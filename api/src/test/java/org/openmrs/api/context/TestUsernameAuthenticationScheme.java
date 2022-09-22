@@ -18,7 +18,7 @@ public class TestUsernameAuthenticationScheme extends DaoAuthenticationScheme {
 
 	@Override
 	public Authenticated authenticate(Credentials credentials) throws ContextAuthenticationException {
-		
+
 		User user = getContextDAO().getUserByUsername(credentials.getClientName()); // that's the actual authentication
 		
 		return new BasicAuthenticated(user, "test-scheme");

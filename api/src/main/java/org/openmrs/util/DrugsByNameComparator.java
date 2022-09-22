@@ -23,14 +23,14 @@ public class DrugsByNameComparator implements Comparator<Drug>, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/* (non-Jsdoc)
+	/*	on-Jsdoc)
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 	 */
 	@Override
 	public int compare(Drug d1, Drug d2) {
 		return compareDrugNamesIgnoringNumericals(d1, d2);
 	}
-	
+
 	/**
 	 * Compare drug names ignoring numericals and other characters. Using compareToIgnoreCase()
 	 * method to prevent a capital letter getting precedence over a simple letter which comes before
@@ -45,13 +45,13 @@ public class DrugsByNameComparator implements Comparator<Drug>, Serializable {
 	 * <strong>Should</strong> return positive if name for drug1 comes before that of drug2 ignoring numerics
 	 */
 	private int compareDrugNamesIgnoringNumericals(Drug d1, Drug d2) {
-		
+
 		String firstDrugName = remove(d1.getName());
 		String secondDrugName = remove(d2.getName());
-		
+
 		return firstDrugName.compareToIgnoreCase(secondDrugName);
 	}
-	
+
 	/**
 	 * Private method which will remove all characters expect a-z and A to Z from text strings
 	 * 

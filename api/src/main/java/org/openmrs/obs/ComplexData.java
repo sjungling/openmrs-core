@@ -22,17 +22,17 @@ import java.io.InputStream;
  * how to handle it.
  */
 public class ComplexData implements java.io.Serializable {
-	
+
 	public static final long serialVersionUID = 345734100L;
-	
+
 	private Object data;
-	
+
 	private String title;
-	
+
 	private String mimeType;
-	
+
 	private Long length;
-	
+
 	/**
 	 * Default constructor requires title and data.
 	 * 
@@ -43,7 +43,7 @@ public class ComplexData implements java.io.Serializable {
 		setTitle(title);
 		setData(data);
 	}
-	
+
 	/**
 	 * Set the title for this ComplexData
 	 * 
@@ -52,7 +52,7 @@ public class ComplexData implements java.io.Serializable {
 	private void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	/**
 	 * Get the title for this ComplexData
 	 * 
@@ -61,7 +61,7 @@ public class ComplexData implements java.io.Serializable {
 	public String getTitle() {
 		return this.title;
 	}
-	
+
 	/**
 	 * Set the data Object.
 	 * 
@@ -70,7 +70,7 @@ public class ComplexData implements java.io.Serializable {
 	private void setData(Object data) {
 		this.data = data;
 	}
-	
+
 	/**
 	 * Get the data Object. If this was initialized with a byte array, the output may not be
 	 * reliable. TODO: Should this even try to return the byte array?
@@ -80,7 +80,7 @@ public class ComplexData implements java.io.Serializable {
 	public Object getData() {
 		return this.data;
 	}
-	
+
 	/**
 	 * Set the data MIME type
 	 * 
@@ -90,7 +90,7 @@ public class ComplexData implements java.io.Serializable {
 	public void setMimeType(String mimeType) {
 		this.mimeType = mimeType;
 	}
-	
+
 	/**
 	 * Get the data MIME type
 	 * 
@@ -100,7 +100,7 @@ public class ComplexData implements java.io.Serializable {
 	public String getMimeType() {
 		return this.mimeType;
 	}
-	
+
 	/**
 	 * Set the data length
 	 *
@@ -110,7 +110,7 @@ public class ComplexData implements java.io.Serializable {
 	public void setLength(Long length) {
 		this.length = length;
 	}
-	
+
 	/**
 	 * Get the data length
 	 *
@@ -120,5 +120,5 @@ public class ComplexData implements java.io.Serializable {
 	public Long getLength() {
 		return this.length;
 	}
-	
+
 }

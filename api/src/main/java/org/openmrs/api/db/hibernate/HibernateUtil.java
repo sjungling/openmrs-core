@@ -39,15 +39,15 @@ public class HibernateUtil {
 
 	private HibernateUtil() {
 	}
-	
+
 	private static final Logger log = LoggerFactory.getLogger(HibernateUtil.class);
-	
+
 	private static Dialect dialect = null;
-	
+
 	private static Boolean isHSQLDialect = null;
-	
+
 	private static Boolean isPostgreSQLDialect = null;
-	
+
 	/**
 	 * Check and cache whether the currect dialect is HSQL or not. This is needed because some
 	 * queries are different if in the hsql world as opposed to the mysql/postgres world
@@ -56,15 +56,15 @@ public class HibernateUtil {
 	 * @return true/false whether we're in hsql right now or not
 	 */
 	public static boolean isHSQLDialect(SessionFactory sessionFactory) {
-		
+
 		if (isHSQLDialect == null) {
 			// check and cache the dialect
 			isHSQLDialect = HSQLDialect.class.getName().equals(getDialect(sessionFactory).getClass().getName());
 		}
-		
+
 		return isHSQLDialect;
 	}
-	
+
 	/**
 	 * Check and cache whether the currect dialect is PostgreSQL or not. This is needed because some
 	 * behaviors of PostgreSQL and MySQL are different and need to be handled separately.
@@ -73,16 +73,16 @@ public class HibernateUtil {
 	 * @return true/false whether we're in postgresql right now or not
 	 */
 	public static boolean isPostgreSQLDialect(SessionFactory sessionFactory) {
-		
+
 		if (isPostgreSQLDialect == null) {
 			// check and cache the dialect
 			isPostgreSQLDialect = PostgreSQL82Dialect.class.getName()
-			        .equals(getDialect(sessionFactory).getClass().getName());
+											.equals(getDialect(sessionFactory).getClass().getName());
 		}
-		
+
 		return isPostgreSQLDialect;
 	}
-	
+
 	/**
 	 * Fetch the current Dialect of the given SessionFactory
 	 *
@@ -90,28 +90,28 @@ public class HibernateUtil {
 	 * @return Dialect of sql that this connection/session is using
 	 */
 	public static Dialect getDialect(SessionFactory sessionFactory) {
-		
+
 		// return cached dialect
 		if (dialect != null) {
 			return dialect;
 		}
-		
+
 		SessionFactoryImplementor implementor = (SessionFactoryImplementor) sessionFactory;
 		dialect = implementor.getDialect();
-		
+
 		log.debug("Getting dialect for session: {}", dialect);
-		
+
 		return dialect;
 	}
-	
+
 	/**
 	 * @see HibernateUtil#escapeSqlWildcards(String, Connection)
 	 */
 	public static String escapeSqlWildcards(final String oldString, SessionFactory sessionFactory) {
 		return sessionFactory.getCurrentSession().doReturningWork(connection -> escapeSqlWildcards(oldString, connection));
-		
+
 	}
-	
+
 	/**
 	 * Escapes all sql wildcards in the given string, returns the same string if it doesn't contain
 	 * any sql wildcards
@@ -122,11 +122,11 @@ public class HibernateUtil {
 	 *         returned
 	 */
 	public static String escapeSqlWildcards(String oldString, Connection connection) {
-		
+
 		//replace all sql wildcards if any
 		if (!StringUtils.isBlank(oldString)) {
 			String escapeCharacter = "";
-			
+
 			try {
 				//get the database specific escape character from the metadata
 				escapeCharacter = connection.getMetaData().getSearchStringEscape();
@@ -135,13 +135,13 @@ public class HibernateUtil {
 				log.warn("Error generated", e);
 			}
 			//insert an escape character before each sql wildcard in the search phrase
-			return StringUtils.replaceEach(oldString, new String[] { "%", "_", "*", "'" }, new String[] {
-			        escapeCharacter + "%", escapeCharacter + "_", escapeCharacter + "*", "''" });
+			return StringUtils.replaceEach(oldString, new String[]{"%", "_", "*", "'"}, new String[]{
+											escapeCharacter + "%", escapeCharacter + "_", escapeCharacter + "*", "''"});
 		} else {
 			return oldString;
 		}
 	}
-	
+
 	/**
 	 * Adds attribute value criteria to the given criteria query
 	 * 
@@ -150,10 +150,10 @@ public class HibernateUtil {
 	 * @param <AT> the attribute type
 	 */
 	public static <AT extends AttributeType> void addAttributeCriteria(Criteria criteria,
-	        Map<AT, String> serializedAttributeValues) {
+									Map<AT, String> serializedAttributeValues) {
 		Conjunction conjunction = Restrictions.conjunction();
 		int a = 0;
-		
+
 		for (Map.Entry<AT, String> entry : serializedAttributeValues.entrySet()) {
 			String alias = "attributes" + (a++);
 			DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Location.class).setProjection(Projections.id());
@@ -161,13 +161,13 @@ public class HibernateUtil {
 			detachedCriteria.add(Restrictions.eq(alias + ".attributeType", entry.getKey()));
 			detachedCriteria.add(Restrictions.eq(alias + ".valueReference", entry.getValue()));
 			detachedCriteria.add(Restrictions.eq(alias + ".voided", false));
-			
+
 			conjunction.add(Property.forName("id").in(detachedCriteria));
 		}
-		
+
 		criteria.add(conjunction);
 	}
-	
+
 	/**
 	 * Gets an object as an instance of its persistent type if it is a hibernate proxy otherwise
 	 * returns the same passed in object
@@ -180,12 +180,12 @@ public class HibernateUtil {
 		if (persistentObject == null) {
 			return null;
 		}
-		
+
 		if (persistentObject instanceof HibernateProxy) {
 			Hibernate.initialize(persistentObject);
 			persistentObject = (T) ((HibernateProxy) persistentObject).getHibernateLazyInitializer().getImplementation();
 		}
-		
+
 		return persistentObject;
 	}
 }

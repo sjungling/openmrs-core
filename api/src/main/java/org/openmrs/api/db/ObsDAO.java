@@ -27,22 +27,22 @@ import org.openmrs.util.OpenmrsConstants.PERSON_TYPE;
  * @see org.openmrs.api.ObsService
  */
 public interface ObsDAO {
-	
+
 	/**
 	 * @see org.openmrs.api.ObsService#saveObs(org.openmrs.Obs, String)
 	 */
 	public Obs saveObs(Obs obs) throws DAOException;
-	
+
 	/**
 	 * @see org.openmrs.api.ObsService#getObs(java.lang.Integer)
 	 */
 	public Obs getObs(Integer obsId) throws DAOException;
-	
+
 	/**
 	 * @see org.openmrs.api.ObsService#purgeObs(Obs)
 	 */
 	public void deleteObs(Obs obs) throws DAOException;
-		
+
 	/**
 	 * @see org.openmrs.api.ObsService#getObservations(java.util.List, java.util.List,
 	 *      java.util.List, java.util.List, java.util.List, java.util.List, java.util.List,
@@ -50,10 +50,10 @@ public interface ObsDAO {
 	 *      java.lang.String)
 	 */
 	public List<Obs> getObservations(List<Person> whom, List<Encounter> encounters, List<Concept> questions,
-	        List<Concept> answers, List<PERSON_TYPE> personTypes, List<Location> locations, List<String> sort,
-	        Integer mostRecentN, Integer obsGroupId, Date fromDate, Date toDate, boolean includeVoidedObs,
-	        String accessionNumber) throws DAOException;
-	
+									List<Concept> answers, List<PERSON_TYPE> personTypes, List<Location> locations, List<String> sort,
+									Integer mostRecentN, Integer obsGroupId, Date fromDate, Date toDate, boolean includeVoidedObs,
+									String accessionNumber) throws DAOException;
+
 	/**
 	 * @see org.openmrs.api.ObsService#getObservationCount(java.util.List, java.util.List,
 	 *      java.util.List, java.util.List, java.util.List, java.util.List, java.lang.Integer,
@@ -61,10 +61,10 @@ public interface ObsDAO {
 	 * @see ObsService#getObservationCount(List, boolean)
 	 */
 	public Long getObservationCount(List<Person> whom, List<Encounter> encounters, List<Concept> questions,
-	        List<Concept> answers, List<PERSON_TYPE> personTypes, List<Location> locations, Integer obsGroupId,
-	        Date fromDate, Date toDate, List<ConceptName> valueCodedNameAnswers, boolean includeVoidedObs,
-	        String accessionNumber) throws DAOException;
-	
+									List<Concept> answers, List<PERSON_TYPE> personTypes, List<Location> locations, Integer obsGroupId,
+									Date fromDate, Date toDate, List<ConceptName> valueCodedNameAnswers, boolean includeVoidedObs,
+									String accessionNumber) throws DAOException;
+
 	/**
 	 * @param uuid
 	 * @return obs or null
@@ -77,7 +77,7 @@ public interface ObsDAO {
 	 * @return Obs or null
 	 */
 	public Obs getRevisionObs(Obs initialObs);
-	
+
 	/**
 	 * Gets the value of status currently saved in the database for the given obs, bypassing any caches. This is used
 	 * when the user updates an existing obs so we can determine whether to change its status or not.
@@ -86,5 +86,5 @@ public interface ObsDAO {
 	 * @since 2.1.0
 	 */
 	public Obs.Status getSavedStatus(Obs obs);
-	
+
 }

@@ -21,9 +21,9 @@ import org.springframework.validation.Validator;
  * @since 1.11.0
  */
 
-@Handler(supports = { Relationship.class }, order = 50)
+@Handler(supports = {Relationship.class}, order = 50)
 public class RelationshipValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 *
@@ -33,7 +33,7 @@ public class RelationshipValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return Relationship.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Checks that a given Relationship object is valid.
 	 *
@@ -52,7 +52,7 @@ public class RelationshipValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		Relationship relationship = (Relationship) target;
-		
+
 		if (relationship != null) {
 			Date startDate = relationship.getStartDate();
 			Date endDate = relationship.getEndDate();
@@ -67,7 +67,7 @@ public class RelationshipValidator implements Validator {
 				}
 			}
 		}
-		
+
 	}
-	
+
 }

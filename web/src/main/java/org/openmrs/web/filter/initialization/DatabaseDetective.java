@@ -18,13 +18,13 @@ import java.util.Properties;
 import org.openmrs.util.DatabaseUtil;
 
 public class DatabaseDetective {
-	
+
 	private static final String CONNECTION_URL = "connection.url";
-	
+
 	private static final String CONNECTION_USERNAME = "connection.username";
-	
+
 	private static final String CONNECTION_PASSWORD = "connection.password";
-	
+
 	/**
 	 * Check whether openmrs database is empty. Having just one non-liquibase table in the given
 	 * database qualifies this as a non-empty database.
@@ -36,27 +36,27 @@ public class DatabaseDetective {
 		if (props == null) {
 			return true;
 		}
-		
+
 		Connection connection = null;
-		
+
 		try {
 			DatabaseUtil.loadDatabaseDriver(props.getProperty(CONNECTION_URL), null);
-			
+
 			connection = DriverManager.getConnection(props.getProperty(CONNECTION_URL), props
-			        .getProperty(CONNECTION_USERNAME), props.getProperty(CONNECTION_PASSWORD));
-			
+											.getProperty(CONNECTION_USERNAME), props.getProperty(CONNECTION_PASSWORD));
+
 			DatabaseMetaData dbMetaData = connection.getMetaData();
-			
-			String[] types = { "TABLE" };
-			
+
+			String[] types = {"TABLE"};
+
 			//get all tables
 			ResultSet tbls = dbMetaData.getTables(null, null, null, types);
-			
+
 			while (tbls.next()) {
 				String tableName = tbls.getString("TABLE_NAME");
 				//if any table exist besides "liquibasechangelog" or "liquibasechangeloglock", return false
 				if (!("liquibasechangelog".equals(tableName.toLowerCase()))
-				        && !("liquibasechangeloglock".equals(tableName.toLowerCase()))) {
+												&& !("liquibasechangeloglock".equals(tableName.toLowerCase()))) {
 					return false;
 				}
 			}

@@ -28,17 +28,17 @@ import org.junit.jupiter.api.Test;
 import org.openmrs.OpenmrsObject;
 
 public class SimpleXStreamSerializerTest {
-	
-	
+
+
 	/**
 	 * @throws SerializationException
 	 * @see org.openmrs.serialization.SimpleXStreamSerializer#serialize(Object)
 	 */
 	@Test
 	public void serialize_shouldSerializeObject() throws SerializationException {
-		
+
 		OpenmrsSerializer serializer = new SimpleXStreamSerializer();
-		
+
 		Foo foo = new Foo("test", 1);
 		List<String> list = new ArrayList<>();
 		list.add("foo");
@@ -49,20 +49,20 @@ public class SimpleXStreamSerializerTest {
 		map.put(3, "bar");
 		foo.setAttributeList(list);
 		foo.setAttributeMap(map);
-		
+
 		String serializedFoo = serializer.serialize(foo);
-		
+
 		assertTrue(StringUtils.deleteWhitespace(serializedFoo).equals(
-		    StringUtils.deleteWhitespace("<org.openmrs.serialization.Foo>\n" + "  <attributeString>test</attributeString>\n"
-		            + "  <attributeInt>1</attributeInt>\n" + "  <attributeList>\n" + "    <string>foo</string>\n"
-		            + "    <string>bar</string>\n" + "  </attributeList>\n" + "  <attributeMap>\n" + "    <entry>\n"
-		            + "      <int>1</int>\n" + "      <string>foo</string>\n" + "    </entry>\n" + "    <entry>\n"
-		            + "      <int>2</int>\n" + "      <string>fooBar</string>\n" + "    </entry>\n" + "    <entry>\n"
-		            + "      <int>3</int>\n" + "      <string>bar</string>\n" + "    </entry>\n" + "  </attributeMap>\n"
-		            + "  </org.openmrs.serialization.Foo>")));
-		
+										StringUtils.deleteWhitespace("<org.openmrs.serialization.Foo>\n" + "  <attributeString>test</attributeString>\n"
+																		+ "  <attributeInt>1</attributeInt>\n" + "  <attributeList>\n" + "    <string>foo</string>\n"
+																		+ "    <string>bar</string>\n" + "  </attributeList>\n" + "  <attributeMap>\n" + "    <entry>\n"
+																		+ "      <int>1</int>\n" + "      <string>foo</string>\n" + "    </entry>\n" + "    <entry>\n"
+																		+ "      <int>2</int>\n" + "      <string>fooBar</string>\n" + "    </entry>\n" + "    <entry>\n"
+																		+ "      <int>3</int>\n" + "      <string>bar</string>\n" + "    </entry>\n" + "  </attributeMap>\n"
+																		+ "  </org.openmrs.serialization.Foo>")));
+
 	}
-	
+
 	/**
 	 * @throws SerializationException
 	 * @see org.openmrs.serialization.SimpleXStreamSerializer#serialize(Object)
@@ -70,17 +70,17 @@ public class SimpleXStreamSerializerTest {
 	@Test
 	public void deserialize_shouldDeserializeStringToClassInstance() throws SerializationException {
 		String serializedFoo = "<org.openmrs.serialization.Foo>\n" + "  <attributeString>Testing</attributeString>\n"
-		        + "  <attributeInt>4</attributeInt>\n" + "  <attributeList>\n" + "    <string>fooBar</string>\n"
-		        + "    <string>bar</string>\n" + "  </attributeList>\n" + "  <attributeMap>\n" + "    <entry>\n"
-		        + "      <int>10</int>\n" + "      <string>foo</string>\n" + "    </entry>\n" + "    <entry>\n"
-		        + "      <int>20</int>\n" + "      <string>fooBar</string>\n" + "    </entry>\n" + "    <entry>\n"
-		        + "      <int>30</int>\n" + "      <string>bar</string>\n" + "    </entry>\n" + "  </attributeMap>\n"
-		        + "</org.openmrs.serialization.Foo>";
-		
+										+ "  <attributeInt>4</attributeInt>\n" + "  <attributeList>\n" + "    <string>fooBar</string>\n"
+										+ "    <string>bar</string>\n" + "  </attributeList>\n" + "  <attributeMap>\n" + "    <entry>\n"
+										+ "      <int>10</int>\n" + "      <string>foo</string>\n" + "    </entry>\n" + "    <entry>\n"
+										+ "      <int>20</int>\n" + "      <string>fooBar</string>\n" + "    </entry>\n" + "    <entry>\n"
+										+ "      <int>30</int>\n" + "      <string>bar</string>\n" + "    </entry>\n" + "  </attributeMap>\n"
+										+ "</org.openmrs.serialization.Foo>";
+
 		OpenmrsSerializer serializer = new SimpleXStreamSerializer();
-		
+
 		Foo foo = serializer.deserialize(serializedFoo, Foo.class);
-		
+
 		assertTrue(foo.getAttributeString().equals("Testing"));
 		assertEquals(4, foo.getAttributeInt());
 
@@ -94,35 +94,35 @@ public class SimpleXStreamSerializerTest {
 		assertTrue(newMap.get(10).equals("foo"));
 		assertTrue(newMap.get(20).equals("fooBar"));
 		assertTrue(newMap.get(30).equals("bar"));
-		
+
 	}
-	
+
 	/**
 	 * @throws SerializationException
-	 * @see SimpleXStreamSerializer#deserialize(String,Class)
+	 * @see SimpleXStreamSerializer#deserialize(String, Class)
 	 */
 	@Test
 	public void deserialize_shouldNotDeserializeProxies() throws SerializationException {
 		String serialized = "<dynamic-proxy>" + "<interface>org.openmrs.OpenmrsObject</interface>"
-		        + "<handler class=\"java.beans.EventHandler\">" + "<target class=\"java.lang.ProcessBuilder\">"
-		        + "<command>" + "<string>someApp</string>" + "</command></target>" + "<action>start</action>" + "</handler>"
-		        + "</dynamic-proxy>";
-		
+										+ "<handler class=\"java.beans.EventHandler\">" + "<target class=\"java.lang.ProcessBuilder\">"
+										+ "<command>" + "<string>someApp</string>" + "</command></target>" + "<action>start</action>" + "</handler>"
+										+ "</dynamic-proxy>";
+
 		assertThrows(SerializationException.class, () -> new SimpleXStreamSerializer().deserialize(serialized, OpenmrsObject.class));
 	}
-	
+
 	/**
 	 * @throws SerializationException
-	 * @see SimpleXStreamSerializer#deserialize(String,Class)
+	 * @see SimpleXStreamSerializer#deserialize(String, Class)
 	 */
 	@Test
 	public void deserialize_shouldIgnoreEntities() throws SerializationException {
 		String xml = "<!DOCTYPE ZSL [<!ENTITY xxe1 \"some attribute value\" >]>" + "<org.openmrs.serialization.Foo>"
-		        + "<attributeString>&xxe1;</attributeString>" + "</org.openmrs.serialization.Foo>";
-		
+										+ "<attributeString>&xxe1;</attributeString>" + "</org.openmrs.serialization.Foo>";
+
 		assertThrows(SerializationException.class, () -> new SimpleXStreamSerializer().deserialize(xml, Foo.class));
 	}
-	
+
 	/**
 	 * @throws SerializationException
 	 * @see SimpleXStreamSerializer#serialize(Object)
@@ -130,7 +130,7 @@ public class SimpleXStreamSerializerTest {
 	@Test
 	public void serialize_shouldNotSerializeProxies() throws SerializationException {
 		EventHandler h = new EventHandler(new ProcessBuilder("someApp"), "start", null, null);
-		Object proxy = Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[] { OpenmrsObject.class }, h);
+		Object proxy = Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[]{OpenmrsObject.class}, h);
 		assertThrows(XStreamException.class, () -> new SimpleXStreamSerializer().serialize(proxy));
 	}
 }

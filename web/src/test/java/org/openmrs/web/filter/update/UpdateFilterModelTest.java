@@ -36,119 +36,119 @@ import org.openmrs.util.DatabaseUpdaterLiquibaseProvider;
  * Tests {@link UpdateFilterModel}.
  */
 public class UpdateFilterModelTest {
-	
+
 	private DatabaseUpdaterLiquibaseProvider liquibaseProvider;
 	private DatabaseUpdaterWrapper databaseUpdaterWrapper;
-	
+
 	private UpdateFilterModel model;
-	
+
 	@BeforeEach
 	public void setUp() {
 		liquibaseProvider = new DatabaseUpdaterLiquibaseProvider();
-		databaseUpdaterWrapper = mock( DatabaseUpdaterWrapper.class );
+		databaseUpdaterWrapper = mock(DatabaseUpdaterWrapper.class);
 	}
-	
+
 	@Test
 	public void createUpdateFilterModel_shouldrequireAnUpdateAndSetChangesToUnrunDatabaseChangesIfChangesAreNonEmpty()
-	        throws Exception {
+									throws Exception {
 		List<OpenMRSChangeSet> changes = Arrays.asList(mock(OpenMRSChangeSet.class));
-		
+
 		when(databaseUpdaterWrapper.getUnrunDatabaseChanges(any(LiquibaseProvider.class))).thenReturn(changes);
 		when(databaseUpdaterWrapper.isLocked()).thenReturn(false);
-		
+
 		model = new UpdateFilterModel(liquibaseProvider, databaseUpdaterWrapper);
-		
+
 		assertTrue(model.updateRequired, "should require an update");
 		assertThat(model.changes, is(changes));
-		
-		verify( databaseUpdaterWrapper, times(1)).getUnrunDatabaseChanges( liquibaseProvider );
-		verify( databaseUpdaterWrapper, never()).updatesRequired();
+
+		verify(databaseUpdaterWrapper, times(1)).getUnrunDatabaseChanges(liquibaseProvider);
+		verify(databaseUpdaterWrapper, never()).updatesRequired();
 	}
-	
+
 	@Test
 	public void createUpdateFilterModel_shouldRequiredAnUpdateIfChangesAreEmptyButDatabaseUpdaterDoesRequireAnUpdate()
-	        throws Exception {
+									throws Exception {
 		List<OpenMRSChangeSet> changes = new ArrayList<>();
-		
+
 		when(databaseUpdaterWrapper.getUnrunDatabaseChanges(any(LiquibaseProvider.class))).thenReturn(changes);
 		when(databaseUpdaterWrapper.isLocked()).thenReturn(false);
 		when(databaseUpdaterWrapper.updatesRequired()).thenReturn(true);
-		
+
 		model = new UpdateFilterModel(liquibaseProvider, databaseUpdaterWrapper);
-		
+
 		assertTrue(model.updateRequired, "should require an update");
 		assertThat(model.changes, is(empty()));
 
-		verify( databaseUpdaterWrapper, times(1)).getUnrunDatabaseChanges( liquibaseProvider );
-		verify( databaseUpdaterWrapper, times(1)).updatesRequired();
+		verify(databaseUpdaterWrapper, times(1)).getUnrunDatabaseChanges(liquibaseProvider);
+		verify(databaseUpdaterWrapper, times(1)).updatesRequired();
 	}
-	
+
 	@Test
 	public void createUpdateFilterModel_shouldNotRequireAnUpdateIfChangesAreEmptyAndDatabaseUpdaterDoesNotRequireAnUpdate()
-	        throws Exception {
+									throws Exception {
 		List<OpenMRSChangeSet> changes = new ArrayList<>();
-		
+
 		when(databaseUpdaterWrapper.getUnrunDatabaseChanges(any(LiquibaseProvider.class))).thenReturn(changes);
 		when(databaseUpdaterWrapper.isLocked()).thenReturn(false);
 		when(databaseUpdaterWrapper.updatesRequired()).thenReturn(false);
-		
+
 		model = new UpdateFilterModel(liquibaseProvider, databaseUpdaterWrapper);
-		
+
 		assertFalse(model.updateRequired, "should not require an update");
 		assertThat(model.changes, is(empty()));
 
-		verify( databaseUpdaterWrapper, times(1)).getUnrunDatabaseChanges( liquibaseProvider );
-		verify( databaseUpdaterWrapper, times(1)).updatesRequired();
+		verify(databaseUpdaterWrapper, times(1)).getUnrunDatabaseChanges(liquibaseProvider);
+		verify(databaseUpdaterWrapper, times(1)).updatesRequired();
 	}
-	
+
 	@Test
 	public void createUpdateFilterModel_shouldNotRequireAnUpdateIfChangesAreNullAndDatabaseUpdaterDoesNotRequireAnUpdate()
-	        throws Exception {
-		
+									throws Exception {
+
 		when(databaseUpdaterWrapper.getUnrunDatabaseChanges(any(LiquibaseProvider.class))).thenReturn(null);
 		when(databaseUpdaterWrapper.isLocked()).thenReturn(false);
 		when(databaseUpdaterWrapper.updatesRequired()).thenReturn(false);
-		
+
 		model = new UpdateFilterModel(liquibaseProvider, databaseUpdaterWrapper);
-		
+
 		assertFalse(model.updateRequired, "should not require an update");
 		assertNull(model.changes, "should not have changes");
 
-		verify( databaseUpdaterWrapper, times(1)).getUnrunDatabaseChanges( liquibaseProvider );
-		verify( databaseUpdaterWrapper, times(1)).updatesRequired();
+		verify(databaseUpdaterWrapper, times(1)).getUnrunDatabaseChanges(liquibaseProvider);
+		verify(databaseUpdaterWrapper, times(1)).updatesRequired();
 	}
-	
+
 	@Test
 	public void createUpdateFilterModel_shouldNotRequireAnUpdateIfDatabaseUpdaterIsLockedAndCallingDatabaseUpdaterTwiceAlwaysReturnsNull()
-	        throws Exception {
-		
+									throws Exception {
+
 		when(databaseUpdaterWrapper.getUnrunDatabaseChanges(any(LiquibaseProvider.class))).thenReturn(null);
 		when(databaseUpdaterWrapper.isLocked()).thenReturn(true);
 		when(databaseUpdaterWrapper.updatesRequired()).thenReturn(false);
-		
+
 		model = new UpdateFilterModel(liquibaseProvider, databaseUpdaterWrapper);
-		
+
 		assertFalse(model.updateRequired, "should not require an update");
 		assertNull(model.changes, "should not have changes");
 
-		verify( databaseUpdaterWrapper, times(2)).getUnrunDatabaseChanges( liquibaseProvider );
-		verify( databaseUpdaterWrapper, times(1)).updatesRequired();
+		verify(databaseUpdaterWrapper, times(2)).getUnrunDatabaseChanges(liquibaseProvider);
+		verify(databaseUpdaterWrapper, times(1)).updatesRequired();
 	}
-	
+
 	@Test
 	public void createUpdateFilterModel_shouldRequireAnUpdateIfDatabaseUpdaterIsLockedAndChangesAreNotNull()
-	        throws Exception {
+									throws Exception {
 		List<OpenMRSChangeSet> changes = Arrays.asList(mock(OpenMRSChangeSet.class));
-		
+
 		when(databaseUpdaterWrapper.getUnrunDatabaseChanges(any(LiquibaseProvider.class))).thenReturn(changes);
 		when(databaseUpdaterWrapper.isLocked()).thenReturn(true);
-		
+
 		model = new UpdateFilterModel(liquibaseProvider, databaseUpdaterWrapper);
-		
+
 		assertTrue(model.updateRequired, "should require an update");
 		assertThat(model.changes, is(changes));
 
-		verify( databaseUpdaterWrapper, times(1)).getUnrunDatabaseChanges( liquibaseProvider );
-		verify( databaseUpdaterWrapper, never()).updatesRequired();
+		verify(databaseUpdaterWrapper, times(1)).getUnrunDatabaseChanges(liquibaseProvider);
+		verify(databaseUpdaterWrapper, never()).updatesRequired();
 	}
 }

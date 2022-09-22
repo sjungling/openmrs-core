@@ -39,7 +39,7 @@ public class ModuleExtensionsTest extends BaseContextMockTest {
 
 	private static final String EXTENSION_POINT_ID_PATIENT_DASHBOARD = "org.openmrs.patientDashboard";
 	private static final String LOGIC_MODULE_PATH = "org/openmrs/module/include/logic-0.2.omod";
-	
+
 	@Mock
 	MessageSourceService messageSourceService;
 
@@ -49,7 +49,7 @@ public class ModuleExtensionsTest extends BaseContextMockTest {
 	public void before() {
 		module = new Module("Extension Test", "extensiontest", "org.openmrs.module.extensiontest", "", "", "0.0.1");
 	}
-	
+
 	@AfterEach
 	public void after() {
 		// needed so other tests which rely on no ModuleClassLoaderFound
@@ -59,12 +59,12 @@ public class ModuleExtensionsTest extends BaseContextMockTest {
 
 	@Test
 	public void getExtensions_shouldNotExpandIfExtensionNamesAreNull() {
-		
+
 		module.setExtensionNames(null);
 
 		assertThat(module.getExtensions(), is(equalTo(Collections.EMPTY_LIST)));
 	}
-	
+
 	@Test
 	public void getExtensions_shouldNotExpandIfExtensionNamesAreEmpty() {
 
@@ -79,12 +79,12 @@ public class ModuleExtensionsTest extends BaseContextMockTest {
 		HashMap<String, String> extensionNames = new HashMap<>();
 		extensionNames.put(EXTENSION_POINT_ID_PATIENT_DASHBOARD, AccessibleExtension.class.getName());
 		module.setExtensionNames(extensionNames);
-		
+
 		ModuleFactory.moduleClassLoaders = null;
 
 		assertThat(module.getExtensions(), is(equalTo(Collections.EMPTY_LIST)));
 	}
-	
+
 	@Test
 	public void getExtensions_shouldNotFailExpandingAnExtensionNameCausingANoClassDefinitionFoundError() {
 		// Tests that when an extension is defined in config.xml and its class is found inside the module but
@@ -94,7 +94,7 @@ public class ModuleExtensionsTest extends BaseContextMockTest {
 		// java.lang.NoClassDefFoundError: org/openmrs/module/web/extension/AdministrationSectionExt
 
 		module = new ModuleFileParser(messageSourceService).parse(
-			new File(getClass().getClassLoader().getResource(LOGIC_MODULE_PATH).getPath())
+										new File(getClass().getClassLoader().getResource(LOGIC_MODULE_PATH).getPath())
 		);
 		ModuleClassLoader moduleClassLoader = new ModuleClassLoader(module, getClass().getClassLoader());
 		ModuleFactory.getModuleClassLoaderMap().put(module, moduleClassLoader);
@@ -112,7 +112,7 @@ public class ModuleExtensionsTest extends BaseContextMockTest {
 
 		assertThat(module.getExtensions(), is(equalTo(Collections.EMPTY_LIST)));
 	}
-	
+
 	@Test
 	public void getExtensions_shouldNotFailExpandingAClassWhichCannotBeInstantiated() {
 
@@ -124,7 +124,7 @@ public class ModuleExtensionsTest extends BaseContextMockTest {
 
 		assertThat(module.getExtensions(), is(equalTo(Collections.EMPTY_LIST)));
 	}
-	
+
 	@Test
 	public void getExtensions_shouldNotFailExpandingAClassWhichCannotAccessed() {
 
@@ -136,7 +136,7 @@ public class ModuleExtensionsTest extends BaseContextMockTest {
 
 		assertThat(module.getExtensions(), is(equalTo(Collections.EMPTY_LIST)));
 	}
-	
+
 	@Test
 	public void getExtensions_shouldExpandClassNamesIntoClassInstances() {
 
@@ -152,7 +152,7 @@ public class ModuleExtensionsTest extends BaseContextMockTest {
 		assertThat(extension.getPointId(), is(EXTENSION_POINT_ID_PATIENT_DASHBOARD));
 		assertThat(extension.getModuleId(), is(module.getModuleId()));
 	}
-	
+
 	@Test
 	public void getExtensions_shouldNotExpandAgainIfClassNamesMatch() {
 
@@ -169,7 +169,7 @@ public class ModuleExtensionsTest extends BaseContextMockTest {
 		assertThat(result.size(), is(1));
 		assertThat(result.get(0), is(sameInstance(extension)));
 	}
-	
+
 	@Test
 	public void getExtensions_shouldExpandAgainIfExtensionNamesNowHaveADifferentClassOnSameExtensionPoint() {
 
@@ -180,7 +180,7 @@ public class ModuleExtensionsTest extends BaseContextMockTest {
 
 		List<Extension> result = module.getExtensions();
 		assertThat(result.size(), is(1));
-		
+
 		extensionNames.put(EXTENSION_POINT_ID_PATIENT_DASHBOARD, AnotherAccessibleExtension.class.getName());
 
 		result = module.getExtensions();
@@ -207,19 +207,20 @@ public class ModuleExtensionsTest extends BaseContextMockTest {
 			return null;
 		}
 	}
-	
+
 	static class AnotherAccessibleExtension extends Extension {
 		@Override
 		public Extension.MEDIA_TYPE getMediaType() {
 			return null;
 		}
 	}
-	
+
 	static class ExtensionCausingIllegalAccessException extends Extension {
 		@Override
 		public Extension.MEDIA_TYPE getMediaType() {
 			return null;
 		}
+
 		private ExtensionCausingIllegalAccessException() {
 		}
 	}

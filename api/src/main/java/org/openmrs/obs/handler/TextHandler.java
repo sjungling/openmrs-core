@@ -36,13 +36,13 @@ import org.springframework.util.Assert;
  *
  */
 public class TextHandler extends AbstractHandler implements ComplexObsHandler {
-	
+
 	/** Views supported by this handler */
-	private static final String[] supportedViews = { ComplexObsHandler.TEXT_VIEW, ComplexObsHandler.RAW_VIEW,
-	        ComplexObsHandler.URI_VIEW };
-	
+	private static final String[] supportedViews = {ComplexObsHandler.TEXT_VIEW, ComplexObsHandler.RAW_VIEW,
+									ComplexObsHandler.URI_VIEW};
+
 	private static final Logger log = LoggerFactory.getLogger(TextHandler.class);
-	
+
 	/**
 	 * Constructor initializes formats for alternative file names to protect from unintentionally
 	 * overwriting existing files.
@@ -50,7 +50,7 @@ public class TextHandler extends AbstractHandler implements ComplexObsHandler {
 	public TextHandler() {
 		super();
 	}
-	
+
 	/**
 	 * 
 	 * 
@@ -62,17 +62,17 @@ public class TextHandler extends AbstractHandler implements ComplexObsHandler {
 		log.debug("value complex: " + obs.getValueComplex());
 		log.debug("file path: " + file.getAbsolutePath());
 		ComplexData complexData = null;
-		
+
 		if (ComplexObsHandler.TEXT_VIEW.equals(view) || ComplexObsHandler.RAW_VIEW.equals(view)) {
 			// to handle problem with downloading/saving files with blank spaces or commas in their names
 			// also need to remove the "file" text appended to the end of the file name
 			String[] names = obs.getValueComplex().split("\\|");
 			String originalFilename = names[0];
 			originalFilename = originalFilename.replaceAll(",", "").replaceAll(" ", "").replaceAll("file$", "");
-			
+
 			try {
 				complexData = ComplexObsHandler.RAW_VIEW.equals(view) ? new ComplexData(originalFilename, OpenmrsUtil
-				        .getFileAsBytes(file)) : new ComplexData(originalFilename, OpenmrsUtil.getFileAsString(file));
+												.getFileAsBytes(file)) : new ComplexData(originalFilename, OpenmrsUtil.getFileAsString(file));
 			}
 			catch (IOException e) {
 				log.error("Trying to read file: " + file.getAbsolutePath(), e);
@@ -84,19 +84,19 @@ public class TextHandler extends AbstractHandler implements ComplexObsHandler {
 			// NOTE: if adding support for another view, don't forget to update supportedViews list above
 			return null;
 		}
-		
+
 		Assert.notNull(complexData, "Complex data must not be null");
-		
+
 		// Get the Mime Type and set it
 		String mimeType = OpenmrsUtil.getFileMimeType(file);
 		mimeType = !(mimeType.equals("application/octet-stream")) ? mimeType : "text/plain";
 		complexData.setMimeType(mimeType);
-		
+
 		obs.setComplexData(complexData);
-		
+
 		return obs;
 	}
-	
+
 	/**
 	 * @see org.openmrs.obs.ComplexObsHandler#getSupportedViews()
 	 */
@@ -104,7 +104,7 @@ public class TextHandler extends AbstractHandler implements ComplexObsHandler {
 	public String[] getSupportedViews() {
 		return supportedViews;
 	}
-	
+
 	/**
 	 * 
 	 * 
@@ -138,23 +138,23 @@ public class TextHandler extends AbstractHandler implements ComplexObsHandler {
 					tempRd.close();
 				}
 				catch (IOException e) {
-					throw new APIException("Obs.error.unable.convert.complex.data", new Object[] { "Reader" }, e);
+					throw new APIException("Obs.error.unable.convert.complex.data", new Object[]{"Reader"}, e);
 				}
 			} else if (InputStream.class.isAssignableFrom(data.getClass())) {
 				try {
 					IOUtils.copy((InputStream) data, fout);
 				}
 				catch (IOException e) {
-					throw new APIException("Obs.error.unable.convert.complex.data", new Object[] { "input stream" }, e);
+					throw new APIException("Obs.error.unable.convert.complex.data", new Object[]{"input stream"}, e);
 				}
 			}
-			
+
 			// Set the Title and URI for the valueComplex
 			obs.setValueComplex(outfile.getName() + " file |" + outfile.getName());
-			
+
 			// Remove the ComplexData from the Obs
 			obs.setComplexData(null);
-			
+
 		}
 		catch (IOException ioe) {
 			throw new APIException("Obs.error.trying.write.complex", null, ioe);
@@ -167,8 +167,8 @@ public class TextHandler extends AbstractHandler implements ComplexObsHandler {
 				// pass
 			}
 		}
-		
+
 		return obs;
 	}
-	
+
 }

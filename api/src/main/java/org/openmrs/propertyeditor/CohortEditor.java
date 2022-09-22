@@ -21,15 +21,15 @@ import org.openmrs.api.context.Context;
  * @see Cohort
  */
 public class CohortEditor extends OpenmrsPropertyEditor<Cohort> {
-	
+
 	public CohortEditor() {
 	}
-	
+
 	@Override
 	protected Cohort getObjectById(Integer id) {
 		return Context.getCohortService().getCohort(id);
 	}
-	
+
 	@Override
 	protected Cohort getObjectByUuid(String uuid) {
 		return Context.getCohortService().getCohortByUuid(uuid);

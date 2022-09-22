@@ -33,9 +33,9 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 public class PersonValidatorTest extends BaseContextSensitiveTest {
-	
+
 	protected Validator validator;
-	
+
 	/**
 	 * @param validator the validator to set
 	 */
@@ -44,9 +44,9 @@ public class PersonValidatorTest extends BaseContextSensitiveTest {
 	public void setValidator(Validator validator) {
 		this.validator = validator;
 	}
-	
+
 	/**
-	 * @see PersonValidator#validate(Object,Errors)
+	 * @see PersonValidator#validate(Object, Errors)
 	 */
 	
 	@Test
@@ -58,12 +58,12 @@ public class PersonValidatorTest extends BaseContextSensitiveTest {
 		pa.setBirthdate(birth.getTime());
 		Errors errors = new BindException(pa, "patient");
 		validator.validate(pa, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("birthdate"));
 	}
-	
+
 	/**
-	 * @see PersonValidator#validate(Object,Errors)
+	 * @see PersonValidator#validate(Object, Errors)
 	 */
 	
 	@Test
@@ -75,12 +75,12 @@ public class PersonValidatorTest extends BaseContextSensitiveTest {
 		pa.setDeathDate(death.getTime());
 		Errors errors = new BindException(pa, "patient");
 		validator.validate(pa, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("deathDate"));
 	}
-	
+
 	/**
-	 * @see PersonValidator#validate(Object,Errors)
+	 * @see PersonValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfBirthdateMakesPatientOlderThat140YearsOld() {
@@ -91,28 +91,28 @@ public class PersonValidatorTest extends BaseContextSensitiveTest {
 		pa.setBirthdate(birth.getTime());
 		Errors errors = new BindException(pa, "patient");
 		validator.validate(pa, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("birthdate"));
 	}
-	
+
 	/**
-	 * @see PersonValidator#validate(Object,Errors)
+	 * @see PersonValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfCauseOfDeathIsBlankWhenPatientIsDead() {
 		Patient pa = new Patient(1);
 		pa.setDead(true);
-		
+
 		Errors errors = new BindException(pa, "patient");
 		validator.validate(pa, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("causeOfDeath"));
 		assertEquals("Person.dead.causeOfDeathAndCauseOfDeathNonCodedNull", errors.getFieldError("causeOfDeath").getCode());
-		
+
 	}
-	
+
 	/**
-	 * @see PersonValidator#validate(Object,Errors)
+	 * @see PersonValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfVoidReasonIsBlankWhenPatientIsVoided() {
@@ -122,9 +122,9 @@ public class PersonValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(pa, errors);
 		assertTrue(errors.hasFieldErrors("voidReason"));
 	}
-	
+
 	/**
-	 * @see PersonValidator#validate(Object,Errors)
+	 * @see PersonValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfPersonDoesNotHaveAtleastOneNonVoidedName() {
@@ -134,9 +134,9 @@ public class PersonValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(pa, errors);
 		assertTrue(errors.hasFieldErrors("names"));
 	}
-	
+
 	/**
-	 * @see org.openmrs.validator.PersonValidator#validate(Object,Errors)
+	 * @see org.openmrs.validator.PersonValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfGenderIsBlankForPersons() {
@@ -144,12 +144,12 @@ public class PersonValidatorTest extends BaseContextSensitiveTest {
 		Errors errors = new BindException(person, "person");
 		PersonValidator personValidator = new PersonValidator();
 		personValidator.validate(person, errors);
-		
+
 		assertFalse(errors.hasFieldErrors("gender"));
 	}
-	
+
 	/**
-	 * @see org.openmrs.validator.PersonValidator#validate(Object,Errors)
+	 * @see org.openmrs.validator.PersonValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() {
@@ -158,16 +158,16 @@ public class PersonValidatorTest extends BaseContextSensitiveTest {
 		person.setGender("g");
 		person.setPersonVoided(true);
 		person.setPersonVoidReason("voidReason");
-		
+
 		Errors errors = new BindException(person, "person");
 		PersonValidator personValidator = new PersonValidator();
 		personValidator.validate(person, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see org.openmrs.validator.PersonValidator#validate(Object,Errors)
+	 * @see org.openmrs.validator.PersonValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() {
@@ -176,34 +176,34 @@ public class PersonValidatorTest extends BaseContextSensitiveTest {
 		person.setGender("too long text too long too long text too long text  too long text");
 		person.setPersonVoided(true);
 		person
-		        .setPersonVoidReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
-		
+										.setPersonVoidReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+
 		Errors errors = new BindException(person, "person");
 		PersonValidator personValidator = new PersonValidator();
 		personValidator.validate(person, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("gender"));
 		assertTrue(errors.hasFieldErrors("personVoidReason"));
 	}
 
 
 	/**
- 	 * @see org.openmrs.validator.PersonValidator#validate(Object,Errors)
-     */
-    @Test
+	* @see org.openmrs.validator.PersonValidator#validate(Object, Errors)
+		*/
+		@Test
 	public void shouldNotSetDeathBeforeBirth() {
 		Patient pa = new Patient(1);
 		Calendar birth = Calendar.getInstance();
 		birth.setTime(new Date());
 		birth.add(Calendar.YEAR, +5);
 		pa.setBirthdate(birth.getTime());
-  		Calendar death = Calendar.getInstance();
+		Calendar death = Calendar.getInstance();
 		death.setTime(new Date());
 		pa.setDeathDate(death.getTime());
-  
-  		Errors errors = new BindException(pa, "patient");
+
+		Errors errors = new BindException(pa, "patient");
 		validator.validate(pa, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("deathDate"));
 	}
 
@@ -211,50 +211,50 @@ public class PersonValidatorTest extends BaseContextSensitiveTest {
 	public void validate_shouldFailValidationWhenDeathCauseAndDeathCauseNonCodedAreSet() {
 		Patient pa = new Patient(1);
 		pa.setDead(true);
-		
+
 		pa.setCauseOfDeathNonCoded("Some text describing Cause of Death");
 		pa.setCauseOfDeath(new Concept());
-		
+
 		Errors errors = new BindException(pa, "patient");
 		validator.validate(pa, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("causeOfDeath"));
 		assertEquals("Person.dead.shouldHaveOnlyOneCauseOfDeathOrCauseOfDeathNonCodedSet", errors.getFieldError("causeOfDeath").getCode());
 	}
-	
+
 	@Test
 	public void validate_shouldNotFailWhenDeathCauseNotCodedIsSet() {
 		Person person = new Patient(1);
-		
+
 		person.setDead(true);
 		person.setCauseOfDeathNonCoded("Some text describing Cause of Death");
 		person.setPersonVoided(true);
 		person.setPersonVoidReason("voidReason");
 		person.setGender("g");
-		
+
 		Errors errors = new BindException(person, "patient");
 		PersonValidator personValidator = new PersonValidator();
 		personValidator.validate(person, errors);
 
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	@Test
 	public void validate_shouldThrowExceptionWhenAddressIsNull() {
 		Person person = new Patient(1);
 		Set<PersonAddress> addresses =  new HashSet<>();
 		addresses.add(null);
-		
+
 		person.setDead(true);
 		person.setCauseOfDeathNonCoded("Some text describing Cause of Death");
 		person.setPersonVoided(true);
 		person.setPersonVoidReason("voidReason");
 		person.setGender("g");
 		person.setAddresses(addresses);
-		
+
 		Errors errors = new BindException(person, "patient");
 		PersonValidator personValidator = new PersonValidator();
-		
+
 		assertThrows(IllegalArgumentException.class, () ->  personValidator.validate(person, errors));
 	}
 

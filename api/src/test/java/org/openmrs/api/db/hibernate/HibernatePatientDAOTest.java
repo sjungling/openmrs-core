@@ -35,7 +35,7 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
 public class HibernatePatientDAOTest extends BaseContextSensitiveTest {
 
 	private HibernatePatientDAO hibernatePatientDao;
-	
+
 	private HibernatePersonDAO hibernatePersonDAO;
 
 	@BeforeEach
@@ -49,9 +49,9 @@ public class HibernatePatientDAOTest extends BaseContextSensitiveTest {
 	public void getPatientIdentifiers_shouldGetByIdentifierType() {
 		List<PatientIdentifierType> identifierTypes = singletonList(new PatientIdentifierType(2));
 		List<PatientIdentifier> identifiers = hibernatePatientDao
-				.getPatientIdentifiers(null, identifierTypes, emptyList(), emptyList(), null);
+										.getPatientIdentifiers(null, identifierTypes, emptyList(), emptyList(), null);
 		List<Integer> identifierIds = identifiers.stream().map(PatientIdentifier::getId)
-				.collect(Collectors.toList());
+										.collect(Collectors.toList());
 
 		assertEquals(2, identifiers.size());
 		assertThat(identifierIds, hasItems(1, 3));
@@ -60,13 +60,13 @@ public class HibernatePatientDAOTest extends BaseContextSensitiveTest {
 	@Test
 	public void getPatientIdentifiers_shouldGetByPatients() {
 		List<Patient> patients = Arrays.asList(
-				hibernatePatientDao.getPatient(6),
-				hibernatePatientDao.getPatient(7)
+										hibernatePatientDao.getPatient(6),
+										hibernatePatientDao.getPatient(7)
 		);
 		List<PatientIdentifier> identifiers = hibernatePatientDao
-				.getPatientIdentifiers(null, emptyList(), emptyList(), patients, null);
+										.getPatientIdentifiers(null, emptyList(), emptyList(), patients, null);
 		List<Integer> identifierIds = identifiers.stream().map(PatientIdentifier::getId)
-				.collect(Collectors.toList());
+										.collect(Collectors.toList());
 
 		assertEquals(2, identifiers.size());
 		assertThat(identifierIds, hasItems(3, 4));

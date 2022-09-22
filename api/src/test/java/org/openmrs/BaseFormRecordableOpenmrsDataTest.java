@@ -30,7 +30,7 @@ public class BaseFormRecordableOpenmrsDataTest {
 	private static final String FORM_NAMESPACE_PATH_SEPARATOR = "^";
 
 	/**
-	 * @see BaseFormRecordableOpenmrsData#setFormField(String,String)
+	 * @see BaseFormRecordableOpenmrsData#setFormField(String, String)
 	 */
 	@Test
 	public void setFormField_shouldSetTheUnderlyingFormNamespaceAndPathInTheCorrectPattern() throws Exception {
@@ -110,19 +110,19 @@ public class BaseFormRecordableOpenmrsDataTest {
 	}
 
 	/**
-	 * @see BaseFormRecordableOpenmrsData#setFormField(String,String)
+	 * @see BaseFormRecordableOpenmrsData#setFormField(String, String)
 	 */
 	@Test
 	public void setFormField_shouldRejectANamepaceAndPathCombinationLongerThanTheMaxLength() throws Exception {
 		final String ns = StringUtil.repeat("x", 255);
 		final String path = "";
-		
+
 		Obs impl = new Obs();
 		assertThrows(APIException.class, () -> impl.setFormField(ns, path));
 	}
 
 	/**
-	 * @see BaseFormRecordableOpenmrsData#setFormField(String,String)
+	 * @see BaseFormRecordableOpenmrsData#setFormField(String, String)
 	 */
 	@Test
 	public void setFormField_shouldRejectANamepaceContainingTheSeparator() throws Exception {
@@ -132,7 +132,7 @@ public class BaseFormRecordableOpenmrsDataTest {
 	}
 
 	/**
-	 * @see BaseFormRecordableOpenmrsData#setFormField(String,String)
+	 * @see BaseFormRecordableOpenmrsData#setFormField(String, String)
 	 */
 	@Test
 	public void setFormField_shouldRejectAPathContainingTheSeparator() throws Exception {

@@ -36,7 +36,7 @@ import org.openmrs.util.PrivilegeConstants;
  */
 @Handler(supports = Patient.class)
 public class PatientDataVoidHandler implements VoidHandler<Patient> {
-	
+
 	/**
 	 * @see org.openmrs.api.handler.VoidHandler#handle(org.openmrs.Voidable, org.openmrs.User,
 	 *      java.util.Date, java.lang.String)

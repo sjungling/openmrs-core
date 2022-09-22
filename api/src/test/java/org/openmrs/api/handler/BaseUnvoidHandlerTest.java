@@ -24,9 +24,9 @@ import org.openmrs.Voidable;
  * Tests the {@link BaseUnvoidHandler} class.
  */
 public class BaseUnvoidHandlerTest {
-	
+
 	/**
-	 * @see BaseUnvoidHandler#handle(Voidable,User,Date,String)
+	 * @see BaseUnvoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldUnsetTheVoidedBit() {
@@ -36,9 +36,9 @@ public class BaseUnvoidHandlerTest {
 		handler.handle(voidable, null, null, null);
 		assertFalse(voidable.getVoided());
 	}
-	
+
 	/**
-	 * @see BaseUnvoidHandler#handle(Voidable,User,Date,String)
+	 * @see BaseUnvoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldUnsetTheVoider() {
@@ -49,9 +49,9 @@ public class BaseUnvoidHandlerTest {
 		handler.handle(voidable, null, null, null);
 		assertNull(voidable.getVoidedBy());
 	}
-	
+
 	/**
-	 * @see BaseUnvoidHandler#handle(Voidable,User,Date,String)
+	 * @see BaseUnvoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldUnsetTheDateVoided() {
@@ -62,9 +62,9 @@ public class BaseUnvoidHandlerTest {
 		handler.handle(voidable, null, null, null);
 		assertNull(voidable.getDateVoided());
 	}
-	
+
 	/**
-	 * @see BaseUnvoidHandler#handle(Voidable,User,Date,String)
+	 * @see BaseUnvoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldUnsetTheVoidReason() {
@@ -75,9 +75,9 @@ public class BaseUnvoidHandlerTest {
 		handler.handle(voidable, null, null, null);
 		assertNull(voidable.getVoidReason());
 	}
-	
+
 	/**
-	 * @see BaseUnvoidHandler#handle(Voidable,User,Date,String)
+	 * @see BaseUnvoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldOnlyActOnAlreadyVoidedObjects() {
@@ -87,9 +87,9 @@ public class BaseUnvoidHandlerTest {
 		handler.handle(voidable, null, null, "SOME REASON");
 		assertNull(voidable.getVoidReason());
 	}
-	
+
 	/**
-	 * @see BaseUnvoidHandler#handle(Voidable,User,Date,String)
+	 * @see BaseUnvoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotActOnObjectsWithADifferentDateVoided() {
@@ -99,7 +99,7 @@ public class BaseUnvoidHandlerTest {
 		Voidable voidable = new Person();
 		voidable.setVoided(true);
 		voidable.setDateVoided(d);
-		
+
 		handler.handle(voidable, null, new Date(), "SOME REASON");
 		assertTrue(voidable.getVoided());
 	}

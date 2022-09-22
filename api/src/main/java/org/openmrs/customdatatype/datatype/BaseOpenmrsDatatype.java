@@ -18,7 +18,7 @@ import org.openmrs.customdatatype.SerializingCustomDatatype;
  * @since 2.0.0
  */
 public abstract class BaseOpenmrsDatatype<T extends OpenmrsObject> extends SerializingCustomDatatype<T> {
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#serialize(java.lang.Object)
 	 * <strong>Should</strong> return the uuid of the object

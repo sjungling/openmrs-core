@@ -24,31 +24,31 @@ import org.hibernate.search.annotations.Field;
  * @since 1.9
  */
 public class ConceptReferenceTerm extends BaseChangeableOpenmrsMetadata {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@DocumentId
 	private Integer conceptReferenceTermId;
-	
+
 	private ConceptSource conceptSource;
-	
+
 	//The unique code used to identify the reference term in it's reference terminology
 	@Field(analyze = Analyze.NO)
 	private String code;
-	
+
 	private String version;
-	
+
 	private Set<ConceptReferenceTermMap> conceptReferenceTermMaps;
-	
+
 	/** default constructor */
 	public ConceptReferenceTerm() {
 	}
-	
+
 	/** constructor with conceptReferenceTermId */
 	public ConceptReferenceTerm(Integer conceptReferenceTermId) {
 		this.conceptReferenceTermId = conceptReferenceTermId;
 	}
-	
+
 	/**
 	 * Convenience constructor with the required fields filled in
 	 *
@@ -62,63 +62,63 @@ public class ConceptReferenceTerm extends BaseChangeableOpenmrsMetadata {
 		this.code = code;
 		setName(name);
 	}
-	
+
 	/**
 	 * @return the conceptReferenceTermId
 	 */
 	public Integer getConceptReferenceTermId() {
 		return conceptReferenceTermId;
 	}
-	
+
 	/**
 	 * @param conceptReferenceTermId the conceptReferenceTermId to set
 	 */
 	public void setConceptReferenceTermId(Integer conceptReferenceTermId) {
 		this.conceptReferenceTermId = conceptReferenceTermId;
 	}
-	
+
 	/**
 	 * @return the conceptSource
 	 */
 	public ConceptSource getConceptSource() {
 		return conceptSource;
 	}
-	
+
 	/**
 	 * @param conceptSource the conceptSource to set
 	 */
 	public void setConceptSource(ConceptSource conceptSource) {
 		this.conceptSource = conceptSource;
 	}
-	
+
 	/**
 	 * @return the code
 	 */
 	public String getCode() {
 		return code;
 	}
-	
+
 	/**
 	 * @param code the code to set
 	 */
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
+
 	/**
 	 * @return the version
 	 */
 	public String getVersion() {
 		return version;
 	}
-	
+
 	/**
 	 * @param version the version to set
 	 */
 	public void setVersion(String version) {
 		this.version = version;
 	}
-	
+
 	/**
 	 * @return the conceptReferenceTermMaps
 	 */
@@ -128,14 +128,14 @@ public class ConceptReferenceTerm extends BaseChangeableOpenmrsMetadata {
 		}
 		return conceptReferenceTermMaps;
 	}
-	
+
 	/**
 	 * @param conceptReferenceTermMaps the conceptReferenceTermMaps to set
 	 */
 	public void setConceptReferenceTermMaps(Set<ConceptReferenceTermMap> conceptReferenceTermMaps) {
 		this.conceptReferenceTermMaps = conceptReferenceTermMaps;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -143,7 +143,7 @@ public class ConceptReferenceTerm extends BaseChangeableOpenmrsMetadata {
 	public Integer getId() {
 		return getConceptReferenceTermId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -151,7 +151,7 @@ public class ConceptReferenceTerm extends BaseChangeableOpenmrsMetadata {
 	public void setId(Integer id) {
 		setConceptReferenceTermId(id);
 	}
-	
+
 	/**
 	 * Add the given {@link ConceptReferenceTermMap} object to this concept reference term's list of
 	 * concept reference term maps. If there is already a corresponding ConceptReferenceTermMap
@@ -164,7 +164,7 @@ public class ConceptReferenceTerm extends BaseChangeableOpenmrsMetadata {
 	 */
 	public void addConceptReferenceTermMap(ConceptReferenceTermMap conceptReferenceTermMap) {
 		if (conceptReferenceTermMap != null && conceptReferenceTermMap.getTermB() != null
-		        && !this.equals(conceptReferenceTermMap.getTermB())) {
+										&& !this.equals(conceptReferenceTermMap.getTermB())) {
 			//can't map a term to itself
 			conceptReferenceTermMap.setTermA(this);
 			if (conceptReferenceTermMaps == null) {
@@ -175,7 +175,7 @@ public class ConceptReferenceTerm extends BaseChangeableOpenmrsMetadata {
 			}
 		}
 	}
-	
+
 	/**
 	 * Remove the given ConceptReferenceTermMap from the list of conceptReferenceTermMaps for this
 	 * {@link ConceptReferenceTerm}
@@ -187,10 +187,10 @@ public class ConceptReferenceTerm extends BaseChangeableOpenmrsMetadata {
 		if (conceptReferenceTermMaps != null) {
 			return conceptReferenceTermMaps.remove(conceptReferenceTermMap);
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -203,7 +203,7 @@ public class ConceptReferenceTerm extends BaseChangeableOpenmrsMetadata {
 		} else if (getName() == null) {
 			return getCode();
 		}
-		
+
 		return "";
 	}
 }

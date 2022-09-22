@@ -24,18 +24,18 @@ import org.slf4j.LoggerFactory;
  * "startup" processes)
  */
 public class TaskThreadedInitializationWrapper implements Task {
-	
+
 	// Logger 
 	private static final Logger log = LoggerFactory.getLogger(TaskThreadedInitializationWrapper.class);
-	
+
 	private Task task;
-	
+
 	private boolean initialized = false;
-	
+
 	private final Lock lock = new ReentrantLock();
-	
+
 	private final Condition initializedCond = lock.newCondition();
-	
+
 	/**
 	 * Default constructor to create this wrapper
 	 * 
@@ -44,7 +44,7 @@ public class TaskThreadedInitializationWrapper implements Task {
 	public TaskThreadedInitializationWrapper(Task task) {
 		this.task = task;
 	}
-	
+
 	/**
 	 * @see org.openmrs.scheduler.Task#execute() Executes the task defined in the task definition
 	 *      but waits until the initialize method has finished
@@ -64,10 +64,10 @@ public class TaskThreadedInitializationWrapper implements Task {
 		finally {
 			lock.unlock();
 		}
-		
+
 		task.execute();
 	}
-	
+
 	/**
 	 * @see org.openmrs.scheduler.Task#initialize(org.openmrs.scheduler.TaskDefinition) Initializes
 	 *      the task and sets the task definition. This method is non-blocking by executing in a new
@@ -86,10 +86,10 @@ public class TaskThreadedInitializationWrapper implements Task {
 				lock.unlock();
 			}
 		};
-		
+
 		new Thread(r).start();
 	}
-	
+
 	/**
 	 * @see org.openmrs.scheduler.Task#getTaskDefinition()
 	 */
@@ -97,7 +97,7 @@ public class TaskThreadedInitializationWrapper implements Task {
 	public TaskDefinition getTaskDefinition() {
 		return task != null ? task.getTaskDefinition() : null;
 	}
-	
+
 	/**
 	 * @see org.openmrs.scheduler.Task#isExecuting()
 	 */
@@ -105,7 +105,7 @@ public class TaskThreadedInitializationWrapper implements Task {
 	public boolean isExecuting() {
 		return task.isExecuting();
 	}
-	
+
 	/**
 	 * @see org.openmrs.scheduler.Task#shutdown()
 	 */

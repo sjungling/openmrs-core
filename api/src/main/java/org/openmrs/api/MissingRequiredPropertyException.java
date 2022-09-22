@@ -15,19 +15,19 @@ package org.openmrs.api;
  * @since 2.1
  */
 public class MissingRequiredPropertyException extends APIException {
-	
+
 	public MissingRequiredPropertyException(String message) {
 		super(message);
 	}
-	
+
 	public MissingRequiredPropertyException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	public MissingRequiredPropertyException(String messageKey, Object[] parameters) {
 		super(messageKey, parameters);
 	}
-	
+
 	/**
 	 * @param clazz the class of the object on which the property is required
 	 * @param property the name of the missing required property

@@ -17,9 +17,9 @@ package org.openmrs.api;
  * @since 1.10
  */
 public class ProgramNameDuplicatedException extends APIException {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Constructor that takes the duplicated program name.
 	 * 

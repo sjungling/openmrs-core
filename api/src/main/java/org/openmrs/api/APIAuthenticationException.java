@@ -15,9 +15,9 @@ package org.openmrs.api;
  * redirected to the login page where they can provide new or higher credentials.
  */
 public class APIAuthenticationException extends APIException {
-	
+
 	public static final long serialVersionUID = 12121213L;
-	
+
 	/**
 	 * Default empty constructor. It is more common to use the
 	 * {@link #APIAuthenticationException(String)} constructor to provide some context to the user
@@ -25,7 +25,7 @@ public class APIAuthenticationException extends APIException {
 	 */
 	public APIAuthenticationException() {
 	}
-	
+
 	/**
 	 * Common constructor taking in a message to give the user some context as to where/why the
 	 * authentication failed.
@@ -35,7 +35,7 @@ public class APIAuthenticationException extends APIException {
 	public APIAuthenticationException(String message) {
 		super(message);
 	}
-	
+
 	/**
 	 * Common constructor taking in a message to give the user some context as to where/why the
 	 * authentication failed.
@@ -46,7 +46,7 @@ public class APIAuthenticationException extends APIException {
 	public APIAuthenticationException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	/**
 	 * Constructor giving the user a further cause exception reason that caused this authentication
 	 * failure
@@ -56,5 +56,5 @@ public class APIAuthenticationException extends APIException {
 	public APIAuthenticationException(Throwable cause) {
 		super(cause);
 	}
-	
+
 }

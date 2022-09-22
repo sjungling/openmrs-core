@@ -16,18 +16,18 @@ package org.openmrs;
  * @since 1.9
  */
 public class EncounterRole extends BaseChangeableOpenmrsMetadata {
-	
+
 	public static final String UNKNOWN_ENCOUNTER_ROLE_UUID = "a0b03050-c99b-11e0-9572-0800200c9a66";
-	
+
 	// Fields
 	private Integer encounterRoleId;
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public EncounterRole() {
 	}
-	
+
 	/**
 	 * @param encounterRoleId
 	 * <strong>Should</strong> set encounter role id
@@ -35,7 +35,7 @@ public class EncounterRole extends BaseChangeableOpenmrsMetadata {
 	public EncounterRole(Integer encounterRoleId) {
 		this.encounterRoleId = encounterRoleId;
 	}
-	
+
 	// Property accessors
 	
 	/**
@@ -48,32 +48,32 @@ public class EncounterRole extends BaseChangeableOpenmrsMetadata {
 		ret += encounterRoleId == null ? "(no ID) " : encounterRoleId.toString() + " ";
 		return "EncounterRole: [" + ret + "]";
 	}
-	
+
 	/**
 	 * @see OpenmrsObject#getId()
 	 */
 	@Override
 	public Integer getId() {
-		
+
 		return getEncounterRoleId();
 	}
-	
+
 	/**
 	 * @see OpenmrsObject#setId(Integer)
 	 */
 	@Override
 	public void setId(Integer id) {
 		setEncounterRoleId(id);
-		
+
 	}
-	
+
 	/**
 	 * @param encounterRoleId The encounterId to set.
 	 */
 	private void setEncounterRoleId(Integer encounterRoleId) {
 		this.encounterRoleId = encounterRoleId;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */

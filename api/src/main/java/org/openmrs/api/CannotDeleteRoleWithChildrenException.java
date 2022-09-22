@@ -13,16 +13,16 @@ package org.openmrs.api;
  * This exception is thrown when a user tries remove role with child.
  */
 public class CannotDeleteRoleWithChildrenException extends APIException {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Generic constructor that gives a normal reason why the user is not being allowed to delete role.
 	 */
 	public CannotDeleteRoleWithChildrenException() {
 		this("Role.cannot.delete.with.child");
 	}
-	
+
 	/**
 	 * Convenience constructor to give the user a message other than normal default one
 	 * 
@@ -31,7 +31,7 @@ public class CannotDeleteRoleWithChildrenException extends APIException {
 	public CannotDeleteRoleWithChildrenException(String message) {
 		super(message);
 	}
-	
+
 	/**
 	 * Convenience constructor to give the user a message other than normal one and to chain
 	 * this exception with a parent exception.
@@ -42,7 +42,7 @@ public class CannotDeleteRoleWithChildrenException extends APIException {
 	public CannotDeleteRoleWithChildrenException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	/**
 	 * Convenience constructor used to only set the parent exception to chain with.
 	 * This does not set the error message for the user as to why an exception is being thrown. 

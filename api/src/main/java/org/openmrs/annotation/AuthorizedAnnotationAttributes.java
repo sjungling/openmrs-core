@@ -55,9 +55,9 @@ import java.util.Set;
  * @see org.openmrs.annotation.Authorized
  */
 public class AuthorizedAnnotationAttributes {
-	
+
 	private static final String UNSUPPORTED_OPERATION = "Unsupported operation";
-	
+
 	/**
 	 * Get the <code>Secured</code> attributes for a given target class.
 	 * 
@@ -76,7 +76,7 @@ public class AuthorizedAnnotationAttributes {
 		}
 		return attributes;
 	}
-	
+
 	/**
 	 * Get the <code>Secured</code> attributes for a given target method.
 	 * 
@@ -85,7 +85,7 @@ public class AuthorizedAnnotationAttributes {
 	 */
 	public Collection<String> getAttributes(Method method) {
 		Set<String> attributes = new HashSet<>();
-		
+
 		for (Annotation annotation : method.getAnnotations()) {
 			// check for Secured annotations
 			if (annotation instanceof Authorized) {
@@ -96,7 +96,7 @@ public class AuthorizedAnnotationAttributes {
 		}
 		return attributes;
 	}
-	
+
 	/**
 	 * Returns whether or not to require that the user have all of the privileges in order to be
 	 * "authorized" for this class
@@ -115,7 +115,7 @@ public class AuthorizedAnnotationAttributes {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns whether or not to require that the user have all of the privileges in order to be
 	 * "authorized" for this method
@@ -134,7 +134,7 @@ public class AuthorizedAnnotationAttributes {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Determine if this method has the @Authorized annotation even on it
 	 * 
@@ -148,24 +148,24 @@ public class AuthorizedAnnotationAttributes {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	public Collection<?> getAttributes(Class<?> clazz, Class<?> filter) {
 		throw new UnsupportedOperationException(UNSUPPORTED_OPERATION);
 	}
-	
+
 	public Collection<?> getAttributes(Method method, Class<?> clazz) {
 		throw new UnsupportedOperationException(UNSUPPORTED_OPERATION);
 	}
-	
+
 	public Collection<?> getAttributes(Field field) {
 		throw new UnsupportedOperationException(UNSUPPORTED_OPERATION);
 	}
-	
+
 	public Collection<?> getAttributes(Field field, Class<?> clazz) {
 		throw new UnsupportedOperationException(UNSUPPORTED_OPERATION);
 	}
-	
+
 }

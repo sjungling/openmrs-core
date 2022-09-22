@@ -17,22 +17,22 @@ import org.springframework.validation.Errors;
  * @since 1.10
  */
 public class ValidationException extends APIException {
-	
+
 	public static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Spring Errors object associated with the validation failure
 	 * @since 1.11
 	 */
 	
 	private Errors errors;
-	
+
 	/**
 	 * Default empty constructor. If at all possible, don't use this one, but use the
 	 */
 	public ValidationException() {
 	}
-	
+
 	/**
 	 * General constructor to give the end user a helpful message that relates to why this error
 	 * occurred.
@@ -42,7 +42,7 @@ public class ValidationException extends APIException {
 	public ValidationException(String message) {
 		super(message);
 	}
-	
+
 	/**
 	 * General constructor to give the end user a helpful message and to also propagate the parent
 	 * error exception message.
@@ -53,7 +53,7 @@ public class ValidationException extends APIException {
 	public ValidationException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	/**
 	 * Constructor used to simply chain a parent exception cause to an ValidationException.
 	 * 
@@ -62,7 +62,7 @@ public class ValidationException extends APIException {
 	public ValidationException(Throwable cause) {
 		super(cause);
 	}
-	
+
 	/**
 	 * Constructor used to associate an Spring Errors object with a ValidationException
 	 *
@@ -72,7 +72,7 @@ public class ValidationException extends APIException {
 	public ValidationException(Errors errors) {
 		this.errors = errors;
 	}
-	
+
 	/**
 	 * Constructor to give the end user a helpful message and to associate an Spring Errors object
 	 * with a ValidationException
@@ -84,14 +84,14 @@ public class ValidationException extends APIException {
 		super(message);
 		this.errors = errors;
 	}
-	
+
 	/**
 	 * @since 1.11
 	 */
 	public Errors getErrors() {
 		return errors;
 	}
-	
+
 	/**
 	 * @since 1.11
 	 */

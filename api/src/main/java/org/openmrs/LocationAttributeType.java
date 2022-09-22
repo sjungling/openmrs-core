@@ -18,9 +18,9 @@ import org.openmrs.attribute.BaseAttributeType;
  * @since 1.9
  */
 public class LocationAttributeType extends BaseAttributeType<Location> implements AttributeType<Location> {
-	
+
 	private Integer locationAttributeTypeId;
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -28,7 +28,7 @@ public class LocationAttributeType extends BaseAttributeType<Location> implement
 	public Integer getId() {
 		return getLocationAttributeTypeId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -36,19 +36,19 @@ public class LocationAttributeType extends BaseAttributeType<Location> implement
 	public void setId(Integer id) {
 		setLocationAttributeTypeId(id);
 	}
-	
+
 	/**
 	 * @return the locationAttributeTypeId
 	 */
 	public Integer getLocationAttributeTypeId() {
 		return locationAttributeTypeId;
 	}
-	
+
 	/**
 	 * @param locationAttributeTypeId the locationAttributeTypeId to set
 	 */
 	public void setLocationAttributeTypeId(Integer locationAttributeTypeId) {
 		this.locationAttributeTypeId = locationAttributeTypeId;
 	}
-	
+
 }

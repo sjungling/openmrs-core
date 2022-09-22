@@ -16,4 +16,5 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @OpenmrsProfile(openmrsPlatformVersion = "1.10")
-public class OpenmrsProfile1_10 {}
+public class OpenmrsProfile1_10 {
+}

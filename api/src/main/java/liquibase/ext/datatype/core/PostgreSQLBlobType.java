@@ -24,25 +24,25 @@ import org.slf4j.LoggerFactory;
  * @since 2.4
  */
 public class PostgreSQLBlobType extends BlobType {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(PostgreSQLBlobType.class);
-	
+
 	@Override
 	public DatabaseDataType toDatabaseDataType(Database database) {
 		if (database instanceof PostgresDatabase) {
 			DatabaseDataType result = new DatabaseDataType("OID");
-			
+
 			log.debug("blob type for PostgreSQL is '{}' ", result.getType());
-			
+
 			return result;
 		}
-		
+
 		log.debug("delegating the choice of blob type for database '{}' to super class of PostgreSQLBlobType",
-		    database.getDatabaseProductName());
-		
+										database.getDatabaseProductName());
+
 		return super.toDatabaseDataType(database);
 	}
-	
+
 	@Override
 	public int getPriority() {
 		return super.getPriority() + 1;

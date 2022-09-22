@@ -27,9 +27,9 @@ import org.springframework.validation.Errors;
  */
 
 public class ImplementationIdValidatorTest extends BaseContextSensitiveTest {
-	
+
 	/**
-	 * @see ImplementationIdValidator#validate(Object,Errors)
+	 * @see ImplementationIdValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldThrowAPIExceptionIfImplementationIdIsNUll() {
@@ -41,60 +41,60 @@ public class ImplementationIdValidatorTest extends BaseContextSensitiveTest {
 			assertEquals(e.getMessage(), Context.getMessageSourceService().getMessage("ImplementationId.null"));
 		}
 	}
-	
+
 	/**
-	 * @see ImplementationIdValidator#validate(Object,Errors)
+	 * @see ImplementationIdValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfImplementationIdIsNull() {
 		ImplementationId implementationId = new ImplementationId();
 		implementationId.setPassphrase("PASSPHRASE");
 		implementationId.setDescription("Description");
-		
+
 		Errors errors = new BindException(implementationId, "implementationId");
 		new ImplementationIdValidator().validate(implementationId, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("implementationId"));
 		assertFalse(errors.hasFieldErrors("passphrase"));
 		assertFalse(errors.hasFieldErrors("description"));
 	}
-	
+
 	/**
-	 * @see ImplementationIdValidator#validate(Object,Errors)
+	 * @see ImplementationIdValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfDescriptionIsNull() {
 		ImplementationId implementationId = new ImplementationId();
 		implementationId.setImplementationId("IMPL_ID");
 		implementationId.setPassphrase("PASSPHRASE");
-		
+
 		Errors errors = new BindException(implementationId, "implementationId");
 		new ImplementationIdValidator().validate(implementationId, errors);
-		
+
 		assertFalse(errors.hasFieldErrors("description"));
 		assertFalse(errors.hasFieldErrors("implementationId"));
 		assertFalse(errors.hasFieldErrors("passphrase"));
 	}
-	
+
 	/**
-	 * @see ImplementationIdValidator#validate(Object,Errors)
+	 * @see ImplementationIdValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfPassPhraseIsNull() {
 		ImplementationId implementationId = new ImplementationId();
 		implementationId.setImplementationId("IMPL_ID");
 		implementationId.setDescription("Description");
-		
+
 		Errors errors = new BindException(implementationId, "implementationId");
 		new ImplementationIdValidator().validate(implementationId, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("passphrase"));
 		assertFalse(errors.hasFieldErrors("implementationId"));
 		assertFalse(errors.hasFieldErrors("description"));
 	}
-	
+
 	/**
-	 * @see ImplementationIdValidator#validate(Object,Errors)
+	 * @see ImplementationIdValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfGivenEmptyImplementationIdObject() {
@@ -102,14 +102,14 @@ public class ImplementationIdValidatorTest extends BaseContextSensitiveTest {
 		ImplementationId implementationId = new ImplementationId();
 		Errors errors = new BindException(implementationId, "implementationId");
 		new ImplementationIdValidator().validate(implementationId, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("passphrase"));
 		assertTrue(errors.hasFieldErrors("implementationId"));
 		assertFalse(errors.hasFieldErrors("description"));
 	}
-	
+
 	/**
-	 * @see ImplementationIdValidator#validate(Object,Errors)
+	 * @see ImplementationIdValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfGivenACaretInTheImplementationIdCode() {
@@ -120,14 +120,14 @@ public class ImplementationIdValidatorTest extends BaseContextSensitiveTest {
 		invalidId.setDescription("Some valid description");
 		Errors errors = new BindException(invalidId, "implementationId");
 		new ImplementationIdValidator().validate(invalidId, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("implementationId"));
 		assertEquals("ImplementationId.implementationId.invalidCharacter", errors.getFieldError("implementationId")
-		        .getCode());
+										.getCode());
 	}
-	
+
 	/**
-	 * @see ImplementationIdValidator#validate(Object,Errors)
+	 * @see ImplementationIdValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfGivenAPipeInTheImplementationIdCode() {
@@ -139,14 +139,14 @@ public class ImplementationIdValidatorTest extends BaseContextSensitiveTest {
 		invalidId2.setDescription("Some valid description");
 		Errors errors = new BindException(invalidId2, "implementationId");
 		new ImplementationIdValidator().validate(invalidId2, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("implementationId"));
 		assertEquals("ImplementationId.implementationId.invalidCharacter", errors.getFieldError("implementationId")
-		        .getCode());
+										.getCode());
 	}
-	
+
 	/**
-	 * @see ImplementationIdValidator#validate(Object,Errors)
+	 * @see ImplementationIdValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfNameIsNull() {
@@ -154,14 +154,14 @@ public class ImplementationIdValidatorTest extends BaseContextSensitiveTest {
 		implementationId.setImplementationId("IMPL_ID");
 		implementationId.setPassphrase("PASSPHRASE");
 		implementationId.setDescription("Description");
-		
+
 		Errors errors = new BindException(implementationId, "implementationId");
 		new ImplementationIdValidator().validate(implementationId, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("name"));
 		assertFalse(errors.hasFieldErrors("implementationId"));
 		assertFalse(errors.hasFieldErrors("passphrase"));
 		assertFalse(errors.hasFieldErrors("description"));
 	}
-	
+
 }

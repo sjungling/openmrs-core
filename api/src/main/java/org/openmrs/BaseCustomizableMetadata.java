@@ -25,9 +25,9 @@ import org.openmrs.customdatatype.Customizable;
  * @since 1.9
  */
 public abstract class BaseCustomizableMetadata<A extends Attribute> extends BaseChangeableOpenmrsMetadata implements Customizable<A> {
-	
+
 	private Set<A> attributes = new LinkedHashSet<>();
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.Customizable#getAttributes()
 	 */
@@ -35,14 +35,14 @@ public abstract class BaseCustomizableMetadata<A extends Attribute> extends Base
 	public Set<A> getAttributes() {
 		return attributes;
 	}
-	
+
 	/**
 	 * @param attributes the attributes to set
 	 */
 	public void setAttributes(Set<A> attributes) {
 		this.attributes = attributes;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.Customizable#getActiveAttributes()
 	 */
@@ -58,7 +58,7 @@ public abstract class BaseCustomizableMetadata<A extends Attribute> extends Base
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.Customizable#getActiveAttributes(org.openmrs.customdatatype.CustomValueDescriptor)
 	 */
@@ -74,7 +74,7 @@ public abstract class BaseCustomizableMetadata<A extends Attribute> extends Base
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.Customizable#addAttribute(Attribute)
 	 */
@@ -86,7 +86,7 @@ public abstract class BaseCustomizableMetadata<A extends Attribute> extends Base
 		getAttributes().add(attribute);
 		attribute.setOwner(this);
 	}
-	
+
 	/**
 	 * Convenience method that voids all existing attributes of the given type, and sets this new one.
 	 * <strong>Should</strong> void the attribute if an attribute with same attribute type already exists and the maxOccurs is set to 1
@@ -99,7 +99,7 @@ public abstract class BaseCustomizableMetadata<A extends Attribute> extends Base
 			addAttribute(attribute);
 			return;
 		}
-		
+
 		if (getActiveAttributes(attribute.getAttributeType()).size() == 1) {
 			A existing = getActiveAttributes(attribute.getAttributeType()).get(0);
 			if (!existing.getValue().equals(attribute.getValue())) {
@@ -113,7 +113,7 @@ public abstract class BaseCustomizableMetadata<A extends Attribute> extends Base
 			}
 			return;
 		}
-		
+
 		for (A existing : getActiveAttributes(attribute.getAttributeType())) {
 			if (existing.getAttributeType().equals(attribute.getAttributeType())) {
 				if (existing.getId() != null) {
@@ -126,5 +126,5 @@ public abstract class BaseCustomizableMetadata<A extends Attribute> extends Base
 		getAttributes().add(attribute);
 		attribute.setOwner(this);
 	}
-	
+
 }

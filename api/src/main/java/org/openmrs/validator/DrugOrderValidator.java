@@ -31,9 +31,9 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { DrugOrder.class }, order = 50)
+@Handler(supports = {DrugOrder.class}, order = 50)
 public class DrugOrderValidator extends OrderValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -43,7 +43,7 @@ public class DrugOrderValidator extends OrderValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return DrugOrder.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -80,7 +80,7 @@ public class DrugOrderValidator extends OrderValidator implements Validator {
 	@Override
 	public void validate(Object obj, Errors errors) {
 		super.validate(obj, errors);
-		
+
 		DrugOrder order = (DrugOrder) obj;
 		if (order == null) {
 			errors.reject("error.general");
@@ -93,9 +93,9 @@ public class DrugOrderValidator extends OrderValidator implements Validator {
 			if (order.getDrug() == null || order.getDrug().getConcept() == null) {
 				ValidationUtils.rejectIfEmpty(errors, "concept", "error.null");
 			}
-			
+
 			if (order.getConcept() != null && order.getDrug() != null && order.getDrug().getConcept() != null
-			        && !order.getDrug().getConcept().equals(order.getConcept())) {
+											&& !order.getDrug().getConcept().equals(order.getConcept())) {
 				errors.rejectValue("drug", "error.general");
 				errors.rejectValue("concept", "error.concept");
 			}
@@ -106,7 +106,7 @@ public class DrugOrderValidator extends OrderValidator implements Validator {
 			validateFieldsForOutpatientCareSettingType(order, errors);
 			validatePairedFields(order, errors);
 			validateUnitsAreAmongAllowedConcepts(errors, order);
-            validateForRequireDrug(errors, order);
+			validateForRequireDrug(errors, order);
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "asNeededCondition", "brandName");
 		}
 	}
@@ -114,41 +114,41 @@ public class DrugOrderValidator extends OrderValidator implements Validator {
 	private void validateForRequireDrug(Errors errors, DrugOrder order) {
 		//Reject if global property is set to specify a formulation for drug order
 		boolean requireDrug = Context.getAdministrationService().getGlobalPropertyValue(
-				OpenmrsConstants.GLOBAL_PROPERTY_DRUG_ORDER_REQUIRE_DRUG, false);
+										OpenmrsConstants.GLOBAL_PROPERTY_DRUG_ORDER_REQUIRE_DRUG, false);
 		OrderService orderService = Context.getOrderService();
 
 
-		if(requireDrug){
-			if(order.getConcept() != null && OpenmrsUtil.nullSafeEquals(orderService.getNonCodedDrugConcept(), order.getConcept())){
-				if(order.getDrug() == null && !order.isNonCodedDrug()){
+		if (requireDrug) {
+			if (order.getConcept() != null && OpenmrsUtil.nullSafeEquals(orderService.getNonCodedDrugConcept(), order.getConcept())) {
+				if (order.getDrug() == null && !order.isNonCodedDrug()) {
 					errors.rejectValue("drugNonCoded", "DrugOrder.error.drugNonCodedIsRequired");
 				}
-				else if(order.getDrug() != null){
+				else if (order.getDrug() != null) {
 					errors.rejectValue("concept", "DrugOrder.error.onlyOneOfDrugOrNonCodedShouldBeSet");
 				}
-			}else{
-				if(order.getDrug() == null && !order.isNonCodedDrug()){
+			} else {
+				if (order.getDrug() == null && !order.isNonCodedDrug()) {
 					errors.rejectValue("drug", "DrugOrder.error.drugIsRequired");
 				}
-				else if(order.getDrug() != null && order.isNonCodedDrug()){
+				else if (order.getDrug() != null && order.isNonCodedDrug()) {
 					errors.rejectValue("concept", "DrugOrder.error.onlyOneOfDrugOrNonCodedShouldBeSet");
 				}
 			}
 		}
 	}
-	
+
 	private void validateFieldsForOutpatientCareSettingType(DrugOrder order, Errors errors) {
 		if (order.getAction() != Order.Action.DISCONTINUE && order.getCareSetting() != null
-		        && order.getCareSetting().getCareSettingType().equals(CareSetting.CareSettingType.OUTPATIENT)) {
+										&& order.getCareSetting().getCareSettingType().equals(CareSetting.CareSettingType.OUTPATIENT)) {
 			boolean requireQuantity = Context.getAdministrationService().getGlobalPropertyValue(
-				OpenmrsConstants.GLOBAL_PROPERTY_DRUG_ORDER_REQUIRE_OUTPATIENT_QUANTITY, true);
+											OpenmrsConstants.GLOBAL_PROPERTY_DRUG_ORDER_REQUIRE_OUTPATIENT_QUANTITY, true);
 			if (requireQuantity) {
 				ValidationUtils.rejectIfEmpty(errors, "quantity", "DrugOrder.error.quantityIsNullForOutPatient");
 				ValidationUtils.rejectIfEmpty(errors, "numRefills", "DrugOrder.error.numRefillsIsNullForOutPatient");
 			}
 		}
 	}
-	
+
 	private void validatePairedFields(DrugOrder order, Errors errors) {
 		if (order.getDose() != null) {
 			ValidationUtils.rejectIfEmpty(errors, "doseUnits", "DrugOrder.error.doseUnitsRequiredWithDose");
@@ -160,7 +160,7 @@ public class DrugOrderValidator extends OrderValidator implements Validator {
 			ValidationUtils.rejectIfEmpty(errors, "durationUnits", "DrugOrder.error.durationUnitsRequiredWithDuration");
 		}
 	}
-	
+
 	private void validateUnitsAreAmongAllowedConcepts(Errors errors, DrugOrder order) {
 		OrderService orderService = Context.getOrderService();
 		if (order.getDoseUnits() != null) {

@@ -21,15 +21,15 @@ import java.lang.annotation.Target;
  * 
  * @since 1.10, 1.9.8, 1.8.5, 1.7.5
  */
-@Target( { ElementType.TYPE })
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface OpenmrsProfile {
-	
+
 	/**
 	 * @since 1.11.3, 1.10.2, 1.9.9
 	 */
 	public String openmrsPlatformVersion() default "";
-	
+
 	public String[] modules() default {};
 }

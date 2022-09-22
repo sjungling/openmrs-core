@@ -15,11 +15,11 @@ package org.openmrs.api;
  * @since 2.1
  */
 public class CannotStopDiscontinuationOrderException extends OrderEntryException {
-	
+
 	public static final long serialVersionUID = 22121215L;
-	
+
 	public CannotStopDiscontinuationOrderException() {
-		
+
 		super("Order.action.cannot.discontinue", (Object[]) null);
 	}
 }

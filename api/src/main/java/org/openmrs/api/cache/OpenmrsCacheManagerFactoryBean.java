@@ -39,10 +39,10 @@ public class OpenmrsCacheManagerFactoryBean extends EhCacheManagerFactoryBean {
 
 		List<CacheConfiguration> cacheConfigurations = CachePropertiesUtil.getCacheConfigurations();
 		cacheConfigurations.stream()
-				.filter(cc ->
-						cacheConfig.get(cc.getName()) == null)
-				.forEach(cc ->
-						cacheManager.addCache(new Cache(cc)));
+										.filter(cc ->
+																		cacheConfig.get(cc.getName()) == null)
+										.forEach(cc ->
+																		cacheManager.addCache(new Cache(cc)));
 
 		return cacheManager;
 	}

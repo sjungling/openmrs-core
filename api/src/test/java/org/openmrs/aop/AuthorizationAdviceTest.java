@@ -36,49 +36,49 @@ import org.springframework.stereotype.Component;
  * Tests {@link AuthorizationAdvice}.
  */
 public class AuthorizationAdviceTest extends BaseContextSensitiveTest {
-	
+
 	@Resource(name = "listener1")
 	Listener1 listener1;
-	
+
 	@Resource(name = "listener2")
 	Listener2 listener2;
-	
+
 	@Test
 	public void before_shouldNotifyListenersAboutCheckedPrivileges() {
-		
+
 		listener1.hasPrivileges.clear();
 		listener1.lacksPrivileges.clear();
-		
+
 		listener2.hasPrivileges.clear();
 		listener2.lacksPrivileges.clear();
-		
+
 		Concept concept = Context.getConceptService().getConcept(3);
-		
+
 		assertThat("listener1", listener1.hasPrivileges, containsInAnyOrder(PrivilegeConstants.GET_CONCEPTS));
 		assertThat("listener2", listener2.hasPrivileges, containsInAnyOrder(PrivilegeConstants.GET_CONCEPTS));
 		assertThat(listener1.lacksPrivileges, empty());
 		assertThat(listener2.lacksPrivileges, empty());
-		
+
 		listener1.hasPrivileges.clear();
 		listener2.hasPrivileges.clear();
-		
+
 		Context.getConceptService().saveConcept(concept);
-		
-		String[] privileges = { PrivilegeConstants.MANAGE_CONCEPTS, PrivilegeConstants.GET_OBS,
-		        PrivilegeConstants.GET_CONCEPT_ATTRIBUTE_TYPES };
+
+		String[] privileges = {PrivilegeConstants.MANAGE_CONCEPTS, PrivilegeConstants.GET_OBS,
+										PrivilegeConstants.GET_CONCEPT_ATTRIBUTE_TYPES};
 		assertThat("listener1", listener1.hasPrivileges, containsInAnyOrder(privileges));
 		assertThat("listener2", listener2.hasPrivileges, containsInAnyOrder(privileges));
 		assertThat(listener1.lacksPrivileges, empty());
 		assertThat(listener2.lacksPrivileges, empty());
 	}
-	
+
 	@Component("listener1")
 	public static class Listener1 implements PrivilegeListener {
-		
+
 		public Set<String> hasPrivileges = new LinkedHashSet<>();
-		
+
 		public Set<String> lacksPrivileges = new LinkedHashSet<>();
-		
+
 		@Override
 		public void privilegeChecked(User user, String privilege, boolean hasPrivilege) {
 			if (hasPrivilege) {
@@ -88,14 +88,15 @@ public class AuthorizationAdviceTest extends BaseContextSensitiveTest {
 			}
 		}
 	}
-	
+
 	@Component("listener2")
-	public static class Listener2 extends Listener1 {}
-	
+	public static class Listener2 extends Listener1 {
+	}
+
 	@Test
 	public void before_shouldThrowAPIAuthenticationException() {
 		Context.getUserContext().logout();
 		assertThrows(APIAuthenticationException.class, () -> Context.getConceptService().getConcept(3));
 	}
-	
+
 }

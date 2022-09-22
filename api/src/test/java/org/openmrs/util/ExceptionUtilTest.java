@@ -19,21 +19,21 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class ExceptionUtilTest {
-	
+
 	/**
-	 * @see ExceptionUtil#rethrowIfCause(Throwable,Class)
+	 * @see ExceptionUtil#rethrowIfCause(Throwable, Class)
 	 */
 	@Test
 	public void rethrowIfCause_shouldAllowAnIntermediateExceptionToBeRethrown() throws Exception {
 		try {
 			List<Class<? extends RuntimeException>> chain = Arrays.asList(NullPointerException.class,
-			    IllegalArgumentException.class, IllegalStateException.class);
+											IllegalArgumentException.class, IllegalStateException.class);
 			throwExceptionChain(chain);
-			
+
 		}
 		catch (Exception ex) {
 			int numFound = 0;
-			
+
 			// Should be able to find the innermost NPE
 			Exception innermost = null;
 			try {
@@ -44,7 +44,7 @@ public class ExceptionUtilTest {
 				innermost = cause;
 				++numFound;
 			}
-			
+
 			// Should be able to find the middle IllegalArgumentException
 			try {
 				ExceptionUtil.rethrowIfCause(ex, IllegalArgumentException.class);
@@ -53,7 +53,7 @@ public class ExceptionUtilTest {
 				assertEquals(innermost, middle.getCause());
 				++numFound;
 			}
-			
+
 			// Should be able to find the outermost IllegalStateException
 			try {
 				ExceptionUtil.rethrowIfCause(ex, IllegalStateException.class);
@@ -62,11 +62,11 @@ public class ExceptionUtilTest {
 				assertEquals(ex, outer);
 				++numFound;
 			}
-			
+
 			assertEquals(3, numFound);
 		}
 	}
-	
+
 	/**
 	 * Recursively builds up an exception chain with the requested exception classes in it. 
 	 * 

@@ -24,41 +24,41 @@ import org.openmrs.OrderType;
  * @since 1.10
  */
 public class OrderContext {
-	
+
 	private OrderType orderType;
-	
+
 	private CareSetting careSetting;
-	
+
 	private Map<String, Object> contextAttributes;
-	
+
 	/**
 	 * @return the orderType
 	 */
 	public OrderType getOrderType() {
 		return orderType;
 	}
-	
+
 	/**
 	 * @param orderType the OrderType to set
 	 */
 	public void setOrderType(OrderType orderType) {
 		this.orderType = orderType;
 	}
-	
+
 	/**
 	 * @return the careSetting
 	 */
 	public CareSetting getCareSetting() {
 		return careSetting;
 	}
-	
+
 	/**
 	 * @param careSetting the CareSetting to set
 	 */
 	public void setCareSetting(CareSetting careSetting) {
 		this.careSetting = careSetting;
 	}
-	
+
 	/**
 	 * @return the contextAttributes
 	 */
@@ -68,14 +68,14 @@ public class OrderContext {
 		}
 		return contextAttributes;
 	}
-	
+
 	/**
 	 * @param contextAttributes the context attributes to set
 	 */
 	public void setContextAttributes(Map<String, Object> contextAttributes) {
 		this.contextAttributes = contextAttributes;
 	}
-	
+
 	/**
 	 * Gets the value of for the specified attribute name
 	 * 
@@ -84,7 +84,7 @@ public class OrderContext {
 	public Object getAttribute(String attributeName) {
 		return getContextAttributes().get(attributeName);
 	}
-	
+
 	/**
 	 * Adds the specified context attribute
 	 * 
@@ -94,7 +94,7 @@ public class OrderContext {
 	public void setAttribute(String attributeName, Object attributeValue) {
 		getContextAttributes().put(attributeName, attributeValue);
 	}
-	
+
 	/**
 	 * Removes the attribute with the specified name
 	 * 
@@ -103,12 +103,12 @@ public class OrderContext {
 	public void removeAttribute(String attributeName) {
 		getContextAttributes().remove(attributeName);
 	}
-	
+
 	/**
 	 * Clears all the context attributes
 	 */
 	public void clear() {
 		getContextAttributes().clear();
 	}
-	
+
 }

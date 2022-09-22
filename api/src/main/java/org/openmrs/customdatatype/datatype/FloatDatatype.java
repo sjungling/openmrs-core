@@ -41,5 +41,5 @@ public class FloatDatatype extends SerializingCustomDatatype<Float> {
 		}
 		return Float.valueOf(serializedValue);
 	}
-	
+
 }

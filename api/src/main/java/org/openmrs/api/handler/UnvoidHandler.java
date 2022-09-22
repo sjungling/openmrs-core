@@ -32,7 +32,7 @@ import org.openmrs.aop.RequiredDataAdvice;
  * @since 1.5
  */
 public interface UnvoidHandler<V extends Voidable> extends RequiredDataHandler<V> {
-	
+
 	/**
 	 * Implementing classes are called around every unvoid* method to set everything to null.<br>
 	 * <br>
@@ -42,5 +42,5 @@ public interface UnvoidHandler<V extends Voidable> extends RequiredDataHandler<V
 	 */
 	@Override
 	public void handle(V voidableObject, User voidingUser, Date origParentVoidedDate, String unused);
-	
+
 }

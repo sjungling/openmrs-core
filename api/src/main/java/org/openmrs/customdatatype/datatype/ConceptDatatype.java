@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ConceptDatatype extends BaseOpenmrsDatatype<Concept> {
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#deserialize(String)
 	 * @override
@@ -34,7 +34,7 @@ public class ConceptDatatype extends BaseOpenmrsDatatype<Concept> {
 		}
 		return Context.getConceptService().getConceptByUuid(uuid);
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#doGetTextSummary(Object)
 	 * <strong>Should</strong> use the name in summary instance

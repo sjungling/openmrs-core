@@ -23,11 +23,11 @@ import org.springframework.validation.Validator;
  *
  * @since 1.10
  */
-@Handler(supports = { Field.class }, order = 50)
+@Handler(supports = {Field.class}, order = 50)
 public class FieldValidator implements Validator {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(FieldValidator.class);
-	
+
 	/**
 	 * Returns whether or not this validator supports validating a given class.
 	 *
@@ -39,7 +39,7 @@ public class FieldValidator implements Validator {
 		log.debug("{}.supports: {}", this.getClass().getName(), c.getName());
 		return Field.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Validates the given Field. 
 	 * Ensures that the field name is present and valid
@@ -61,13 +61,13 @@ public class FieldValidator implements Validator {
 	@Override
 	public void validate(Object obj, Errors errors) throws APIException {
 		log.debug("{}.validate...", this.getClass().getName());
-		
+
 		if (obj == null || !(obj instanceof Field)) {
 			throw new IllegalArgumentException("The parameter obj should not be null and must be of type " + Field.class);
 		}
-		
+
 		Field field = (Field) obj;
-		
+
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.null", "Field name is required");
 		if (field.getSelectMultiple() == null) {
 			errors.rejectValue("selectMultiple", "error.general");

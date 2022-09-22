@@ -24,9 +24,9 @@ import org.openmrs.util.OpenmrsConstants;
  * @since 2.4
  */
 public class LoggingConfigurationGlobalPropertyListener implements GlobalPropertyListener {
-	
+
 	private volatile String logLayout = null;
-	
+
 	private volatile String logLocation = null;
 
 	/**
@@ -35,9 +35,9 @@ public class LoggingConfigurationGlobalPropertyListener implements GlobalPropert
 	@Override
 	public boolean supportsPropertyName(String propertyName) {
 		return
-			OpenmrsConstants.GLOBAL_PROPERTY_LOG_LEVEL.equals(propertyName) ||
-			OpenmrsConstants.GP_LOG_LAYOUT.equals(propertyName) ||
-			OpenmrsConstants.GP_LOG_LOCATION.equals(propertyName);
+										OpenmrsConstants.GLOBAL_PROPERTY_LOG_LEVEL.equals(propertyName) ||
+																		OpenmrsConstants.GP_LOG_LAYOUT.equals(propertyName) ||
+																		OpenmrsConstants.GP_LOG_LOCATION.equals(propertyName);
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class LoggingConfigurationGlobalPropertyListener implements GlobalPropert
 				if (logLayout != null && logLayout.equals(newValue.getPropertyValue())) {
 					return;
 				}
-				
+
 				logLayout = newValue.getPropertyValue();
 				OpenmrsLoggingUtil.reloadLoggingConfiguration();
 				return;
@@ -61,7 +61,7 @@ public class LoggingConfigurationGlobalPropertyListener implements GlobalPropert
 				if (logLocation != null && logLocation.equals(newValue.getPropertyValue())) {
 					return;
 				}
-				
+
 				logLocation = newValue.getPropertyValue();
 				OpenmrsLoggingUtil.reloadLoggingConfiguration();
 		}
@@ -79,7 +79,7 @@ public class LoggingConfigurationGlobalPropertyListener implements GlobalPropert
 			case OpenmrsConstants.GP_LOG_LOCATION:
 				logLocation = null;
 		}
-		
+
 		OpenmrsLoggingUtil.reloadLoggingConfiguration();
 	}
 }

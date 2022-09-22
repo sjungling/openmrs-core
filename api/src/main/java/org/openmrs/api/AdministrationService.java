@@ -40,14 +40,14 @@ import org.springframework.validation.Errors;
  * @see org.openmrs.api.context.Context
  */
 public interface AdministrationService extends OpenmrsService {
-	
+
 	/**
 	 * Used by Spring to set the specific/chosen database access implementation
 	 * 
 	 * @param dao The dao implementation to use
 	 */
 	public void setAdministrationDAO(AdministrationDAO dao);
-										
+
 	/**
 	 * Get a global property by its uuid. There should be only one of these in the database (well,
 	 * in the world actually). If multiple are found, an error is thrown.
@@ -57,7 +57,7 @@ public interface AdministrationService extends OpenmrsService {
 	 * <strong>Should</strong> return null if no object found with given uuid
 	 */
 	public GlobalProperty getGlobalPropertyByUuid(String uuid);
-	
+
 	/**
 	 * Get a listing or important variables used in openmrs
 	 * 
@@ -67,7 +67,7 @@ public interface AdministrationService extends OpenmrsService {
 	
 	@Authorized(PrivilegeConstants.VIEW_ADMIN_FUNCTIONS)
 	public SortedMap<String, String> getSystemVariables();
-	
+
 	/**
 	 * Get a map of all the System Information. Java, user, time, runtime properties, etc
 	 * 
@@ -76,7 +76,7 @@ public interface AdministrationService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.VIEW_ADMIN_FUNCTIONS)
 	public Map<String, Map<String, String>> getSystemInformation();
-	
+
 	/**
 	 * Gets the global property that has the given <code>propertyName</code>.
 	 * <p>
@@ -91,7 +91,7 @@ public interface AdministrationService extends OpenmrsService {
 	 * <strong>Should</strong> get property in case insensitive way
 	 */
 	public String getGlobalProperty(String propertyName);
-	
+
 	/**
 	 * Gets the global property that has the given <code>propertyName</code>
 	 * <p>
@@ -107,7 +107,7 @@ public interface AdministrationService extends OpenmrsService {
 	 * <strong>Should</strong> not fail with null default value
 	 */
 	public String getGlobalProperty(String propertyName, String defaultValue);
-	
+
 	/**
 	 * Gets the global property that has the given <code>propertyName</code>
 	 * 
@@ -116,7 +116,7 @@ public interface AdministrationService extends OpenmrsService {
 	 * <strong>Should</strong> return null when no global property match given property name
 	 */
 	public GlobalProperty getGlobalPropertyObject(String propertyName);
-	
+
 	/**
 	 * Gets all global properties that begin with <code>prefix</code>.
 	 * 
@@ -126,7 +126,7 @@ public interface AdministrationService extends OpenmrsService {
 	 * <strong>Should</strong> return all relevant global properties in the database
 	 */
 	public List<GlobalProperty> getGlobalPropertiesByPrefix(String prefix);
-	
+
 	/**
 	 * Gets all global properties that end with <code>suffix</code>.
 	 * 
@@ -136,7 +136,7 @@ public interface AdministrationService extends OpenmrsService {
 	 * <strong>Should</strong> return all relevant global properties in the database
 	 */
 	public List<GlobalProperty> getGlobalPropertiesBySuffix(String suffix);
-	
+
 	/**
 	 * Get a list of all global properties in the system
 	 * 
@@ -145,7 +145,7 @@ public interface AdministrationService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.GET_GLOBAL_PROPERTIES)
 	public List<GlobalProperty> getAllGlobalProperties();
-	
+
 	/**
 	 * Save the given list of global properties to the database.
 	 * 
@@ -158,7 +158,7 @@ public interface AdministrationService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES)
 	public List<GlobalProperty> saveGlobalProperties(List<GlobalProperty> props);
-	
+
 	/**
 	 * Completely remove the given global property from the database
 	 * 
@@ -168,7 +168,7 @@ public interface AdministrationService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.PURGE_GLOBAL_PROPERTIES)
 	public void purgeGlobalProperty(GlobalProperty globalProperty);
-	
+
 	/**
 	 * Completely remove the given global properties from the database
 	 * 
@@ -178,7 +178,7 @@ public interface AdministrationService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.PURGE_GLOBAL_PROPERTIES)
 	public void purgeGlobalProperties(List<GlobalProperty> globalProperties);
-	
+
 	/**
 	 * Save the given global property to the database. If the global property already exists,
 	 * then it will be overwritten
@@ -190,7 +190,7 @@ public interface AdministrationService extends OpenmrsService {
 	 * <strong>Should</strong> save a global property whose typed value is handled by a custom datatype
 	 */
 	public void setGlobalProperty(String propertyName, String propertyValue);
-	
+
 	/**
 	 * Overwrites the value of the global property if it already exists. If the global property does
 	 * not exist, an exception will be thrown
@@ -203,7 +203,7 @@ public interface AdministrationService extends OpenmrsService {
 	 * <strong>Should</strong> update a global property whose typed value is handled by a custom datatype
 	 */
 	public void updateGlobalProperty(String propertyName, String propertyValue);
-	
+
 	/**
 	 * Save the given global property to the database
 	 * 
@@ -218,7 +218,7 @@ public interface AdministrationService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES)
 	public GlobalProperty saveGlobalProperty(GlobalProperty gp);
-	
+
 	/**
 	 * Allows code to be notified when a global property is created/edited/deleted.
 	 * 
@@ -226,7 +226,7 @@ public interface AdministrationService extends OpenmrsService {
 	 * @param listener The listener to register
 	 */
 	public void addGlobalPropertyListener(GlobalPropertyListener listener);
-	
+
 	/**
 	 * Removes a GlobalPropertyListener previously registered by
 	 * {@link #addGlobalPropertyListener(GlobalPropertyListener)}
@@ -234,7 +234,7 @@ public interface AdministrationService extends OpenmrsService {
 	 * @param listener
 	 */
 	public void removeGlobalPropertyListener(GlobalPropertyListener listener);
-	
+
 	/**
 	 * Runs the <code>sql</code> on the database. If <code>selectOnly</code> is flagged then any
 	 * non-select sql statements will be rejected.
@@ -247,7 +247,7 @@ public interface AdministrationService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.SQL_LEVEL_ACCESS)
 	public List<List<Object>> executeSQL(String sql, boolean selectOnly);
-	
+
 	/**
 	 * Get the implementation id stored for this server Returns null if no implementation id has
 	 * been successfully set yet
@@ -257,7 +257,7 @@ public interface AdministrationService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.MANAGE_IMPLEMENTATION_ID)
 	public ImplementationId getImplementationId();
-	
+
 	/**
 	 * Set the given <code>implementationId</code> as this implementation's unique id
 	 * 
@@ -274,7 +274,7 @@ public interface AdministrationService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.MANAGE_IMPLEMENTATION_ID)
 	public void setImplementationId(ImplementationId implementationId);
-	
+
 	/**
 	 * Gets the list of locales which the administrator has allowed for use on the system. This is
 	 * specified with a global property named
@@ -286,7 +286,7 @@ public interface AdministrationService extends OpenmrsService {
 	 * <strong>Should</strong> not return duplicates even if the global property has them
 	 */
 	public List<Locale> getAllowedLocales();
-	
+
 	/**
 	 * Gets the list of locales for which localized messages are available for the user interface
 	 * (presentation layer). This set includes all the available locales (as indicated by the
@@ -302,7 +302,7 @@ public interface AdministrationService extends OpenmrsService {
 	 * <strong>Should</strong> return language locale if it is specified in allowed list and there are no country locale message files available
 	 */
 	public Set<Locale> getPresentationLocales();
-	
+
 	/**
 	 * Returns a global property according to the type specified
 	 * 
@@ -314,14 +314,14 @@ public interface AdministrationService extends OpenmrsService {
 	 * @since 1.7
 	 */
 	public <T> T getGlobalPropertyValue(String propertyName, T defaultValue);
-	
+
 	/**
 	 * @param aClass class of object getting length for
 	 * @param fieldName name of the field to get the length for
 	 * @return the max field length of a property
 	 */
 	public int getMaximumPropertyLength(Class<? extends OpenmrsObject> aClass, String fieldName);
-	
+
 	/**
 	 * Performs validation in the manual flush mode to prevent any premature flushes.
 	 * <p>
@@ -343,7 +343,7 @@ public interface AdministrationService extends OpenmrsService {
 	 * @param user authenticated user
 	 * @return
 	 * @throws APIException
-     */
+		*/
 	public List<Locale> getSearchLocales(Locale currentLocale, User user);
 
 	/**
@@ -360,14 +360,14 @@ public interface AdministrationService extends OpenmrsService {
 	 * <strong>Should</strong> cache results for a user
 	 */
 	public List<Locale> getSearchLocales();
-	
+
 	/**
 	 * Used by Spring to set the http client for accessing the openmrs implementation service
 	 *
 	 * @param implementationHttpClient The implementation http client
 	 */
 	public void setImplementationIdHttpClient(HttpClient implementationHttpClient);
-	
+
 	/**
 	 * Reads a GP which specifies if database string comparison is case sensitive.
 	 * <p>
@@ -380,7 +380,7 @@ public interface AdministrationService extends OpenmrsService {
 	 * @since 1.9.9, 1.10.2, 1.11
 	 */
 	public boolean isDatabaseStringComparisonCaseSensitive();
-	
+
 	/**
 	 * <ul>
 	 * <li>Unlike MySQL which uses identifier strategy, PostgreSQL follows sequence strategy</li>

@@ -23,9 +23,9 @@ import org.openmrs.util.OpenmrsConstants;
  * the global properties are updated.
  */
 public class GlobalLocaleList implements GlobalPropertyListener {
-	
+
 	private Set<Locale> allowedLocales = null;
-	
+
 	/**
 	 * @see org.openmrs.api.GlobalPropertyListener#globalPropertyChanged(org.openmrs.GlobalProperty)
 	 */
@@ -39,7 +39,7 @@ public class GlobalLocaleList implements GlobalPropertyListener {
 			}
 		}
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.GlobalPropertyListener#globalPropertyDeleted(java.lang.String)
 	 */
@@ -47,7 +47,7 @@ public class GlobalLocaleList implements GlobalPropertyListener {
 	public void globalPropertyDeleted(String propertyName) {
 		allowedLocales = null;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.GlobalPropertyListener#supportsPropertyName(java.lang.String)
 	 */
@@ -55,7 +55,7 @@ public class GlobalLocaleList implements GlobalPropertyListener {
 	public boolean supportsPropertyName(String propertyName) {
 		return OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST.equals(propertyName);
 	}
-	
+
 	/**
 	 * Gets the current list of allowed locales.
 	 * 
@@ -64,5 +64,5 @@ public class GlobalLocaleList implements GlobalPropertyListener {
 	public Set<Locale> getAllowedLocales() {
 		return allowedLocales;
 	}
-	
+
 }

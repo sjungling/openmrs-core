@@ -17,7 +17,7 @@ import java.io.OutputStream;
  * meaningful way.
  */
 public interface DownloadableDatatypeHandler<T> extends CustomDatatypeHandler<CustomDatatype<T>, T> {
-	
+
 	/**
 	 * @param dt the datatype this handler handles
 	 * @param valueReference custom value to be downloaded
@@ -25,7 +25,7 @@ public interface DownloadableDatatypeHandler<T> extends CustomDatatypeHandler<Cu
 	 * Should not return null.
 	 */
 	String getContentType(CustomDatatype<T> dt, String valueReference);
-	
+
 	/**
 	 * @param dt the datatype this handler handles
 	 * @param valueReference custom value to be downloaded
@@ -33,7 +33,7 @@ public interface DownloadableDatatypeHandler<T> extends CustomDatatypeHandler<Cu
 	 * May return null, in which case the framework will choose a meaningless filename.
 	 */
 	String getFilename(CustomDatatype<T> dt, String valueReference);
-	
+
 	/**
 	 * Writes the custom value to os. Implementations should assume that the caller has set up the stream,
 	 * calling getMimeType and getFilename if necessary.
@@ -45,5 +45,5 @@ public interface DownloadableDatatypeHandler<T> extends CustomDatatypeHandler<Cu
 	 * @throws IOException if there is an IO error writing to the stream 
 	 */
 	void writeToStream(CustomDatatype<T> dt, String valueReference, OutputStream os) throws IOException;
-	
+
 }

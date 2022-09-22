@@ -15,28 +15,28 @@ package org.openmrs.customdatatype;
  * @since 1.9
  */
 public interface CustomValueDescriptor {
-	
+
 	/**
 	 * Return the name of a class that implements {@link CustomDatatype}.
 	 * @return the datatype used to store this custom value
 	 * @see CustomDatatype
 	 */
 	String getDatatypeClassname();
-	
+
 	/**
 	 * May be null.
 	 * @return the configuration to be passed to the datatype. For example if the datatype is RegexValidatedString the datatypeConfig would be the regular expression
 	 * @see CustomDatatype#setConfiguration(String)
 	 */
 	String getDatatypeConfig();
-	
+
 	/**
 	 * May be null.
 	 * @return the fully-qualified classname of the preferred {@link CustomDatatypeHandler} chosen by the
 	 * system administrator for this attribute type.
 	 */
 	String getPreferredHandlerClassname();
-	
+
 	/**
 	 * May be null.
 	 * @return the configuration to be passed to the handler for a datatype. For example if the
@@ -44,5 +44,5 @@ public interface CustomValueDescriptor {
 	 * @see CustomDatatypeHandler#setHandlerConfiguration(String)
 	 */
 	String getHandlerConfig();
-	
+
 }

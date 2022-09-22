@@ -20,9 +20,9 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { Role.class }, order = 50)
+@Handler(supports = {Role.class}, order = 50)
 public class RoleValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -32,7 +32,7 @@ public class RoleValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return c.equals(Role.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -53,7 +53,7 @@ public class RoleValidator implements Validator {
 			errors.rejectValue("role", "error.general");
 		} else {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "role", "error.role");
-			
+
 			// reject any role that has a leading or trailing space
 			if (!role.getRole().equals(role.getRole().trim())) {
 				errors.rejectValue("role", "error.trailingSpaces");
@@ -65,5 +65,5 @@ public class RoleValidator implements Validator {
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "role", "description");
 		}
 	}
-	
+
 }

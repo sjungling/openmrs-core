@@ -17,19 +17,19 @@ package org.openmrs.api;
  * @since 2.1
  */
 public class CannotDeleteObjectInUseException extends InvalidOperationOnObjectException {
-	
+
 	public CannotDeleteObjectInUseException(String message) {
 		super(message);
 	}
-	
+
 	public CannotDeleteObjectInUseException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	public CannotDeleteObjectInUseException(String messageKey, Object[] parameters) {
 		super(messageKey, parameters);
 	}
-	
+
 	/**
 	 * @see InvalidOperationOnObjectException#InvalidOperationOnObjectException(Class)
 	 */

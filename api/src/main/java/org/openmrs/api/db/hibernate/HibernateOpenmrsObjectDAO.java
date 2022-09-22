@@ -25,21 +25,21 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  */
 public class HibernateOpenmrsObjectDAO<T extends BaseOpenmrsObject> implements OpenmrsObjectDAO<T> {
-	
+
 	@Autowired
 	protected SessionFactory sessionFactory;
-	
+
 	protected Class<T> mappedClass;
-	
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	@Override
 	public T getById(Serializable id) {
 		return (T) sessionFactory.getCurrentSession().get(mappedClass, id);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.OpenmrsObjectDAO#getByUuid(java.lang.String)
 	 */
@@ -48,7 +48,7 @@ public class HibernateOpenmrsObjectDAO<T extends BaseOpenmrsObject> implements O
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(mappedClass);
 		return (T) crit.add(Restrictions.eq("uuid", uuid)).uniqueResult();
 	}
-	
+
 	/** 
 	 * @see org.openmrs.api.db.OpenmrsObjectDAO#delete(org.openmrs.BaseOpenmrsObject)
 	 */
@@ -56,7 +56,7 @@ public class HibernateOpenmrsObjectDAO<T extends BaseOpenmrsObject> implements O
 	public void delete(T persistent) {
 		sessionFactory.getCurrentSession().delete(persistent);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.OpenmrsObjectDAO#saveOrUpdate(org.openmrs.BaseOpenmrsObject)
 	 */
@@ -65,5 +65,5 @@ public class HibernateOpenmrsObjectDAO<T extends BaseOpenmrsObject> implements O
 		sessionFactory.getCurrentSession().saveOrUpdate(persistent);
 		return persistent;
 	}
-	
+
 }

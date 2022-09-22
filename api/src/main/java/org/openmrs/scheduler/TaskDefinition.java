@@ -21,36 +21,36 @@ import org.slf4j.LoggerFactory;
  * Represents the metadata for a task that can be scheduled.
  */
 public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(TaskDefinition.class);
-	
+
 	// Task metadata
 	private Integer id;
-	
+
 	// This class must implement the schedulable interface or it will fail to start
 	private String taskClass;
-	
+
 	private Task taskInstance = null;
-	
+
 	// Scheduling metadata
 	private Date startTime;
-	
+
 	private Date lastExecutionTime;
-	
+
 	private Long repeatInterval; // NOW in seconds to give us ability to
 	
 	// support longer intervals (years, decades,
 	// milleniums)
 	
 	private Boolean startOnStartup;
-	
+
 	private String startTimePattern;
-	
+
 	private Boolean started;
-	
+
 	// Relationships
 	private Map<String, String> properties;
-	
+
 	/**
 	 * Default no-arg public constructor
 	 */
@@ -60,7 +60,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 		// as we have a default date populated
 		this.properties = new HashMap<>();
 	}
-	
+
 	/**
 	 * Public constructor
 	 */
@@ -72,7 +72,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 		setDescription(description);
 		this.taskClass = taskClass;
 	}
-	
+
 	/**
 	 * Get the task identifier.
 	 * 
@@ -82,7 +82,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public Integer getId() {
 		return this.id;
 	}
-	
+
 	/**
 	 * Set the task identifier.
 	 * 
@@ -92,7 +92,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * Get the data map used to provide the task with runtime data.
 	 * 
@@ -101,7 +101,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public Map<String, String> getProperties() {
 		return this.properties;
 	}
-	
+
 	/**
 	 * Set the properties of the task. This overrides any properties previously set with the
 	 * setProperty(String, String) method.
@@ -111,7 +111,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public void setProperties(Map<String, String> properties) {
 		this.properties = properties;
 	}
-	
+
 	/**
 	 * Get the schedulable object to be executed.
 	 * 
@@ -120,7 +120,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public String getTaskClass() {
 		return this.taskClass;
 	}
-	
+
 	/**
 	 * Set the schedulable object to be executed.
 	 * 
@@ -129,7 +129,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public void setTaskClass(String taskClass) {
 		this.taskClass = taskClass;
 	}
-	
+
 	/**
 	 * Get the start time for when the task should be executed.
 	 * 
@@ -138,7 +138,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public Date getStartTime() {
 		return startTime;
 	}
-	
+
 	/**
 	 * Set the start time for when the task should be executed. For instance, use "new Date()", if
 	 * you want it to start now.
@@ -148,7 +148,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
-	
+
 	/**
 	 * Get the time the task was last executed.
 	 * 
@@ -157,7 +157,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public Date getLastExecutionTime() {
 		return lastExecutionTime;
 	}
-	
+
 	/**
 	 * Set the time the task was last executed
 	 * 
@@ -166,7 +166,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public void setLastExecutionTime(Date lastExecutionTime) {
 		this.lastExecutionTime = lastExecutionTime;
 	}
-	
+
 	/**
 	 * Gets the number of seconds until task is executed again.
 	 * 
@@ -175,7 +175,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public Long getRepeatInterval() {
 		return repeatInterval;
 	}
-	
+
 	/**
 	 * Sets the number of seconds until task is executed again.
 	 * 
@@ -184,49 +184,49 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public void setRepeatInterval(Long repeatInterval) {
 		this.repeatInterval = repeatInterval;
 	}
-	
+
 	/**
 	 * Get the date format used to set the start time.
 	 */
 	public String getStartTimePattern() {
 		return this.startTimePattern;
 	}
-	
+
 	/**
 	 * Sets the date format used to set the start time.
 	 */
 	public void setStartTimePattern(String pattern) {
 		this.startTimePattern = pattern;
 	}
-	
+
 	/**
 	 * Gets the flag that indicates whether the task should startup as soon as the scheduler starts.
 	 */
 	public Boolean getStartOnStartup() {
 		return this.startOnStartup;
 	}
-	
+
 	/**
 	 * Sets the flag that indicates whether the task should startup as soon as the scheduler starts.
 	 */
 	public void setStartOnStartup(Boolean startOnStartup) {
 		this.startOnStartup = startOnStartup;
 	}
-	
+
 	/**
 	 * Gets the flag that indicates whether the task has been started.
 	 */
 	public Boolean getStarted() {
 		return this.started;
 	}
-	
+
 	/**
 	 * Sets the flag that indicates whether the task has been started.
 	 */
 	public void setStarted(Boolean started) {
 		this.started = started;
 	}
-	
+
 	/**
 	 * Get task configuration property.
 	 * 
@@ -236,7 +236,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public String getProperty(String key) {
 		return this.properties.get(key);
 	}
-	
+
 	/**
 	 * Set task configuration property. Only supports strings at the moment.
 	 * 
@@ -246,7 +246,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public void setProperty(String key, String value) {
 		this.properties.put(key, value);
 	}
-	
+
 	/**
 	 * Convenience method that asks SchedulerUtil for it's next execution time.
 	 * 
@@ -255,7 +255,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public Date getNextExecutionTime() {
 		return SchedulerUtil.getNextExecution(this);
 	}
-	
+
 	/**
 	 * Convenience method to calculate the seconds until the next execution time.
 	 * 
@@ -263,9 +263,9 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	 */
 	public long getSecondsUntilNextExecutionTime() {
 		return (getNextExecutionTime().getTime() - System.currentTimeMillis()) / 1000;
-		
+
 	}
-	
+
 	// ==================================   Metadata ============================
 	
 	/**
@@ -274,10 +274,10 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	@Override
 	public String toString() {
 		return "[TaskDefinition " + " id=" + getId() + " name=" + getName() + " class=" + getTaskClass() + " startTime="
-		        + getStartTime() + " repeatInterval=" + this.getRepeatInterval() + " secondsUntilNext="
-		        + this.getSecondsUntilNextExecutionTime() + "]";
+										+ getStartTime() + " repeatInterval=" + this.getRepeatInterval() + " secondsUntilNext="
+										+ this.getSecondsUntilNextExecutionTime() + "]";
 	}
-	
+
 	/**
 	 * Gets the runnable task instance associated with this definition.
 	 * 
@@ -286,7 +286,7 @@ public class TaskDefinition extends BaseChangeableOpenmrsMetadata {
 	public Task getTaskInstance() {
 		return taskInstance;
 	}
-	
+
 	/**
 	 * Sets the runnable task instance associated with this definition. This should be set by the
 	 * scheduler which instantiates the task.

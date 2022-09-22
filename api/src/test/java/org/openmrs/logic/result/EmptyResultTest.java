@@ -20,12 +20,12 @@ import org.junit.jupiter.api.Test;
  * Tests the {@link EmptyResult} class
  */
 public class EmptyResultTest {
-	
+
 	@Test
 	public void isEmpty_shouldReturnTrue() {
 		assertThat(new EmptyResult(), is(empty()));
 	}
-	
+
 	@Test
 	public void isNull_shouldReturnTrue() {
 		assertTrue(new EmptyResult().isNull());

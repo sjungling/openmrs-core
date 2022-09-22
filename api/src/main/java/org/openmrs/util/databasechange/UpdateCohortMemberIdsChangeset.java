@@ -30,7 +30,7 @@ import liquibase.resource.ResourceAccessor;
  * This change set is run to update cohort member ids
  */
 public class UpdateCohortMemberIdsChangeset implements CustomTaskChange {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(UpdateCohortMemberIdsChangeset.class);
 
 	/**
@@ -41,14 +41,14 @@ public class UpdateCohortMemberIdsChangeset implements CustomTaskChange {
 		JdbcConnection connection = (JdbcConnection) database.getConnection();
 		Statement stmt = null;
 		PreparedStatement pStmt = null;
-		
+
 		try {
 			stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM cohort_member");
-			
+
 			pStmt = connection
-					.prepareStatement("UPDATE cohort_member SET cohort_member_id = ?"
-							+ " WHERE cohort_id = ? AND patient_id = ?");
+											.prepareStatement("UPDATE cohort_member SET cohort_member_id = ?"
+																			+ " WHERE cohort_id = ? AND patient_id = ?");
 			int i = 0;
 			while (rs.next()) {
 				int cohortId = rs.getInt("cohort_id");
@@ -72,7 +72,7 @@ public class UpdateCohortMemberIdsChangeset implements CustomTaskChange {
 					log.warn("Failed to close the statement object");
 				}
 			}
-			
+
 			if (pStmt != null) {
 				try {
 					pStmt.close();
@@ -83,7 +83,7 @@ public class UpdateCohortMemberIdsChangeset implements CustomTaskChange {
 			}
 		}
 	}
-	
+
 	/**
 	 * @see liquibase.change.custom.CustomChange#getConfirmationMessage()
 	 */
@@ -91,21 +91,21 @@ public class UpdateCohortMemberIdsChangeset implements CustomTaskChange {
 	public String getConfirmationMessage() {
 		return "Finished updating cohort member ids";
 	}
-	
+
 	/**
 	 * @see liquibase.change.custom.CustomChange#setUp()
 	 */
 	@Override
 	public void setUp() throws SetupException {
 	}
-	
+
 	/**
 	 * @see liquibase.change.custom.CustomChange#setFileOpener(ResourceAccessor)
 	 */
 	@Override
 	public void setFileOpener(ResourceAccessor resourceAccessor) {
 	}
-	
+
 	/**
 	 * @see liquibase.change.custom.CustomChange#validate(Database)
 	 */

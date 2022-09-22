@@ -24,9 +24,9 @@ import org.openmrs.Voidable;
  * Tests for the {@link BaseVoidHandler} class.
  */
 public class BaseVoidHandlerTest {
-	
+
 	/**
-	 * @see BaseVoidHandler#handle(Voidable,User,Date,String)
+	 * @see BaseVoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldSetTheVoidedBit() {
@@ -36,9 +36,9 @@ public class BaseVoidHandlerTest {
 		handler.handle(voidable, null, null, " ");
 		assertTrue(voidable.getVoided());
 	}
-	
+
 	/**
-	 * @see BaseVoidHandler#handle(Voidable,User,Date,String)
+	 * @see BaseVoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldSetTheVoidReason() {
@@ -47,9 +47,9 @@ public class BaseVoidHandlerTest {
 		handler.handle(voidable, null, null, "THE REASON");
 		assertEquals("THE REASON", voidable.getVoidReason());
 	}
-	
+
 	/**
-	 * @see BaseVoidHandler#handle(Voidable,User,Date,String)
+	 * @see BaseVoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldSetVoidedBy() {
@@ -58,9 +58,9 @@ public class BaseVoidHandlerTest {
 		handler.handle(voidable, new User(2), null, " ");
 		assertEquals(2, voidable.getVoidedBy().getId().intValue());
 	}
-	
+
 	/**
-	 * @see BaseVoidHandler#handle(Voidable,User,Date,String)
+	 * @see BaseVoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotSetVoidedByIfNonNull() {
@@ -70,22 +70,22 @@ public class BaseVoidHandlerTest {
 		handler.handle(voidable, new User(2), null, " ");
 		assertEquals(3, voidable.getVoidedBy().getId().intValue());
 	}
-	
+
 	/**
-	 * @see BaseVoidHandler#handle(Voidable,User,Date,String)
+	 * @see BaseVoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldSetDateVoided() {
 		Date d = new Date();
-		
+
 		VoidHandler<Voidable> handler = new BaseVoidHandler();
 		Voidable voidable = new Person();
 		handler.handle(voidable, null, d, " ");
 		assertEquals(d, voidable.getDateVoided());
 	}
-	
+
 	/**
-	 * @see BaseVoidHandler#handle(Voidable,User,Date,String)
+	 * @see BaseVoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotSetDateVoidedIfNonNull() {
@@ -98,9 +98,9 @@ public class BaseVoidHandlerTest {
 		handler.handle(voidable, null, new Date(), " ");
 		assertEquals(d, voidable.getDateVoided());
 	}
-	
+
 	/**
-	 * @see BaseVoidHandler#handle(Voidable,User,Date,String)
+	 * @see BaseVoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotSetTheVoidReasonIfAlreadyVoided() {
@@ -111,16 +111,16 @@ public class BaseVoidHandlerTest {
 		handler.handle(voidable, null, null, "THE REASON");
 		assertNull(voidable.getVoidReason());
 	}
-	
+
 	/**
-	 * @see BaseVoidHandler#handle(Voidable,User,Date,String)
+	 * @see BaseVoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldSetVoidedByEvenIfVoidedBitIsSetButVoidedByIsNull() {
 		VoidHandler<Voidable> handler = new BaseVoidHandler();
 		Voidable voidable = new Person();
 		voidable.setVoided(true);
-		
+
 		handler.handle(voidable, null, null, "THE REASON");
 		assertEquals("THE REASON", voidable.getVoidReason());
 	}

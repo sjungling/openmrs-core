@@ -31,7 +31,7 @@ public class VisitAttributeType extends BaseAttributeType<Visit> implements Attr
 	@Column(name = "visit_attribute_type_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer visitAttributeTypeId;
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -39,7 +39,7 @@ public class VisitAttributeType extends BaseAttributeType<Visit> implements Attr
 	public Integer getId() {
 		return getVisitAttributeTypeId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -47,19 +47,19 @@ public class VisitAttributeType extends BaseAttributeType<Visit> implements Attr
 	public void setId(Integer id) {
 		setVisitAttributeTypeId(id);
 	}
-	
+
 	/**
 	 * @return the visitAttributeTypeId
 	 */
 	public Integer getVisitAttributeTypeId() {
 		return visitAttributeTypeId;
 	}
-	
+
 	/**
 	 * @param visitAttributeTypeId the visitAttributeTypeId to set
 	 */
 	public void setVisitAttributeTypeId(Integer visitAttributeTypeId) {
 		this.visitAttributeTypeId = visitAttributeTypeId;
 	}
-	
+
 }

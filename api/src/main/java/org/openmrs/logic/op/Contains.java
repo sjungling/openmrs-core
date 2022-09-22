@@ -20,10 +20,10 @@ package org.openmrs.logic.op;
  * @see Before
  */
 public class Contains implements ComparisonOperator {
-	
+
 	@Override
 	public String toString() {
 		return "CONTAINS";
 	}
-	
+
 }

@@ -20,7 +20,7 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { Privilege.class }, order = 50)
+@Handler(supports = {Privilege.class}, order = 50)
 public class PrivilegeValidator implements Validator {
 
 	/**
@@ -32,7 +32,7 @@ public class PrivilegeValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return c.equals(Privilege.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -54,5 +54,5 @@ public class PrivilegeValidator implements Validator {
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "privilege", "description");
 		}
 	}
-	
+
 }

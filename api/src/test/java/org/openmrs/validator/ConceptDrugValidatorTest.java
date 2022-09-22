@@ -21,9 +21,9 @@ import org.springframework.validation.Errors;
  * Tests methods on the {@link ConceptDrugValidator} class.
  */
 public class ConceptDrugValidatorTest {
-	
+
 	/**
-	 * @see ConceptDrugValidator#validate(Object,Errors)
+	 * @see ConceptDrugValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfAConceptIsNotSpecified() {
@@ -32,7 +32,7 @@ public class ConceptDrugValidatorTest {
 		new ConceptDrugValidator().validate(drug, errors);
 		assertTrue(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see ConceptDrugValidator#supports(Class)
 	 */
@@ -40,7 +40,7 @@ public class ConceptDrugValidatorTest {
 	public void supports_shouldRejectClassesNotExtendingDrug() {
 		assertFalse(new ConceptDrugValidator().supports(String.class));
 	}
-	
+
 	/**
 	 * @see ConceptDrugValidator#supports(Class)
 	 */
@@ -48,5 +48,5 @@ public class ConceptDrugValidatorTest {
 	public void supports_shouldSupportDrug() {
 		assertTrue(new ConceptDrugValidator().supports(Drug.class));
 	}
-	
+
 }

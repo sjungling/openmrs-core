@@ -46,19 +46,19 @@ import java.lang.annotation.Target;
  * public class OrderValidator implements Validator { ... } 
  * </pre>
  */
-@Target( { ElementType.TYPE })
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
 public @interface Handler {
-	
+
 	/**
 	 * A list of Classes that this Handler can handle.
 	 * 
 	 * @return list of classes
 	 */
 	public Class<?>[] supports() default {};
-	
+
 	/**
 	 * Provides a means for specifying the relative order of this Handler against another Handler of
 	 * the same type. For example, if two handlers are registered as capable of handling a
@@ -70,5 +70,5 @@ public @interface Handler {
 	 * @return an int specifying the relative order of this Handler
 	 */
 	public int order() default Integer.MAX_VALUE;
-	
+
 }

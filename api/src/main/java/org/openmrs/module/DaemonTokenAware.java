@@ -18,7 +18,7 @@ package org.openmrs.module;
  * @since 1.9.2
  */
 public interface DaemonTokenAware {
-	
+
 	/**
 	 * Allows to receive the daemon token.
 	 * <p>
@@ -28,5 +28,5 @@ public interface DaemonTokenAware {
 	 * @param token
 	 */
 	void setDaemonToken(DaemonToken token);
-	
+
 }

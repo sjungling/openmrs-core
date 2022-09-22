@@ -24,7 +24,7 @@ import org.springframework.validation.Validator;
  *
  * @since 1.10
  */
-@Handler(supports = { Alert.class }, order = 50)
+@Handler(supports = {Alert.class}, order = 50)
 public class AlertValidator implements Validator {
 
 	private static final Logger logger = LoggerFactory.getLogger(AlertValidator.class);
@@ -38,7 +38,7 @@ public class AlertValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return Alert.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
 	 * <strong>Should</strong> fail validation if Alert Text is null or empty or whitespace
@@ -52,11 +52,11 @@ public class AlertValidator implements Validator {
 
 		if (obj == null || !(obj instanceof Alert)) {
 			throw new IllegalArgumentException("error.general and must be of type " + Alert.class);
-	}
+		}
 		Alert alert = (Alert) obj;
 
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "text", "Alert.text.required");
-			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "text");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "text", "Alert.text.required");
+		ValidateUtil.validateFieldLengths(errors, obj.getClass(), "text");
 
 	}
 }

@@ -18,22 +18,22 @@ import org.slf4j.LoggerFactory;
  * Base class for all other task classes.
  */
 public abstract class AbstractTask implements Task {
-	
+
 	// Logger
 	private static final Logger log = LoggerFactory.getLogger(AbstractTask.class);
-	
+
 	// Indicates whether the task is currently running
 	protected boolean isExecuting = false;
-	
+
 	// The task definition of the running task
 	protected TaskDefinition taskDefinition;
-	
+
 	/**
 	 * Default constructor
 	 */
 	protected AbstractTask() {
 	}
-	
+
 	/**
 	 * Constructor
 	 * 
@@ -43,13 +43,13 @@ public abstract class AbstractTask implements Task {
 		log.debug("Initializing " + taskDefinition.getName());
 		initialize(taskDefinition);
 	}
-	
+
 	/**
 	 * @see org.openmrs.scheduler.Task#execute()
 	 */
 	@Override
 	public abstract void execute();
-	
+
 	/**
 	 * @see org.openmrs.scheduler.Task#isExecuting()
 	 */
@@ -57,7 +57,7 @@ public abstract class AbstractTask implements Task {
 	public boolean isExecuting() {
 		return isExecuting;
 	}
-	
+
 	/**
 	 * @see org.openmrs.scheduler.Task#initialize(TaskDefinition)
 	 */
@@ -65,7 +65,7 @@ public abstract class AbstractTask implements Task {
 	public void initialize(final TaskDefinition definition) {
 		this.taskDefinition = definition;
 	}
-	
+
 	/**
 	 * @see org.openmrs.scheduler.Task#getTaskDefinition()
 	 */
@@ -73,7 +73,7 @@ public abstract class AbstractTask implements Task {
 	public TaskDefinition getTaskDefinition() {
 		return this.taskDefinition;
 	}
-	
+
 	/**
 	 * @see org.openmrs.scheduler.Task#shutdown()
 	 */
@@ -81,14 +81,14 @@ public abstract class AbstractTask implements Task {
 	public void shutdown() {
 		taskDefinition = null;
 	}
-	
+
 	/**
 	 * Callback method that tells the task that it has started executing.
 	 */
 	public void startExecuting() {
 		this.isExecuting = true;
 	}
-	
+
 	/**
 	 * Callback method that tells the task that it has stopped executing.
 	 */

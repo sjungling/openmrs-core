@@ -38,7 +38,7 @@ public class Security {
 	 * encryption settings
 	 */
 	private static final Logger log = LoggerFactory.getLogger(Security.class);
-	
+
 	private static final Random RANDOM = new SecureRandom();
 
 	private Security() {
@@ -63,10 +63,10 @@ public class Security {
 		if (hashedPassword == null || passwordToHash == null) {
 			throw new APIException("password.cannot.be.null", (Object[]) null);
 		}
-		
+
 		return hashedPassword.equals(encodeString(passwordToHash))
-			|| hashedPassword.equals(encodeStringSHA1(passwordToHash))
-			|| hashedPassword.equals(incorrectlyEncodeString(passwordToHash));
+										|| hashedPassword.equals(encodeStringSHA1(passwordToHash))
+										|| hashedPassword.equals(incorrectlyEncodeString(passwordToHash));
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class Security {
 	 */
 	private static String hexString(byte[] block) {
 		StringBuilder buf = new StringBuilder();
-		char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+		char[] hexChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 		int high;
 		int low;
 		for (byte aBlock : block) {
@@ -275,7 +275,7 @@ public class Security {
 	 */
 	public static byte[] getSavedInitVector() {
 		String initVectorText = Context.getRuntimeProperties().getProperty(
-			OpenmrsConstants.ENCRYPTION_VECTOR_RUNTIME_PROPERTY, OpenmrsConstants.ENCRYPTION_VECTOR_DEFAULT);
+										OpenmrsConstants.ENCRYPTION_VECTOR_RUNTIME_PROPERTY, OpenmrsConstants.ENCRYPTION_VECTOR_DEFAULT);
 
 		if (StringUtils.hasText(initVectorText)) {
 			return Base64.getDecoder().decode(initVectorText);
@@ -307,7 +307,7 @@ public class Security {
 	 */
 	public static byte[] getSavedSecretKey() {
 		String keyText = Context.getRuntimeProperties().getProperty(OpenmrsConstants.ENCRYPTION_KEY_RUNTIME_PROPERTY,
-			OpenmrsConstants.ENCRYPTION_KEY_DEFAULT);
+										OpenmrsConstants.ENCRYPTION_KEY_DEFAULT);
 
 		if (StringUtils.hasText(keyText)) {
 			return Base64.getDecoder().decode(keyText);

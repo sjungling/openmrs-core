@@ -24,19 +24,19 @@ import org.openmrs.web.test.BaseWebContextSensitiveTest;
  * Tests some of the methods on the {@link UpdateFilter}
  */
 public class UpdateFilterTest extends BaseWebContextSensitiveTest {
-	
+
 	/**
 	 * @throws ServletException
-	 * @see UpdateFilter#authenticateAsSuperUser(String,String)
+	 * @see UpdateFilter#authenticateAsSuperUser(String, String)
 	 */
 	@Test
 	public void authenticateAsSuperUser_shouldReturnFalseIfGivenInvalidCredentials() throws ServletException {
 		assertFalse(new UpdateFilter().authenticateAsSuperUser("a-bad-username", "a-bad-password"));
 	}
-	
+
 	/**
 	 * @throws ServletException
-	 * @see UpdateFilter#authenticateAsSuperUser(String,String)
+	 * @see UpdateFilter#authenticateAsSuperUser(String, String)
 	 */
 	@Test
 	public void authenticateAsSuperUser_shouldReturnFalseIfGivenUserIsNotSuperuser() throws ServletException {
@@ -44,37 +44,37 @@ public class UpdateFilterTest extends BaseWebContextSensitiveTest {
 		executeDataSet("org/openmrs/api/include/UserServiceTest.xml");
 		Context.authenticate("userWithSha512Hash", "test"); // sanity check
 		Context.logout();
-		
+
 		assertFalse(new UpdateFilter().authenticateAsSuperUser("userWithSha512Hash", "test"));
 	}
-	
+
 	/**
 	 * @throws ServletException
-	 * @see UpdateFilter#authenticateAsSuperUser(String,String)
+	 * @see UpdateFilter#authenticateAsSuperUser(String, String)
 	 */
 	@Test
 	public void authenticateAsSuperUser_shouldReturnTrueIfGivenUserIsSuperuser() throws ServletException {
 		assertTrue(new UpdateFilter().authenticateAsSuperUser("admin", "test"));
 	}
-	
+
 	/**
 	 * @throws SQLException
 	 * @throws Exception
-	 * @see UpdateFilter#isSuperUser(Connection,Integer)
+	 * @see UpdateFilter#isSuperUser(Connection, Integer)
 	 */
 	@Test
 	public void isSuperUser_shouldReturnTrueIfGivenUserHasSuperuserRole() throws SQLException {
 		assertTrue(new UpdateFilter().isSuperUser(getConnection(), 1));
 	}
-	
+
 	/**
 	 * @throws SQLException
 	 * @throws Exception
-	 * @see UpdateFilter#isSuperUser(Connection,Integer)
+	 * @see UpdateFilter#isSuperUser(Connection, Integer)
 	 */
 	@Test
 	public void isSuperUser_shouldReturnFalseIfGivenUserDoesNotHaveTheSuperUserRole() throws SQLException {
 		assertFalse(new UpdateFilter().isSuperUser(getConnection(), 502));
 	}
-	
+
 }

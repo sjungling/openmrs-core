@@ -18,7 +18,7 @@ import org.openmrs.attribute.BaseAttribute;
  * @since 2.5.0
  */
 public class DiagnosisAttribute extends BaseAttribute<DiagnosisAttributeType, Diagnosis> implements Attribute<DiagnosisAttributeType, Diagnosis> {
-	
+
 	private Integer diagnosisAttributeId;
 
 	/**
@@ -27,28 +27,28 @@ public class DiagnosisAttribute extends BaseAttribute<DiagnosisAttributeType, Di
 	public Integer getDiagnosisAttributeId() {
 		return diagnosisAttributeId;
 	}
-	
+
 	/**
 	 * @param diagnosisAttributeId the DiagnosisAttributeId to set
 	 */
 	public void setDiagnosisAttributeId(Integer diagnosisAttributeId) {
 		this.diagnosisAttributeId = diagnosisAttributeId;
 	}
-	
+
 	/**
 	 * @return the diagnosis
 	 */
 	public Diagnosis getDiagnosis() {
 		return getOwner();
 	}
-	
+
 	/**
 	 * @param diagnosis the diagnosis to set
 	 */
 	public void setDiagnosis(Diagnosis diagnosis) {
 		setOwner(diagnosis);
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -56,7 +56,7 @@ public class DiagnosisAttribute extends BaseAttribute<DiagnosisAttributeType, Di
 	public Integer getId() {
 		return getDiagnosisAttributeId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(Integer)
 	 */

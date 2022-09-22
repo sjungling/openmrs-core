@@ -62,9 +62,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 public class EncounterServiceImpl extends BaseOpenmrsService implements EncounterService {
-	
+
 	private EncounterDAO dao;
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#setEncounterDAO(org.openmrs.api.db.EncounterDAO)
 	 */
@@ -72,7 +72,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public void setEncounterDAO(EncounterDAO dao) {
 		this.dao = dao;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncountersByPatient(java.lang.String, boolean)
 	 */
@@ -82,26 +82,26 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		if (query == null) {
 			throw new IllegalArgumentException("The 'query' parameter is required and cannot be null");
 		}
-		
+
 		return Context.getEncounterService().filterEncountersByViewPermissions(
-		    dao.getEncounters(query, null, null, null, includeVoided), null);
+										dao.getEncounters(query, null, null, null, includeVoided), null);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#saveEncounter(org.openmrs.Encounter)
 	 */
 	@Override
 	public Encounter saveEncounter(Encounter encounter) throws APIException {
-		
+
 		// if authenticated user is not supposed to edit encounter of certain type
 		failIfDeniedToEdit(encounter);
-		
+
 		//If new encounter, try to assign a visit using the registered visit assignment handler.
 		createVisitForNewEncounter(encounter);
-		
+
 		// check permissions
 		boolean isNewEncounter = requirePrivilege(encounter);
-		
+
 		// This must be done after setting dateCreated etc on the obs because
 		// of the way the ORM tools flush things and check for nullity
 		// This also must be done before the save encounter so we can use the
@@ -110,7 +110,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		Patient p = encounter.getPatient();
 		Date originalDate;
 		Location originalLocation = null;
-		
+
 		if (!isNewEncounter) {
 			// fetch the datetime from the database prior to saving for this
 			// encounter
@@ -135,18 +135,18 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 			for (Obs obs : encounter.getAllFlattenedObs(true)) {
 				// if the date was changed
 				if (OpenmrsUtil.compare(originalDate, newDate) != 0
-				        && OpenmrsUtil.compare(obs.getObsDatetime(), originalDate) == 0) {
-					
+												&& OpenmrsUtil.compare(obs.getObsDatetime(), originalDate) == 0) {
+
 					// if the obs datetime is the same as the
 					// original encounter datetime, fix it
 					obs.setObsDatetime(newDate);
-					
+
 				}
-				
+
 				if (!OpenmrsUtil.nullSafeEquals(newLocation, originalLocation) && obs.getLocation().equals(originalLocation)) {
 					obs.setLocation(newLocation);
 				}
-				
+
 				// if the Person in the obs doesn't match the Patient in the
 				// encounter, fix it
 				if (!obs.getPerson().getPersonId().equals(p.getPatientId())) {
@@ -174,7 +174,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 				Context.getOrderService().saveOrder(o, null);
 			}
 		}
-		
+
 		// save the Obs
 		String changeMessage = Context.getMessageSourceService().getMessage("Obs.void.reason.default");
 		ObsService os = Context.getObsService();
@@ -196,15 +196,15 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 
 		removeGivenObsAndTheirGroupMembersFromEncounter(obsToRemove, encounter);
 		addGivenObsAndTheirGroupMembersToEncounter(obsToAdd, encounter);
-		
+
 		// save the conditions
 		encounter.getConditions().forEach(Context.getConditionService()::saveCondition);
-		
+
 		encounter.getAllergies().forEach(Context.getPatientService()::saveAllergy);
-		
+
 		return encounter;
 	}
-	
+
 	/**
 	 * This method safely checks if authenticated user is not supposed to edit encounter of certain type
 	 * 
@@ -213,11 +213,11 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	 */
 	private void failIfDeniedToEdit(Encounter encounter) throws APIException {
 		if (!canEditEncounter(encounter, null)) {
-			throw new APIException("Encounter.error.privilege.required.edit", new Object[] { encounter.getEncounterType()
-			        .getEditPrivilege() });
+			throw new APIException("Encounter.error.privilege.required.edit", new Object[]{encounter.getEncounterType()
+											.getEditPrivilege()});
 		}
 	}
-	
+
 	/**
 	 * This method assigns a visit to a new encounter using the registered visit assignment handler
 	 * 
@@ -225,13 +225,13 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	 */
 	private void createVisitForNewEncounter(Encounter encounter) {
 		if (encounter.getEncounterId() == null) {
-			
+
 			//Am using Context.getEncounterService().getActiveEncounterVisitHandler() instead of just
 			//getActiveEncounterVisitHandler() for modules which may want to AOP around this call.
 			EncounterVisitHandler encounterVisitHandler = Context.getEncounterService().getActiveEncounterVisitHandler();
 			if (encounterVisitHandler != null) {
 				encounterVisitHandler.beforeCreateEncounter(encounter);
-				
+
 				//If we have been assigned a new visit, persist it.
 				if (encounter.getVisit() != null && encounter.getVisit().getVisitId() == null) {
 					Context.getVisitService().saveVisit(encounter.getVisit());
@@ -239,7 +239,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 			}
 		}
 	}
-	
+
 	/**
 	 * Checks for the type of privilege required
 	 * 
@@ -300,11 +300,11 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		} else if (canViewEncounter(encounter, null)) {
 			return encounter;
 		} else {
-			throw new APIException("Encounter.error.privilege.required.view", new Object[] { encounter.getEncounterType()
-			        .getViewPrivilege() });
+			throw new APIException("Encounter.error.privilege.required.view", new Object[]{encounter.getEncounterType()
+											.getViewPrivilege()});
 		}
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncountersByPatient(org.openmrs.Patient)
 	 */
@@ -314,23 +314,23 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		if (patient == null) {
 			throw new IllegalArgumentException("The 'patient' parameter is requred and cannot be null");
 		}
-		
+
 		EncounterSearchCriteria encounterSearchCriteria = new EncounterSearchCriteriaBuilder().setPatient(patient)
-		        .setIncludeVoided(false).createEncounterSearchCriteria();
-		
+										.setIncludeVoided(false).createEncounterSearchCriteria();
+
 		return Context.getEncounterService().getEncounters(encounterSearchCriteria);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncountersByPatient(String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
 	public List<Encounter> getEncountersByPatient(String query) throws APIException {
-		
+
 		return Context.getEncounterService().filterEncountersByViewPermissions(getEncountersByPatient(query, false), null);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncountersByPatientId(java.lang.Integer)
 	 */
@@ -341,9 +341,9 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 			throw new IllegalArgumentException("The 'patientId' parameter is requred and cannot be null");
 		}
 		return Context.getEncounterService()
-		        .filterEncountersByViewPermissions(dao.getEncountersByPatientId(patientId), null);
+										.filterEncountersByViewPermissions(dao.getEncountersByPatientId(patientId), null);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncountersByPatientIdentifier(java.lang.String)
 	 */
@@ -353,14 +353,14 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		if (identifier == null) {
 			throw new IllegalArgumentException("The 'identifier' parameter is required and cannot be null");
 		}
-		
+
 		List<Encounter> encs = new ArrayList<>();
 		for (Patient p : Context.getPatientService().getPatients(identifier, null, null, false)) {
 			encs.addAll(Context.getEncounterService().getEncountersByPatientId(p.getPatientId()));
 		}
 		return Context.getEncounterService().filterEncountersByViewPermissions(encs, null);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncounters(org.openmrs.Patient,
 	 *      org.openmrs.Location, java.util.Date, java.util.Date, java.util.Collection,
@@ -372,17 +372,17 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	@Override
 	@Transactional(readOnly = true)
 	public List<Encounter> getEncounters(Patient who, Location loc, Date fromDate, Date toDate,
-	                                     Collection<Form> enteredViaForms, Collection<EncounterType> encounterTypes,
-	                                     Collection<Provider> providers, Collection<VisitType> visitTypes,
-	                                     Collection<Visit> visits, boolean includeVoided) {
+									Collection<Form> enteredViaForms, Collection<EncounterType> encounterTypes,
+									Collection<Provider> providers, Collection<VisitType> visitTypes,
+									Collection<Visit> visits, boolean includeVoided) {
 		EncounterSearchCriteriaBuilder encounterSearchCriteriaBuilder = new EncounterSearchCriteriaBuilder().setPatient(who)
-		        .setLocation(loc).setFromDate(fromDate).setToDate(toDate).setEnteredViaForms(enteredViaForms)
-		        .setEncounterTypes(encounterTypes).setProviders(providers).setVisitTypes(visitTypes).setVisits(visits)
-		        .setIncludeVoided(includeVoided);
-		
+										.setLocation(loc).setFromDate(fromDate).setToDate(toDate).setEnteredViaForms(enteredViaForms)
+										.setEncounterTypes(encounterTypes).setProviders(providers).setVisitTypes(visitTypes).setVisits(visits)
+										.setIncludeVoided(includeVoided);
+
 		return getEncounters(encounterSearchCriteriaBuilder.createEncounterSearchCriteria());
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncounters(org.openmrs.parameter.EncounterSearchCriteria)
 	 */
@@ -390,38 +390,38 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public List<Encounter> getEncounters(EncounterSearchCriteria encounterSearchCriteria) {
 		// the second search parameter is null as it defaults to authenticated user from context
 		return Context.getEncounterService().filterEncountersByViewPermissions(dao.getEncounters(encounterSearchCriteria),
-		    null);
+										null);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#voidEncounter(org.openmrs.Encounter, java.lang.String)
 	 */
 	@Override
 	public Encounter voidEncounter(Encounter encounter, String reason) {
-		
+
 		// if authenticated user is not supposed to edit encounter of certain type
 		if (!canEditEncounter(encounter, null)) {
-			throw new APIException("Encounter.error.privilege.required.void", new Object[] { encounter.getEncounterType()
-			        .getEditPrivilege() });
+			throw new APIException("Encounter.error.privilege.required.void", new Object[]{encounter.getEncounterType()
+											.getEditPrivilege()});
 		}
-		
+
 		if (reason == null) {
 			throw new IllegalArgumentException("The argument 'reason' is required and so cannot be null");
 		}
-		
+
 		ObsService os = Context.getObsService();
 		for (Obs o : encounter.getObsAtTopLevel(false)) {
 			if (!o.getVoided()) {
 				os.voidObs(o, reason);
 			}
 		}
-		
+
 		OrderService orderService = Context.getOrderService();
 		for (Order o : encounter.getOrders()) {
 			// There is intentionally no voided check around this method call.  See TRUNK-5996.
 			orderService.voidOrder(o, reason);
 		}
-		
+
 		encounter.setVoided(true);
 		encounter.setVoidedBy(Context.getAuthenticatedUser());
 		//we expect the dateVoided to be already set by AOP logic at this point unless this method was called within the API,
@@ -434,38 +434,38 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		Context.getEncounterService().saveEncounter(encounter);
 		return encounter;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#unvoidEncounter(org.openmrs.Encounter)
 	 */
 	@Override
 	public Encounter unvoidEncounter(Encounter encounter) throws APIException {
-		
+
 		// if authenticated user is not supposed to edit encounter of certain type
 		if (!canEditEncounter(encounter, null)) {
-			throw new APIException("Encounter.error.privilege.required.unvoid", new Object[] { encounter.getEncounterType()
-			        .getEditPrivilege() });
+			throw new APIException("Encounter.error.privilege.required.unvoid", new Object[]{encounter.getEncounterType()
+											.getEditPrivilege()});
 		}
-		
+
 		String voidReason = encounter.getVoidReason();
 		if (voidReason == null) {
 			voidReason = "";
 		}
-		
+
 		ObsService os = Context.getObsService();
 		for (Obs o : encounter.getObsAtTopLevel(true)) {
 			if (voidReason.equals(o.getVoidReason())) {
 				os.unvoidObs(o);
 			}
 		}
-		
+
 		OrderService orderService = Context.getOrderService();
 		for (Order o : encounter.getOrders()) {
 			if (voidReason.equals(o.getVoidReason())) {
 				orderService.unvoidOrder(o);
 			}
 		}
-		
+
 		encounter.setVoided(false);
 		encounter.setVoidedBy(null);
 		encounter.setDateVoided(null);
@@ -473,7 +473,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		Context.getEncounterService().saveEncounter(encounter);
 		return encounter;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#purgeEncounter(org.openmrs.Encounter)
 	 */
@@ -481,31 +481,31 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public void purgeEncounter(Encounter encounter) throws APIException {
 		// if authenticated user is not supposed to edit encounter of certain type
 		if (!canEditEncounter(encounter, null)) {
-			throw new APIException("Encounter.error.privilege.required.purge", new Object[] { encounter.getEncounterType()
-			        .getEditPrivilege() });
+			throw new APIException("Encounter.error.privilege.required.purge", new Object[]{encounter.getEncounterType()
+											.getEditPrivilege()});
 		}
 		dao.deleteEncounter(encounter);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#purgeEncounter(Encounter, boolean)
 	 */
 	@Override
 	public void purgeEncounter(Encounter encounter, boolean cascade) throws APIException {
-		
+
 		// if authenticated user is not supposed to edit encounter of certain type
 		if (!canEditEncounter(encounter, null)) {
-			throw new APIException("Encounter.error.privilege.required.purge", new Object[] { encounter.getEncounterType()
-			        .getEditPrivilege() });
+			throw new APIException("Encounter.error.privilege.required.purge", new Object[]{encounter.getEncounterType()
+											.getEditPrivilege()});
 		}
-		
+
 		if (cascade) {
 			ObsService obsService = Context.getObsService();
 			List<Encounter> justThisEncounter = new ArrayList<>();
 			justThisEncounter.add(encounter);
 			List<Obs> observations = new ArrayList<>(
-					obsService.getObservations(null, justThisEncounter, null, null, null, null, null, null,
-							null, null, null, true));
+											obsService.getObservations(null, justThisEncounter, null, null, null, null, null, null,
+																			null, null, null, true));
 			for (Obs o : observations) {
 				obsService.purgeObs(o);
 			}
@@ -516,7 +516,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		}
 		Context.getEncounterService().purgeEncounter(encounter);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#saveEncounterType(org.openmrs.EncounterType)
 	 */
@@ -524,11 +524,11 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public EncounterType saveEncounterType(EncounterType encounterType) {
 		//make sure the user has not turned off encounter types editing
 		Context.getEncounterService().checkIfEncounterTypesAreLocked();
-		
+
 		dao.saveEncounterType(encounterType);
 		return encounterType;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncounterType(java.lang.Integer)
 	 */
@@ -537,7 +537,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public EncounterType getEncounterType(Integer encounterTypeId) throws APIException {
 		return dao.getEncounterType(encounterTypeId);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncounterType(java.lang.String)
 	 */
@@ -546,7 +546,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public EncounterType getEncounterType(String name) throws APIException {
 		return dao.getEncounterType(name);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getAllEncounterTypes()
 	 */
@@ -555,7 +555,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public List<EncounterType> getAllEncounterTypes() throws APIException {
 		return dao.getAllEncounterTypes(true);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getAllEncounterTypes(boolean)
 	 */
@@ -564,7 +564,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public List<EncounterType> getAllEncounterTypes(boolean includeRetired) throws APIException {
 		return dao.getAllEncounterTypes(includeRetired);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#findEncounterTypes(java.lang.String)
 	 */
@@ -573,7 +573,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public List<EncounterType> findEncounterTypes(String name) throws APIException {
 		return dao.findEncounterTypes(name);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#retireEncounterType(EncounterType, String)
 	 */
@@ -582,26 +582,26 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		if (reason == null) {
 			throw new IllegalArgumentException("The 'reason' for retiring is required");
 		}
-		
+
 		//make sure the user has not turned off encounter types editing
 		Context.getEncounterService().checkIfEncounterTypesAreLocked();
-		
+
 		encounterType.setRetired(true);
 		encounterType.setRetireReason(reason);
 		return Context.getEncounterService().saveEncounterType(encounterType);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#unretireEncounterType(org.openmrs.EncounterType)
 	 */
 	@Override
 	public EncounterType unretireEncounterType(EncounterType encounterType) throws APIException {
 		Context.getEncounterService().checkIfEncounterTypesAreLocked();
-		
+
 		encounterType.setRetired(false);
 		return Context.getEncounterService().saveEncounterType(encounterType);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#purgeEncounterType(org.openmrs.EncounterType)
 	 */
@@ -609,10 +609,10 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public void purgeEncounterType(EncounterType encounterType) throws APIException {
 		//make sure the user has not turned off encounter types editing
 		Context.getEncounterService().checkIfEncounterTypesAreLocked();
-		
+
 		dao.deleteEncounterType(encounterType);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncounterByUuid(java.lang.String)
 	 */
@@ -621,7 +621,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public Encounter getEncounterByUuid(String uuid) throws APIException {
 		return dao.getEncounterByUuid(uuid);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncounterTypeByUuid(java.lang.String)
 	 */
@@ -630,7 +630,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public EncounterType getEncounterTypeByUuid(String uuid) throws APIException {
 		return dao.getEncounterTypeByUuid(uuid);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getAllEncounters(org.openmrs.Cohort)
 	 */
@@ -639,7 +639,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public Map<Integer, List<Encounter>> getAllEncounters(Cohort patients) {
 		return dao.getAllEncounters(patients);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncounters(java.lang.String, java.lang.Integer,
 	 *      java.lang.Integer, boolean)
@@ -647,11 +647,11 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	@Override
 	@Transactional(readOnly = true)
 	public List<Encounter> getEncounters(String query, Integer start, Integer length, boolean includeVoided)
-	    throws APIException {
+									throws APIException {
 		return Context.getEncounterService().filterEncountersByViewPermissions(
-		    dao.getEncounters(query, null, start, length, includeVoided), null);
+										dao.getEncounters(query, null, start, length, includeVoided), null);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncounters(java.lang.String, java.lang.Integer,
 	 *      java.lang.Integer, java.lang.Integer, boolean)
@@ -659,11 +659,11 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	@Override
 	@Transactional(readOnly = true)
 	public List<Encounter> getEncounters(String query, Integer patientId, Integer start, Integer length,
-	                                     boolean includeVoided) throws APIException {
+									boolean includeVoided) throws APIException {
 		return Context.getEncounterService().filterEncountersByViewPermissions(
-		    dao.getEncounters(query, patientId, start, length, includeVoided), null);
+										dao.getEncounters(query, patientId, start, length, includeVoided), null);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getCountOfEncounters(java.lang.String, boolean)
 	 */
@@ -672,7 +672,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public Integer getCountOfEncounters(String query, boolean includeVoided) {
 		return OpenmrsUtil.convertToInteger(dao.getCountOfEncounters(query, null, includeVoided));
 	}
-	
+
 	/**
 	 * @see EncounterService#getEncountersByVisit(Visit, boolean)
 	 */
@@ -680,59 +680,59 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	@Transactional(readOnly = true)
 	public List<Encounter> getEncountersByVisit(Visit visit, boolean includeVoided) {
 		return Context.getEncounterService().filterEncountersByViewPermissions(
-		    dao.getEncountersByVisit(visit, includeVoided), null);
+										dao.getEncountersByVisit(visit, includeVoided), null);
 	}
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<EncounterVisitHandler> getEncounterVisitHandlers() {
 
 		return HandlerUtil.getHandlersForType(EncounterVisitHandler.class, null);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getActiveEncounterVisitHandler()
 	 */
 	@Override
 	@Transactional(readOnly = true)
 	public EncounterVisitHandler getActiveEncounterVisitHandler() throws APIException {
-		
+
 		String handlerGlobalValue = Context.getAdministrationService().getGlobalProperty(
-		    OpenmrsConstants.GP_VISIT_ASSIGNMENT_HANDLER, null);
-		
+										OpenmrsConstants.GP_VISIT_ASSIGNMENT_HANDLER, null);
+
 		if (StringUtils.isBlank(handlerGlobalValue)) {
 			return null;
 		}
-		
+
 		EncounterVisitHandler handler;
-		
+
 		// convention = [NamePrefix:beanName] or [className]
 		String namePrefix = OpenmrsConstants.REGISTERED_COMPONENT_NAME_PREFIX;
-		
+
 		if (handlerGlobalValue.startsWith(namePrefix)) {
 			String beanName = handlerGlobalValue.substring(namePrefix.length());
-			
+
 			handler = Context.getRegisteredComponent(beanName, EncounterVisitHandler.class);
 		} else {
 			Object instance;
-			
+
 			try {
 				instance = OpenmrsClassLoader.getInstance().loadClass(handlerGlobalValue).newInstance();
 			}
 			catch (Exception ex) {
-				throw new APIException("failed.instantiate.assignment.handler", new Object[] { handlerGlobalValue }, ex);
+				throw new APIException("failed.instantiate.assignment.handler", new Object[]{handlerGlobalValue}, ex);
 			}
-			
+
 			if (instance instanceof EncounterVisitHandler) {
 				handler = (EncounterVisitHandler) instance;
 			} else {
 				throw new APIException("assignment.handler.should.implement.EncounterVisitHandler", (Object[]) null);
 			}
 		}
-		
+
 		return handler;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#saveEncounterRole(org.openmrs.EncounterRole)
 	 */
@@ -741,7 +741,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		dao.saveEncounterRole(encounterRole);
 		return encounterRole;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncounterRole(Integer)
 	 */
@@ -750,7 +750,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public EncounterRole getEncounterRole(Integer encounterRoleId) throws APIException {
 		return dao.getEncounterRole(encounterRoleId);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#purgeEncounterRole(org.openmrs.EncounterRole)
 	 */
@@ -758,7 +758,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public void purgeEncounterRole(EncounterRole encounterRole) throws APIException {
 		dao.deleteEncounterRole(encounterRole);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getAllEncounterRoles(boolean)
 	 */
@@ -767,7 +767,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public List<EncounterRole> getAllEncounterRoles(boolean includeRetired) {
 		return dao.getAllEncounterRoles(includeRetired);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncounterRoleByUuid(String)
 	 */
@@ -776,7 +776,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public EncounterRole getEncounterRoleByUuid(String uuid) throws APIException {
 		return dao.getEncounterRoleByUuid(uuid);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncounterRoleByName(String)
 	 */
@@ -784,7 +784,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public EncounterRole getEncounterRoleByName(String name) {
 		return dao.getEncounterRoleByName(name);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#retireEncounterRole(org.openmrs.EncounterRole, String)
 	 */
@@ -795,7 +795,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		}
 		return Context.getEncounterService().saveEncounterRole(encounterRole);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#unretireEncounterRole(org.openmrs.EncounterRole)
 	 */
@@ -803,7 +803,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public EncounterRole unretireEncounterRole(EncounterRole encounterRole) throws APIException {
 		return Context.getEncounterService().saveEncounterRole(encounterRole);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncountersNotAssignedToAnyVisit(org.openmrs.Patient)
 	 */
@@ -811,9 +811,9 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	@Transactional(readOnly = true)
 	public List<Encounter> getEncountersNotAssignedToAnyVisit(Patient patient) throws APIException {
 		return Context.getEncounterService().filterEncountersByViewPermissions(
-		    dao.getEncountersNotAssignedToAnyVisit(patient), null);
+										dao.getEncountersNotAssignedToAnyVisit(patient), null);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncountersByVisitsAndPatient(org.openmrs.Patient,
 	 *      boolean, java.lang.String, java.lang.Integer, java.lang.Integer)
@@ -821,11 +821,11 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	@Override
 	@Transactional(readOnly = true)
 	public List<Encounter> getEncountersByVisitsAndPatient(Patient patient, boolean includeVoided, String query,
-	                                                       Integer start, Integer length) throws APIException {
+									Integer start, Integer length) throws APIException {
 		return Context.getEncounterService().filterEncountersByViewPermissions(
-		    dao.getEncountersByVisitsAndPatient(patient, includeVoided, query, start, length), null);
+										dao.getEncountersByVisitsAndPatient(patient, includeVoided, query, start, length), null);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncountersByVisitsAndPatientCount(org.openmrs.Patient,
 	 *      boolean, java.lang.String)
@@ -833,10 +833,10 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	@Override
 	@Transactional(readOnly = true)
 	public Integer getEncountersByVisitsAndPatientCount(Patient patient, boolean includeVoided, String query)
-	    throws APIException {
+									throws APIException {
 		return dao.getEncountersByVisitsAndPatientCount(patient, includeVoided, query);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#filterEncountersByViewPermissions(java.util.List,
 	 *      org.openmrs.User)
@@ -849,7 +849,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 			if (user == null) {
 				user = Context.getAuthenticatedUser();
 			}
-			for (Iterator<Encounter> iterator = encounters.iterator(); iterator.hasNext();) {
+			for (Iterator<Encounter> iterator = encounters.iterator(); iterator.hasNext(); ) {
 				Encounter encounter = iterator.next();
 				// determine whether it's need to include this encounter into result or not
 				// as it can be not accessed by current user due to permissions lack
@@ -862,7 +862,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		}
 		return encounters;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#canViewAllEncounterTypes(org.openmrs.User)
 	 */
@@ -878,7 +878,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		}
 		return canView;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#canEditAllEncounterTypes(org.openmrs.User)
 	 */
@@ -894,7 +894,7 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		}
 		return canEdit;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#canEditEncounter(org.openmrs.Encounter,
 	 *      org.openmrs.User)
@@ -913,10 +913,10 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		if (user == null) {
 			user = Context.getAuthenticatedUser();
 		}
-		
+
 		return userHasEncounterPrivilege(encounter.getEncounterType().getEditPrivilege(), user);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#canViewEncounter(org.openmrs.Encounter,
 	 *      org.openmrs.User)
@@ -935,10 +935,10 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		if (user == null) {
 			user = Context.getAuthenticatedUser();
 		}
-		
+
 		return userHasEncounterPrivilege(encounter.getEncounterType().getViewPrivilege(), user);
 	}
-	
+
 	/**
 	 * Convenient method that safely checks if user has given encounter privilege
 	 * 
@@ -951,10 +951,10 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 		if (privilege == null) {
 			return true;
 		}
-		
+
 		return user.hasPrivilege(privilege.getPrivilege());
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#checkIfEncounterTypesAreLocked()
 	 */
@@ -962,12 +962,12 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	@Transactional(readOnly = true)
 	public void checkIfEncounterTypesAreLocked() {
 		String locked = Context.getAdministrationService().getGlobalProperty(
-		    OpenmrsConstants.GLOBAL_PROPERTY_ENCOUNTER_TYPES_LOCKED, "false");
+										OpenmrsConstants.GLOBAL_PROPERTY_ENCOUNTER_TYPES_LOCKED, "false");
 		if (Boolean.valueOf(locked)) {
 			throw new EncounterTypeLockedException();
 		}
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.EncounterService#getEncounterRolesByName(String)
 	 */
@@ -976,19 +976,19 @@ public class EncounterServiceImpl extends BaseOpenmrsService implements Encounte
 	public List<EncounterRole> getEncounterRolesByName(String name) {
 		return dao.getEncounterRolesByName(name);
 	}
-	
+
 	@Override
 	public Encounter transferEncounter(Encounter encounter, Patient patient) {
 		Encounter encounterCopy = encounter.copyAndAssignToAnotherPatient(patient);
-		
+
 		voidEncounter(encounter, "transfer to patient: id = " + patient.getId());
-		
+
 		//void visit if voided encounter is the only one
 		Visit visit = encounter.getVisit();
 		if (visit != null && visit.getEncounters().size() == 1) {
 			Context.getVisitService().voidVisit(visit, "Visit does not contain non-voided encounters");
 		}
-		
+
 		return saveEncounter(encounterCopy);
 	}
 }

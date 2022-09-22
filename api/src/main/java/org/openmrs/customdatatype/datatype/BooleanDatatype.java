@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class BooleanDatatype extends SerializingCustomDatatype<Boolean> {
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#serialize(java.lang.Object)
 	 */
@@ -30,7 +30,7 @@ public class BooleanDatatype extends SerializingCustomDatatype<Boolean> {
 		}
 		return typedValue.toString();
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#deserialize(java.lang.String)
 	 */
@@ -41,5 +41,5 @@ public class BooleanDatatype extends SerializingCustomDatatype<Boolean> {
 		}
 		return Boolean.valueOf(serializedValue);
 	}
-	
+
 }

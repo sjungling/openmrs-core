@@ -18,9 +18,9 @@ import org.springframework.validation.Errors;
  * 
  * @since 1.9
  */
-@Handler(supports = { VisitAttributeType.class }, order = 50)
+@Handler(supports = {VisitAttributeType.class}, order = 50)
 public class VisitAttributeTypeValidator extends BaseAttributeTypeValidator<VisitAttributeType> {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -30,7 +30,7 @@ public class VisitAttributeTypeValidator extends BaseAttributeTypeValidator<Visi
 	public boolean supports(Class<?> c) {
 		return c.equals(VisitAttributeType.class);
 	}
-	
+
 	/**
 	 * <strong>Should</strong> pass validation if field lengths are correct
 	 * <strong>Should</strong> fail validation if field lengths are not correct
@@ -40,7 +40,7 @@ public class VisitAttributeTypeValidator extends BaseAttributeTypeValidator<Visi
 		if (obj != null) {
 			super.validate(obj, errors);
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "description", "datatypeClassname",
-			    "preferredHandlerClassname", "retireReason");
+											"preferredHandlerClassname", "retireReason");
 		}
 	}
 }

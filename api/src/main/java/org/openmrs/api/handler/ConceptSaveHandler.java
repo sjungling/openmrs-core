@@ -35,7 +35,7 @@ import org.openmrs.api.context.Context;
  */
 @Handler(supports = Concept.class)
 public class ConceptSaveHandler implements SaveHandler<Concept> {
-	
+
 	/**
 	 * @see org.openmrs.api.handler.SaveHandler#handle(org.openmrs.OpenmrsObject, org.openmrs.User,
 	 *      java.util.Date, java.lang.String)

@@ -18,9 +18,9 @@ import org.openmrs.attribute.BaseAttribute;
  * @since 1.9
  */
 public class VisitAttribute extends BaseAttribute<VisitAttributeType, Visit> implements Attribute<VisitAttributeType, Visit> {
-	
+
 	private Integer visitAttributeId;
-	
+
 	// BaseAttribute<Visit> has an "owner" property of type Visit, which we re-expose as "visit"
 	
 	/**
@@ -30,7 +30,7 @@ public class VisitAttribute extends BaseAttribute<VisitAttributeType, Visit> imp
 	public Integer getId() {
 		return getVisitAttributeId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -38,33 +38,33 @@ public class VisitAttribute extends BaseAttribute<VisitAttributeType, Visit> imp
 	public void setId(Integer id) {
 		setVisitAttributeId(id);
 	}
-	
+
 	/**
 	 * @return the visit
 	 */
 	public Visit getVisit() {
 		return getOwner();
 	}
-	
+
 	/**
 	 * @param visit the visit to set
 	 */
 	public void setVisit(Visit visit) {
 		setOwner(visit);
 	}
-	
+
 	/**
 	 * @return the visitAttributeId
 	 */
 	public Integer getVisitAttributeId() {
 		return visitAttributeId;
 	}
-	
+
 	/**
 	 * @param visitAttributeId the visitAttributeId to set
 	 */
 	public void setVisitAttributeId(Integer visitAttributeId) {
 		this.visitAttributeId = visitAttributeId;
 	}
-	
+
 }

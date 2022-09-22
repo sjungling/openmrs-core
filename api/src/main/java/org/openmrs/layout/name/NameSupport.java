@@ -17,15 +17,15 @@ import org.openmrs.layout.LayoutSupport;
  * @since 1.12
  */
 public class NameSupport extends LayoutSupport<NameTemplate> {
-	
+
 	private static NameSupport singleton;
-	
+
 	public NameSupport() {
 		if (singleton == null) {
 			singleton = this;
 		}
 	}
-	
+
 	public static NameSupport getInstance() {
 		if (singleton == null) {
 			throw new APIException("Not Yet Instantiated");
@@ -33,7 +33,7 @@ public class NameSupport extends LayoutSupport<NameTemplate> {
 			return singleton;
 		}
 	}
-	
+
 	@Override
 	public String getDefaultLayoutFormat() {
 		String ret = Context.getAdministrationService().getGlobalProperty("layout.name.format");

@@ -36,8 +36,8 @@ import org.springframework.validation.Validator;
  * Tests the methods in {@link HandlerUtil}
  */
 public class HandlerUtilTest extends BaseContextSensitiveTest {
-	
-	
+
+
 	/**
 	 * @see HandlerUtil#getHandlerForType(Class, Class)
 	 */
@@ -59,7 +59,7 @@ public class HandlerUtilTest extends BaseContextSensitiveTest {
 		assertNotNull(l);
 		assertEquals(0, l.size());
 	}
-	
+
 	/**
 	 * @see HandlerUtil#getPreferredHandler(Class, Class)
 	 */
@@ -68,28 +68,28 @@ public class HandlerUtilTest extends BaseContextSensitiveTest {
 		Validator v = HandlerUtil.getPreferredHandler(Validator.class, DrugOrder.class);
 		assertEquals(DrugOrderValidator.class, v.getClass());
 	}
-	
+
 	/**
 	 * @see HandlerUtil#getPreferredHandler(Class, Class)
 	 */
 	@Test
-	public void getPreferredHandler_shouldThrowAAPIExceptionExceptionIfNoHandlerIsFound() { 
-		
+	public void getPreferredHandler_shouldThrowAAPIExceptionExceptionIfNoHandlerIsFound() {
+
 		APIException exception = assertThrows(APIException.class, () -> HandlerUtil.getPreferredHandler(Validator.class, Integer.class));
-		assertThat(exception.getMessage(), is(Context.getMessageSourceService().getMessage("handler.type.not.found", new Object[] { Validator.class.toString(), Integer.class }, null)));
+		assertThat(exception.getMessage(), is(Context.getMessageSourceService().getMessage("handler.type.not.found", new Object[]{Validator.class.toString(), Integer.class}, null)));
 	}
-	
+
 	@Test
 	public void getPreferredHandler_shouldReturnPatientValidatorForPatient() {
 		Validator handler = HandlerUtil.getPreferredHandler(Validator.class, Patient.class);
-		
+
 		assertThat(handler, is(instanceOf(PatientValidator.class)));
 	}
-	
+
 	@Test
 	public void getPreferredHandler_shouldReturnPersonValidatorForPerson() {
 		Validator handler = HandlerUtil.getPreferredHandler(Validator.class, Person.class);
-		
+
 		assertThat(handler, is(instanceOf(PersonValidator.class)));
 	}
 }

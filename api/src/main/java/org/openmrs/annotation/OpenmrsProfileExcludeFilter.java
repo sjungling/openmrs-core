@@ -40,7 +40,7 @@ public class OpenmrsProfileExcludeFilter implements TypeFilter {
 	@Override
 	public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) throws IOException {
 		Map<String, Object> openmrsProfileAttributes = metadataReader.getAnnotationMetadata().getAnnotationAttributes(
-				"org.openmrs.annotation.OpenmrsProfile");
+										"org.openmrs.annotation.OpenmrsProfile");
 		if (openmrsProfileAttributes != null) {
 			return !matchOpenmrsProfileAttributes(openmrsProfileAttributes);
 		} else {
@@ -57,7 +57,7 @@ public class OpenmrsProfileExcludeFilter implements TypeFilter {
 		}
 
 		if (StringUtils.isNotBlank((String) openmrsPlatformVersion)
-				&& !ModuleUtil.matchRequiredVersions(OpenmrsConstants.OPENMRS_VERSION_SHORT, (String) openmrsPlatformVersion)) {
+										&& !ModuleUtil.matchRequiredVersions(OpenmrsConstants.OPENMRS_VERSION_SHORT, (String) openmrsPlatformVersion)) {
 			return false;
 		}
 
@@ -77,7 +77,7 @@ public class OpenmrsProfileExcludeFilter implements TypeFilter {
 				boolean moduleMatched = false;
 				for (Module module : ModuleFactory.getStartedModules()) {
 					if (module.getModuleId().equals(moduleId)
-							&& ModuleUtil.matchRequiredVersions(module.getVersion(), moduleVersion)) {
+													&& ModuleUtil.matchRequiredVersions(module.getVersion(), moduleVersion)) {
 						moduleMatched = true;
 						break;
 					}

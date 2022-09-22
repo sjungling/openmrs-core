@@ -22,41 +22,41 @@ import org.springframework.validation.Errors;
  * Tests methods on the {@link LocationTagValidator} class.
  */
 public class LocationTagValidatorTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see LocationTagValidator#validate(Object, org.springframework.validation.Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() {
 		LocationTag locationTag = new LocationTag();
-		
+
 		locationTag.setName("name");
 		locationTag.setDescription("description");
 		locationTag.setRetireReason("retireReason");
-		
+
 		Errors errors = new BindException(locationTag, "locationTag");
 		new LocationTagValidator().validate(locationTag, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see LocationTagValidator#validate(Object,Errors)
+	 * @see LocationTagValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() {
 		LocationTag locationTag = new LocationTag();
-		
+
 		locationTag
-		        .setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		locationTag
-		        .setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		locationTag
-		        .setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
-		
+										.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+
 		Errors errors = new BindException(locationTag, "location");
 		new LocationTagValidator().validate(locationTag, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("name"));
 		assertTrue(errors.hasFieldErrors("description"));
 		assertTrue(errors.hasFieldErrors("retireReason"));

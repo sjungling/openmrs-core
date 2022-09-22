@@ -67,11 +67,11 @@ public class MigrationHelper {
 
 	private MigrationHelper() {
 	}
-	
+
 	private static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
 	private static final Logger log = LoggerFactory.getLogger(MigrationHelper.class);
-	
+
 	static DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
 	/**
@@ -99,14 +99,14 @@ public class MigrationHelper {
 		try {
 			// Disable resolution of external entities. See TRUNK-3942 
 			builder.setEntityResolver((publicId, systemId) -> new InputSource(new StringReader("")));
-			
+
 			return builder.parse(new InputSource(new StringReader(xml)));
 		}
 		catch (IOException | SAXException ex) {
 			return null;
 		}
 	}
-	
+
 	private static void findNodesNamed(Node node, String lookForName, Collection<Node> ret) {
 		if (node.getNodeName().equals(lookForName)) {
 			ret.add(node);
@@ -117,7 +117,7 @@ public class MigrationHelper {
 			}
 		}
 	}
-	
+
 	/**
 	 * Takes XML like: &lt;something&gt; &lt;user date_changed="2001-03-06 08:46:53.0"
 	 * date_created="2001-03-06 08:46:53.0" username="hamish@mit.edu" first_name="Hamish"
@@ -130,7 +130,7 @@ public class MigrationHelper {
 		int ret = 0;
 		Random rand = new Random();
 		UserService us = Context.getUserService();
-		
+
 		List<Node> toAdd = new ArrayList<>();
 		findNodesNamed(document, "user", toAdd);
 		for (Node node : toAdd) {
@@ -149,7 +149,7 @@ public class MigrationHelper {
 			user.setUsername(username);
 			user.setDateCreated(parseDate(e.getAttribute("date_created")));
 			user.setDateChanged(parseDate(e.getAttribute("date_changed")));
-			
+
 			// Generate a temporary password: 8-12 random characters
 			String pass;
 			{
@@ -166,7 +166,7 @@ public class MigrationHelper {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * Takes XML like: &lt;something&gt; &lt;location name="Cerca-la-Source"/&gt; &lt;/something&gt; returns the
 	 * number of locations added
@@ -190,13 +190,13 @@ public class MigrationHelper {
 			}
 			Location location = new Location();
 			location.setName(name);
-			
+
 			ls.saveLocation(location);
 			++ret;
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * Takes a list of Strings of the format RELATIONSHIP:&lt;user last name&gt;,&lt;user first
 	 * name&gt;,&lt;relationship type name&gt;,&lt;patient identifier type name&gt;,&lt;identifier&gt; so if user hfraser
@@ -237,7 +237,7 @@ public class MigrationHelper {
 					user = users.get(0);
 				} else if (users.size() > 1) {
 					throw new IllegalArgumentException("Found " + users.size() + " users named '" + userLastName + ", "
-					        + userFirstName + "'");
+													+ userFirstName + "'");
 				}
 			}
 			if (user == null) {
@@ -247,7 +247,7 @@ public class MigrationHelper {
 					user = users.get(0);
 				} else if (users.size() > 1) {
 					throw new IllegalArgumentException("Found " + users.size() + " voided users named '" + userLastName
-					        + ", " + userFirstName + "'");
+													+ ", " + userFirstName + "'");
 				}
 			}
 			if (user == null && autoCreateUsers) {
@@ -279,14 +279,14 @@ public class MigrationHelper {
 				throw new IllegalArgumentException("Can't find user '" + userLastName + ", " + userFirstName + "'");
 			}
 			Person person = personService.getPerson(user.getUserId());
-			
+
 			RelationshipType relationship = personService.getRelationshipTypeByName(relationshipType);
 			PatientIdentifierType pit = ps.getPatientIdentifierTypeByName(identifierType);
 			List<PatientIdentifier> found = ps.getPatientIdentifiers(identifier, Collections.singletonList(pit), null, null,
-			    null);
+											null);
 			if (found.size() != 1) {
 				throw new IllegalArgumentException("Found " + found.size() + " patients with identifier '" + identifier
-				        + "' of type " + identifierType);
+												+ "' of type " + identifierType);
 			}
 			Person relative = personService.getPerson(found.get(0).getPatient().getPatientId());
 			Relationship rel = new Relationship();
@@ -325,10 +325,10 @@ public class MigrationHelper {
 				PatientIdentifierType pit = ps.getPatientIdentifierTypeByName(temp[0]);
 				String identifier = temp[1];
 				List<PatientIdentifier> pis = ps.getPatientIdentifiers(identifier, Collections.singletonList(pit), null,
-				    null, null);
+												null, null);
 				if (pis.size() != 1) {
 					throw new IllegalArgumentException("Found " + pis.size() + " instances of identifier " + identifier
-					        + " of type " + pit);
+													+ " of type " + pit);
 				}
 				Patient p = pis.get(0).getPatient();
 				Program program = programsByName.get(temp[2]);
@@ -355,12 +355,12 @@ public class MigrationHelper {
 				ProgramWorkflow wf = program.getWorkflowByName(temp[3]);
 				if (wf == null) {
 					throw new RuntimeException("Couldn't find workflow \"" + temp[3] + "\" for program " + program + " (in "
-					        + program.getAllWorkflows() + ")");
+													+ program.getAllWorkflows() + ")");
 				}
 				ProgramWorkflowState st = wf.getStateByName(temp[4]);
 				if (st == null) {
 					throw new RuntimeException("Couldn't find state \"" + temp[4] + "\" for workflow " + wf + " (in "
-					        + wf.getStates() + ")");
+													+ wf.getStates() + ")");
 				}
 				Date startDate = temp.length < 6 ? null : parseDate(temp[5]);
 				Date endDate = temp.length < 7 ? null : parseDate(temp[6]);
@@ -374,12 +374,12 @@ public class MigrationHelper {
 			}
 		}
 		int numAdded = 0;
-		
+
 		for (PatientProgram pp : knownPatientPrograms.values()) {
 			pws.savePatientProgram(pp);
 			++numAdded;
 		}
 		return numAdded;
 	}
-	
+
 }

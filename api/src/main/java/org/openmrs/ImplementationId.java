@@ -15,19 +15,19 @@ package org.openmrs;
  * ImplementationId is stored and verified on the openmrs servers.
  */
 public class ImplementationId implements java.io.Serializable {
-	
+
 	public static final long serialVersionUID = 3752234110L;
-	
+
 	// Fields
 	
 	private String name;
-	
+
 	private String description;
-	
+
 	private String implementationId;
-	
+
 	private String passphrase;
-	
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -35,16 +35,16 @@ public class ImplementationId implements java.io.Serializable {
 	public boolean equals(Object o) {
 		if (o instanceof ImplementationId) {
 			ImplementationId other = (ImplementationId) o;
-			
+
 			if (getImplementationId() != null && other.getImplementationId() != null) {
 				return getImplementationId().equals(other.getImplementationId());
 			}
-			
+
 			return this == other;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -53,10 +53,10 @@ public class ImplementationId implements java.io.Serializable {
 		if (getImplementationId() != null) {
 			return getImplementationId().hashCode() * 342 + 3;
 		}
-		
+
 		return super.hashCode();
 	}
-	
+
 	/**
 	 * Text describing this implementation. (e.g. Source for the AMPATH program in Kenya. Created by
 	 * Paul Biondich)
@@ -66,7 +66,7 @@ public class ImplementationId implements java.io.Serializable {
 	public String getDescription() {
 		return description;
 	}
-	
+
 	/**
 	 * Text describing this implementation. (e.g. Source for the AMPATH program in Kenya. Created by
 	 * Paul Biondich)
@@ -76,7 +76,7 @@ public class ImplementationId implements java.io.Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	/**
 	 * This is the unique id for this implementation. <br>
 	 * <br>
@@ -90,7 +90,7 @@ public class ImplementationId implements java.io.Serializable {
 	public String getImplementationId() {
 		return implementationId;
 	}
-	
+
 	/**
 	 * This is the unique id for this implementation. <br>
 	 * <br>
@@ -104,7 +104,7 @@ public class ImplementationId implements java.io.Serializable {
 	public void setImplementationId(String implementationId) {
 		this.implementationId = implementationId;
 	}
-	
+
 	/**
 	 * This text is a long text string that is used to validate who uses an implementation id.
 	 * Multiple installations of openmrs can use the same implementation id, but they must all know
@@ -116,7 +116,7 @@ public class ImplementationId implements java.io.Serializable {
 	public String getPassphrase() {
 		return passphrase;
 	}
-	
+
 	/**
 	 * This text is a long text string that is used to validate who uses an implementation id.
 	 * Multiple installations of openmrs can use the same implementation id, but they must all know
@@ -128,7 +128,7 @@ public class ImplementationId implements java.io.Serializable {
 	public void setPassphrase(String passphrase) {
 		this.passphrase = passphrase;
 	}
-	
+
 	/**
 	 * A descriptive name for this implementation (e.g. AMRS installation in Eldoret, Kenya)
 	 *
@@ -137,7 +137,7 @@ public class ImplementationId implements java.io.Serializable {
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * A descriptive name for this implementation (e.g. AMRS installation in Eldoret, Kenya)
 	 *
@@ -146,7 +146,7 @@ public class ImplementationId implements java.io.Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Impl Id: " + getImplementationId() + " name: " + getName() + " desc: " + getDescription();

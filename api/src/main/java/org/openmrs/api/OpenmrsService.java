@@ -20,16 +20,16 @@ import org.openmrs.api.impl.BaseOpenmrsService;
  * @see BaseOpenmrsService
  */
 public interface OpenmrsService {
-	
+
 	/**
 	 * Called when the OpenMRS service layer is initializing. This occurs when a new module is
 	 * loaded or during the initial server/api start
 	 */
 	public void onStartup();
-	
+
 	/**
 	 * Called when the OpenMRS service layer is shutting down
 	 */
 	public void onShutdown();
-	
+
 }

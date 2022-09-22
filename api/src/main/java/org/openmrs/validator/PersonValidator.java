@@ -29,22 +29,22 @@ import org.springframework.validation.Validator;
  *
  * @since 1.9
  */
-@Handler(supports = { Person.class }, order = 50)
+@Handler(supports = {Person.class}, order = 50)
 public class PersonValidator implements Validator {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(PersonValidator.class);
-	
+
 	@Autowired
 	private PersonNameValidator personNameValidator;
-	
+
 	@Autowired
 	private PersonAddressValidator personAddressValidator;
-	
+
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return Person.class.isAssignableFrom(clazz);
 	}
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
 	 *      org.springframework.validation.Errors)
@@ -62,32 +62,32 @@ public class PersonValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		log.debug("{}.validate...", this.getClass().getName());
-		
+
 		if (target == null) {
 			return;
 		}
-		
+
 		Person person = (Person) target;
-		
+
 		validatePersonNames(person, errors);
-		
+
 		if (!person.getVoided() && !validatePersonHasAtLeastOneNonVoidedName(person)) {
 			errors.rejectValue("names", "Person.shouldHaveAtleastOneNonVoidedName");
 		}
-		
+
 		validatePersonAddresses(person, errors);
-		
+
 		validateBirthDate(errors, person.getBirthdate());
 		validateDeathDate(errors, person.getDeathDate(), person.getBirthdate());
 		if (person.getVoided()) {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "voidReason", "error.null");
 		}
-		
+
 		validateDeathCause(person, errors);
-		
+
 		ValidateUtil.validateFieldLengths(errors, Person.class, "gender", "personVoidReason");
 	}
-	
+
 	/**
 	 * Checks if a person contains any non voided PersonName attribute
 	 *
@@ -95,9 +95,9 @@ public class PersonValidator implements Validator {
 	 * @return true if at leas one personName is not voided
 	 */
 	private boolean validatePersonHasAtLeastOneNonVoidedName(Person person) {
-			return person.getNames().stream().anyMatch(personName -> !personName.getVoided());
+		return person.getNames().stream().anyMatch(personName -> !personName.getVoided());
 	}
-	
+
 	/**
 	 * Checks if the names of a person fulfill the expected criteria  
 	 *
@@ -113,7 +113,7 @@ public class PersonValidator implements Validator {
 			index++;
 		}
 	}
-	
+
 	/**
 	 * Checks if the addresses of a person fulfill the expected criteria  
 	 *
@@ -133,24 +133,24 @@ public class PersonValidator implements Validator {
 			}
 		}
 	}
-	
+
 	/**
 	 * Checks if the death cause and death cause non coded fulfill the business logic
 	 *
 	 * @param person The person whose death attributes should be validated.
 	 * @param errors Stores information about errors encountered during validation.
 	 */
-	private void validateDeathCause(Person person, Errors errors){
+	private void validateDeathCause(Person person, Errors errors) {
 		if (person.getDead()) {
-			if(person.getCauseOfDeath() != null && person.getCauseOfDeathNonCoded() != null) {
+			if (person.getCauseOfDeath() != null && person.getCauseOfDeathNonCoded() != null) {
 				errors.rejectValue("causeOfDeath", "Person.dead.shouldHaveOnlyOneCauseOfDeathOrCauseOfDeathNonCodedSet");
 			}
-			else if(person.getCauseOfDeath() == null && person.getCauseOfDeathNonCoded() == null) {
+			else if (person.getCauseOfDeath() == null && person.getCauseOfDeathNonCoded() == null) {
 				errors.rejectValue("causeOfDeath", "Person.dead.causeOfDeathAndCauseOfDeathNonCodedNull");
 			}
 		}
 	}
-	
+
 	/**
 	 * Checks if the birth date specified is in the future or older than 140 years old..
 	 *
@@ -164,7 +164,7 @@ public class PersonValidator implements Validator {
 		rejectIfFutureDate(errors, birthDate, "birthdate");
 		rejectDateIfBefore140YearsAgo(errors, birthDate, "birthdate");
 	}
-	
+
 	/**
 	 * Checks if the death date is in the future.
 	 * 
@@ -181,7 +181,7 @@ public class PersonValidator implements Validator {
 		}
 		rejectDeathDateIfBeforeBirthDate(errors, deathDate, birthDate);
 	}
-	
+
 	/**
 	 * Rejects a date if it is in the future.
 	 * 
@@ -194,7 +194,7 @@ public class PersonValidator implements Validator {
 			errors.rejectValue(dateField, "error.date.future");
 		}
 	}
-	
+
 	/**
 	 * Rejects a date if it is before 140 years ago.
 	 * 
@@ -210,7 +210,7 @@ public class PersonValidator implements Validator {
 			errors.rejectValue(dateField, "error.date.nonsensical");
 		}
 	}
-	
+
 	/**
 	 * Rejects a death date if it is before birth date
 	 * 
@@ -223,5 +223,5 @@ public class PersonValidator implements Validator {
 			errors.rejectValue("deathDate", "error.deathdate.before.birthdate");
 		}
 	}
-	
+
 }

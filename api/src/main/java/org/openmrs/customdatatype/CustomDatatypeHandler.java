@@ -18,12 +18,12 @@ import org.openmrs.attribute.AttributeType;
  * @since 1.9
  */
 public interface CustomDatatypeHandler<DT extends CustomDatatype<T>, T> {
-	
+
 	/**
 	 * An {@link AttributeType} will typically be configured with a handler and a configuration. The framework
 	 * takes care of constructing a handler, and setting its configuration (if any)  
 	 * @param handlerConfig
 	 */
 	void setHandlerConfiguration(String handlerConfig);
-	
+
 }

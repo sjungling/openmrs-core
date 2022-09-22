@@ -28,9 +28,9 @@ public class OrderSearchCriteriaBuilder {
 	private Collection<Concept> concepts;
 
 	private Collection<OrderType> orderTypes;
-	
+
 	private String accessionNumber;
-	
+
 	private String orderNumber;
 
 	private Date activatedOnOrBeforeDate;
@@ -108,7 +108,7 @@ public class OrderSearchCriteriaBuilder {
 		this.orderNumber = orderNumber;
 		return (this);
 	}
-	
+
 	/**
 	 * @param activatedOnOrBeforeDate orders must have dateActivated on or before this date
 	 * @return this builder instance
@@ -158,20 +158,20 @@ public class OrderSearchCriteriaBuilder {
 	}
 
 	/**
-     *
-     * @param action
-     * @return this builder instance
-     */
-    public OrderSearchCriteriaBuilder setAction(Order.Action action) {
-        this.action = action;
-        return (this);
-    }
+		
+		 @param action
+		 @return this builder instance
+		*/
+		public OrderSearchCriteriaBuilder setAction(Order.Action action) {
+		this.action = action;
+		return (this);
+	}
 
-    /**
-	 *
-	 * @param fulfillerStatus
-	 * @return this builder instance
-	 */
+	/**
+		*
+		* @param fulfillerStatus
+		* @return this builder instance
+		*/
 	public OrderSearchCriteriaBuilder setFulfillerStatus(Order.FulfillerStatus fulfillerStatus) {
 		this.fulfillerStatus = fulfillerStatus;
 		return (this);
@@ -211,9 +211,9 @@ public class OrderSearchCriteriaBuilder {
 	 * @return a new search criteria instance
 	 */
 	public OrderSearchCriteria build() {
-		return new OrderSearchCriteria(patient, careSetting, concepts, orderTypes, accessionNumber, orderNumber, activatedOnOrBeforeDate,  
-			activatedOnOrAfterDate, isStopped, autoExpireOnOrBeforeDate, canceledOrExpiredOnOrBeforeDate,
-				action, fulfillerStatus, includeNullFulfillerStatus, excludeCanceledAndExpired, excludeDiscontinueOrders, includeVoided);
+		return new OrderSearchCriteria(patient, careSetting, concepts, orderTypes, accessionNumber, orderNumber, activatedOnOrBeforeDate,
+										activatedOnOrAfterDate, isStopped, autoExpireOnOrBeforeDate, canceledOrExpiredOnOrBeforeDate,
+										action, fulfillerStatus, includeNullFulfillerStatus, excludeCanceledAndExpired, excludeDiscontinueOrders, includeVoided);
 	}
 }
 

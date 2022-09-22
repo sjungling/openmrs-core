@@ -22,12 +22,12 @@ import org.springframework.context.ApplicationEvent;
  * @since 2.3.0
  */
 public class FullTextQueryCreatedEvent extends ApplicationEvent {
-	
+
 	/**
 	 * @see ApplicationEvent#ApplicationEvent(java.lang.Object)
 	 */
 	public FullTextQueryCreatedEvent(FullTextQueryAndEntityClass queryAndClass) {
 		super(queryAndClass);
 	}
-	
+
 }

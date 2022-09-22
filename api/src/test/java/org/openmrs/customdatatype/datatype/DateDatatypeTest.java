@@ -19,14 +19,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class DateDatatypeTest {
-	
+
 	DateDatatype datatype;
-	
+
 	@BeforeEach
 	public void before() {
 		datatype = new DateDatatype();
 	}
-	
+
 	/**
 	 * @throws ParseException
 	 * @see Date#deserialize(String)
@@ -36,7 +36,7 @@ public class DateDatatypeTest {
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2011-04-25");
 		assertEquals(date, datatype.deserialize(datatype.serialize(date)));
 	}
-	
+
 	/**
 	 * @throws ParseException
 	 * @see Date#serialize(java.util.Date)

@@ -26,15 +26,15 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ProviderDAOTest extends BaseContextSensitiveTest {
-	
+
 	private static final String PROVIDERS_INITIAL_XML = "org/openmrs/api/include/ProviderServiceTest-initial.xml";
-	
+
 	@Autowired
 	private PersonDAO personDao;
-	
+
 	@Autowired
 	private ProviderDAO providerDao;
-	
+
 	/**
 	 * Run this before each unit test in this class.
 	 * 
@@ -44,9 +44,9 @@ public class ProviderDAOTest extends BaseContextSensitiveTest {
 	public void runBeforeEachTest() {
 		executeDataSet(PROVIDERS_INITIAL_XML);
 	}
-	
+
 	/**
-	 * @see ProviderDAO#getProvidersByPerson(Person,boolean)
+	 * @see ProviderDAO#getProvidersByPerson(Person, boolean)
 	 */
 	@Test
 	public void getProvidersByPerson_shouldNotReturnRetiredProvidersIfIncludeRetiredFalse() {
@@ -54,18 +54,18 @@ public class ProviderDAOTest extends BaseContextSensitiveTest {
 		assertEquals(1, providers.size());
 		assertFalse(providers.iterator().next().getRetired());
 	}
-	
+
 	/**
-	 * @see ProviderDAO#getProvidersByPerson(Person,boolean)
+	 * @see ProviderDAO#getProvidersByPerson(Person, boolean)
 	 */
 	@Test
 	public void getProvidersByPerson_shouldListRetiredProvidersAtTheEnd() {
 		List<Provider> providers = (List<Provider>) providerDao.getProvidersByPerson(personDao.getPerson(2), true);
 		assertTrue(providers.get(1).getRetired());
 	}
-	
+
 	/**
-	 * @see ProviderDAO#getProvidersByPerson(Person,boolean)
+	 * @see ProviderDAO#getProvidersByPerson(Person, boolean)
 	 */
 	@Test
 	public void getProvidersByPerson_shouldReturnAllProvidersIfIncludeRetiredTrue() {

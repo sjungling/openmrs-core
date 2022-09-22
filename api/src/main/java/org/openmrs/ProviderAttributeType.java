@@ -40,7 +40,7 @@ public class ProviderAttributeType extends BaseAttributeType<Provider> implement
 	public Integer getId() {
 		return getProviderAttributeTypeId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -48,13 +48,13 @@ public class ProviderAttributeType extends BaseAttributeType<Provider> implement
 	public void setId(Integer id) {
 		setProviderAttributeTypeId(id);
 	}
-	
+
 	public void setProviderAttributeTypeId(Integer providerAttributeTypeId) {
 		this.providerAttributeTypeId = providerAttributeTypeId;
 	}
-	
+
 	public Integer getProviderAttributeTypeId() {
 		return providerAttributeTypeId;
 	}
-	
+
 }

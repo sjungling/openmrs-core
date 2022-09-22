@@ -21,10 +21,10 @@ package org.openmrs.logic.op;
  * @see Before
  */
 public class After implements ComparisonOperator {
-	
+
 	@Override
 	public String toString() {
 		return "AFTER";
 	}
-	
+
 }

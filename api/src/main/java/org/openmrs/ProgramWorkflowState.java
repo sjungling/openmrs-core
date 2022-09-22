@@ -13,23 +13,23 @@ package org.openmrs;
  * ProgramWorkflowState
  */
 public class ProgramWorkflowState extends BaseChangeableOpenmrsMetadata {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	// ******************
 	// Properties
 	// ******************
 	
 	private Integer programWorkflowStateId;
-	
+
 	private ProgramWorkflow programWorkflow;
-	
+
 	private Concept concept;
-	
+
 	private Boolean initial;
-	
+
 	private Boolean terminal;
-	
+
 	// ******************
 	// Constructors
 	// ******************
@@ -37,12 +37,12 @@ public class ProgramWorkflowState extends BaseChangeableOpenmrsMetadata {
 	/** Default Constructor */
 	public ProgramWorkflowState() {
 	}
-	
+
 	/** Constructor with id */
 	public ProgramWorkflowState(Integer programWorkflowStateId) {
 		setProgramWorkflowStateId(programWorkflowStateId);
 	}
-	
+
 	// ******************
 	// Instance methods
 	// ******************
@@ -52,7 +52,7 @@ public class ProgramWorkflowState extends BaseChangeableOpenmrsMetadata {
 	public String toString() {
 		return "State " + getConcept().toString() + " initial=" + getInitial() + " terminal=" + getTerminal();
 	}
-	
+
 	// ******************
 	// Property Access
 	// ******************
@@ -60,43 +60,43 @@ public class ProgramWorkflowState extends BaseChangeableOpenmrsMetadata {
 	public Concept getConcept() {
 		return concept;
 	}
-	
+
 	public void setConcept(Concept concept) {
 		this.concept = concept;
 	}
-	
+
 	public Boolean getInitial() {
 		return initial;
 	}
-	
+
 	public void setInitial(Boolean initial) {
 		this.initial = initial;
 	}
-	
+
 	public Boolean getTerminal() {
 		return terminal;
 	}
-	
+
 	public void setTerminal(Boolean terminal) {
 		this.terminal = terminal;
 	}
-	
+
 	public ProgramWorkflow getProgramWorkflow() {
 		return programWorkflow;
 	}
-	
+
 	public void setProgramWorkflow(ProgramWorkflow programWorkflow) {
 		this.programWorkflow = programWorkflow;
 	}
-	
+
 	public Integer getProgramWorkflowStateId() {
 		return programWorkflowStateId;
 	}
-	
+
 	public void setProgramWorkflowStateId(Integer programWorkflowStateId) {
 		this.programWorkflowStateId = programWorkflowStateId;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
@@ -105,7 +105,7 @@ public class ProgramWorkflowState extends BaseChangeableOpenmrsMetadata {
 	public Integer getId() {
 		return getProgramWorkflowStateId();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -113,6 +113,6 @@ public class ProgramWorkflowState extends BaseChangeableOpenmrsMetadata {
 	@Override
 	public void setId(Integer id) {
 		setProgramWorkflowStateId(id);
-		
+
 	}
 }

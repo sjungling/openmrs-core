@@ -24,20 +24,20 @@ import org.springframework.core.io.ClassPathResource;
 @Configuration
 public class CacheConfig {
 
-    @Bean(name = "apiCacheManagerFactoryBean")
-    public EhCacheManagerFactoryBean apiCacheManagerFactoryBean(){
-        OpenmrsCacheManagerFactoryBean cacheManagerFactoryBean = new OpenmrsCacheManagerFactoryBean();
-        cacheManagerFactoryBean.setConfigLocation(new ClassPathResource("ehcache-api.xml"));
-        cacheManagerFactoryBean.setShared(false);
-        cacheManagerFactoryBean.setAcceptExisting(true);
+	@Bean(name = "apiCacheManagerFactoryBean")
+	public EhCacheManagerFactoryBean apiCacheManagerFactoryBean() {
+		OpenmrsCacheManagerFactoryBean cacheManagerFactoryBean = new OpenmrsCacheManagerFactoryBean();
+		cacheManagerFactoryBean.setConfigLocation(new ClassPathResource("ehcache-api.xml"));
+		cacheManagerFactoryBean.setShared(false);
+		cacheManagerFactoryBean.setAcceptExisting(true);
 
-        return cacheManagerFactoryBean;
-    }
+		return cacheManagerFactoryBean;
+	}
 
-    @Bean(name = "apiCacheManager")
-    public CacheManager cacheManager() {
-        return new EhCacheCacheManager(apiCacheManagerFactoryBean().getObject());
-    }
+	@Bean(name = "apiCacheManager")
+	public CacheManager cacheManager() {
+		return new EhCacheCacheManager(apiCacheManagerFactoryBean().getObject());
+	}
 
 
 }

@@ -34,18 +34,18 @@ import org.springframework.validation.Errors;
  * Contains tests methods for the {@link DrugValidator}
  */
 public class DrugValidatorTest extends BaseContextSensitiveTest {
-	
-	
+
+
 	@Autowired
 	private ConceptService conceptService;
-	
+
 	protected static final String GET_DRUG_MAPPINGS = "org/openmrs/api/include/ConceptServiceTest-getDrugMappings.xml";
-	
+
 	@BeforeEach
 	public void executeDrugMappingsDataSet() {
 		executeDataSet(GET_DRUG_MAPPINGS);
 	}
-	
+
 	/**
 	 * @see DrugValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -54,7 +54,7 @@ public class DrugValidatorTest extends BaseContextSensitiveTest {
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new DrugValidator().validate(null, new BindException(new Drug(), "drug")));
 		assertThat(exception.getMessage(), is("The parameter obj should not be null and must be of type" + Drug.class));
 	}
-	
+
 	/**
 	 * @see DrugValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -66,7 +66,7 @@ public class DrugValidatorTest extends BaseContextSensitiveTest {
 		new DrugValidator().validate(drug, errors);
 		assertTrue(errors.hasFieldErrors("drugReferenceMaps[0].drug"));
 	}
-	
+
 	/**
 	 * @see DrugValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -78,7 +78,7 @@ public class DrugValidatorTest extends BaseContextSensitiveTest {
 		new DrugValidator().validate(drug, errors);
 		assertTrue(errors.hasFieldErrors("drugReferenceMaps[0].conceptReferenceTerm"));
 	}
-	
+
 	/**
 	 * @see DrugValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -91,7 +91,7 @@ public class DrugValidatorTest extends BaseContextSensitiveTest {
 		//reference term validator should have been called which should reject a null code
 		assertTrue(errors.hasFieldErrors("drugReferenceMaps[0].conceptReferenceTerm.code"));
 	}
-	
+
 	/**
 	 * @see DrugValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -104,7 +104,7 @@ public class DrugValidatorTest extends BaseContextSensitiveTest {
 		//concept map type validator should have been called which should reject a null name
 		assertTrue(errors.hasFieldErrors("drugReferenceMaps[0].conceptMapType.name"));
 	}
-	
+
 	/**
 	 * @see DrugValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -112,9 +112,9 @@ public class DrugValidatorTest extends BaseContextSensitiveTest {
 	public void validate_shouldRejectDrugMultipleMappingsToTheSameTerm() {
 		Drug drug = new Drug();
 		DrugReferenceMap term1 = new DrugReferenceMap(conceptService.getConceptReferenceTerm(1), conceptService
-		        .getConceptMapType(1));
+										.getConceptMapType(1));
 		DrugReferenceMap term2 = new DrugReferenceMap(conceptService.getConceptReferenceTerm(1), conceptService
-		        .getConceptMapType(2));
+										.getConceptMapType(2));
 		drug.addDrugReferenceMap(term1);
 		drug.addDrugReferenceMap(term2);
 		assertEquals(2, drug.getDrugReferenceMaps().size());
@@ -122,7 +122,7 @@ public class DrugValidatorTest extends BaseContextSensitiveTest {
 		new DrugValidator().validate(drug, errors);
 		assertTrue(errors.hasFieldErrors("drugReferenceMaps[1].conceptReferenceTerm"));
 	}
-	
+
 	/**
 	 * @see DrugValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -130,12 +130,12 @@ public class DrugValidatorTest extends BaseContextSensitiveTest {
 	public void validate_shouldPassIfAllFieldsAreCorrect() {
 		Drug drug = new Drug();
 		drug.addDrugReferenceMap(new DrugReferenceMap(conceptService.getConceptReferenceTerm(1), conceptService
-		        .getConceptMapType(1)));
+										.getConceptMapType(1)));
 		Errors errors = new BindException(drug, "drug");
 		new DrugValidator().validate(drug, errors);
 		assertFalse(errors.hasFieldErrors());
 	}
-	
+
 	/**
 	 * @see DrugValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -143,7 +143,7 @@ public class DrugValidatorTest extends BaseContextSensitiveTest {
 	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() {
 		Drug drug = new Drug();
 		drug.addDrugReferenceMap(new DrugReferenceMap(conceptService.getConceptReferenceTerm(1), conceptService
-		        .getConceptMapType(1)));
+										.getConceptMapType(1)));
 		drug.setName("name");
 		drug.setStrength("strength");
 		drug.setRetireReason("retireReason");
@@ -151,7 +151,7 @@ public class DrugValidatorTest extends BaseContextSensitiveTest {
 		new DrugValidator().validate(drug, errors);
 		assertFalse(errors.hasFieldErrors());
 	}
-	
+
 	/**
 	 * @see DrugValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -159,13 +159,13 @@ public class DrugValidatorTest extends BaseContextSensitiveTest {
 	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() {
 		Drug drug = new Drug();
 		drug.addDrugReferenceMap(new DrugReferenceMap(conceptService.getConceptReferenceTerm(1), conceptService
-		        .getConceptMapType(1)));
+										.getConceptMapType(1)));
 		drug
-		        .setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		drug
-		        .setStrength("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setStrength("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		drug
-		        .setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		Errors errors = new BindException(drug, "drug");
 		new DrugValidator().validate(drug, errors);
 		assertTrue(errors.hasFieldErrors("name"));

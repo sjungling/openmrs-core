@@ -49,7 +49,7 @@ import org.openmrs.serialization.OpenmrsSerializer;
  * @since 1.5
  */
 public interface SerializedObjectDAO {
-	
+
 	/**
 	 * Retrieves the raw SerializedObject from the database by id
 	 * 
@@ -59,7 +59,7 @@ public interface SerializedObjectDAO {
 	 * <strong>Should</strong> return the saved serialized object
 	 */
 	public SerializedObject getSerializedObject(Integer id) throws DAOException;
-	
+
 	/**
 	 * Retrieves the saved object of the passed type from the database by it's id
 	 * 
@@ -70,7 +70,7 @@ public interface SerializedObjectDAO {
 	 * <strong>Should</strong> return the saved object
 	 */
 	public <T extends OpenmrsObject> T getObject(Class<T> type, Integer id) throws DAOException;
-	
+
 	/**
 	 * Retrieves the raw Serialized Object from the database by uuid
 	 * 
@@ -80,7 +80,7 @@ public interface SerializedObjectDAO {
 	 * <strong>Should</strong> return the saved serialized object
 	 */
 	public SerializedObject getSerializedObjectByUuid(String uuid) throws DAOException;
-	
+
 	/**
 	 * Retrieves the saved object of the passed type from the database by it's uuid
 	 * 
@@ -91,7 +91,7 @@ public interface SerializedObjectDAO {
 	 * <strong>Should</strong> return the saved object
 	 */
 	public <T extends OpenmrsObject> T getObjectByUuid(Class<T> type, String uuid) throws DAOException;
-	
+
 	/**
 	 * Saves an object to the database in serialized form
 	 * 
@@ -102,7 +102,7 @@ public interface SerializedObjectDAO {
 	 * <strong>Should</strong> throw an exception if object not supported
 	 */
 	public <T extends OpenmrsObject> T saveObject(T object) throws DAOException;
-	
+
 	/**
 	 * Saves an object to the database, in serialized form, using the specified
 	 * {@link OpenmrsSerializer}
@@ -116,7 +116,7 @@ public interface SerializedObjectDAO {
 	 * <strong>Should</strong> set auditable fields before serializing
 	 */
 	public <T extends OpenmrsObject> T saveObject(T object, OpenmrsSerializer serializer) throws DAOException;
-	
+
 	/**
 	 * Retrieves all raw Serialized Object from the database that match the passed type and
 	 * includeRetired flag
@@ -128,7 +128,7 @@ public interface SerializedObjectDAO {
 	 * <strong>Should</strong> return all objects of the passed type
 	 */
 	public List<SerializedObject> getAllSerializedObjects(Class<?> type, boolean includeRetired) throws DAOException;
-	
+
 	/**
 	 * Retrieves all non-retired objects of the passed type from the database that have been saved
 	 * through serialization
@@ -139,7 +139,7 @@ public interface SerializedObjectDAO {
 	 * <strong>Should</strong> return all non-retired objects of the passed type
 	 */
 	public <T extends OpenmrsObject> List<T> getAllObjects(Class<T> type) throws DAOException;
-	
+
 	/**
 	 * Retrieves all objects from the database that match the passed type that have been saved
 	 * through serialization Returns voided / retired Objects only if includeRetired parameter is
@@ -153,7 +153,7 @@ public interface SerializedObjectDAO {
 	 * <strong>Should</strong> return only non-retired objects of the passed type if not includeRetired
 	 */
 	public <T extends OpenmrsObject> List<T> getAllObjects(Class<T> type, boolean includeRetired) throws DAOException;
-	
+
 	/**
 	 * Retrieves all raw Serialized Objects from the database that match the passed type and name
 	 * 
@@ -166,8 +166,8 @@ public interface SerializedObjectDAO {
 	 * <strong>Should</strong> return all saved objects with the given type and partial name
 	 */
 	public List<SerializedObject> getAllSerializedObjectsByName(Class<?> type, String name, boolean exactMatchOnly)
-	        throws DAOException;
-	
+									throws DAOException;
+
 	/**
 	 * Retrieves all objects from the database that match the passed type and name that have been
 	 * saved through serialization
@@ -181,8 +181,8 @@ public interface SerializedObjectDAO {
 	 * <strong>Should</strong> return all saved objects with the given type and partial name
 	 */
 	public <T extends OpenmrsMetadata> List<T> getAllObjectsByName(Class<T> type, String name, boolean exactMatchOnly)
-	        throws DAOException;
-	
+									throws DAOException;
+
 	/**
 	 * Converts a raw SerializedObject to an OpenmrsObject, using the appropriate Serializer
 	 * 
@@ -192,8 +192,8 @@ public interface SerializedObjectDAO {
 	 * @throws DAOException
 	 */
 	public <T extends OpenmrsObject> T convertSerializedObject(Class<T> clazz, SerializedObject serializedObject)
-	        throws DAOException;
-	
+									throws DAOException;
+
 	/**
 	 * Deletes the item from the database with the given primary key id
 	 * 
@@ -202,7 +202,7 @@ public interface SerializedObjectDAO {
 	 * <strong>Should</strong> delete the object with the passed id
 	 */
 	public void purgeObject(Integer id) throws DAOException;
-	
+
 	/**
 	 * Returns the registered class for the passed object, or null if none found For example, if the
 	 * supportedTypes property contains the CohortDefinition.class interface, and a particular
@@ -213,19 +213,19 @@ public interface SerializedObjectDAO {
 	 * @return The registered type for the passed object, or null if not found
 	 */
 	public Class<? extends OpenmrsObject> getRegisteredTypeForObject(OpenmrsObject object);
-	
+
 	/**
 	 * @return all supported types that this class can manage
 	 */
 	public List<Class<? extends OpenmrsObject>> getSupportedTypes();
-	
+
 	/**
 	 * Registers a class as one that should be supported
 	 * 
 	 * @param clazz The class to register
 	 */
 	public void registerSupportedType(Class<? extends OpenmrsObject> clazz) throws DAOException;
-	
+
 	/**
 	 * Removes this class as one that should be supported
 	 * 

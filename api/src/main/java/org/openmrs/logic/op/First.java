@@ -19,10 +19,10 @@ package org.openmrs.logic.op;
  * @see Last
  */
 public class First implements TransformOperator {
-	
+
 	@Override
 	public String toString() {
 		return "FIRST";
 	}
-	
+
 }

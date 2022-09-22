@@ -21,15 +21,15 @@ import org.openmrs.api.context.Context;
  * @see ConceptDatatype
  */
 public class ConceptDatatypeEditor extends OpenmrsPropertyEditor<ConceptDatatype> {
-	
+
 	public ConceptDatatypeEditor() {
 	}
-	
+
 	@Override
 	protected ConceptDatatype getObjectById(Integer id) {
 		return Context.getConceptService().getConceptDatatype(id);
 	}
-	
+
 	@Override
 	protected ConceptDatatype getObjectByUuid(String uuid) {
 		return Context.getConceptService().getConceptDatatypeByUuid(uuid);

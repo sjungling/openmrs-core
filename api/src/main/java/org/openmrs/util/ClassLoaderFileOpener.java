@@ -23,27 +23,27 @@ import liquibase.resource.InputStreamList;
  * liquibase xml files in modules to be found.
  */
 public class ClassLoaderFileOpener extends AbstractResourceAccessor {
-	
+
 	/**
 	 * The classloader to read from
 	 */
 	private final ClassLoader cl;
-	
+
 	/**
 	 * @param cl the {@link ClassLoader} to use for finding files.
 	 */
 	public ClassLoaderFileOpener(ClassLoader cl) {
 		this.cl = cl;
 	}
-	
+
 	@Override
 	public InputStreamList openStreams(String context, String path) throws IOException {
 		InputStreamList result = new InputStreamList();
-		
+
 		if (path.isEmpty()) {
 			return result;
 		}
-		
+
 		URL url = cl.getResource(path);
 		if (url != null) {
 			try {
@@ -53,10 +53,10 @@ public class ClassLoaderFileOpener extends AbstractResourceAccessor {
 				throw new IOException(e);
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public SortedSet<String> list(String s, String s1, boolean b, boolean b1, boolean b2) throws IOException {
 		throw new UnsupportedOperationException();

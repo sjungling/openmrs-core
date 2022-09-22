@@ -49,28 +49,28 @@ import org.slf4j.LoggerFactory;
 @Order(10)
 @SuppressWarnings("unused")
 public class OpenmrsConfigurationFactory extends ConfigurationFactory {
-	
+
 	private static final org.slf4j.Logger log = LoggerFactory.getLogger(OpenmrsConfigurationFactory.class);
-	
-	public static final String[] SUFFIXES = new String[] { ".xml", ".yml", ".yaml", ".json", "*" };
-	
+
+	public static final String[] SUFFIXES = new String[]{".xml", ".yml", ".yaml", ".json", "*"};
+
 	@Override
 	public Configuration getConfiguration(LoggerContext loggerContext, String name, URI configLocation) {
 		if (!isActive()) {
 			return null;
 		}
-		
+
 		// try to load the configuration from the application directory
 		if (configLocation == null) {
-			for (File applicationDirectory : new File[] {
+			for (File applicationDirectory : new File[]{
 				OpenmrsUtil.getDirectoryInApplicationDataDirectory("configuration"),
 				OpenmrsUtil.getApplicationDataDirectoryAsFile()
- 			}) {
+		}) {
 				for (String suffix : getSupportedTypes()) {
 					if (suffix.equals("*")) {
 						continue;
 					}
-					
+
 					File configFile = new File(applicationDirectory, getDefaultPrefix() + suffix);
 					if (configFile.exists() && configFile.canRead()) {
 						return super.getConfiguration(loggerContext, name, configFile.toURI());
@@ -78,10 +78,10 @@ public class OpenmrsConfigurationFactory extends ConfigurationFactory {
 				}
 			}
 		}
-		
-		return super.getConfiguration(loggerContext, name, configLocation);		
+
+		return super.getConfiguration(loggerContext, name, configLocation);
 	}
-	
+
 	@Override
 	public Configuration getConfiguration(LoggerContext loggerContext, ConfigurationSource source) {
 		switch (FilenameUtils.getExtension(source.getLocation()).toLowerCase(Locale.ROOT)) {
@@ -94,30 +94,30 @@ public class OpenmrsConfigurationFactory extends ConfigurationFactory {
 				return new OpenmrsJsonConfiguration(loggerContext, source);
 			default:
 				throw new IllegalArgumentException(
-					OpenmrsConfigurationFactory.class.getName() + " does not know how to handle source " + source.getFile());
+												OpenmrsConfigurationFactory.class.getName() + " does not know how to handle source " + source.getFile());
 		}
 	}
-	
+
 	@Override
 	protected String[] getSupportedTypes() {
 		return SUFFIXES;
 	}
-	
+
 	protected static void doOpenmrsCustomisations(AbstractConfiguration configuration) {
 		// if we don't have an in-memory appender, add it
 		MemoryAppender memoryAppender = configuration.getAppender(OpenmrsConstants.MEMORY_APPENDER_NAME);
 		if (memoryAppender == null) {
 			memoryAppender = MemoryAppender.newBuilder().build();
 			memoryAppender.start();
-			
+
 			configuration.addAppender(memoryAppender);
 		}
-		
+
 		LoggerConfig rootLogger = configuration.getRootLogger();
 		if (rootLogger.getAppenders().get(OpenmrsConstants.MEMORY_APPENDER_NAME) == null) {
 			rootLogger.addAppender(memoryAppender, null, memoryAppender.getFilter());
 		}
-		
+
 		try {
 			AdministrationService adminService = Context.getAdministrationService();
 			applyLogLevels(configuration, adminService);
@@ -128,10 +128,10 @@ public class OpenmrsConfigurationFactory extends ConfigurationFactory {
 			}
 		}
 	}
-	
+
 	private static void applyLogLevels(AbstractConfiguration configuration, AdministrationService adminService) {
 		String logLevel = adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOG_LEVEL, "");
-		
+
 		for (String level : logLevel.split(",")) {
 			String[] classAndLevel = level.split(":");
 			if (classAndLevel.length == 0) {
@@ -143,16 +143,16 @@ public class OpenmrsConfigurationFactory extends ConfigurationFactory {
 			}
 		}
 	}
-	
+
 	private static void applyLogLevel(AbstractConfiguration configuration, @NotNull String loggerName, String loggerLevel) {
 		if (StringUtils.isBlank(loggerLevel)) {
 			return;
 		}
-		
+
 		if (loggerName == null) {
 			loggerName = OpenmrsConstants.LOG_CLASS_DEFAULT;
 		}
-		
+
 		LoggerConfig loggerConfig = configuration.getLogger(loggerName);
 		if (loggerConfig != null) {
 			switch (loggerLevel.toLowerCase(Locale.ROOT)) {
@@ -176,44 +176,44 @@ public class OpenmrsConfigurationFactory extends ConfigurationFactory {
 					break;
 				default:
 					log.warn("Log level {} is invalid. " +
-						"Valid values are trace, debug, info, warn, error or fatal", loggerLevel);
+													"Valid values are trace, debug, info, warn, error or fatal", loggerLevel);
 					break;
 			}
 		}
 	}
-	
+
 	private static class OpenmrsXmlConfiguration extends XmlConfiguration {
-		
+
 		public OpenmrsXmlConfiguration(LoggerContext loggerContext, ConfigurationSource configSource) {
 			super(loggerContext, configSource);
 		}
-		
+
 		@Override
 		protected void doConfigure() {
 			super.doConfigure();
 			doOpenmrsCustomisations(this);
 		}
 	}
-	
+
 	private static class OpenmrsYamlConfiguration extends YamlConfiguration {
-		
+
 		public OpenmrsYamlConfiguration(LoggerContext loggerContext, ConfigurationSource configSource) {
 			super(loggerContext, configSource);
 		}
-		
+
 		@Override
 		protected void doConfigure() {
 			super.doConfigure();
 			doOpenmrsCustomisations(this);
 		}
 	}
-	
+
 	private static class OpenmrsJsonConfiguration extends JsonConfiguration {
-		
+
 		public OpenmrsJsonConfiguration(LoggerContext loggerContext, ConfigurationSource configSource) {
 			super(loggerContext, configSource);
 		}
-		
+
 		@Override
 		protected void doConfigure() {
 			super.doConfigure();

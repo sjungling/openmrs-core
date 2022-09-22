@@ -25,9 +25,9 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { Order.class })
+@Handler(supports = {Order.class})
 public class OrderValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -37,7 +37,7 @@ public class OrderValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return Order.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -81,26 +81,26 @@ public class OrderValidator implements Validator {
 			ValidationUtils.rejectIfEmpty(errors, "orderer", "error.null");
 			ValidationUtils.rejectIfEmpty(errors, "urgency", "error.null");
 			ValidationUtils.rejectIfEmpty(errors, "action", "error.null");
-			
+
 			validateSamePatientInOrderAndEncounter(order, errors);
 			validateOrderTypeClass(order, errors);
 			validateDateActivated(order, errors);
 			validateScheduledDate(order, errors);
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "orderReasonNonCoded", "accessionNumber",
-			    "commentToFulfiller", "voidReason");
-			
+											"commentToFulfiller", "voidReason");
+
 			validateOrderGroupEncounter(order, errors);
 			validateOrderGroupPatient(order, errors);
 		}
 	}
-	
+
 	private void validateOrderTypeClass(Order order, Errors errors) {
 		OrderType orderType = order.getOrderType();
 		if (orderType != null && !orderType.getJavaClass().isAssignableFrom(order.getClass())) {
 			errors.rejectValue("orderType", "Order.error.orderTypeClassMismatchesOrderClass");
 		}
 	}
-	
+
 	private void validateDateActivated(Order order, Errors errors) {
 		Date dateActivated = order.getDateActivated();
 		if (dateActivated != null) {
@@ -120,22 +120,22 @@ public class OrderValidator implements Validator {
 			}
 			Encounter encounter = order.getEncounter();
 			if (encounter != null && encounter.getEncounterDatetime() != null
-			        && encounter.getEncounterDatetime().after(dateActivated)) {
+											&& encounter.getEncounterDatetime().after(dateActivated)) {
 				errors.rejectValue("dateActivated", "Order.error.encounterDatetimeAfterDateActivated");
 			}
 		}
 	}
-	
+
 	private void validateSamePatientInOrderAndEncounter(Order order, Errors errors) {
 		if (order.getEncounter() != null && order.getPatient() != null
-				&& !order.getEncounter().getPatient().equals(order.getPatient())) {
+										&& !order.getEncounter().getPatient().equals(order.getPatient())) {
 			errors.rejectValue("encounter", "Order.error.encounterPatientMismatch");
 		}
 	}
-	
+
 	private void validateScheduledDate(Order order, Errors errors) {
 		boolean isUrgencyOnScheduledDate = (order.getUrgency() != null && order.getUrgency().equals(
-		    Order.Urgency.ON_SCHEDULED_DATE));
+										Order.Urgency.ON_SCHEDULED_DATE));
 		if (order.getScheduledDate() != null && !isUrgencyOnScheduledDate) {
 			errors.rejectValue("urgency", "Order.error.urgencyNotOnScheduledDate");
 		}
@@ -143,13 +143,13 @@ public class OrderValidator implements Validator {
 			errors.rejectValue("scheduledDate", "Order.error.scheduledDateNullForOnScheduledDateUrgency");
 		}
 	}
-	
+
 	private void validateOrderGroupEncounter(Order order, Errors errors) {
 		if (order.getOrderGroup() != null && !(order.getEncounter().equals(order.getOrderGroup().getEncounter()))) {
 			errors.rejectValue("encounter", "Order.error.orderEncounterAndOrderGroupEncounterMismatch");
 		}
 	}
-	
+
 	private void validateOrderGroupPatient(Order order, Errors errors) {
 		if (order.getOrderGroup() != null && !(order.getPatient().equals(order.getOrderGroup().getPatient()))) {
 			errors.rejectValue("patient", "Order.error.orderPatientAndOrderGroupPatientMismatch");

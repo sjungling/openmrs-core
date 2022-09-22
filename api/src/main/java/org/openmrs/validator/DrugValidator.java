@@ -26,9 +26,9 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.10
  */
-@Handler(supports = { Drug.class })
+@Handler(supports = {Drug.class})
 public class DrugValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -38,7 +38,7 @@ public class DrugValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return Drug.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Validates an Drug object
 	 * 
@@ -67,13 +67,13 @@ public class DrugValidator implements Validator {
 				Drug mappedDrug = referenceMap.getDrug();
 				ConceptReferenceTerm referenceTerm = referenceMap.getConceptReferenceTerm();
 				ConceptMapType mapType = referenceMap.getConceptMapType();
-				
+
 				if (mappedDrug == null) {
 					errors.rejectValue("drugReferenceMaps[" + index + "].drug", "Drug.drugReferenceMap.mappedDrug");
 				}
 				if (referenceTerm == null) {
 					errors.rejectValue("drugReferenceMaps[" + index + "].conceptReferenceTerm",
-					    "Drug.drugReferenceMap.conceptReferenceTerm");
+													"Drug.drugReferenceMap.conceptReferenceTerm");
 				} else if (referenceTerm.getConceptReferenceTermId() == null) {
 					try {
 						errors.pushNestedPath("drugReferenceMaps[" + index + "].conceptReferenceTerm");
@@ -83,10 +83,10 @@ public class DrugValidator implements Validator {
 						errors.popNestedPath();
 					}
 				}
-				
+
 				if (mapType == null) {
 					errors.rejectValue("drugReferenceMaps[" + index + "].conceptMapType",
-					    "Drug.drugReferenceMap.conceptMapType");
+													"Drug.drugReferenceMap.conceptMapType");
 				} else if (mapType.getConceptMapTypeId() == null) {
 					try {
 						errors.pushNestedPath("drugReferenceMaps[" + index + "].conceptMapType");
@@ -96,17 +96,17 @@ public class DrugValidator implements Validator {
 						errors.popNestedPath();
 					}
 				}
-				
+
 				//don't proceed to the next map
 				if (errors.hasErrors()) {
 					return;
 				}
-				
+
 				//if we already have a mapping to this term, reject it this map
 				if (!mappedTermUuids.add(referenceMap.getConceptReferenceTerm().getUuid())) {
 					errors.rejectValue("drugReferenceMaps[" + index + "].conceptReferenceTerm",
-					    "Drug.drugReferenceMap.termAlreadyMapped",
-					    "Cannot map a drug multiple times to the same reference term");
+													"Drug.drugReferenceMap.termAlreadyMapped",
+													"Cannot map a drug multiple times to the same reference term");
 				}
 				index++;
 			}

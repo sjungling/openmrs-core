@@ -19,7 +19,7 @@ import org.springframework.validation.Validator;
  *
  */
 public class ConceptSourceValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 *
@@ -29,7 +29,7 @@ public class ConceptSourceValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return c.equals(ConceptSource.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -46,13 +46,13 @@ public class ConceptSourceValidator implements Validator {
 	public void validate(Object obj, Errors errors) throws IllegalArgumentException {
 		if (obj == null || !(obj instanceof ConceptSource)) {
 			throw new IllegalArgumentException("The parameter obj should not be null and must be of type "
-			        + ConceptSource.class);
+											+ ConceptSource.class);
 		} else {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name");
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "error.null");
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "hl7Code", "uniqueId", "description",
-			    "retireReason");
+											"retireReason");
 		}
-		
+
 	}
 }

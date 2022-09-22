@@ -18,18 +18,18 @@ import org.slf4j.LoggerFactory;
  * Holds all OpenMRS event listeners
  */
 public class EventListeners {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(EventListeners.class);
-	
+
 	private static List<GlobalPropertyListener> globalPropertyListeners = null;
-	
+
 	public EventListeners() {
 	}
-	
+
 	public List<GlobalPropertyListener> getGlobalPropertyListeners() {
 		return globalPropertyListeners;
 	}
-	
+
 	/**
 	 * This setter acts more like an "appender".  If the list already has elements, calling this method
 	 * will <b>add to</b> the list of listeners instead of replacing it.
@@ -40,7 +40,7 @@ public class EventListeners {
 		if (globalPropertyListeners == null) {
 			return;
 		}
-		
+
 		if (log.isDebugEnabled()) {
 			StringBuilder sb = new StringBuilder();
 			for (GlobalPropertyListener gpl : globalPropertyListeners) {
@@ -51,7 +51,7 @@ public class EventListeners {
 			}
 			log.debug("GlobalPropertyListeners set to: " + sb);
 		}
-		
+
 		if (EventListeners.globalPropertyListeners == null) {
 			EventListeners.globalPropertyListeners = globalPropertyListeners;
 		} else {
@@ -62,7 +62,7 @@ public class EventListeners {
 			}
 		}
 	}
-	
+
 	/**
 	 * Convenience method called by spring to reset the static list of event
 	 * listeners.<br>
@@ -80,5 +80,5 @@ public class EventListeners {
 			EventListeners.globalPropertyListeners.clear();
 		}
 	}
-	
+
 }

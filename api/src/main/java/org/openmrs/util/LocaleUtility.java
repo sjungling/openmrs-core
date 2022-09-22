@@ -26,21 +26,21 @@ import org.springframework.util.StringUtils;
  * A utility class for working with Locales.
  */
 public class LocaleUtility implements GlobalPropertyListener {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(LocaleUtility.class);
-	
+
 	/**
 	 * Cached version of the default locale. This is cached so that we don't have to look it up in
 	 * the global property table every page load
 	 */
 	private static Locale defaultLocaleCache = null;
-	
+
 	/**
 	 * Cached version of the localeAllowedList. This is cached so that we don't have to look it up
 	 * in the global property table every page load
 	 */
 	private static List<Locale> localesAllowedListCache = null;
-	
+
 	/**
 	 * Gets the default locale specified as a global property.
 	 *
@@ -57,8 +57,8 @@ public class LocaleUtility implements GlobalPropertyListener {
 			if (Context.isSessionOpen()) {
 				try {
 					String locale = Context.getAdministrationService().getGlobalProperty(
-					    OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE);
-					
+													OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE);
+
 					if (StringUtils.hasLength(locale)) {
 						try {
 							defaultLocaleCache = fromSpecification(locale);
@@ -73,7 +73,7 @@ public class LocaleUtility implements GlobalPropertyListener {
 					log.warn("Unable to get locale global property value. " + e.getMessage());
 					log.trace("Unable to get locale global property value", e);
 				}
-				
+
 				// if we weren't able to load the locale from the global property,
 				// use the default one
 				if (defaultLocaleCache == null) {
@@ -83,12 +83,12 @@ public class LocaleUtility implements GlobalPropertyListener {
 				// if session is not open, return the default locale without caching
 				return fromSpecification(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE_DEFAULT_VALUE);
 			}
-			
+
 		}
-		
+
 		return defaultLocaleCache;
 	}
-	
+
 	/**
 	 * Compatible is a looser matching than that provided by Locale.equals(). Two locales are
 	 * considered equal if they are equal, or if either does not have a country specified and the
@@ -106,9 +106,9 @@ public class LocaleUtility implements GlobalPropertyListener {
 	 */
 	public static boolean areCompatible(Locale lhs, Locale rhs) {
 		return lhs.equals(rhs) || (("".equals(lhs.getCountry())) || ("".equals(rhs.getCountry()))) && lhs.getLanguage()
-				.equals(rhs.getLanguage());
+										.equals(rhs.getLanguage());
 	}
-	
+
 	/**
 	 * Creates a locale based on a string specification. The specification must be conform with the
 	 * following format: ll_CC_vv <br>
@@ -128,9 +128,9 @@ public class LocaleUtility implements GlobalPropertyListener {
 	 */
 	public static Locale fromSpecification(String localeSpecification) {
 		Locale createdLocale = null;
-		
+
 		localeSpecification = localeSpecification.trim();
-		
+
 		String[] localeComponents = localeSpecification.split("_");
 		if (localeComponents.length == 1) {
 			createdLocale = new Locale(localeComponents[0]);
@@ -141,10 +141,10 @@ public class LocaleUtility implements GlobalPropertyListener {
 			// second underscore
 			createdLocale = new Locale(localeComponents[0], localeComponents[1], variant);
 		}
-		
+
 		return createdLocale;
 	}
-	
+
 	/**
 	 * Utility method that returns a collection of all openmrs system locales, the set includes the
 	 * current logged in user's preferred locale if any is set, the default locale, allowed locales
@@ -161,53 +161,53 @@ public class LocaleUtility implements GlobalPropertyListener {
 	 * @since 1.7
 	 */
 	public static Set<Locale> getLocalesInOrder() {
-		
+
 		Set<Locale> locales = new LinkedHashSet<>();
 		locales.add(Context.getLocale());
 		locales.add(getDefaultLocale());
 		if (localesAllowedListCache == null) {
 			localesAllowedListCache = Context.getAdministrationService().getAllowedLocales();
 		}
-		
+
 		if (localesAllowedListCache != null) {
 			locales.addAll(localesAllowedListCache);
 		}
-		
+
 		locales.add(Locale.ENGLISH);
 		locales.add(fromSpecification(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE_DEFAULT_VALUE));
-		
+
 		return locales;
 	}
-	
+
 	public static void setDefaultLocaleCache(Locale defaultLocaleCache) {
 		LocaleUtility.defaultLocaleCache = defaultLocaleCache;
 	}
-	
+
 	public static void setLocalesAllowedListCache(List<Locale> localesAllowedListCache) {
 		LocaleUtility.localesAllowedListCache = localesAllowedListCache;
 	}
-	
+
 	@Override
 	public void globalPropertyChanged(GlobalProperty newValue) {
 		// reset the value
 		setDefaultLocaleCache(null);
 		setLocalesAllowedListCache(null);
 	}
-	
+
 	@Override
 	public void globalPropertyDeleted(String propertyName) {
 		// reset the value
 		setDefaultLocaleCache(null);
 		setLocalesAllowedListCache(null);
 	}
-	
+
 	@Override
 	public boolean supportsPropertyName(String propertyName) {
 		return propertyName.equals(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE)
-		        || propertyName.equals(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST);
-		
+										|| propertyName.equals(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST);
+
 	}
-	
+
 	/**
 	 * Checks if specified locale object is valid
 	 *
@@ -223,5 +223,5 @@ public class LocaleUtility implements GlobalPropertyListener {
 			return false;
 		}
 	}
-	
+
 }

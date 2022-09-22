@@ -31,9 +31,9 @@ import org.springframework.validation.Errors;
  * Contains tests methods for the {@link ConceptReferenceTermValidator}
  */
 public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest {
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheCodeIsAWhiteSpaceCharacter() {
@@ -45,9 +45,9 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertTrue(errors.hasFieldErrors("code"));
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheCodeIsAnEmptyString() {
@@ -59,9 +59,9 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertTrue(errors.hasFieldErrors("code"));
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheCodeIsNull() {
@@ -72,9 +72,9 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertTrue(errors.hasFieldErrors("code"));
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheConceptReferenceTermCodeIsADuplicateInItsConceptSource() {
@@ -86,18 +86,18 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertTrue(errors.hasFieldErrors("code"));
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheConceptReferenceTermObjectIsNull() {
 		Errors errors = new BindException(new ConceptReferenceTerm(), "term");
 		assertThrows(IllegalArgumentException.class, () -> new ConceptReferenceTermValidator().validate(null, errors));
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheConceptSourceIsNull() {
@@ -108,9 +108,9 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertTrue(errors.hasFieldErrors("conceptSource"));
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	@Disabled
@@ -124,9 +124,9 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	@Disabled
@@ -139,9 +139,9 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	@Disabled
@@ -153,9 +153,9 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassIfAllTheRequiredFieldsAreSetAndValid() {
@@ -167,9 +167,9 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassIfTheDuplicateCodeIsForATermFromAnotherConceptSource() {
@@ -182,9 +182,9 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassIfTheDuplicateNameIsForATermFromAnotherConceptSource() {
@@ -197,9 +197,9 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfAConceptReferenceTermMapHasNoConceptMapType() {
@@ -212,9 +212,9 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertTrue(errors.hasFieldErrors("conceptReferenceTermMaps[0].conceptMapType"));
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTermBOfAConceptReferenceTermMapIsNotSet() {
@@ -229,9 +229,9 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertTrue(errors.hasFieldErrors("conceptReferenceTermMaps[0].termB"));
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfATermIsMappedToItself() {
@@ -244,9 +244,9 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertTrue(errors.hasFieldErrors("conceptReferenceTermMaps[0].termB"));
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfATermIsMappedMultipleTimesToTheSameTerm() {
@@ -259,17 +259,17 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		//test should fail if we change the term below
 		ConceptReferenceTermMap map2 = new ConceptReferenceTermMap(cs.getConceptReferenceTerm(1), cs.getConceptMapType(1));
 		term.addConceptReferenceTermMap(map2);
-		
+
 		Errors errors = new BindException(term, "term");
 		new ConceptReferenceTermValidator().validate(term, errors);
 		System.err.println(errors.getAllErrors());
-		
+
 		//the term for second mapping should be rejected
 		assertTrue(errors.hasFieldErrors("conceptReferenceTermMaps[1].termB"));
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() {
@@ -284,24 +284,24 @@ public class ConceptReferenceTermValidatorTest extends BaseContextSensitiveTest 
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see ConceptReferenceTermValidator#validate(Object,Errors)
+	 * @see ConceptReferenceTermValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() {
 		ConceptReferenceTerm term = new ConceptReferenceTerm();
 		term
-		        .setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		term
-		        .setCode("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setCode("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		term.setConceptSource(Context.getConceptService().getConceptSource(1));
 		term
-		        .setVersion("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setVersion("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		term
-		        .setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		term
-		        .setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		Errors errors = new BindException(term, "term");
 		new ConceptReferenceTermValidator().validate(term, errors);
 		assertTrue(errors.hasFieldErrors("name"));

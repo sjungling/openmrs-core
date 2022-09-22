@@ -50,7 +50,7 @@ public class ThreadSafeCircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 	public Queue<E> makeObject() {
 		return new ThreadSafeCircularFifoQueue<>(100);
 	}
-	
+
 	/* Test overrides */
 	/* included here to allow running individual test cases */
 

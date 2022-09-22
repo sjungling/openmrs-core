@@ -22,9 +22,9 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.10
  */
-@Handler(supports = { RelationshipType.class }, order = 50)
+@Handler(supports = {RelationshipType.class}, order = 50)
 public class RelationshipTypeValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -34,7 +34,7 @@ public class RelationshipTypeValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return RelationshipType.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
 	 * <strong>Should</strong> fail validation if aIsToB(or A is To B) is null or empty or whitespace
@@ -55,9 +55,9 @@ public class RelationshipTypeValidator implements Validator {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "bIsToA", "RelationshipType.bIsToA.required");
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "RelationshipType.description.required");
 			RelationshipType exist = Context.getPersonService().getRelationshipTypeByName(
-			    relationshipType.getaIsToB() + "/" + relationshipType.getbIsToA());
+											relationshipType.getaIsToB() + "/" + relationshipType.getbIsToA());
 			if (exist != null && !exist.getRetired()
-			        && !OpenmrsUtil.nullSafeEquals(relationshipType.getUuid(), exist.getUuid())) {
+											&& !OpenmrsUtil.nullSafeEquals(relationshipType.getUuid(), exist.getUuid())) {
 				errors.reject("duplicate.relationshipType");
 			}
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "aIsToB", "bIsToA", "description", "retireReason");

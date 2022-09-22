@@ -16,16 +16,16 @@ package org.openmrs;
  * @since 1.9.2, 1.10
  */
 public class TestOrder extends ServiceOrder {
-	
+
 	public static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Default Constructor
 	 */
 	public TestOrder() {
-		
+
 	}
-	
+
 	/**
 	 * @see org.openmrs.ServiceOrder#copy()
 	 */
@@ -35,7 +35,7 @@ public class TestOrder extends ServiceOrder {
 		super.copyHelper(newOrder);
 		return newOrder;
 	}
-	
+
 	/**
 	 * Creates a discontinuation order for this.
 	 * 
@@ -48,7 +48,7 @@ public class TestOrder extends ServiceOrder {
 		super.cloneForDiscontinuingHelper(newOrder);
 		return newOrder;
 	}
-	
+
 	/**
 	 * Creates a TestOrder for revision from this order, sets the previousOrder, action field and
 	 * other test order fields.

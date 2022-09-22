@@ -20,15 +20,15 @@ import org.openmrs.api.context.Daemon;
  * @since 1.9.2
  */
 public class DaemonToken implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private final String id;
-	
+
 	public DaemonToken(String id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * @return the id
 	 */

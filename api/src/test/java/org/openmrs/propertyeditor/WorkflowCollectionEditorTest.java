@@ -20,7 +20,7 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
  * Tests {@link WorkflowCollectionEditor}
  */
 public class WorkflowCollectionEditorTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see WorkflowCollectionEditor#setAsText(String)
 	 */
@@ -28,14 +28,14 @@ public class WorkflowCollectionEditorTest extends BaseContextSensitiveTest {
 	public void setAsText_shouldUpdateWorkflowsInProgram() {
 		Program program = Context.getProgramWorkflowService().getProgram(1);
 		WorkflowCollectionEditor editor = new WorkflowCollectionEditor();
-		
+
 		assertEquals(2, program.getWorkflows().size());
-		
+
 		editor.setAsText("1:3");
-		
+
 		assertEquals(1, program.getWorkflows().size());
 		assertEquals(3, program.getWorkflows().iterator().next().getConcept().getConceptId().intValue());
 		assertEquals(3, program.getAllWorkflows().size());
 	}
-	
+
 }

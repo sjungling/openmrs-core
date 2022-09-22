@@ -27,7 +27,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 public class ModuleFilterDefinitionTest {
-	
+
 	public static Document getDocument(String xmlString) {
 		try {
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -37,7 +37,7 @@ public class ModuleFilterDefinitionTest {
 		} catch (Exception e) {
 			return null;
 		}
-	}	
+	}
 
 	/**
 	 * @see ModulefilterDefinition#retrieveFilterDefinitions
@@ -57,14 +57,14 @@ public class ModuleFilterDefinitionTest {
 	@Test
 	public void retrieveFilterDefinitions_shouldReturnEmptyListIfNoFilterNodes() {
 		String xmlString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-						 + "<data></data>";
+										+ "<data></data>";
 		Module module = new Module("test");
 		module.setConfig(getDocument(xmlString));
 
 		List<ModuleFilterDefinition> out = ModuleFilterDefinition.retrieveFilterDefinitions(module);
 		assertThat(out, is(empty()));
 	}
-	
+
 	/**
 	 * @see ModulefilterDefinition#retrieveFilterDefinitions
 	 * @throws ModuleException
@@ -72,20 +72,20 @@ public class ModuleFilterDefinitionTest {
 	@Test
 	public void retrieveFilterDefinitions_shouldReturnListOfSizeOneUsingInitParams() {
 		String xmlString = "<?xml version =\"1.0\" encoding=\"UTF-8\"?>\n"
-						 + "<data><filter>\n"
-						 + "	<init-param>\n"
-						 + "		<param-name>test</param-name>\n"
-						 + "		<param-value>123</param-value>\n"
-						 + "	</init-param>\n"
-						 + "</filter></data>";
+										+ "<data><filter>\n"
+										+ "	<init-param>\n"
+										+ "		<param-name>test</param-name>\n"
+										+ "		<param-value>123</param-value>\n"
+										+ "	</init-param>\n"
+										+ "</filter></data>";
 		Module module = new Module("test");
 		module.setConfig(getDocument(xmlString));
-		
+
 		List<ModuleFilterDefinition> out = ModuleFilterDefinition.retrieveFilterDefinitions(module);
 		assertThat(out.size(), is(1));
 		assertThat(out.get(0).getInitParameters().get("test"), is("123"));
 	}
-	
+
 	/**
 	 * @see ModulefilterDefinition#retrieveFilterDefinitions
 	 * @throws ModuleException
@@ -93,13 +93,13 @@ public class ModuleFilterDefinitionTest {
 	@Test
 	public void retrieveFilterDefinitions_shouldReturnListOfSizeOneUsingFilterNameAndClass() {
 		String xmlString = "<?xml version =\"1.0\" encoding=\"UTF-8\"?>\n"
-						 + "<data><filter>\n"
-						 + "	<filter-name>test</filter-name>\n"
-						 + "	<filter-class>123</filter-class>\n"
-						 + "</filter></data>";
+										+ "<data><filter>\n"
+										+ "	<filter-name>test</filter-name>\n"
+										+ "	<filter-class>123</filter-class>\n"
+										+ "</filter></data>";
 		Module module = new Module("test");
 		module.setConfig(getDocument(xmlString));
-		
+
 		List<ModuleFilterDefinition> out = ModuleFilterDefinition.retrieveFilterDefinitions(module);
 		assertThat(out.size(), is(1));
 		assertThat(out.get(0).getFilterName(), is("test"));

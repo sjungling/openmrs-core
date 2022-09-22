@@ -15,40 +15,40 @@ import java.util.Date;
  * Relationship
  */
 public class Relationship extends BaseChangeableOpenmrsData {
-	
+
 	public static final long serialVersionUID = 323423L;
-	
+
 	// Fields
 	
 	private Integer relationshipId;
-	
+
 	private Person personA;
-	
+
 	private RelationshipType relationshipType;
-	
+
 	private Person personB;
-	
+
 	private Date startDate;
-	
+
 	private Date endDate;
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public Relationship() {
 	}
-	
+
 	/** constructor with id */
 	public Relationship(Integer relationshipId) {
 		this.relationshipId = relationshipId;
 	}
-	
+
 	public Relationship(Person personA, Person personB, RelationshipType type) {
 		this.personA = personA;
 		this.personB = personB;
 		this.relationshipType = type;
 	}
-	
+
 	/**
 	 * Does a shallow copy of this Relationship. Does NOT copy relationshipId
 	 * 
@@ -57,7 +57,7 @@ public class Relationship extends BaseChangeableOpenmrsData {
 	public Relationship copy() {
 		return copyHelper(new Relationship());
 	}
-	
+
 	/**
 	 * The purpose of this method is to allow subclasses of Relationship to delegate a portion of
 	 * their copy() method back to the superclass, in case the base class implementation changes.
@@ -77,7 +77,7 @@ public class Relationship extends BaseChangeableOpenmrsData {
 		target.setVoidReason(getVoidReason());
 		return target;
 	}
-	
+
 	// Property accessors
 	
 	/**
@@ -86,56 +86,56 @@ public class Relationship extends BaseChangeableOpenmrsData {
 	public Person getPersonA() {
 		return personA;
 	}
-	
+
 	/**
 	 * @param personA The person to set.
 	 */
 	public void setPersonA(Person personA) {
 		this.personA = personA;
 	}
-	
+
 	/**
 	 * @return Returns the relationship type.
 	 */
 	public RelationshipType getRelationshipType() {
 		return relationshipType;
 	}
-	
+
 	/**
 	 * @param type The relationship type to set.
 	 */
 	public void setRelationshipType(RelationshipType type) {
 		this.relationshipType = type;
 	}
-	
+
 	/**
 	 * @return Returns the relationshipId.
 	 */
 	public Integer getRelationshipId() {
 		return relationshipId;
 	}
-	
+
 	/**
 	 * @param relationshipId The relationshipId to set.
 	 */
 	public void setRelationshipId(Integer relationshipId) {
 		this.relationshipId = relationshipId;
 	}
-	
+
 	/**
 	 * @return Returns the personB.
 	 */
 	public Person getPersonB() {
 		return personB;
 	}
-	
+
 	/**
 	 * @param personB The relative to set.
 	 */
 	public void setPersonB(Person personB) {
 		this.personB = personB;
 	}
-	
+
 	/**
 	 * If not null, this indicates that the relationship started on a particular date
 	 * @since 1.9
@@ -144,7 +144,7 @@ public class Relationship extends BaseChangeableOpenmrsData {
 	public Date getStartDate() {
 		return this.startDate;
 	}
-	
+
 	/**
 	 * @since 1.9
 	 * @param startDate relationship's start date.
@@ -152,7 +152,7 @@ public class Relationship extends BaseChangeableOpenmrsData {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	
+
 	/**
 	 * If not null, this indicates that the relationship ended on a particular date
 	 * @since 1.9
@@ -161,7 +161,7 @@ public class Relationship extends BaseChangeableOpenmrsData {
 	public Date getEndDate() {
 		return this.endDate;
 	}
-	
+
 	/**
 	 * @since 1.9
 	 * @param endDate relationship's end date.
@@ -169,23 +169,23 @@ public class Relationship extends BaseChangeableOpenmrsData {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	
+
 	@Override
 	public String toString() {
 		String relType = getRelationshipType() == null ? "NULL" : getRelationshipType().getaIsToB();
 		return personA + " is the " + relType + " of " + personB;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
 	@Override
 	public Integer getId() {
-		
+
 		return getRelationshipId();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -193,7 +193,7 @@ public class Relationship extends BaseChangeableOpenmrsData {
 	@Override
 	public void setId(Integer id) {
 		setRelationshipId(id);
-		
+
 	}
-	
+
 }

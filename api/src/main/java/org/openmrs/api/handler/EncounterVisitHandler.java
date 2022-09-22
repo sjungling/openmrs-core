@@ -25,19 +25,19 @@ import org.openmrs.api.context.Context;
  * @since 1.9
  */
 public interface EncounterVisitHandler {
-	
+
 	/**
 	 * @return a displayable string so that users can pick between different assignment handlers
 	 */
 	public String getDisplayName();
-	
+
 	/**
 	 * @param locale optional locale to specify. If none is passed, {@link Context#getLocale()}
 	 *            should be used
 	 * @return a displayable string so that users can pick between different assignment handlers
 	 */
 	public String getDisplayName(Locale locale);
-	
+
 	/**
 	 * Implementations of this method should look at the given <code>encounter</code> and choose
 	 * whether or not it should be assigned to a {@link Visit} that is already open or if it should
@@ -51,5 +51,5 @@ public interface EncounterVisitHandler {
 	 * @param encounter the new unsaved encounter in question of whether to assign to a visit
 	 */
 	public void beforeCreateEncounter(Encounter encounter);
-	
+
 }

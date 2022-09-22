@@ -17,35 +17,35 @@ import org.openmrs.util.OpenmrsUtil;
  * This represents a single concept within a concept set.
  */
 public class ConceptSet extends BaseOpenmrsObject implements Auditable, java.io.Serializable, Comparable<ConceptSet> {
-	
+
 	public static final long serialVersionUID = 3787L;
-	
+
 	// Fields
 	private Integer conceptSetId;
-	
+
 	// concept in the set
-	private Concept concept; 
-	
+	private Concept concept;
+
 	// parent concept that uses this set
-	private Concept conceptSet; 
-	
+	private Concept conceptSet;
+
 	private Double sortWeight;
-	
+
 	private User creator;
-	
+
 	private Date dateCreated;
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public ConceptSet() {
 	}
-	
+
 	public ConceptSet(Concept concept, Double weight) {
 		setConcept(concept);
 		setSortWeight(weight);
 	}
-	
+
 	// Property accessors
 	
 	/**
@@ -56,7 +56,7 @@ public class ConceptSet extends BaseOpenmrsObject implements Auditable, java.io.
 	public Integer getConceptSetId() {
 		return conceptSetId;
 	}
-	
+
 	/**
 	 * Sets the concept set identifier.
 	 * 
@@ -65,37 +65,37 @@ public class ConceptSet extends BaseOpenmrsObject implements Auditable, java.io.
 	public void setConceptSetId(Integer conceptSetId) {
 		this.conceptSetId = conceptSetId;
 	}
-	
+
 	public Concept getConcept() {
 		return concept;
 	}
-	
+
 	public void setConcept(Concept concept) {
 		this.concept = concept;
 	}
-	
+
 	public Concept getConceptSet() {
 		return conceptSet;
 	}
-	
+
 	public void setConceptSet(Concept set) {
 		this.conceptSet = set;
 	}
-	
+
 	/**
 	 * @return Returns the sortWeight.
 	 */
 	public Double getSortWeight() {
 		return sortWeight;
 	}
-	
+
 	/**
 	 * @param sortWeight The sortWeight to set.
 	 */
 	public void setSortWeight(Double sortWeight) {
 		this.sortWeight = sortWeight;
 	}
-	
+
 	/**
 	 * @return Returns the creator.
 	 */
@@ -103,7 +103,7 @@ public class ConceptSet extends BaseOpenmrsObject implements Auditable, java.io.
 	public User getCreator() {
 		return creator;
 	}
-	
+
 	/**
 	 * @param creator The creator to set.
 	 */
@@ -111,7 +111,7 @@ public class ConceptSet extends BaseOpenmrsObject implements Auditable, java.io.
 	public void setCreator(User creator) {
 		this.creator = creator;
 	}
-	
+
 	/**
 	 * @return Returns the dateCreated.
 	 */
@@ -119,7 +119,7 @@ public class ConceptSet extends BaseOpenmrsObject implements Auditable, java.io.
 	public Date getDateCreated() {
 		return dateCreated;
 	}
-	
+
 	/**
 	 * @param dateCreated The dateCreated to set.
 	 */
@@ -127,7 +127,7 @@ public class ConceptSet extends BaseOpenmrsObject implements Auditable, java.io.
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
@@ -136,7 +136,7 @@ public class ConceptSet extends BaseOpenmrsObject implements Auditable, java.io.
 	public Integer getId() {
 		return getConceptSetId();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -145,7 +145,7 @@ public class ConceptSet extends BaseOpenmrsObject implements Auditable, java.io.
 	public void setId(Integer id) {
 		this.setConceptSetId(id);
 	}
-	
+
 	/**
 	 * Not currently used. Always returns null.
 	 * 
@@ -155,7 +155,7 @@ public class ConceptSet extends BaseOpenmrsObject implements Auditable, java.io.
 	public User getChangedBy() {
 		return null;
 	}
-	
+
 	/**
 	 * Not currently used. Always returns null.
 	 * 
@@ -165,7 +165,7 @@ public class ConceptSet extends BaseOpenmrsObject implements Auditable, java.io.
 	public Date getDateChanged() {
 		return null;
 	}
-	
+
 	/**
 	 * Not currently used.
 	 * 
@@ -174,7 +174,7 @@ public class ConceptSet extends BaseOpenmrsObject implements Auditable, java.io.
 	@Override
 	public void setChangedBy(User changedBy) {
 	}
-	
+
 	/**
 	 * Not currently used.
 	 * 
@@ -183,7 +183,7 @@ public class ConceptSet extends BaseOpenmrsObject implements Auditable, java.io.
 	@Override
 	public void setDateChanged(Date dateChanged) {
 	}
-	
+
 	/**
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 * Note: this comparator imposes orderings that are inconsistent with equals.
@@ -197,5 +197,5 @@ public class ConceptSet extends BaseOpenmrsObject implements Auditable, java.io.
 		}
 		return value;
 	}
-	
+
 }

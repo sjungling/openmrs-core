@@ -35,7 +35,7 @@ import org.openmrs.api.context.Context;
  */
 @Handler(supports = ConceptName.class)
 public class ConceptNameSaveHandler implements SaveHandler<ConceptName> {
-	
+
 	/**
 	 * This method does a lookup on all tag name for all child {@link ConceptNameTag}s that have a
 	 * null {@link ConceptNameTag#getConceptNameTagId()}.
@@ -49,29 +49,29 @@ public class ConceptNameSaveHandler implements SaveHandler<ConceptName> {
 	 */
 	@Override
 	public void handle(ConceptName conceptName, User currentUser, Date currentDate, String reason) {
-		
+
 		// put Integer conceptNameTagIds onto ConceptNameTags that are missing them
 		if (conceptName.getTags() != null) {
 			Collection<ConceptNameTag> replacementTags = new ArrayList<>();
-			
+
 			Iterator<ConceptNameTag> tagsIt = conceptName.getTags().iterator();
 			while (tagsIt.hasNext()) {
 				ConceptNameTag tag = tagsIt.next();
-				
+
 				if (tag.getConceptNameTagId() == null) {
 					ConceptNameTag replacementTag = Context.getConceptService().getConceptNameTagByName(tag.getTag());
-					
+
 					if (replacementTag != null) {
 						tagsIt.remove();
 						replacementTags.add(replacementTag);
 					}
 				}
 			}
-			
+
 			if (!replacementTags.isEmpty()) {
 				conceptName.getTags().addAll(replacementTags);
 			}
 		}
 	}
-	
+
 }

@@ -486,8 +486,8 @@ public class DrugOrder extends Order {
 	public String toString() {
 		String prefix = DISCONTINUE == getAction() ? "DC " : "";
 		return prefix + "DrugOrder(" + getDose() + getDoseUnits() + " of "
-		        + (isNonCodedDrug() ? getDrugNonCoded() : (getDrug() != null ? getDrug().getName() : "[no drug]")) + " from " + getDateActivated() + " to "
-		        + (isDiscontinuedRightNow() ? getDateStopped() : getAutoExpireDate()) + ")";
+										+ (isNonCodedDrug() ? getDrugNonCoded() : (getDrug() != null ? getDrug().getName() : "[no drug]")) + " from " + getDateActivated() + " to "
+										+ (isDiscontinuedRightNow() ? getDateStopped() : getAutoExpireDate()) + ")";
 	}
 
 	/**
@@ -517,19 +517,19 @@ public class DrugOrder extends Order {
 	 */
 	@Override
 	public boolean hasSameOrderableAs(Order otherOrder) {
-        if (!super.hasSameOrderableAs(otherOrder)) {
-            return false;
-        }
-        if (!(otherOrder instanceof DrugOrder)) {
-            return false;
-        }
-        DrugOrder otherDrugOrder = (DrugOrder) otherOrder;
+		if (!super.hasSameOrderableAs(otherOrder)) {
+			return false;
+		}
+		if (!(otherOrder instanceof DrugOrder)) {
+			return false;
+		}
+		DrugOrder otherDrugOrder = (DrugOrder) otherOrder;
 
-        if (isNonCodedDrug() || otherDrugOrder.isNonCodedDrug()) {
-            return OpenmrsUtil.nullSafeEqualsIgnoreCase(this.getDrugNonCoded(), otherDrugOrder.getDrugNonCoded());
-        }
-        return OpenmrsUtil.nullSafeEquals(this.getDrug(), otherDrugOrder.getDrug());
-    }
+		if (isNonCodedDrug() || otherDrugOrder.isNonCodedDrug()) {
+			return OpenmrsUtil.nullSafeEqualsIgnoreCase(this.getDrugNonCoded(), otherDrugOrder.getDrugNonCoded());
+		}
+		return OpenmrsUtil.nullSafeEquals(this.getDrug(), otherDrugOrder.getDrug());
+	}
 
 	/**
 	 * @since 1.12

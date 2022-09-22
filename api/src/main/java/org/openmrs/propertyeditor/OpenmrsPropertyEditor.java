@@ -26,11 +26,11 @@ import org.openmrs.OpenmrsObject;
  * @see org.openmrs.OpenmrsObject
  */
 public abstract class OpenmrsPropertyEditor<T extends OpenmrsObject> extends PropertyEditorSupport {
-	
+
 	protected abstract T getObjectById(Integer id);
-	
+
 	protected abstract T getObjectByUuid(String uuid);
-	
+
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
 		if (StringUtils.isNotBlank(text)) {
@@ -48,7 +48,7 @@ public abstract class OpenmrsPropertyEditor<T extends OpenmrsObject> extends Pro
 			setValue(null);
 		}
 	}
-	
+
 	@Override
 	public String getAsText() {
 		T t = (T) getValue();

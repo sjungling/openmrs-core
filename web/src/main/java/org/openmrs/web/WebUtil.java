@@ -28,9 +28,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class WebUtil implements GlobalPropertyListener {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(WebUtil.class);
-	
+
 	/**
 	 * Encodes for (X)HTML text content and text attributes.
 	 *
@@ -216,23 +216,23 @@ public class WebUtil implements GlobalPropertyListener {
 		if (tmpS == null) {
 			return "";
 		}
-		
+
 		tmpS = tmpS.replace("\"", "\\\"");
-		
+
 		return tmpS;
 	}
-	
+
 	public static String escapeNewlines(String s) {
 		String tmpS = s;
 		if (tmpS == null) {
 			return "";
 		}
-		
+
 		tmpS = tmpS.replace("\n", "\\n");
-		
+
 		return tmpS;
 	}
-	
+
 	public static String escapeQuotesAndNewlines(String s) {
 		String tmpS = s;
 		if (tmpS == null) {
@@ -242,10 +242,10 @@ public class WebUtil implements GlobalPropertyListener {
 		tmpS = tmpS.replace("\"", "\\\"");
 		tmpS = tmpS.replace("\r\n", "\\r\\n");
 		tmpS = tmpS.replace("\n", "\\n");
-		
+
 		return tmpS;
 	}
-	
+
 	/**
 	 * Strips out the path from a string if "C:\documents\file.doc", will return "file.doc" if
 	 * "file.doc", will return "file.doc" if "/home/file.doc" will return "file.doc"
@@ -255,25 +255,25 @@ public class WebUtil implements GlobalPropertyListener {
 	 */
 	public static String stripFilename(String filename) {
 		log.debug("Stripping filename from: {}", filename);
-		
+
 		// for unix based filesystems
 		String tmpFilename = filename;
 		int index = tmpFilename.lastIndexOf("/");
 		if (index != -1) {
 			tmpFilename = tmpFilename.substring(index + 1);
 		}
-		
+
 		// for windows based filesystems
 		index = tmpFilename.lastIndexOf("\\");
 		if (index != -1) {
 			tmpFilename = tmpFilename.substring(index + 1);
 		}
-		
+
 		log.debug("Returning stripped down filename: {}", tmpFilename);
-		
+
 		return tmpFilename;
 	}
-	
+
 	/**
 	 * This method checks if input locale string contains control characters and tries to clean up
 	 * actually contained ones. Also it parses locale object from string representation and
@@ -317,7 +317,7 @@ public class WebUtil implements GlobalPropertyListener {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Convenient method that parses the given string object, that contains locale parameters which
 	 * are separated by comma. Tries to clean up CTLs and other unsupported chars within input
@@ -335,11 +335,11 @@ public class WebUtil implements GlobalPropertyListener {
 		if (localesString == null) {
 			return null;
 		}
-		
+
 		StringBuilder outputString = new StringBuilder();
-		
+
 		boolean first = true;
-		
+
 		for (String locale : Arrays.asList(localesString.split(","))) {
 			Locale loc = normalizeLocale(locale);
 			if (loc != null) {
@@ -357,7 +357,7 @@ public class WebUtil implements GlobalPropertyListener {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Method that returns WebConstants.WEBAPP_NAME or an empty string if WebConstants.WEBAPP_NAME
 	 * is empty.
@@ -368,19 +368,19 @@ public class WebUtil implements GlobalPropertyListener {
 	public static String getContextPath() {
 		return StringUtils.isEmpty(WebConstants.WEBAPP_NAME) ? "" : "/" + WebConstants.WEBAPP_NAME;
 	}
-	
+
 	public static String formatDate(Date date) {
 		return formatDate(date, Context.getLocale(), FORMAT_TYPE.DATE);
 	}
-	
+
 	public static String formatDate(Date date, Locale locale, FORMAT_TYPE type) {
 		log.debug("Formatting date: " + date + " with locale " + locale);
-		
+
 		DateFormat dateFormat = null;
-		
+
 		if (type == FORMAT_TYPE.TIMESTAMP) {
 			String dateTimeFormat = Context.getAdministrationService().getGlobalPropertyValue(
-			    OpenmrsConstants.GP_SEARCH_DATE_DISPLAY_FORMAT, null);
+											OpenmrsConstants.GP_SEARCH_DATE_DISPLAY_FORMAT, null);
 			if (StringUtils.isEmpty(dateTimeFormat)) {
 				dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 			} else {
@@ -388,7 +388,7 @@ public class WebUtil implements GlobalPropertyListener {
 			}
 		} else if (type == FORMAT_TYPE.TIME) {
 			String timeFormat = Context.getAdministrationService().getGlobalPropertyValue(
-			    OpenmrsConstants.GP_SEARCH_DATE_DISPLAY_FORMAT, null);
+											OpenmrsConstants.GP_SEARCH_DATE_DISPLAY_FORMAT, null);
 			if (StringUtils.isEmpty(timeFormat)) {
 				dateFormat = DateFormat.getTimeInstance(DateFormat.MEDIUM, locale);
 			} else {
@@ -396,7 +396,7 @@ public class WebUtil implements GlobalPropertyListener {
 			}
 		} else if (type == FORMAT_TYPE.DATE) {
 			String formatValue = Context.getAdministrationService().getGlobalPropertyValue(
-			    OpenmrsConstants.GP_SEARCH_DATE_DISPLAY_FORMAT, "");
+											OpenmrsConstants.GP_SEARCH_DATE_DISPLAY_FORMAT, "");
 			if (StringUtils.isEmpty(formatValue)) {
 				dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 			} else {
@@ -405,7 +405,7 @@ public class WebUtil implements GlobalPropertyListener {
 		}
 		return date == null ? "" : dateFormat.format(date);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.GlobalPropertyListener#supportsPropertyName(java.lang.String)
 	 */
@@ -413,14 +413,14 @@ public class WebUtil implements GlobalPropertyListener {
 	public boolean supportsPropertyName(String propertyName) {
 		return OpenmrsConstants.GP_SEARCH_DATE_DISPLAY_FORMAT.equals(propertyName);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.GlobalPropertyListener#globalPropertyChanged(org.openmrs.GlobalProperty)
 	 */
 	@Override
 	public void globalPropertyChanged(GlobalProperty newValue) {
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.GlobalPropertyListener#globalPropertyDeleted(java.lang.String)
 	 */

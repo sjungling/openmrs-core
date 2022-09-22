@@ -24,9 +24,9 @@ import org.slf4j.LoggerFactory;
  * @since 1.9
  */
 public class AutoCloseVisitsTask extends AbstractTask {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(AutoCloseVisitsTask.class);
-	
+
 	/**
 	 * @see org.openmrs.scheduler.tasks.AbstractTask#execute()
 	 */

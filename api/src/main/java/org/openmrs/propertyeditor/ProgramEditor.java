@@ -29,12 +29,12 @@ import org.springframework.util.StringUtils;
  * @see Program
  */
 public class ProgramEditor extends PropertyEditorSupport {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ProgramEditor.class);
-	
+
 	public ProgramEditor() {
 	}
-	
+
 	/**
 	 * <strong>Should</strong> set using concept id
 	 * <strong>Should</strong> set using concept uuid
@@ -62,7 +62,7 @@ public class ProgramEditor extends PropertyEditorSupport {
 				} else {
 					p = Context.getProgramWorkflowService().getProgramByUuid(text);
 				}
-				
+
 				setValue(p);
 				if (p == null) {
 					log.error("Error setting text: " + text, ex);
@@ -73,7 +73,7 @@ public class ProgramEditor extends PropertyEditorSupport {
 			setValue(null);
 		}
 	}
-	
+
 	@Override
 	public String getAsText() {
 		Program p = (Program) getValue();
@@ -83,5 +83,5 @@ public class ProgramEditor extends PropertyEditorSupport {
 			return p.getProgramId().toString();
 		}
 	}
-	
+
 }

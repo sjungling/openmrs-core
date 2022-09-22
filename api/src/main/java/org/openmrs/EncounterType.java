@@ -15,21 +15,21 @@ package org.openmrs;
  * @see Encounter
  */
 public class EncounterType extends BaseChangeableOpenmrsMetadata {
-	
+
 	public static final long serialVersionUID = 789L;
-	
+
 	private Integer encounterTypeId;
-	
+
 	private Privilege viewPrivilege;
-	
+
 	private Privilege editPrivilege;
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public EncounterType() {
 	}
-	
+
 	/**
 	 * Constructor with id
 	 * 
@@ -38,7 +38,7 @@ public class EncounterType extends BaseChangeableOpenmrsMetadata {
 	public EncounterType(Integer encounterTypeId) {
 		this.encounterTypeId = encounterTypeId;
 	}
-	
+
 	/**
 	 * Required values constructor. This is the minimum number of values that must be non-null in
 	 * order to have a successful save to the database
@@ -50,7 +50,7 @@ public class EncounterType extends BaseChangeableOpenmrsMetadata {
 		setName(name);
 		setDescription(description);
 	}
-	
+
 	// Property accessors
 	
 	/**
@@ -59,14 +59,14 @@ public class EncounterType extends BaseChangeableOpenmrsMetadata {
 	public Integer getEncounterTypeId() {
 		return encounterTypeId;
 	}
-	
+
 	/**
 	 * @param encounterTypeId The encounterTypeId to set.
 	 */
 	public void setEncounterTypeId(Integer encounterTypeId) {
 		this.encounterTypeId = encounterTypeId;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
@@ -75,7 +75,7 @@ public class EncounterType extends BaseChangeableOpenmrsMetadata {
 	public Integer getId() {
 		return getEncounterTypeId();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -83,9 +83,9 @@ public class EncounterType extends BaseChangeableOpenmrsMetadata {
 	@Override
 	public void setId(Integer id) {
 		setEncounterTypeId(id);
-		
+
 	}
-	
+
 	/**
 	 * Gets privilege which can view this type of encounters
 	 * @return the viewPrivilege the privilege instance
@@ -93,7 +93,7 @@ public class EncounterType extends BaseChangeableOpenmrsMetadata {
 	public Privilege getViewPrivilege() {
 		return viewPrivilege;
 	}
-	
+
 	/**
 	 * Sets privilege which can view this type of encounters
 	 * @param viewPrivilege the viewPrivilege to set
@@ -101,7 +101,7 @@ public class EncounterType extends BaseChangeableOpenmrsMetadata {
 	public void setViewPrivilege(Privilege viewPrivilege) {
 		this.viewPrivilege = viewPrivilege;
 	}
-	
+
 	/**
 	 * Gets privilege which can edit this type of encounters
 	 * @return the editPrivilege the privilege instance
@@ -109,7 +109,7 @@ public class EncounterType extends BaseChangeableOpenmrsMetadata {
 	public Privilege getEditPrivilege() {
 		return editPrivilege;
 	}
-	
+
 	/**
 	 * Sets privilege which can edit this type of encounters
 	 * @param editPrivilege the editPrivilege to set
@@ -117,5 +117,5 @@ public class EncounterType extends BaseChangeableOpenmrsMetadata {
 	public void setEditPrivilege(Privilege editPrivilege) {
 		this.editPrivilege = editPrivilege;
 	}
-	
+
 }

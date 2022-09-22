@@ -37,17 +37,17 @@ public class ConditionValidator implements Validator {
 	 */
 	@Override
 	public void validate(Object object, Errors errors) {
-		if(object == null){
+		if (object == null) {
 			throw new IllegalArgumentException("The object parameter should not be null");
 		}
-		if(!(object instanceof Condition)){
+		if (!(object instanceof Condition)) {
 			throw  new IllegalArgumentException("The object parameter should be of type " + Condition.class);
 		}
 		Condition condition = (Condition) object;
-		if(condition.getCondition() == null){
+		if (condition.getCondition() == null) {
 			errors.rejectValue("condition", "Condition.conditionShouldNotBeNull", "The condition is required");
 		}
-		if(condition.getClinicalStatus() == null){
+		if (condition.getClinicalStatus() == null) {
 			errors.rejectValue("clinicalStatus", "Condition.clinicalStatusShouldNotBeNull", "The clinical status is required");
 		}
 	}

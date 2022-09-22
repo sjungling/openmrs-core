@@ -25,31 +25,31 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 public class ChangeLogVersionsTest {
-	
+
 	private static final org.slf4j.Logger log = LoggerFactory.getLogger(ChangeLogVersionFinderTest.class);
-	
+
 	private static final String CORE_DATA_BASE_NAME = ChangeLogVersionFinder.CORE_DATA_BASE_NAME;
-	
+
 	private static final String CORE_DATA_PATTERN = "classpath*:" + ChangeLogVersionFinder.CORE_DATA_FOLDER_NAME
-	        + File.separator + "*";
-	
+									+ File.separator + "*";
+
 	private static final String SCHEMA_ONLY_BASE_NAME = ChangeLogVersionFinder.SCHEMA_ONLY_BASE_NAME;
-	
+
 	private static final String SCHEMA_ONLY_PATTERN = "classpath*:" + ChangeLogVersionFinder.SCHEMA_ONLY_FOLDER_NAME
-	        + File.separator + "*";
-	
+									+ File.separator + "*";
+
 	private static final String UPDATE_TO_LATEST_BASE_NAME = ChangeLogVersionFinder.UPDATE_TO_LATEST_BASE_NAME;
-	
+
 	private static final String UPDATE_TO_LATEST_PATTERN = "classpath*:" + ChangeLogVersionFinder.UPDATES_FOLDER_NAME
-	        + File.separator + "*";
-	
+									+ File.separator + "*";
+
 	private ChangeLogVersions changeLogVersions;
-	
+
 	@BeforeEach
 	public void setup() {
 		changeLogVersions = new ChangeLogVersions();
 	}
-	
+
 	/**
 	 * This test compares the static list of Liquibase snapshot versions defined by
 	 * org.openmrs.liquibase.ChangeLogVersions#getSnapshotVersions() with the list of actual change log
@@ -64,9 +64,9 @@ public class ChangeLogVersionsTest {
 	public void shouldGetSnapshotVersions() throws IOException {
 		compareActualAndExpectedChangeLogs(changeLogVersions.getSnapshotVersions(), CORE_DATA_BASE_NAME, CORE_DATA_PATTERN);
 		compareActualAndExpectedChangeLogs(changeLogVersions.getSnapshotVersions(), SCHEMA_ONLY_BASE_NAME,
-		    SCHEMA_ONLY_PATTERN);
+										SCHEMA_ONLY_PATTERN);
 	}
-	
+
 	/**
 	 * This test compares the static list of Liquibase update versions defined by
 	 * org.openmrs.liquibase.ChangeLogVersions#getUpdateVersions() with the list of actual change log
@@ -78,9 +78,9 @@ public class ChangeLogVersionsTest {
 	@Test
 	public void shouldGetUpdateVersions() throws IOException {
 		compareActualAndExpectedChangeLogs(changeLogVersions.getUpdateVersions(), UPDATE_TO_LATEST_BASE_NAME,
-		    UPDATE_TO_LATEST_PATTERN);
+										UPDATE_TO_LATEST_PATTERN);
 	}
-	
+
 	/**
 	 * Tests a helper method implemented in this test class.
 	 */
@@ -90,14 +90,14 @@ public class ChangeLogVersionsTest {
 		List<String> expected = Arrays.asList("basename-alpha.xml", "basename-bravo.xml", "basename-charlie.xml");
 		assertEquals(expected, actual);
 	}
-	
+
 	private void compareActualAndExpectedChangeLogs(List<String> versions, String basename, String pattern)
-	        throws IOException {
+									throws IOException {
 		List<String> expectedChangeLogFiles = getChangelogNamesFromVersions(versions, basename);
 		List<String> actualChangeLogFiles = lookupLiquibaseChangeLogs(pattern);
 		assertEquals(expectedChangeLogFiles, actualChangeLogFiles);
 	}
-	
+
 	private List<String> getChangelogNamesFromVersions(List<String> versions, String baseName) {
 		List<String> changeLogNames = new ArrayList<>();
 		for (String version : versions) {
@@ -105,13 +105,13 @@ public class ChangeLogVersionsTest {
 		}
 		return changeLogNames;
 	}
-	
+
 	private List<String> lookupLiquibaseChangeLogs(String resourcePattern) throws IOException {
 		PathMatchingResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
 		Resource[] resources = resourcePatternResolver.getResources(resourcePattern);
-		
+
 		log.debug("Liquibase resources found for pattern '{}' are: {}", resourcePattern, Arrays.toString(resources));
-		
+
 		return Arrays.stream(resources).map(resource -> resource.getFilename()).sorted().collect(Collectors.toList());
 	}
 }

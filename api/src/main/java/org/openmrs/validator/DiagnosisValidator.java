@@ -42,30 +42,30 @@ public class DiagnosisValidator implements Validator {
 	 */
 	@Override
 	public void validate(Object o, Errors errors) {
-		Diagnosis diagnosis = (Diagnosis)o;
-		
-		if(diagnosis == null){
+		Diagnosis diagnosis = (Diagnosis) o;
+
+		if (diagnosis == null) {
 			throw new APIException("Diagnosis can't be null");
 		} else if (diagnosis.getVoided()) {
 			return;
 		}
-		
-		if  (diagnosis.getEncounter() == null){
+
+		if  (diagnosis.getEncounter() == null) {
 			errors.rejectValue("encounter", "error.null");
 		}
-		
-		if (diagnosis.getDiagnosis() == null){
+
+		if (diagnosis.getDiagnosis() == null) {
 			errors.rejectValue("diagnosis", "error.null");
 		}
-		
-		if (diagnosis.getCertainty() == null){
+
+		if (diagnosis.getCertainty() == null) {
 			errors.rejectValue("certainty", "error.null");
 		}
-		
+
 		Integer rank = diagnosis.getRank();
-		if (rank == null){
+		if (rank == null) {
 			errors.rejectValue("rank", "error.null");
-		}else if(rank < 0){
+		} else if (rank < 0) {
 			errors.rejectValue("rank", "error.rank.notPositiveInteger");
 		}
 	}

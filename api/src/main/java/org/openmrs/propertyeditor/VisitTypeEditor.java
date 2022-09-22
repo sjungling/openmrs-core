@@ -20,15 +20,15 @@ import org.openmrs.api.context.Context;
  * @since 1.9
  */
 public class VisitTypeEditor extends OpenmrsPropertyEditor<VisitType> {
-	
+
 	public VisitTypeEditor() {
 	}
-	
+
 	@Override
 	protected VisitType getObjectById(Integer id) {
 		return Context.getVisitService().getVisitType(id);
 	}
-	
+
 	@Override
 	protected VisitType getObjectByUuid(String uuid) {
 		return Context.getVisitService().getVisitTypeByUuid(uuid);

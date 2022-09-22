@@ -18,13 +18,13 @@ import org.springframework.stereotype.Component;
 
 @Component("fullTextSessionFactory")
 public class FullTextSessionFactoryImpl implements FullTextSessionFactory {
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Autowired
 	private ApplicationEventPublisher eventPublisher;
-	
+
 	/**
 	 * @see FullTextSessionFactory#getFullTextSession()
 	 */
@@ -33,5 +33,5 @@ public class FullTextSessionFactoryImpl implements FullTextSessionFactory {
 		FullTextSession delegateSession = Search.getFullTextSession(sessionFactory.getCurrentSession());
 		return new DelegatingFullTextSession(delegateSession, eventPublisher);
 	}
-	
+
 }

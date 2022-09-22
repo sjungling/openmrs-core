@@ -112,12 +112,12 @@ public class ConditionServiceImpl extends BaseOpenmrsService implements Conditio
 		if (condition.getVoided()) {
 			if (!existingCondition.getVoided()) {
 				return Context.getConditionService().voidCondition(existingCondition,
-					StringUtils.isNotBlank(condition.getVoidReason()) ? condition.getVoidReason() : "Condition deleted");
+												StringUtils.isNotBlank(condition.getVoidReason()) ? condition.getVoidReason() : "Condition deleted");
 			} else {
 				return existingCondition;
 			}
 		}
-		
+
 		// If the existing condition is voided, we will only calls to unvoid the condition
 		// All other changes are ignored
 		if (existingCondition.getVoided()) {

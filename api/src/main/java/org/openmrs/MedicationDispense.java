@@ -31,9 +31,9 @@ import java.util.Date;
 @Entity
 @Table(name = "medication_dispense")
 public class MedicationDispense extends BaseFormRecordableOpenmrsData {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "medication_dispense_id")
@@ -46,7 +46,7 @@ public class MedicationDispense extends BaseFormRecordableOpenmrsData {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "patient_id")
 	private Patient patient;
-	
+
 	/**
 	 * FHIR:context
 	 * Encounter when the dispensing event occurred
@@ -62,7 +62,7 @@ public class MedicationDispense extends BaseFormRecordableOpenmrsData {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "concept")
 	private Concept concept;
-	
+
 	/**
 	 * FHIR:medication.reference(Medication)
 	 * Corresponds to drugOrder.drug
@@ -191,7 +191,7 @@ public class MedicationDispense extends BaseFormRecordableOpenmrsData {
 	 * FHIR:DosageInstructions.patientInstructions
 	 * Relates to drugOrder.dosingInstructions
 	 */
-	@Column(name = "dosing_instructions", length=65535)
+	@Column(name = "dosing_instructions", length = 65535)
 	private String dosingInstructions;
 
 	/**
@@ -235,7 +235,7 @@ public class MedicationDispense extends BaseFormRecordableOpenmrsData {
 	@JoinColumn(name = "substitution_reason")
 	private Concept substitutionReason;
 
-	
+
 	public MedicationDispense() {
 	}
 

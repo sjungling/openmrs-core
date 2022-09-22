@@ -25,21 +25,21 @@ import org.junit.jupiter.api.Test;
 import org.openmrs.util.H2DatabaseIT;
 
 public class InsertWithUuidDataChangeDatabaseIT extends H2DatabaseIT {
-	
+
 	@Test
 	public void shouldInsertUuids() throws Exception {
 		this.updateDatabase("org/openmrs/liquibase/liquibase-test-insert-with-uuid.xml");
-		
+
 		Map<String, String> expected = new HashMap<>();
 		expected.put("alpha", "alpha123-alph-alph-alph-alpha1234567");
 		expected.put("bravo", "bravo123-brav-brav-brav-bravo1234567");
-		
+
 		Map<String, String> actual = getNamesWithUuids();
-		
+
 		assertEquals(3, actual.size());
 		assertEquals(expected.get("alpha"), actual.get("alpha"));
 		assertEquals(expected.get("bravo"), actual.get("bravo"));
-		
+
 		String uuid = actual.get("charlie");
 		assertNotNull(uuid);
 		try {
@@ -49,19 +49,19 @@ public class InsertWithUuidDataChangeDatabaseIT extends H2DatabaseIT {
 			fail("uuid generated for name 'charlie' is not valid");
 		}
 	}
-	
+
 	protected Map<String, String> getNamesWithUuids() throws SQLException {
 		Map<String, String> result = new HashMap<>();
 		try (Connection connection = getConnection();
 			Statement statement = connection.createStatement()) {
 			String query = "select * from name_with_uuid";
 			statement.execute(query);
-			
+
 			ResultSet resultSet = statement.getResultSet();
 			while (resultSet.next()) {
 				result.put(resultSet.getString(1), resultSet.getString(2));
 			}
-			
+
 			return result;
 		}
 	}

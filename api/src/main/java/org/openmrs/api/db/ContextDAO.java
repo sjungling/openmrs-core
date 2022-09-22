@@ -23,7 +23,7 @@ import org.openmrs.util.OpenmrsConstants;
  * Defines the functions that the Context needs to access the database
  */
 public interface ContextDAO {
-	
+
 	/**
 	 * Authenticate user with the given username and password.
 	 * 
@@ -53,7 +53,7 @@ public interface ContextDAO {
 	 * <strong>Should</strong> throw a ContextAuthenticationException if username is white space
 	 */
 	public User authenticate(String username, String password) throws ContextAuthenticationException;
-	
+
 	/**
 	 * Gets a user given the uuid. Privilege checks are not done here because this is used by the
 	 * {@link Context#getAuthenticatedUser()} method.
@@ -63,7 +63,7 @@ public interface ContextDAO {
 	 * @throws ContextAuthenticationException
 	 */
 	public User getUserByUuid(String uuid) throws ContextAuthenticationException;
-	
+
 	/**
 	 * Gets a user given the username. Privilege checks are not done here because this is used by the
 	 * {@link Context#getAuthenticatedUser()} or {@link Context#authenticate(org.openmrs.api.context.Credentials)} methods.
@@ -74,7 +74,7 @@ public interface ContextDAO {
 	 * @since 2.3.0
 	 */
 	public User getUserByUsername(String username);
-	
+
 	/**
 	 * Creates a new user.
 	 * When the users are managed by a third-party authentication provider, it will happen that a successfully authenticated user still needs to be created in OpenMRS.
@@ -89,27 +89,27 @@ public interface ContextDAO {
 	 * @since 2.3.0
 	 */
 	public User createUser(User user, String password, List<String> roleNames) throws Exception;
-	
+
 	/**
 	 * Open session.
 	 */
 	public void openSession();
-	
+
 	/**
 	 * Close session.
 	 */
 	public void closeSession();
-	
+
 	/**
 	 * @see org.openmrs.api.context.Context#clearSession()
 	 */
 	public void clearSession();
-	
+
 	/**
 	 * @see org.openmrs.api.context.Context#flushSession()
 	 */
 	public void flushSession();
-	
+
 	/**
 	 * Used to clear a cached object out of a session in the middle of a unit of work. Future
 	 * updates to this object will not be saved. Future gets of this object will not fetch this
@@ -137,20 +137,20 @@ public interface ContextDAO {
 	 * @param props Properties
 	 */
 	public void startup(Properties props);
-	
+
 	/**
 	 * Stops the OpenMRS System Should be called after all activity has ended and application is
 	 * closing
 	 */
 	public void shutdown();
-	
+
 	/**
 	 * Merge in the default properties defined for this database connection
 	 * 
 	 * @param runtimeProperties The current user specific runtime properties
 	 */
 	public void mergeDefaultRuntimeProperties(Properties runtimeProperties);
-	
+
 	/**
 	 * Updates the search index if necessary.
 	 * <p>
@@ -158,7 +158,7 @@ public interface ContextDAO {
 	 * or the value does not match {@link OpenmrsConstants#SEARCH_INDEX_VERSION}.
 	 */
 	public void setupSearchIndex();
-	
+
 	/**
 	 * @see Context#updateSearchIndex()
 	 */
@@ -168,12 +168,12 @@ public interface ContextDAO {
 	 * @see Context#updateSearchIndexAsync()
 	 */
 	public Future<?> updateSearchIndexAsync();
-	
+
 	/**
 	 * @see Context#updateSearchIndexForObject(Object)
 	 */
 	public void updateSearchIndexForObject(Object object);
-	
+
 	/**
 	 * @see Context#updateSearchIndexForType(Class)
 	 */

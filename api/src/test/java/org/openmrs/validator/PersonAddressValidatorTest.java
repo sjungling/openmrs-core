@@ -28,13 +28,13 @@ import org.springframework.validation.Errors;
  * Consists of tests for the PersonAddressValidator
  */
 public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
-	
+
 	protected static final String PERSON_ADDRESS_VALIDATOR_DATASET_PACKAGE_PATH = "org/openmrs/include/personAddressValidatorTestDataset.xml";
-	
+
 	PersonAddressValidator validator = null;
-	
+
 	PersonService ps = null;
-	
+
 	/**
 	 * Run this before each unit test in this class.
 	 * 
@@ -45,9 +45,9 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		validator = new PersonAddressValidator();
 		ps = Context.getPersonService();
 	}
-	
+
 	/**
-	 * @see PersonAddressValidator#validate(Object,Errors)
+	 * @see PersonAddressValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheStartDateIsInTheFuture() {
@@ -60,9 +60,9 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(personAddress, errors);
 		assertTrue(errors.hasFieldErrors());
 	}
-	
+
 	/**
-	 * @see PersonAddressValidator#validate(Object,Errors)
+	 * @see PersonAddressValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheEndDateIsBeforeTheStartDate() {
@@ -75,9 +75,9 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(personAddress, errors);
 		assertTrue(errors.hasFieldErrors());
 	}
-	
+
 	/**
-	 * @see PersonAddressValidator#validate(Object,Errors)
+	 * @see PersonAddressValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassIfAllTheDatesAreValid() {
@@ -89,9 +89,9 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(personAddress, errors);
 		assertFalse(errors.hasFieldErrors());
 	}
-	
+
 	/**
-	 * @see PersonAddressValidator#validate(Object,Errors)
+	 * @see PersonAddressValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassIfStartDateAndEndDateAreBothNull() {
@@ -102,9 +102,9 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(personAddress, errors);
 		assertFalse(errors.hasFieldErrors());
 	}
-	
+
 	/**
-	 * @see PersonAddressValidator#validate(Object,Errors)
+	 * @see PersonAddressValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassIfStartDateIsNull() {
@@ -116,9 +116,9 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(personAddress, errors);
 		assertFalse(errors.hasFieldErrors());
 	}
-	
+
 	/**
-	 * @see PersonAddressValidator#validate(Object,Errors)
+	 * @see PersonAddressValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassIfEndDateIsNull() {
@@ -130,7 +130,7 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(personAddress, errors);
 		assertFalse(errors.hasFieldErrors());
 	}
-	
+
 	/**
 	 * @see PersonAddressValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -138,12 +138,12 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 	public void validate_shouldFailIfRequiredFieldsAreEmpty() {
 		executeDataSet(PERSON_ADDRESS_VALIDATOR_DATASET_PACKAGE_PATH);
 		Address personAddress = new PersonAddress();
-		
+
 		Errors errors = new BindException(personAddress, "personAddress");
 		validator.validate(personAddress, errors);
 		assertTrue(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see PersonAddressValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -152,14 +152,14 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		executeDataSet(PERSON_ADDRESS_VALIDATOR_DATASET_PACKAGE_PATH);
 		Address personAddress = new PersonAddress();
 		personAddress.setAddress1("Address1");
-		
+
 		Errors errors = new BindException(personAddress, "personAddress");
 		validator.validate(personAddress, errors);
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see PersonAddressValidator#validate(Object,Errors)
+	 * @see PersonAddressValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() {
@@ -183,9 +183,9 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(personAddress, errors);
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see PersonAddressValidator#validate(Object,Errors)
+	 * @see PersonAddressValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() {

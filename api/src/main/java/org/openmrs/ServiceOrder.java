@@ -34,7 +34,7 @@ public abstract class ServiceOrder extends Order {
 	private OrderFrequency frequency;
 
 	private Integer numberOfRepeats;
-	
+
 	private Concept location;
 
 	/**

@@ -17,7 +17,7 @@ import org.openmrs.util.DatabaseUpdater;
  * {@link DatabaseUpdater#executeChangelog(String, ChangeSetExecutorCallback)}
  */
 public interface ChangeSetExecutorCallback {
-	
+
 	/**
 	 * This method is called after each changeset is executed.
 	 *

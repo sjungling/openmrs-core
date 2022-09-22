@@ -30,12 +30,12 @@ import org.springframework.util.Assert;
  * @since 1.5
  */
 public class BinaryDataHandler extends AbstractHandler implements ComplexObsHandler {
-	
+
 	/** Views supported by this handler */
-	private static final String[] supportedViews = { ComplexObsHandler.RAW_VIEW, };
-	
+	private static final String[] supportedViews = {ComplexObsHandler.RAW_VIEW, };
+
 	private static final Logger log = LoggerFactory.getLogger(BinaryDataHandler.class);
-	
+
 	/**
 	 * Constructor initializes formats for alternative file names to protect from unintentionally
 	 * overwriting existing files.
@@ -43,7 +43,7 @@ public class BinaryDataHandler extends AbstractHandler implements ComplexObsHand
 	public BinaryDataHandler() {
 		super();
 	}
-	
+
 	/**
 	 * Currently supports the following views: org.openmrs.obs.ComplexObsHandler#RAW_VIEW
 	 * 
@@ -55,7 +55,7 @@ public class BinaryDataHandler extends AbstractHandler implements ComplexObsHand
 		log.debug("value complex: " + obs.getValueComplex());
 		log.debug("file path: " + file.getAbsolutePath());
 		ComplexData complexData = null;
-		
+
 		// Raw view (i.e. the file as is)
 		if (ComplexObsHandler.RAW_VIEW.equals(view)) {
 			// to handle problem with downloading/saving files with blank spaces or commas in their names
@@ -63,7 +63,7 @@ public class BinaryDataHandler extends AbstractHandler implements ComplexObsHand
 			String[] names = obs.getValueComplex().split("\\|");
 			String originalFilename = names[0];
 			originalFilename = originalFilename.replaceAll(",", "").replaceAll(" ", "").replaceAll("file$", "");
-			
+
 			try {
 				complexData = new ComplexData(originalFilename, OpenmrsUtil.getFileAsBytes(file));
 			}
@@ -75,18 +75,18 @@ public class BinaryDataHandler extends AbstractHandler implements ComplexObsHand
 			// NOTE: if adding support for another view, don't forget to update supportedViews list above
 			return null;
 		}
-		
+
 		Assert.notNull(complexData, "Complex data must not be null");
-		
+
 		// Get the Mime Type and set it
 		String mimeType = OpenmrsUtil.getFileMimeType(file);
 		complexData.setMimeType(mimeType);
-		
+
 		obs.setComplexData(complexData);
-		
+
 		return obs;
 	}
-	
+
 	/**
 	 * @see org.openmrs.obs.ComplexObsHandler#getSupportedViews()
 	 */
@@ -94,7 +94,7 @@ public class BinaryDataHandler extends AbstractHandler implements ComplexObsHand
 	public String[] getSupportedViews() {
 		return supportedViews;
 	}
-	
+
 	/**
 	 * TODO should this support a StringReader too?
 	 * 
@@ -108,12 +108,12 @@ public class BinaryDataHandler extends AbstractHandler implements ComplexObsHand
 			log.error("Cannot save complex data where obsId=" + obs.getObsId() + " because its ComplexData is null.");
 			return obs;
 		}
-		
+
 		FileOutputStream fout = null;
 		try {
 			File outfile = getOutputFileToWrite(obs);
 			fout = new FileOutputStream(outfile);
-			
+
 			Object data = obs.getComplexData().getData();
 			if (data instanceof byte[]) {
 				fout.write((byte[]) data);
@@ -122,16 +122,16 @@ public class BinaryDataHandler extends AbstractHandler implements ComplexObsHand
 					OpenmrsUtil.copyFile((InputStream) data, fout);
 				}
 				catch (IOException e) {
-					throw new APIException("Obs.error.unable.convert.complex.data", new Object[] { "input stream" }, e);
+					throw new APIException("Obs.error.unable.convert.complex.data", new Object[]{"input stream"}, e);
 				}
 			}
-			
+
 			// Set the Title and URI for the valueComplex
 			obs.setValueComplex(outfile.getName() + " file |" + outfile.getName());
-			
+
 			// Remove the ComplexData from the Obs
 			obs.setComplexData(null);
-			
+
 		}
 		catch (IOException ioe) {
 			throw new APIException("Obs.error.trying.write.complex", null, ioe);
@@ -144,8 +144,8 @@ public class BinaryDataHandler extends AbstractHandler implements ComplexObsHand
 				// pass
 			}
 		}
-		
+
 		return obs;
 	}
-	
+
 }

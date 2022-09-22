@@ -43,11 +43,11 @@ import org.slf4j.LoggerFactory;
  */
 @Indexed
 public class PersonAttribute extends BaseChangeableOpenmrsData implements java.io.Serializable, Comparable<PersonAttribute> {
-	
+
 	public static final long serialVersionUID = 11231211232111L;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(PersonAttribute.class);
-	
+
 	// Fields
 	@DocumentId
 	private Integer personAttributeId;
@@ -59,21 +59,21 @@ public class PersonAttribute extends BaseChangeableOpenmrsData implements java.i
 	private PersonAttributeType attributeType;
 
 	@Fields({
-			@Field(name = "valuePhrase", analyzer = @Analyzer(definition = LuceneAnalyzers.PHRASE_ANALYZER), boost = @Boost(8f)),
-			@Field(name = "valueExact", analyzer = @Analyzer(definition = LuceneAnalyzers.EXACT_ANALYZER), boost = @Boost(4f)),
-			@Field(name = "valueStart", analyzer = @Analyzer(definition = LuceneAnalyzers.START_ANALYZER), boost = @Boost(2f)),
-			@Field(name = "valueAnywhere", analyzer = @Analyzer(definition = LuceneAnalyzers.ANYWHERE_ANALYZER))
+									@Field(name = "valuePhrase", analyzer = @Analyzer(definition = LuceneAnalyzers.PHRASE_ANALYZER), boost = @Boost(8f)),
+									@Field(name = "valueExact", analyzer = @Analyzer(definition = LuceneAnalyzers.EXACT_ANALYZER), boost = @Boost(4f)),
+									@Field(name = "valueStart", analyzer = @Analyzer(definition = LuceneAnalyzers.START_ANALYZER), boost = @Boost(2f)),
+									@Field(name = "valueAnywhere", analyzer = @Analyzer(definition = LuceneAnalyzers.ANYWHERE_ANALYZER))
 	})
 	private String value;
-	
+
 	/** default constructor */
 	public PersonAttribute() {
 	}
-	
+
 	public PersonAttribute(Integer personAttributeId) {
 		this.personAttributeId = personAttributeId;
 	}
-	
+
 	/**
 	 * Constructor for creating a basic attribute
 	 * 
@@ -84,7 +84,7 @@ public class PersonAttribute extends BaseChangeableOpenmrsData implements java.i
 		this.attributeType = type;
 		this.value = value;
 	}
-	
+
 	/**
 	 * Shallow copy of this PersonAttribute. Does NOT copy personAttributeId
 	 * 
@@ -93,7 +93,7 @@ public class PersonAttribute extends BaseChangeableOpenmrsData implements java.i
 	public PersonAttribute copy() {
 		return copyHelper(new PersonAttribute());
 	}
-	
+
 	/**
 	 * The purpose of this method is to allow subclasses of PersonAttribute to delegate a portion of
 	 * their copy() method back to the superclass, in case the base class implementation changes.
@@ -115,7 +115,7 @@ public class PersonAttribute extends BaseChangeableOpenmrsData implements java.i
 		target.setVoidReason(getVoidReason());
 		return target;
 	}
-	
+
 	/**
 	 * Compares this PersonAttribute object to the given otherAttribute. This method differs from
 	 * {@link #equals(Object)} in that this method compares the inner fields of each attribute for
@@ -129,24 +129,24 @@ public class PersonAttribute extends BaseChangeableOpenmrsData implements java.i
 	@SuppressWarnings("unchecked")
 	public boolean equalsContent(PersonAttribute otherAttribute) {
 		boolean returnValue = true;
-		
+
 		// these are the methods to compare.
-		String[] methods = { "getAttributeType", "getValue", "getVoided" };
-		
+		String[] methods = {"getAttributeType", "getValue", "getVoided"};
+
 		Class attributeClass = this.getClass();
-		
+
 		// loop over all of the selected methods and compare this and other
 		for (String methodAttribute : methods) {
 			try {
 				Method method = attributeClass.getMethod(methodAttribute);
-				
+
 				Object thisValue = method.invoke(this);
 				Object otherValue = method.invoke(otherAttribute);
-				
+
 				if (otherValue != null) {
 					returnValue &= otherValue.equals(thisValue);
 				}
-				
+
 			}
 			catch (NoSuchMethodException e) {
 				log.warn("No such method for comparison " + methodAttribute, e);
@@ -156,10 +156,10 @@ public class PersonAttribute extends BaseChangeableOpenmrsData implements java.i
 			}
 
 		}
-		
+
 		return returnValue;
 	}
-	
+
 	// property accessors
 	
 	/**
@@ -168,42 +168,42 @@ public class PersonAttribute extends BaseChangeableOpenmrsData implements java.i
 	public Person getPerson() {
 		return person;
 	}
-	
+
 	/**
 	 * @param person The person to set.
 	 */
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	
+
 	/**
 	 * @return the attributeType
 	 */
 	public PersonAttributeType getAttributeType() {
 		return attributeType;
 	}
-	
+
 	/**
 	 * @param attributeType the attributeType to set
 	 */
 	public void setAttributeType(PersonAttributeType attributeType) {
 		this.attributeType = attributeType;
 	}
-	
+
 	/**
 	 * @return the value
 	 */
 	public String getValue() {
 		return value;
 	}
-	
+
 	/**
 	 * @param value the value to set
 	 */
 	public void setValue(String value) {
 		this.value = value;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 * <strong>Should</strong> return toString of hydrated value
@@ -216,24 +216,24 @@ public class PersonAttribute extends BaseChangeableOpenmrsData implements java.i
 		} else if (o != null) {
 			return o.toString();
 		}
-		
+
 		return this.value;
 	}
-	
+
 	/**
 	 * @return the personAttributeId
 	 */
 	public Integer getPersonAttributeId() {
 		return personAttributeId;
 	}
-	
+
 	/**
 	 * @param personAttributeId the personAttributeId to set
 	 */
 	public void setPersonAttributeId(Integer personAttributeId) {
 		this.personAttributeId = personAttributeId;
 	}
-	
+
 	/**
 	 * Will try to create an object of class 'PersonAttributeType.format'. If that implements
 	 * <code>Attributable</code>, hydrate(value) is called. Defaults to just returning getValue()
@@ -244,11 +244,11 @@ public class PersonAttribute extends BaseChangeableOpenmrsData implements java.i
 	 */
 	@SuppressWarnings("unchecked")
 	public Object getHydratedObject() {
-		
+
 		if (getValue() == null) {
 			return null;
 		}
-		
+
 		try {
 			Class c = OpenmrsClassLoader.getInstance().loadClass(getAttributeType().getFormat());
 			try {
@@ -265,19 +265,19 @@ public class PersonAttribute extends BaseChangeableOpenmrsData implements java.i
 			}
 		}
 		catch (Exception e) {
-			
+
 			// No need to warn if the input was blank
 			if (StringUtils.isBlank(getValue())) {
 				return null;
 			}
-			
+
 			log.warn("Unable to hydrate value: " + getValue() + " for type: " + getAttributeType(), e);
 		}
-		
+
 		log.debug("Returning value: '" + getValue() + "'");
 		return getValue();
 	}
-	
+
 	/**
 	 * Convenience method for voiding this attribute
 	 * 
@@ -290,7 +290,7 @@ public class PersonAttribute extends BaseChangeableOpenmrsData implements java.i
 		setVoidReason(reason);
 		setDateVoided(new Date());
 	}
-	
+
 	/**
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 * <strong>Should</strong> return negative if other attribute is voided
@@ -306,17 +306,17 @@ public class PersonAttribute extends BaseChangeableOpenmrsData implements java.i
 		DefaultComparator paDComparator = new DefaultComparator();
 		return paDComparator.compare(this, other);
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
 	@Override
 	public Integer getId() {
-		
+
 		return getPersonAttributeId();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -324,9 +324,9 @@ public class PersonAttribute extends BaseChangeableOpenmrsData implements java.i
 	@Override
 	public void setId(Integer id) {
 		setPersonAttributeId(id);
-		
+
 	}
-	
+
 	/**
 	 Provides a default comparator.
 	 @since 1.12
@@ -334,28 +334,28 @@ public class PersonAttribute extends BaseChangeableOpenmrsData implements java.i
 	public static class DefaultComparator implements Comparator<PersonAttribute>, Serializable {
 
 		private static final long serialVersionUID = 1L;
-		
+
 		@Override
 		public int compare(PersonAttribute pa1, PersonAttribute pa2) {
 			int retValue;
 			if ((retValue = OpenmrsUtil.compareWithNullAsGreatest(pa1.getAttributeType(), pa2.getAttributeType())) != 0) {
 				return retValue;
 			}
-			
+
 			if ((retValue = pa1.getVoided().compareTo(pa2.getVoided())) != 0) {
 				return retValue;
 			}
-			
+
 			if ((retValue = OpenmrsUtil.compareWithNullAsLatest(pa1.getDateCreated(), pa2.getDateCreated())) != 0) {
 				return retValue;
 			}
-			
+
 			if ((retValue = OpenmrsUtil.compareWithNullAsGreatest(pa1.getValue(), pa2.getValue())) != 0) {
 				return retValue;
 			}
-			
+
 			return OpenmrsUtil.compareWithNullAsGreatest(pa1.getPersonAttributeId(), pa2.getPersonAttributeId());
 		}
 	}
-	
+
 }

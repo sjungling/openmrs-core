@@ -20,9 +20,9 @@ import org.springframework.core.type.filter.TypeFilter;
  * Creates a bean if profile is matched. It returns true if a bean should be created.
  */
 public class OpenmrsProfileIncludeFilter implements TypeFilter {
-	
+
 	private OpenmrsProfileExcludeFilter openmrsProfileExcludeFilter = new OpenmrsProfileExcludeFilter();
-	
+
 	/**
 	 * <strong>Should</strong> create bean for openmrs 1_8 and later
 	 * <strong>Should</strong> not create bean for openmrs 1_6 to 1_7
@@ -30,12 +30,12 @@ public class OpenmrsProfileIncludeFilter implements TypeFilter {
 	@Override
 	public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) throws IOException {
 		Map<String, Object> openmrsProfileAttributes = metadataReader.getAnnotationMetadata().getAnnotationAttributes(
-		    "org.openmrs.annotation.OpenmrsProfile");
+										"org.openmrs.annotation.OpenmrsProfile");
 		if (openmrsProfileAttributes != null) {
 			return openmrsProfileExcludeFilter.matchOpenmrsProfileAttributes(openmrsProfileAttributes);
 		} else {
 			return false;
 		}
 	}
-	
+
 }

@@ -32,7 +32,7 @@ import org.openmrs.aop.RequiredDataAdvice;
  * @since 1.5
  */
 public interface UnretireHandler<R extends Retireable> extends RequiredDataHandler<R> {
-	
+
 	/**
 	 * Called around every unretire* method to set {@link Retireable} attributes to null.<br>
 	 * <br>
@@ -42,5 +42,5 @@ public interface UnretireHandler<R extends Retireable> extends RequiredDataHandl
 	 */
 	@Override
 	public void handle(R retireableObject, User retiringUser, Date origParentRetiredDate, String unused);
-	
+
 }

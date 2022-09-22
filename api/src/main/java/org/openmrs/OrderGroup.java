@@ -23,25 +23,25 @@ import org.openmrs.api.APIException;
  * @since 1.12
  */
 public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
-	
+
 	public static final long serialVersionUID = 72232L;
-	
+
 	private Integer orderGroupId;
-	
+
 	private Patient patient;
-	
+
 	private Encounter encounter;
-	
+
 	private List<Order> orders;
-	
+
 	private OrderSet orderSet;
-	
+
 	private OrderGroup parentOrderGroup;
 
 	private Concept orderGroupReason;
 
 	private OrderGroup previousOrderGroup;
-	
+
 	private Set<OrderGroup> nestedOrderGroups;
 
 	/**
@@ -52,7 +52,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 	public Integer getOrderGroupId() {
 		return orderGroupId;
 	}
-	
+
 	/**
 	 * Sets the orderGroupId
 	 *
@@ -61,7 +61,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 	public void setOrderGroupId(Integer orderGroupId) {
 		this.orderGroupId = orderGroupId;
 	}
-	
+
 	/**
 	 * Gets the patient
 	 *
@@ -70,7 +70,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 	public Patient getPatient() {
 		return patient;
 	}
-	
+
 	/**
 	 * Sets the patient
 	 *
@@ -79,7 +79,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
-	
+
 	/**
 	 * Gets the encounter
 	 *
@@ -88,7 +88,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 	public Encounter getEncounter() {
 		return encounter;
 	}
-	
+
 	/**
 	 * Sets the encounter
 	 *
@@ -97,7 +97,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 	public void setEncounter(Encounter encounter) {
 		this.encounter = encounter;
 	}
-	
+
 	/**
 	 * Gets the orders
 	 *
@@ -109,7 +109,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 		}
 		return orders;
 	}
-	
+
 	/**
 	 * Sets the orders
 	 *
@@ -118,7 +118,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
-	
+
 	/**
 	 * Adds a new order to the existing list of orders
 	 * 
@@ -127,7 +127,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 	public void addOrder(Order order) {
 		this.addOrder(order, null);
 	}
-	
+
 	/**
 	 * Adds {@link Order}s to existing Order list
 	 * 
@@ -139,7 +139,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 			addOrder(order);
 		}
 	}
-	
+
 	/**
 	 * Adds a new order to the existing list of orders.
 	 * The <tt>sortWeight</tt> for the order is auto calculated based on the given position.
@@ -151,16 +151,16 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 		if (order == null || getOrders().contains(order)) {
 			return;
 		}
-                
-                order.setOrderGroup(this);  
-                 
+
+		order.setOrderGroup(this);
+
 		Integer listIndex = findListIndexForGivenPosition(position);
 		getOrders().add(listIndex, order);
 		if (order.getSortWeight() == null) {
 			order.setSortWeight(findSortWeight(listIndex));
 		}
 	}
-	
+
 	private Integer findListIndexForGivenPosition(Integer position) {
 		Integer size = getOrders().size();
 		if (position != null) {
@@ -174,7 +174,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 		}
 		return position;
 	}
-	
+
 	private double findSortWeight(int index) {
 		int size = getOrders().size();
 		if (size == 1) {
@@ -188,7 +188,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 		}
 		return (getOrders().get(index - 1).getSortWeight() + getOrders().get(index + 1).getSortWeight()) / 2;
 	}
-	
+
 	/**
 	 * Gets the orderSet
 	 *
@@ -197,7 +197,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 	public OrderSet getOrderSet() {
 		return orderSet;
 	}
-	
+
 	/**
 	 * Sets the orderSet
 	 *
@@ -206,17 +206,17 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 	public void setOrderSet(OrderSet orderSet) {
 		this.orderSet = orderSet;
 	}
-	
+
 	@Override
 	public Integer getId() {
 		return getOrderGroupId();
 	}
-	
+
 	@Override
 	public void setId(Integer id) {
 		setOrderGroupId(id);
 	}
-	
+
 	/**
 	 * Gets the parent order group to maintain linkages between groups and support group nesting
 	 * 
@@ -226,7 +226,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 	public OrderGroup getParentOrderGroup() {
 		return parentOrderGroup;
 	}
-	
+
 	/**
 	 * Sets the parent order group to maintain linkages between groups and support group nesting
 	 * 
@@ -258,7 +258,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 	public void setOrderGroupReason(Concept orderGroupReason) {
 		this.orderGroupReason = orderGroupReason;
 	}
-	
+
 	/**
 	 * Gets the previous order group to other order groups, to maintain linkages
 	 * between groups and support group nesting
@@ -280,7 +280,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 	public void setPreviousOrderGroup(OrderGroup previousOrderGroup) {
 		this.previousOrderGroup = previousOrderGroup;
 	}
-	
+
 	/**
 	 * Gets the nested order groups to other order groups, to maintain linkages
 	 * between groups and support group nesting
@@ -291,7 +291,7 @@ public class OrderGroup extends BaseCustomizableData<OrderGroupAttribute> {
 	public Set<OrderGroup> getNestedOrderGroups() {
 		return this.nestedOrderGroups;
 	}
-	
+
 	/**
 	 * Sets the nested order groups to other order groups, to maintain linkages
 	 * between groups and support group nesting.

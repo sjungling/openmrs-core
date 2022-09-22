@@ -22,11 +22,11 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { ConceptStateConversion.class }, order = 50)
+@Handler(supports = {ConceptStateConversion.class}, order = 50)
 public class StateConversionValidator implements Validator {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(StateConversionValidator.class);
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -36,7 +36,7 @@ public class StateConversionValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return c.equals(ConceptStateConversion.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -59,5 +59,5 @@ public class StateConversionValidator implements Validator {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "programWorkflowState", "error.programWorkflowState");
 		}
 	}
-	
+
 }

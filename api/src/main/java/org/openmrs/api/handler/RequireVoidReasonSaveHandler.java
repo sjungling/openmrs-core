@@ -30,9 +30,9 @@ import org.openmrs.api.APIException;
  * @see RequiredDataAdvice
  * @since 1.5
  */
-@Handler(supports = { Patient.class, Encounter.class })
+@Handler(supports = {Patient.class, Encounter.class})
 public class RequireVoidReasonSaveHandler implements SaveHandler<Voidable> {
-	
+
 	/**
 	 * Validates that the voidReason is non-null and non-empty for supported objects
 	 * 
@@ -44,10 +44,10 @@ public class RequireVoidReasonSaveHandler implements SaveHandler<Voidable> {
 	 */
 	@Override
 	public void handle(Voidable voidableObject, User currentUser, Date currentDate, String notUsed) {
-		
+
 		if (voidableObject.getVoided() && StringUtils.isBlank(voidableObject.getVoidReason())) {
-			throw new APIException("voided.bit.was.set.true", new Object[] { voidableObject, voidableObject.getClass() });
+			throw new APIException("voided.bit.was.set.true", new Object[]{voidableObject, voidableObject.getClass()});
 		}
 	}
-	
+
 }

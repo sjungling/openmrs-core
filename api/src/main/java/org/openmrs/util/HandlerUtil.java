@@ -32,22 +32,22 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class HandlerUtil implements ApplicationListener<ContextRefreshedEvent> {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(HandlerUtil.class);
-	
+
 	private static volatile Map<Key, List<?>> cachedHandlers = new WeakHashMap<>();
-	
+
 	private static class Key {
-		
+
 		public final Class<?> handlerType;
-		
+
 		public final Class<?> type;
-		
+
 		public Key(Class<?> handlerType, Class<?> type) {
 			this.handlerType = handlerType;
 			this.type = type;
 		}
-		
+
 		@Override
 		public int hashCode() {
 			final int prime = 31;
@@ -56,7 +56,7 @@ public class HandlerUtil implements ApplicationListener<ContextRefreshedEvent> {
 			result = prime * result + ((type == null) ? 0 : type.hashCode());
 			return result;
 		}
-		
+
 		@Override
 		public boolean equals(Object obj) {
 			if (this == obj) {
@@ -82,13 +82,13 @@ public class HandlerUtil implements ApplicationListener<ContextRefreshedEvent> {
 				return type.equals(other.type);
 			}
 		}
-		
+
 	}
-	
+
 	public static void clearCachedHandlers() {
 		cachedHandlers = new WeakHashMap<>();
 	}
-	
+
 	/**
 	 * Retrieves a List of all registered components from the Context that are of the passed
 	 * handlerType and one or more of the following is true:
@@ -111,9 +111,9 @@ public class HandlerUtil implements ApplicationListener<ContextRefreshedEvent> {
 		if (list != null) {
 			return (List<H>) list;
 		}
-		
+
 		List<H> handlers = new ArrayList<>();
-		
+
 		// First get all registered components of the passed class
 		log.debug("Getting handlers of type " + handlerType + (type == null ? "" : " for class " + type.getName()));
 		for (H handler : Context.getRegisteredComponents(handlerType)) {
@@ -137,17 +137,17 @@ public class HandlerUtil implements ApplicationListener<ContextRefreshedEvent> {
 				}
 			}
 		}
-		
+
 		// Return the list of handlers based on the order specified in the Handler annotation
 		handlers.sort(Comparator.comparing(o -> getOrderOfHandler(o.getClass())));
-		
+
 		Map<Key, List<?>> newCachedHandlers = new WeakHashMap<>(cachedHandlers);
 		newCachedHandlers.put(new Key(handlerType, type), handlers);
 		cachedHandlers = newCachedHandlers;
-		
+
 		return handlers;
 	}
-	
+
 	/**
 	 * Retrieves the preferred Handler for a given handlerType and type. A <em>preferred</em>
 	 * handler is the Handler that has the lowest defined <em>order</em> attribute in it's
@@ -164,26 +164,26 @@ public class HandlerUtil implements ApplicationListener<ContextRefreshedEvent> {
 	 * <strong>Should</strong> should return person validator for person
 	 */
 	public static <H, T> H getPreferredHandler(Class<H> handlerType, Class<T> type) {
-		
+
 		if (handlerType == null || type == null) {
 			throw new IllegalArgumentException("You must specify both a handlerType and a type");
 		}
 		List<H> handlers = getHandlersForType(handlerType, type);
 		if (handlers == null || handlers.isEmpty()) {
-			throw new APIException("handler.type.not.found", new Object[] { handlerType, type });
+			throw new APIException("handler.type.not.found", new Object[]{handlerType, type});
 		}
-		
+
 		if (handlers.size() > 1) {
 			int order1 = getOrderOfHandler(handlers.get(0).getClass());
 			int order2 = getOrderOfHandler(handlers.get(1).getClass());
 			if (order1 == order2) {
-				throw new APIException("handler.type.multiple", new Object[] { handlerType, type });
+				throw new APIException("handler.type.multiple", new Object[]{handlerType, type});
 			}
 		}
-		
+
 		return handlers.get(0);
 	}
-	
+
 	/**
 	 * Utility method to return the order attribute of the {@link Handler} annotation on the passed
 	 * class. If the passed class does not have a {@link Handler} annotation, a RuntimeException is
@@ -195,11 +195,11 @@ public class HandlerUtil implements ApplicationListener<ContextRefreshedEvent> {
 	public static Integer getOrderOfHandler(Class<?> handlerClass) {
 		Handler annotation = handlerClass.getAnnotation(Handler.class);
 		if (annotation == null) {
-			throw new APIException("class.not.annotated.as.handler", new Object[] { handlerClass });
+			throw new APIException("class.not.annotated.as.handler", new Object[]{handlerClass});
 		}
 		return annotation.order();
 	}
-	
+
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		clearCachedHandlers();

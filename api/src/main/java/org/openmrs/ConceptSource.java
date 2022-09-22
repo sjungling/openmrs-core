@@ -16,70 +16,70 @@ import java.util.Date;
  * ICD9, ICD10, SNOMED, or any other OpenMRS implementation
  */
 public class ConceptSource extends BaseChangeableOpenmrsMetadata {
-	
+
 	public static final long serialVersionUID = 375L;
-	
+
 	// Fields
 	
 	private Integer conceptSourceId;
-	
+
 	private String hl7Code;
-	
+
 	private String uniqueId;
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public ConceptSource() {
 	}
-	
+
 	/** constructor with id */
 	public ConceptSource(Integer conceptSourceId) {
 		this.conceptSourceId = conceptSourceId;
 	}
-	
+
 	/**
 	 * @return Returns the conceptSourceId.
 	 */
 	public Integer getConceptSourceId() {
 		return conceptSourceId;
 	}
-	
+
 	/**
 	 * @param conceptSourceId The conceptSourceId to set.
 	 */
 	public void setConceptSourceId(Integer conceptSourceId) {
 		this.conceptSourceId = conceptSourceId;
 	}
-	
+
 	/**
 	 * @return Returns the hl7Code.
 	 */
 	public String getHl7Code() {
 		return hl7Code;
 	}
-	
+
 	/**
 	 * @param hl7Code The hl7Code to set.
 	 */
 	public void setHl7Code(String hl7Code) {
 		this.hl7Code = hl7Code;
 	}
-	
+
 	/**
 	 * @return the unique id
 	 */
 	public String getUniqueId() {
 		return uniqueId;
 	}
-	
+
 	/**
 	 * @param uniqueId the unique id to set
 	 */
 	public void setUniqueId(String uniqueId) {
 		this.uniqueId = uniqueId;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
@@ -88,7 +88,7 @@ public class ConceptSource extends BaseChangeableOpenmrsMetadata {
 	public Integer getId() {
 		return getConceptSourceId();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)

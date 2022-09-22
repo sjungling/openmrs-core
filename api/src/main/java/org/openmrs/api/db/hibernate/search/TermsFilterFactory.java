@@ -25,15 +25,15 @@ import org.hibernate.search.filter.StandardFilterKey;
 import org.hibernate.search.filter.impl.CachingWrapperQuery;
 
 public class TermsFilterFactory {
-	
+
 	private Set<Set<Term>> includeTerms = new HashSet<>();
-	
+
 	private Set<Term> excludeTerms = new HashSet<>();
-	
+
 	public void setIncludeTerms(Set<Set<Term>> terms) {
 		this.includeTerms = new HashSet<>(terms);
 	}
-	
+
 	public void setExcludeTerms(Set<Term> terms) {
 		this.excludeTerms = new HashSet<>(terms);
 	}
@@ -45,7 +45,7 @@ public class TermsFilterFactory {
 		key.addParameter(excludeTerms);
 		return key;
 	}
-	
+
 	@Factory
 	public Query getQuery() {
 		BooleanQuery query = new BooleanQuery();
@@ -70,7 +70,7 @@ public class TermsFilterFactory {
 		for (Term term : excludeTerms) {
 			query.add(new TermQuery(term), Occur.MUST_NOT);
 		}
-		
+
 		return new CachingWrapperQuery(query);
 	}
 }

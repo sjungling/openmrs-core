@@ -21,14 +21,14 @@ import liquibase.logging.core.AbstractLogService;
  * @since 2.5.1, 2.6.0
  */
 public class Slf4JLogService extends AbstractLogService {
-	
+
 	private final Map<Class<?>, Slf4JLogger> loggers = new HashMap<>();
-	
+
 	@Override
 	public int getPriority() {
 		return PRIORITY_SPECIALIZED;
 	}
-	
+
 	@Override
 	public Logger getLog(Class clazz) {
 		return loggers.computeIfAbsent(clazz, c -> new Slf4JLogger(c, getFilter()));

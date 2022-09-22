@@ -42,50 +42,50 @@ import org.openmrs.customdatatype.Customizable;
 @Entity
 @Table(name = "visit")
 public class Visit extends BaseCustomizableData<VisitAttribute> implements Auditable, Customizable<VisitAttribute> {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "visit_id")
 	private Integer visitId;
-	
+
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "patient_id")
 	private Patient patient;
-	
+
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "visit_type_id")
 	private VisitType visitType;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "indication_concept_id")
 	private Concept indication;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "location_id")
 	private Location location;
-	
+
 	@Column(name = "date_started", nullable = false, length = 19)
 	private Date startDatetime;
-	
+
 	@Column(name = "date_stopped", length = 19)
 	private Date stopDatetime;
-	
+
 	@OneToMany(mappedBy = "visit")
 	@OrderBy("encounter_datetime desc, encounter_id desc")
 	private Set<Encounter> encounters;
-	
+
 	@Access(AccessType.PROPERTY)
 	@OneToMany(mappedBy = "visit", cascade = CascadeType.ALL, orphanRemoval = true)
 	@OrderBy("voided asc")
 	@BatchSize(size = 100)
 	private Set<VisitAttribute> attributes = new LinkedHashSet<>();
-	
+
 	/**
 	 * Default Constructor
 	 */
 	public Visit() {
 	}
-	
+
 	/**
 	 * Constructor that takes in a visitId
 	 * 
@@ -94,7 +94,7 @@ public class Visit extends BaseCustomizableData<VisitAttribute> implements Audit
 	public Visit(Integer visitId) {
 		this.visitId = visitId;
 	}
-	
+
 	/**
 	 * Convenience constructor that takes in the required fields i.e {@link Patient},
 	 * {@link VisitType} and dateStarted
@@ -109,105 +109,105 @@ public class Visit extends BaseCustomizableData<VisitAttribute> implements Audit
 		this.visitType = visitType;
 		this.startDatetime = startDatetime;
 	}
-	
+
 	/**
 	 * @return the visitId
 	 */
 	public Integer getVisitId() {
 		return visitId;
 	}
-	
+
 	/**
 	 * @param visitId the visitId to set
 	 */
 	public void setVisitId(Integer visitId) {
 		this.visitId = visitId;
 	}
-	
+
 	/**
 	 * @return the patient
 	 */
 	public Patient getPatient() {
 		return patient;
 	}
-	
+
 	/**
 	 * @param patient the patient to set
 	 */
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
-	
+
 	/**
 	 * @return the visitType
 	 */
 	public VisitType getVisitType() {
 		return visitType;
 	}
-	
+
 	/**
 	 * @param visitType the visitType to set
 	 */
 	public void setVisitType(VisitType visitType) {
 		this.visitType = visitType;
 	}
-	
+
 	/**
 	 * @return the indication
 	 */
 	public Concept getIndication() {
 		return indication;
 	}
-	
+
 	/**
 	 * @param indication the indication to set
 	 */
 	public void setIndication(Concept indication) {
 		this.indication = indication;
 	}
-	
+
 	/**
 	 * @return the location
 	 */
 	public Location getLocation() {
 		return location;
 	}
-	
+
 	/**
 	 * @param location the location to set
 	 */
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-	
+
 	/**
 	 * @return the startDatetime
 	 */
 	public Date getStartDatetime() {
 		return startDatetime;
 	}
-	
+
 	/**
 	 * @param startDatetime the startDatetime to set
 	 */
 	public void setStartDatetime(Date startDatetime) {
 		this.startDatetime = startDatetime;
 	}
-	
+
 	/**
 	 * @return the stopDatetime
 	 */
 	public Date getStopDatetime() {
 		return stopDatetime;
 	}
-	
+
 	/**
 	 * @param stopDatetime the stopDatetime to set
 	 */
 	public void setStopDatetime(Date stopDatetime) {
 		this.stopDatetime = stopDatetime;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -215,7 +215,7 @@ public class Visit extends BaseCustomizableData<VisitAttribute> implements Audit
 	public Integer getId() {
 		return visitId;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -223,7 +223,7 @@ public class Visit extends BaseCustomizableData<VisitAttribute> implements Audit
 	public void setId(Integer id) {
 		visitId = id;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -231,7 +231,7 @@ public class Visit extends BaseCustomizableData<VisitAttribute> implements Audit
 	public String toString() {
 		return "Visit #" + visitId;
 	}
-	
+
 	/**
 	 * @return the encounters
 	 */
@@ -241,14 +241,14 @@ public class Visit extends BaseCustomizableData<VisitAttribute> implements Audit
 		}
 		return encounters;
 	}
-	
+
 	/**
 	 * @param encounters the encounters to set
 	 */
 	public void setEncounters(Set<Encounter> encounters) {
 		this.encounters = encounters;
 	}
-	
+
 	/**
 	 * Gets a list of non voided encounters
 	 * 
@@ -258,7 +258,7 @@ public class Visit extends BaseCustomizableData<VisitAttribute> implements Audit
 	public List<Encounter> getNonVoidedEncounters() {
 		return getEncounters().stream().filter(e -> !e.getVoided()).collect(Collectors.toList());
 	}
-	
+
 	/**
 	 * adds an individual encounter to a visit
 	 *

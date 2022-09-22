@@ -30,10 +30,10 @@ import org.springframework.validation.MapBindingResult;
  * Tests methods on the {@link RelationshipValidator} class.
  */
 public class RelationshipValidatorTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @throws ParseException
-	 * @see RelationshipValidator#validate(Object,Errors)
+	 * @see RelationshipValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfEndDateIsBeforeStartDate() throws ParseException {
@@ -45,10 +45,10 @@ public class RelationshipValidatorTest extends BaseContextSensitiveTest {
 		new RelationshipValidator().validate(relationship, errors);
 		assertTrue(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @throws ParseException
-	 * @see RelationshipValidator#validate(Object,Errors)
+	 * @see RelationshipValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassIfEndDateIsAfterStartDate() throws ParseException {
@@ -60,37 +60,37 @@ public class RelationshipValidatorTest extends BaseContextSensitiveTest {
 		new RelationshipValidator().validate(relationship, errors);
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see RelationshipValidator#validate(Object,Errors)
+	 * @see RelationshipValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() {
 		Relationship relationship = new Relationship(1);
 		relationship.setVoidReason("voidReason");
-		
+
 		Map<String, String> map = new HashMap<>();
 		MapBindingResult errors = new MapBindingResult(map, Relationship.class.getName());
 		new RelationshipValidator().validate(relationship, errors);
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see RelationshipValidator#validate(Object,Errors)
+	 * @see RelationshipValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() {
 		Relationship relationship = new Relationship(1);
 		relationship
-		        .setVoidReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
-		
+										.setVoidReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+
 		Errors errors = new BindException(relationship, "relationship");
 		new RelationshipValidator().validate(relationship, errors);
 		assertTrue(errors.hasFieldErrors("voidReason"));
 	}
-	
+
 	/**
-	 * @see RelationshipValidator#validate(Object,Errors)
+	 * @see RelationshipValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfStartDateIsInFuture() {
@@ -104,9 +104,9 @@ public class RelationshipValidatorTest extends BaseContextSensitiveTest {
 		new RelationshipValidator().validate(relationship, errors);
 		assertTrue(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see RelationshipValidator#validate(Object,Errors)
+	 * @see RelationshipValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassIfStartDateIsNotInFuture() {
@@ -120,9 +120,9 @@ public class RelationshipValidatorTest extends BaseContextSensitiveTest {
 		new RelationshipValidator().validate(relationship, errors);
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see RelationshipValidator#validate(Object,Errors)
+	 * @see RelationshipValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassIfStartDateIsEmpty() {

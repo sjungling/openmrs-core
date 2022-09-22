@@ -38,12 +38,12 @@ import org.slf4j.LoggerFactory;
  * @since 2.4.4, 2.5.1, 2.6.0
  */
 public final class OpenmrsLoggingUtil {
-	
+
 	private static final org.slf4j.Logger log = LoggerFactory.getLogger(OpenmrsLoggingUtil.class);
-	
+
 	private OpenmrsLoggingUtil() {
 	}
-	
+
 	/**
 	 * Gets the in-memory log appender. This method needed to be added as it is much more difficult to
 	 * get a specific appender in the Log4J2 architecture. This method is called in places where we need
@@ -54,15 +54,15 @@ public final class OpenmrsLoggingUtil {
 	@Logging(ignore = true)
 	public static MemoryAppender getMemoryAppender() {
 		MemoryAppender memoryAppender = ((LoggerContext) LogManager.getContext(true)).getConfiguration()
-			.getAppender(OpenmrsConstants.MEMORY_APPENDER_NAME);
-		
+										.getAppender(OpenmrsConstants.MEMORY_APPENDER_NAME);
+
 		if (memoryAppender != null && !memoryAppender.isStarted()) {
 			memoryAppender.start();
 		}
-		
+
 		return memoryAppender;
 	}
-	
+
 	/**
 	 * Returns the location of the OpenMRS log file.
 	 * <p/>
@@ -74,8 +74,8 @@ public final class OpenmrsLoggingUtil {
 	 * */
 	public static String getOpenmrsLogLocation() {
 		Appender fileAppender = ((LoggerContext) LogManager.getRootLogger()).getConfiguration()
-			.getAppender(OpenmrsConstants.LOG_OPENMRS_FILE_APPENDER);
-		
+										.getAppender(OpenmrsConstants.LOG_OPENMRS_FILE_APPENDER);
+
 		String fileName = null;
 		if (fileAppender instanceof AbstractOutputStreamAppender) {
 			if (fileAppender instanceof RollingFileAppender) {
@@ -94,10 +94,10 @@ public final class OpenmrsLoggingUtil {
 				return null;
 			}
 		}
-		
+
 		return fileName == null ? null : Paths.get("", fileName).toAbsolutePath().toString();
 	}
-	
+
 	/**
 	 * Sets the org.openmrs Log4J logger's level if global property log.level.openmrs (
 	 * OpenmrsConstants.GLOBAL_PROPERTY_LOG_LEVEL ) exists. Valid values for global property are
@@ -106,8 +106,8 @@ public final class OpenmrsLoggingUtil {
 	@Logging(ignore = true)
 	public static void applyLogLevels() {
 		String logLevel = Context.getAdministrationService()
-			.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOG_LEVEL, "");
-		
+										.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOG_LEVEL, "");
+
 		synchronized (OpenmrsLoggingUtil.class) {
 			for (String level : logLevel.split(",")) {
 				String[] classAndLevel = level.split(":");
@@ -119,12 +119,12 @@ public final class OpenmrsLoggingUtil {
 					applyLogLevelInternal(classAndLevel[0].trim(), classAndLevel[1].trim());
 				}
 			}
-			
+
 			// DO NOT USE LogManager#getContext() here as this might reset the logger context
 			((Logger) LogManager.getRootLogger()).getContext().updateLoggers();
 		}
 	}
-	
+
 	/**
 	 * Set the log4j log level for class <code>logClass</code> to <code>logLevel</code>.
 	 *
@@ -141,7 +141,7 @@ public final class OpenmrsLoggingUtil {
 			}
 		}
 	}
-	
+
 	/**
 	 * This method is the implementation of applying a level to a logger. It is intended to be called in an
 	 * already synchronized context. Note these changes will only be applied once a call to
@@ -157,11 +157,11 @@ public final class OpenmrsLoggingUtil {
 			if (StringUtils.isEmpty(logClass)) {
 				logClass = OpenmrsConstants.LOG_CLASS_DEFAULT;
 			}
-			
+
 			// DO NOT USE LogManager#getContext() here as this will reset the logger context
 			LoggerContext context = ((Logger) LogManager.getRootLogger()).getContext();
 			LoggerConfig configuration = context.getConfiguration().getLoggerConfig(logClass);
-			
+
 			logLevel = logLevel.toLowerCase();
 			switch (logLevel) {
 				case OpenmrsConstants.LOG_LEVEL_TRACE:
@@ -184,12 +184,12 @@ public final class OpenmrsLoggingUtil {
 					break;
 				default:
 					log.warn("Log level {} is invalid. " +
-						"Valid values are trace, debug, info, warn, error or fatal", logLevel);
+													"Valid values are trace, debug, info, warn, error or fatal", logLevel);
 					break;
 			}
 		}
 	}
-	
+
 	/**
 	 * Reloads the logging configuration
 	 */
@@ -197,5 +197,5 @@ public final class OpenmrsLoggingUtil {
 		// Works, but it might be necessary to verify this in the future
 		((LoggerContext) LogManager.getContext(true)).reconfigure();
 	}
-	
+
 }

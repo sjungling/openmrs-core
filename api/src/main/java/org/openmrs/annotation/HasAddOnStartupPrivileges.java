@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
  * @see org.openmrs.annotation.AddOnStartup
  * @since 1.10
  */
-@Target( { ElementType.TYPE })
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented

@@ -23,7 +23,7 @@ public class DatabaseDetectiveTest {
 	public void setup() {
 		databaseDetective = new DatabaseDetective();
 	}
-	
+
 	@Test
 	public void shouldRecogniseNull() {
 		assertTrue(databaseDetective.isDatabaseEmpty(null));

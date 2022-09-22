@@ -27,13 +27,13 @@ import org.openmrs.api.context.UserContext;
  */
 @ExtendWith(MockitoExtension.class)
 public abstract class BaseContextMockTest {
-	
+
 	@Mock
 	protected UserContext userContext;
-	
+
 	@InjectMocks
 	protected ContextMockHelper contextMockHelper;
-	
+
 	@AfterEach
 	public void revertContextMocks() {
 		contextMockHelper.revertMocks();

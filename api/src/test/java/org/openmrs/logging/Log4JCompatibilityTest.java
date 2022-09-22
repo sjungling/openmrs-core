@@ -32,12 +32,12 @@ class Log4JCompatibilityTest {
 		final Level originalLevel = compatibilityLogger.getLevel();
 		final boolean originalAdditive = compatibilityLogger.isAdditive();
 		final org.openmrs.logging.MemoryAppender ma = MemoryAppender.newBuilder()
-			.setLayout(PatternLayout.newBuilder()
-				.withPattern("%m%n")
-				.build())
-			.setBufferSize(1)
-			.build();
-		
+										.setLayout(PatternLayout.newBuilder()
+																		.withPattern("%m%n")
+																		.build())
+										.setBufferSize(1)
+										.build();
+
 		try {
 			// start the appender
 			ma.start();
@@ -57,5 +57,5 @@ class Log4JCompatibilityTest {
 			compatibilityLogger.setAdditive(originalAdditive);
 		}
 	}
-	
+
 }

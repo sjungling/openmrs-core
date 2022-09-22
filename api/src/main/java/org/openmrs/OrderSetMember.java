@@ -14,21 +14,21 @@ package org.openmrs;
  * OrderSetMember
  */
 public class OrderSetMember extends BaseChangeableOpenmrsMetadata {
-	
+
 	public static final long serialVersionUID = 72232L;
-	
+
 	private Integer orderSetMemberId;
-	
+
 	private OrderType orderType;
-	
+
 	private OrderSet orderSet;
-	
+
 	private String orderTemplate;
-	
+
 	private String orderTemplateType;
-	
+
 	private Concept concept;
-	
+
 	/**
 	 * Gets the orderSetMemberId
 	 *
@@ -37,7 +37,7 @@ public class OrderSetMember extends BaseChangeableOpenmrsMetadata {
 	public Integer getOrderSetMemberId() {
 		return orderSetMemberId;
 	}
-	
+
 	/**
 	 * Sets the orderSetMemberId
 	 *
@@ -46,7 +46,7 @@ public class OrderSetMember extends BaseChangeableOpenmrsMetadata {
 	public void setOrderSetMemberId(Integer orderSetMemberId) {
 		this.orderSetMemberId = orderSetMemberId;
 	}
-	
+
 	/**
 	 * Gets the orderType
 	 *
@@ -55,7 +55,7 @@ public class OrderSetMember extends BaseChangeableOpenmrsMetadata {
 	public OrderType getOrderType() {
 		return orderType;
 	}
-	
+
 	/**
 	 * Sets the orderType
 	 *
@@ -64,7 +64,7 @@ public class OrderSetMember extends BaseChangeableOpenmrsMetadata {
 	public void setOrderType(OrderType orderType) {
 		this.orderType = orderType;
 	}
-	
+
 	/**
 	 * Gets the orderTemplate
 	 *
@@ -73,7 +73,7 @@ public class OrderSetMember extends BaseChangeableOpenmrsMetadata {
 	public String getOrderTemplate() {
 		return orderTemplate;
 	}
-	
+
 	/**
 	 * Sets the orderTemplate
 	 *
@@ -82,7 +82,7 @@ public class OrderSetMember extends BaseChangeableOpenmrsMetadata {
 	public void setOrderTemplate(String orderTemplate) {
 		this.orderTemplate = orderTemplate;
 	}
-	
+
 	/**
 	 * Returns the orderTemplateType
 	 * 
@@ -91,7 +91,7 @@ public class OrderSetMember extends BaseChangeableOpenmrsMetadata {
 	public String getOrderTemplateType() {
 		return orderTemplateType;
 	}
-	
+
 	/**
 	 * It takes in a name of a handler, which defines the schema of orderTemplate to be generated
 	 * 
@@ -100,11 +100,11 @@ public class OrderSetMember extends BaseChangeableOpenmrsMetadata {
 	public void setOrderTemplateType(String orderTemplateType) {
 		this.orderTemplateType = orderTemplateType;
 	}
-	
+
 	public Concept getConcept() {
 		return concept;
 	}
-	
+
 	/**
 	 * Sets the concept
 	 *
@@ -113,7 +113,7 @@ public class OrderSetMember extends BaseChangeableOpenmrsMetadata {
 	public void setConcept(Concept concept) {
 		this.concept = concept;
 	}
-	
+
 	/**
 	 * Gets the orderSet for the member
 	 *
@@ -122,7 +122,7 @@ public class OrderSetMember extends BaseChangeableOpenmrsMetadata {
 	public OrderSet getOrderSet() {
 		return orderSet;
 	}
-	
+
 	/**
 	 * Sets the orderSet for the member
 	 *
@@ -131,15 +131,15 @@ public class OrderSetMember extends BaseChangeableOpenmrsMetadata {
 	public void setOrderSet(OrderSet orderSet) {
 		this.orderSet = orderSet;
 	}
-	
+
 	@Override
 	public Integer getId() {
 		return getOrderSetMemberId();
 	}
-	
+
 	@Override
 	public void setId(Integer id) {
 		setOrderSetMemberId(id);
 	}
-	
+
 }

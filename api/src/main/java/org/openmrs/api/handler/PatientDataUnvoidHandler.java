@@ -40,7 +40,7 @@ import org.openmrs.parameter.EncounterSearchCriteriaBuilder;
  */
 @Handler(supports = {Patient.class}, order = 50)
 public class PatientDataUnvoidHandler implements UnvoidHandler<Patient> {
-	
+
 	@Override
 	public void handle(Patient patient, User originalVoidingUser, Date origParentVoidedDate, String unused) {
 		//can't be unvoiding a patient that doesn't exist in the database
@@ -48,26 +48,26 @@ public class PatientDataUnvoidHandler implements UnvoidHandler<Patient> {
 			//unvoid all the encounter that got voided as a result of the patient getting voided
 			EncounterService es = Context.getEncounterService();
 			EncounterSearchCriteria encounterSearchCriteria = new EncounterSearchCriteriaBuilder()
-				.setPatient(patient)
-				.setIncludeVoided(true)
-				.createEncounterSearchCriteria();
+											.setPatient(patient)
+											.setIncludeVoided(true)
+											.createEncounterSearchCriteria();
 			List<Encounter> encounters = es.getEncounters(encounterSearchCriteria);
 			if (CollectionUtils.isNotEmpty(encounters)) {
 				for (Encounter encounter : encounters) {
 					if (encounter.getVoided() && encounter.getDateVoided().equals(origParentVoidedDate)
-					        && encounter.getVoidedBy().equals(originalVoidingUser)) {
+													&& encounter.getVoidedBy().equals(originalVoidingUser)) {
 						es.unvoidEncounter(encounter);
 					}
 				}
 			}
-			
+
 			//unvoid all the orders that got voided as a result of the patient getting voided
 			OrderService os = Context.getOrderService();
 			List<Order> orders = os.getAllOrdersByPatient(patient);
 			if (CollectionUtils.isNotEmpty(orders)) {
 				for (Order order : orders) {
 					if (order.getVoided() && order.getDateVoided().equals(origParentVoidedDate)
-					        && order.getVoidedBy().equals(originalVoidingUser)) {
+													&& order.getVoidedBy().equals(originalVoidingUser)) {
 						os.unvoidOrder(order);
 					}
 				}

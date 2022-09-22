@@ -25,59 +25,59 @@ import org.openmrs.api.db.OpenmrsDataDAO;
  * @param <T>
  */
 public class HibernateOpenmrsDataDAO<T extends BaseOpenmrsData> extends HibernateOpenmrsObjectDAO<T> implements OpenmrsDataDAO<T> {
-	
+
 	public HibernateOpenmrsDataDAO(Class<T> mappedClass) {
 		super();
 		this.mappedClass = mappedClass;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.OpenmrsDataDAO#getAll(boolean)
 	 */
 	@Override
 	public List<T> getAll(boolean includeVoided) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(mappedClass);
-		
+
 		if (!includeVoided) {
 			crit.add(Restrictions.eq("voided", false));
 		}
-		
+
 		return crit.list();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.OpenmrsDataDAO#getAll(boolean, java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
 	public List<T> getAll(boolean includeVoided, Integer firstResult, Integer maxResults) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(mappedClass);
-		
+
 		if (!includeVoided) {
 			crit.add(Restrictions.eq("voided", false));
 		}
 		crit.setFirstResult(firstResult);
 		crit.setMaxResults(maxResults);
-		
+
 		return crit.list();
-		
+
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.OpenmrsDataDAO#getAllCount(boolean)
 	 */
 	@Override
 	public int getAllCount(boolean includeVoided) {
-		
+
 		String hql = "select count(*)" + " from " + mappedClass;
-		
+
 		if (!includeVoided) {
 			hql += " where voided = false";
 		}
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		
+
 		Number count = (Number) query.uniqueResult();
-		
+
 		return count == null ? 0 : count.intValue();
 	}
-	
+
 }

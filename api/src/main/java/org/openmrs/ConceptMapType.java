@@ -37,46 +37,46 @@ public class ConceptMapType extends BaseChangeableOpenmrsMetadata {
 
 	@Column(name = "is_hidden", nullable = false, length = 1)
 	private Boolean isHidden = Boolean.FALSE;
-	
+
 	public static final String SAME_AS_MAP_TYPE_UUID = "35543629-7d8c-11e1-909d-c80aa9edcf4e";
-	
+
 	/** default constructor */
 	public ConceptMapType() {
 	}
-	
+
 	/** constructor with id */
 	public ConceptMapType(Integer conceptMapTypeId) {
 		this.conceptMapTypeId = conceptMapTypeId;
 	}
-	
+
 	/**
 	 * @return the conceptMapTypeId
 	 */
 	public Integer getConceptMapTypeId() {
 		return conceptMapTypeId;
 	}
-	
+
 	/**
 	 * @param conceptMapTypeId the conceptMapTypeId to set
 	 */
 	public void setConceptMapTypeId(Integer conceptMapTypeId) {
 		this.conceptMapTypeId = conceptMapTypeId;
 	}
-	
+
 	/**
 	 * @return the isHidden
 	 */
 	public Boolean getIsHidden() {
 		return isHidden;
 	}
-	
+
 	/**
 	 * @param isHidden the isHidden to set
 	 */
 	public void setIsHidden(Boolean isHidden) {
 		this.isHidden = isHidden;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -84,7 +84,7 @@ public class ConceptMapType extends BaseChangeableOpenmrsMetadata {
 	public Integer getId() {
 		return getConceptMapTypeId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -92,7 +92,7 @@ public class ConceptMapType extends BaseChangeableOpenmrsMetadata {
 	public void setId(Integer id) {
 		setConceptMapTypeId(id);
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -101,10 +101,10 @@ public class ConceptMapType extends BaseChangeableOpenmrsMetadata {
 		if (getName() == null) {
 			return "";
 		}
-		
+
 		return getName();
 	}
-	
+
 	/**
 	 * Returns true if this concept map type is hidden otherwise false
 	 *

@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
  * Unit testing for the Message class
  */
 public class MessageTest {
-	
+
 	/**
 	 * Convenience method to create a reusable/retestable message object with an attachment.
 	 * 
@@ -34,10 +34,10 @@ public class MessageTest {
 		String attachment = "attachment";
 		String attachmentContentType = "text/plain";
 		String attachmentFileName = "moo.txt";
-		
+
 		return new Message(id, recipients, sender, subject, content, attachment, attachmentContentType, attachmentFileName);
 	}
-	
+
 	/**
 	 * Convenience method to create a reusable/retestable message object with only the basic
 	 * to/form/subject/content filled in.
@@ -50,12 +50,12 @@ public class MessageTest {
 		String sender = "foo@bar.com";
 		String subject = "moo";
 		String content = "message";
-		
+
 		return new Message(id, recipients, sender, subject, content);
 	}
-	
+
 	/**
-	 * @see Message#Message(Integer,String,String,String,String,String,String,String)
+	 * @see Message#Message(Integer, String, String, String, String, String, String, String)
 	 */
 	@Test
 	public void Message_shouldFillInAllParameters() {
@@ -67,45 +67,45 @@ public class MessageTest {
 		String attachment = "attachment";
 		String attachmentContentType = "text/plain";
 		String attachmentFileName = "moo.txt";
-		
+
 		Message toTest = new Message(id, recipients, sender, subject, content, attachment, attachmentContentType,
-		        attachmentFileName);
+										attachmentFileName);
 		assertEquals((int) toTest.getId(), 1);
 		assertEquals(recipients, toTest.getRecipients());
 		assertEquals(sender, toTest.getSender());
 		assertEquals(subject, toTest.getSubject());
 		assertEquals(content, toTest.getContent());
 	}
-	
+
 	/**
 	 * @see Message#setRecipients(String)
 	 */
 	@Test
 	public void setRecipients_shouldSetMultipleRecipients() {
 		Message testMessage = createTestMessage1();
-		
+
 		String recipients = "recipient1@example.com,recipient2@example.com";
-		
+
 		testMessage.setRecipients(recipients);
-		
+
 		assertEquals(testMessage.getRecipients(), recipients);
 	}
-	
+
 	/**
 	 * @see Message#addRecipient(String)
 	 */
 	@Test
 	public void addRecipient_shouldAddNewRecipient() {
 		Message testMessage = createTestMessage1();
-		
+
 		String oldRecipients = testMessage.getRecipients();
 		String newRecipient = "bob@example.com";
-		
+
 		testMessage.addRecipient(newRecipient);
-		
+
 		assertEquals(testMessage.getRecipients(), oldRecipients + "," + newRecipient);
 	}
-	
+
 	/**
 	 * @see Message#hasAttachment()
 	 */
@@ -113,9 +113,9 @@ public class MessageTest {
 	public void hasAttachment_shouldRReturnTrueIfThisMessageHasAnAttachment() {
 		Message testMessage1 = createTestMessage1();
 		Message testMessage2 = createTestMessage2();
-		
+
 		assertTrue(testMessage1.hasAttachment());
 		assertFalse(testMessage2.hasAttachment());
 	}
-	
+
 }

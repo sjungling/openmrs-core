@@ -34,9 +34,9 @@ import java.io.IOException;
  * See:  https://issues.openmrs.org/browse/LUI-169
  */
 public class OpenmrsJspServlet extends JspServlet {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(OpenmrsJspServlet.class);
-	
+
 	public static final String OPENMRS_TLD_SCAN_NEEDED = "OPENMRS_TLD_SCAN_NEEDED";
 
 	@Override
@@ -44,7 +44,7 @@ public class OpenmrsJspServlet extends JspServlet {
 		Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
 		super.init(config);
 	}
-	
+
 	@Override
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		rescanTldsIfNeeded();
@@ -105,7 +105,7 @@ public class OpenmrsJspServlet extends JspServlet {
 	}
 
 	private boolean getBooleanAttribute(String attribute, boolean defaultValue) {
-		Boolean val = (Boolean)getServletContext().getAttribute(attribute);
+		Boolean val = (Boolean) getServletContext().getAttribute(attribute);
 		if (val != null) {
 			return val;
 		}

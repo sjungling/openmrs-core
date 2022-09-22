@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
  * @see EncounterType
  */
 public class EncounterTypeTest {
-	
+
 	/**
 	 * Make sure the EncounterType(Integer) constructor sets the encounterTypeId
 	 * 

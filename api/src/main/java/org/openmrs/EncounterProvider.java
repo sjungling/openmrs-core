@@ -15,25 +15,25 @@ package org.openmrs;
  * @since 1.9
  */
 public class EncounterProvider extends BaseChangeableOpenmrsData {
-	
+
 	public static final long serialVersionUID = 1L;
-	
+
 	private Integer encounterProviderId;
-	
+
 	private Encounter encounter;
-	
+
 	private Provider provider;
-	
+
 	private EncounterRole encounterRole;
-	
+
 	public void setEncounterProviderId(Integer encounterProviderId) {
 		this.encounterProviderId = encounterProviderId;
 	}
-	
+
 	public Integer getEncounterProviderId() {
 		return this.encounterProviderId;
 	}
-	
+
 	/**
 	 * @see OpenmrsObject#getId()
 	 */
@@ -41,7 +41,7 @@ public class EncounterProvider extends BaseChangeableOpenmrsData {
 	public Integer getId() {
 		return getEncounterProviderId();
 	}
-	
+
 	/**
 	 * @see OpenmrsObject#setId(Integer)
 	 */
@@ -49,7 +49,7 @@ public class EncounterProvider extends BaseChangeableOpenmrsData {
 	public void setId(Integer id) {
 		setEncounterProviderId(id);
 	}
-	
+
 	/**
 	 * @return the encounter
 	 * @see Encounter
@@ -57,14 +57,14 @@ public class EncounterProvider extends BaseChangeableOpenmrsData {
 	public Encounter getEncounter() {
 		return this.encounter;
 	}
-	
+
 	/**
 	 * @param encounter the encounter to set
 	 */
 	public void setEncounter(Encounter encounter) {
 		this.encounter = encounter;
 	}
-	
+
 	/**
 	 * @return the provider
 	 * @see Provider
@@ -72,14 +72,14 @@ public class EncounterProvider extends BaseChangeableOpenmrsData {
 	public Provider getProvider() {
 		return this.provider;
 	}
-	
+
 	/**
 	 * @param provider the provider to set
 	 */
 	public void setProvider(Provider provider) {
 		this.provider = provider;
 	}
-	
+
 	/**
 	 * @return the encounterRole
 	 * @see EncounterRole
@@ -87,14 +87,14 @@ public class EncounterProvider extends BaseChangeableOpenmrsData {
 	public EncounterRole getEncounterRole() {
 		return this.encounterRole;
 	}
-	
+
 	/**
 	 * @param encounterRole the encounterRole to set
 	 */
 	public void setEncounterRole(EncounterRole encounterRole) {
 		this.encounterRole = encounterRole;
 	}
-	
+
 	/**
 	 * @return copied encounter provider
 	 *

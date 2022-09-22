@@ -41,9 +41,9 @@ import org.openmrs.collection.ListPart;
  * @since 1.11
  */
 public abstract class LuceneQuery<T> extends SearchQuery<T> {
-	
+
 	private Set<Set<Term>> includeTerms = new HashSet<>();
-	
+
 	private Set<Term> excludeTerms = new HashSet<>();
 
 	private TermsFilter termsFilter;
@@ -53,7 +53,7 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 	private Set<Object> skipSameValues;
 
 	boolean useOrQueryParser = false;
-	
+
 	/**
 	 * Normal uses a textual match algorithm for the search
 	 * Soundex indicates to use a Phonetic search strategy
@@ -62,11 +62,11 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 	{
 		NORMAL, SOUNDEX
 	}
-	
+
 	public static <T> LuceneQuery<T> newQuery(final Class<T> type, final Session session, final String query, final Collection<String> fields) {
 		return newQuery(type, session, query, fields, MatchType.NORMAL);
 	}
-	
+
 	public static <T> LuceneQuery<T> newQuery(final Class<T> type, final Session session, final String query, final Collection<String> fields, MatchType matchType) {
 		return new LuceneQuery<T>(type, session) {
 			@Override
@@ -89,7 +89,7 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 	 */
 	public static <T> LuceneQuery<T> newQuery(final Class<T> type, final Session session, final String query) {
 		return new LuceneQuery<T>(type, session) {
-			
+
 			@Override
 			protected Query prepareQuery() throws ParseException {
 				if (query.isEmpty()) {
@@ -97,10 +97,10 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 				}
 				return newQueryParser().parse(query);
 			}
-			
+
 		};
 	}
-	
+
 	/**
 	 * Escape any characters that can be interpreted by the query parser.
 	 * 
@@ -110,7 +110,7 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 	public static String escapeQuery(final String query) {
 		return QueryParser.escape(query);
 	}
-	
+
 	public LuceneQuery(Class<T> type, Session session) {
 		super(session, type);
 	}
@@ -132,20 +132,20 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 	 */
 	public LuceneQuery<T> include(String field, Object value) {
 		if (value != null) {
-			include(field, new Object[] { value });
+			include(field, new Object[]{value});
 		}
-		
+
 		return this;
 	}
-	
+
 	public LuceneQuery<T> include(String field, Collection<?> values) {
 		if (values != null) {
 			include(field, values.toArray());
 		}
-		
+
 		return this;
 	}
-	
+
 	/**
 	 * Include items with any of the given values in the specified field.
 	 * <p>
@@ -163,10 +163,10 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 			}
 			includeTerms.add(terms);
 		}
-		
+
 		return this;
 	}
-	
+
 	/**
 	 * Exclude any items with the given value in the specified field.
 	 * <p>
@@ -178,12 +178,12 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 	 */
 	public LuceneQuery<T> exclude(String field, Object value) {
 		if (value != null) {
-			exclude(field, new Object[] { value });
+			exclude(field, new Object[]{value});
 		}
-		
+
 		return this;
 	}
-	
+
 	/**
 	 * Exclude any items with the given values in the specified field.
 	 * <p>
@@ -199,10 +199,10 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 				excludeTerms.add(new Term(field, value.toString()));
 			}
 		}
-		
+
 		return this;
 	}
-	
+
 	/**
 	 * It is called by the constructor to get an instance of a query.
 	 * <p>
@@ -213,7 +213,7 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 	 * @throws ParseException
 	 */
 	protected abstract Query prepareQuery() throws ParseException;
-	
+
 	/**
 	 * It is called by the constructor after creating {@link FullTextQuery}.
 	 * <p>
@@ -223,7 +223,7 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 	 */
 	protected void adjustFullTextQuery(FullTextQuery fullTextQuery) {
 	}
-	
+
 	/**
 	 * You can use it in {@link #prepareQuery()}.
 	 * 
@@ -232,7 +232,7 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 	protected QueryBuilder newQueryBuilder() {
 		return getFullTextSession().getSearchFactory().buildQueryBuilder().forEntity(getType()).get();
 	}
-	
+
 	/**
 	 * You can use it in {@link #prepareQuery()}.
 	 * 
@@ -240,7 +240,7 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 	 */
 	protected QueryParser newQueryParser() {
 		Analyzer analyzer = getFullTextSession().getSearchFactory().getAnalyzer(getType());
-		QueryParser queryParser = new QueryParser(null, analyzer); 
+		QueryParser queryParser = new QueryParser(null, analyzer);
 		setDefaultOperator(queryParser);
 		return queryParser;
 	}
@@ -248,8 +248,8 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 
 	protected MultiFieldQueryParser newMultipleFieldQueryParser(Collection<String> fields, MatchType matchType) {
 		Analyzer analyzer;
-		
-		if(matchType == MatchType.SOUNDEX) {
+
+		if (matchType == MatchType.SOUNDEX) {
 			analyzer = getFullTextSession().getSearchFactory().getAnalyzer(getType());
 		}
 		else if (getType().isAssignableFrom(PatientIdentifier.class) || getType().isAssignableFrom(PersonName.class) || getType().isAssignableFrom(PersonAttribute.class)) {
@@ -280,7 +280,7 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 	protected FullTextSession getFullTextSession() {
 		return Context.getRegisteredComponent("fullTextSessionFactory", FullTextSessionFactory.class).getFullTextSession();
 	}
-	
+
 	/**
 	 * Skip elements, values of which repeat in the given field.
 	 * <p>
@@ -292,7 +292,7 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 	 * @param field
 	 * @return this
 	 */
-	public LuceneQuery<T> skipSame(String field){
+	public LuceneQuery<T> skipSame(String field) {
 		return skipSame(field, null);
 	}
 
@@ -308,7 +308,7 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 	 * @param luceneQuery results of which should be skipped too. It works only for queries, which called skipSame as well.
 	 * @return this
 	 */
-	public LuceneQuery<T> skipSame(String field, LuceneQuery<?> luceneQuery){
+	public LuceneQuery<T> skipSame(String field, LuceneQuery<?> luceneQuery) {
 		String idPropertyName = getSession().getSessionFactory().getClassMetadata(getType()).getIdentifierPropertyName();
 
 		FullTextQuery query = buildQuery();
@@ -340,7 +340,7 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 
 		return this;
 	}
-	
+
 	@Override
 	public T uniqueResult() {
 		if (noUniqueTerms) {
@@ -349,10 +349,10 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 
 		@SuppressWarnings("unchecked")
 		T result = (T) buildQuery().uniqueResult();
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public List<T> list() {
 		if (noUniqueTerms) {
@@ -361,10 +361,10 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 
 		@SuppressWarnings("unchecked")
 		List<T> list = buildQuery().list();
-		
+
 		return list;
 	}
-	
+
 	@Override
 	public ListPart<T> listPart(Long firstResult, Long maxResults) {
 		if (noUniqueTerms) {
@@ -373,14 +373,14 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 
 		FullTextQuery fullTextQuery = buildQuery();
 		applyPartialResults(fullTextQuery, firstResult, maxResults);
-		
+
 		@SuppressWarnings("unchecked")
 		List<T> list = fullTextQuery.list();
 
 		return ListPart.newListPart(list, firstResult, maxResults, (long) fullTextQuery.getResultSize(),
-		    !fullTextQuery.hasPartialResults());
+										!fullTextQuery.hasPartialResults());
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.hibernate.search.SearchQuery#resultSize()
 	 */
@@ -392,7 +392,7 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 
 		return buildQuery().getResultSize();
 	}
-	
+
 	public List<Object[]> listProjection(String... fields) {
 		if (noUniqueTerms) {
 			return Collections.emptyList();
@@ -400,13 +400,13 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 
 		FullTextQuery fullTextQuery = buildQuery();
 		fullTextQuery.setProjection(fields);
-		
+
 		@SuppressWarnings("unchecked")
 		List<Object[]> list = fullTextQuery.list();
 
 		return list;
 	}
-	
+
 	public ListPart<Object[]> listPartProjection(Long firstResult, Long maxResults, String... fields) {
 		if (noUniqueTerms) {
 			return ListPart.newListPart(Collections.emptyList(), firstResult, maxResults, 0L, true);
@@ -414,23 +414,23 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 
 		FullTextQuery fullTextQuery = buildQuery();
 		applyPartialResults(fullTextQuery, firstResult, maxResults);
-		
+
 		fullTextQuery.setProjection(fields);
-		
+
 		@SuppressWarnings("unchecked")
 		List<Object[]> list = fullTextQuery.list();
-		
+
 		return ListPart.newListPart(list, firstResult, maxResults, (long) fullTextQuery.getResultSize(),
-		    !fullTextQuery.hasPartialResults());
-		
+										!fullTextQuery.hasPartialResults());
+
 	}
-	
+
 	public ListPart<Object[]> listPartProjection(Integer firstResult, Integer maxResults, String... fields) {
 		Long first = (firstResult != null) ? Long.valueOf(firstResult) : null;
 		Long max = (maxResults != null) ? Long.valueOf(maxResults) : null;
 		return listPartProjection(first, max, fields);
 	}
-	
+
 	private FullTextQuery buildQuery() {
 		Query query;
 		try {
@@ -439,11 +439,11 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 		catch (ParseException e) {
 			throw new IllegalStateException("Invalid query", e);
 		}
-		
+
 		FullTextQuery fullTextQuery = getFullTextSession().createFullTextQuery(query, getType());
 
 		fullTextQuery.enableFullTextFilter("termsFilterFactory").setParameter("includeTerms", includeTerms)
-				.setParameter("excludeTerms", excludeTerms);
+										.setParameter("excludeTerms", excludeTerms);
 
 		fullTextQuery.setFilter(termsFilter);
 
@@ -451,12 +451,12 @@ public abstract class LuceneQuery<T> extends SearchQuery<T> {
 
 		return fullTextQuery;
 	}
-	
+
 	private void applyPartialResults(FullTextQuery fullTextQuery, Long firstResult, Long maxResults) {
 		if (firstResult != null) {
 			fullTextQuery.setFirstResult(firstResult.intValue());
 		}
-		
+
 		if (maxResults != null) {
 			fullTextQuery.setMaxResults(maxResults.intValue());
 		}

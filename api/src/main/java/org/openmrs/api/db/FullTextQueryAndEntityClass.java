@@ -19,16 +19,16 @@ import org.hibernate.search.FullTextQuery;
  * @since 2.3.0
  */
 public class FullTextQueryAndEntityClass {
-	
+
 	private FullTextQuery query;
-	
+
 	private Class<?> entityClass;
-	
+
 	public FullTextQueryAndEntityClass(FullTextQuery query, Class<?> entityClass) {
 		this.query = query;
 		this.entityClass = entityClass;
 	}
-	
+
 	/**
 	 * Gets the query
 	 *
@@ -37,7 +37,7 @@ public class FullTextQueryAndEntityClass {
 	public FullTextQuery getQuery() {
 		return query;
 	}
-	
+
 	/**
 	 * Gets the entityClass
 	 *
@@ -46,5 +46,5 @@ public class FullTextQueryAndEntityClass {
 	public Class<?> getEntityClass() {
 		return entityClass;
 	}
-	
+
 }

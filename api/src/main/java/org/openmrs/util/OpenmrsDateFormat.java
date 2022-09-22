@@ -23,17 +23,17 @@ import java.util.regex.Pattern;
  * that the date string is the same length as the pattern string
  */
 public class OpenmrsDateFormat extends SimpleDateFormat {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public OpenmrsDateFormat(SimpleDateFormat sdf, Locale locale) {
 		super(sdf.toPattern(), locale);
 		this.setLenient(false);
 	}
-	
+
 	@Override
 	public Date parse(String text) throws ParseException {
-		
+
 		// first test to see if the pattern ends in "{non-alphanumeric-character}yyyy"
 		Matcher patternMatch = Pattern.compile("\\Wyyyy$").matcher(this.toPattern());
 		if (patternMatch.find()) {
@@ -47,10 +47,10 @@ public class OpenmrsDateFormat extends SimpleDateFormat {
 		else {
 			if (this.toPattern().length() != text.length()) {
 				throw new ParseException("Unparseable date \"" + text
-				        + "\" - length of date string doesn't match length of date pattern", 0);
+												+ "\" - length of date string doesn't match length of date pattern", 0);
 			}
 		}
-		
+
 		// if we've passed this validation, just call the SimpleDateFormat.parse() method
 		return super.parse(text);
 	}

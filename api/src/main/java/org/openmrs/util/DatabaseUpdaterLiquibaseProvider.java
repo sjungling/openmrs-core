@@ -19,7 +19,7 @@ import org.openmrs.liquibase.LiquibaseProvider;
  * @since 2.4
  */
 public class DatabaseUpdaterLiquibaseProvider implements LiquibaseProvider {
-	
+
 	@Override
 	public Liquibase getLiquibase(String changeLogFile) throws Exception {
 		return DatabaseUpdater.getLiquibase(changeLogFile);

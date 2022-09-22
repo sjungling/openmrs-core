@@ -15,26 +15,26 @@ import org.openmrs.util.OpenmrsUtil;
 /**
  * Represent allergy reactions
  */
-public class AllergyReaction extends BaseOpenmrsObject implements java.io.Serializable{
-	
+public class AllergyReaction extends BaseOpenmrsObject implements java.io.Serializable {
+
 	public static final long serialVersionUID = 1;
 
 
 	private Integer allergyReactionId;
-	
+
 	private Allergy allergy;
-	
+
 	private Concept reaction;
-	
+
 	private String reactionNonCoded;
-	
+
 	/**
 	 * Default constructor
 	 */
-	public AllergyReaction(){
-		
+	public AllergyReaction() {
+
 	}
-	
+
 	/**
 	 * @param allergy the allergy to set
 	 * @param reaction the reaction to set
@@ -45,7 +45,7 @@ public class AllergyReaction extends BaseOpenmrsObject implements java.io.Serial
 		this.reaction = reaction;
 		this.reactionNonCoded = reactionNonCoded;
 	}
-	
+
 	public Integer getAllergyReactionId() {
 		return allergyReactionId;
 	}
@@ -69,57 +69,57 @@ public class AllergyReaction extends BaseOpenmrsObject implements java.io.Serial
 	public void setId(Integer allergyReactionId) {
 		this.allergyReactionId = allergyReactionId;
 	}
-	
+
 	/**
 	 * @return Returns the allergy
 	 */
 	public Allergy getAllergy() {
 		return allergy;
 	}
-	
+
 	/**
 	 * @param allergy the allergy to set
 	 */
 	public void setAllergy(Allergy allergy) {
 		this.allergy = allergy;
 	}
-	
+
 	/**
 	 * @return Returns the reaction
 	 */
 	public Concept getReaction() {
 		return reaction;
 	}
-	
+
 	/**
 	 * @param reaction the reaction to set
 	 */
 	public void setReaction(Concept reaction) {
 		this.reaction = reaction;
 	}
-	
+
 	/**
 	 * @return Returns the reactionNonCoded
 	 */
 	public String getReactionNonCoded() {
 		return reactionNonCoded;
 	}
-	
+
 	/**
 	 * @param reactionNonCoded the reactionNonCoded to set
 	 */
 	public void setReactionNonCoded(String reactionNonCoded) {
 		this.reactionNonCoded = reactionNonCoded;
 	}
-	
+
 	@Override
-    public String toString() {
-	    if (StringUtils.isNotBlank(reactionNonCoded)) {
-	    	return reactionNonCoded;
-	    }
-	    return reaction.getName().getName();
-    }
-	
+	public String toString() {
+		if (StringUtils.isNotBlank(reactionNonCoded)) {
+			return reactionNonCoded;
+		}
+		return reaction.getName().getName();
+	}
+
 	/**
 	 * Checks if this reaction has the same values as the given one
 	 * 

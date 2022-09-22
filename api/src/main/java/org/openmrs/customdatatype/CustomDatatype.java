@@ -17,7 +17,7 @@ package org.openmrs.customdatatype;
  * @since 1.9 
  */
 public interface CustomDatatype<T> {
-	
+
 	/**
 	 * A {@link CustomValueDescriptor} defines both a datatype and its configuration (e.g. a regex for a RegexValidatedString datatype).
 	 * The framework will instantiate datatypes and call this method to set that configuration. Subclasses should define the format
@@ -26,7 +26,7 @@ public interface CustomDatatype<T> {
 	 * @param config
 	 */
 	void setConfiguration(String config);
-	
+
 	/**
 	 * The OpenMRS service layer calls this method when a custom value of this datatype is saved (created or edited). Implementations
 	 * should persist the typed value, and return a valueReference that can be used to access that value in the future.
@@ -43,7 +43,7 @@ public interface CustomDatatype<T> {
 	 * @throws InvalidCustomValueException
 	 */
 	String save(T typedValue, String existingValueReference) throws InvalidCustomValueException;
-	
+
 	/**
 	 * Gets the reference string that would be persisted for the given typed value. (This allows efficient searching for exact attribute
 	 * values.)
@@ -53,7 +53,7 @@ public interface CustomDatatype<T> {
 	 * @throws UnsupportedOperationException  if it is not feasible to calculate this efficiently (e.g. you'd need to go to remote storage)
 	 */
 	String getReferenceStringForValue(T typedValue) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Converts a reference string to its typed value. This may be expensive, especially if the datatype needs
 	 * to go to remote storage.
@@ -64,7 +64,7 @@ public interface CustomDatatype<T> {
 	 * was changed since this value was persisted)
 	 */
 	T fromReferenceString(String referenceString) throws InvalidCustomValueException;
-	
+
 	/**
 	 * Converts a reference string to a short (generally &lt; 100 characters) plain-text representation of its value. The return
 	 * value also indicates whether this representation is a complete view of the value, or if there is more to display. 
@@ -75,24 +75,24 @@ public interface CustomDatatype<T> {
 	 * @return a summary representation of the given value
 	 */
 	Summary getTextSummary(String referenceString);
-	
+
 	/**
 	 * Validates the given value to see if it is a legal value for the given handler. (For example the RegexValidatedText
 	 * type checks against a regular expression.)
 	 * @param typedValue
 	 */
 	void validate(T typedValue) throws InvalidCustomValueException;
-	
+
 	/**
 	 * A short representation of a custom value, along with an indication of whether this is the complete value,
 	 * or just a summary.
 	 */
 	public class Summary {
-		
+
 		private String summary;
-		
+
 		private boolean complete;
-		
+
 		/**
 		 * @param summary
 		 * @param complete
@@ -101,21 +101,21 @@ public interface CustomDatatype<T> {
 			this.summary = summary;
 			this.complete = complete;
 		}
-		
+
 		/**
 		 * @return the short representation of a custom value
 		 */
 		public String getSummary() {
 			return summary;
 		}
-		
+
 		/**
 		 * @param summary the summary to set
 		 */
 		public void setSummary(String summary) {
 			this.summary = summary;
 		}
-		
+
 		/**
 		 * @return if true, then getSummary() returns a complete view of the custom value; otherwise the value is
 		 * in fact a summary 
@@ -123,14 +123,14 @@ public interface CustomDatatype<T> {
 		public boolean isComplete() {
 			return complete;
 		}
-		
+
 		/**
 		 * @param complete the complete to set
 		 */
 		public void setComplete(boolean complete) {
 			this.complete = complete;
 		}
-		
+
 		/**
 		 * @see java.lang.Object#toString()
 		 */
@@ -139,5 +139,5 @@ public interface CustomDatatype<T> {
 			return summary;
 		}
 	}
-	
+
 }

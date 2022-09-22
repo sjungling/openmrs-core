@@ -36,7 +36,7 @@ import org.springframework.validation.Errors;
  *
  */
 public class TestOrderValidatorTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see TestOrderValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -58,14 +58,14 @@ public class TestOrderValidatorTest extends BaseContextSensitiveTest {
 		order.setEncounter(encounter);
 		order.setDateActivated(new Date());
 		order.setSpecimenSource(specimenSource);
-		
+
 		Errors errors = new BindException(order, "order");
 		new TestOrderValidator().validate(order, errors);
 		assertTrue(errors.hasFieldErrors("specimenSource"));
 		assertEquals("ServiceOrder.error.specimenSourceNotAmongAllowedConcepts", errors.getFieldError("specimenSource")
-		        .getCode());
+										.getCode());
 	}
-	
+
 	/**
 	 * @see TestOrderValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -87,7 +87,7 @@ public class TestOrderValidatorTest extends BaseContextSensitiveTest {
 		order.setEncounter(encounter);
 		order.setDateActivated(new Date());
 		order.setSpecimenSource(specimenSource);
-		
+
 		Errors errors = new BindException(order, "order");
 		new TestOrderValidator().validate(order, errors);
 		assertFalse(errors.hasFieldErrors());

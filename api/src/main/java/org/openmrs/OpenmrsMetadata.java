@@ -22,27 +22,27 @@ import java.util.Date;
  * @since 1.5
  */
 public interface OpenmrsMetadata extends Auditable, Retireable {
-	
+
 	/**
 	 * @return the name
 	 */
 	public String getName();
-	
+
 	/**
 	 * @param name the name to set
 	 */
 	public void setName(String name);
-	
+
 	/**
 	 * @return the description
 	 */
 	public String getDescription();
-	
+
 	/**
 	 * @param description the description to set
 	 */
 	public void setDescription(String description);
-	
+
 	/**
 	 * @deprecated As of version 2.2 OpenmrsMetadata is immutable by default, it's up to the
 	 *             subclasses to make themselves mutable by extending BaseChangeableOpenmrsMetadata,
@@ -51,7 +51,7 @@ public interface OpenmrsMetadata extends Auditable, Retireable {
 	@Override
 	@Deprecated
 	User getChangedBy();
-	
+
 	/**
 	 * @deprecated As of version 2.2 OpenmrsMetadata is immutable by default, it's up to the
 	 *             subclasses to make themselves mutable by extending BaseChangeableOpenmrsMetadata,
@@ -60,7 +60,7 @@ public interface OpenmrsMetadata extends Auditable, Retireable {
 	@Override
 	@Deprecated
 	void setChangedBy(User changedBy);
-	
+
 	/**
 	 * @deprecated As of version 2.2 OpenmrsMetadata is immutable by default, it's up to the
 	 *             subclasses to make themselves mutable by extending BaseChangeableOpenmrsMetadata,
@@ -69,7 +69,7 @@ public interface OpenmrsMetadata extends Auditable, Retireable {
 	@Override
 	@Deprecated
 	Date getDateChanged();
-	
+
 	/**
 	 * @deprecated As of version 2.2 OpenmrsMetadata is immutable by default, it's up to the
 	 *             subclasses to make themselves mutable by extending BaseChangeableOpenmrsMetadata,

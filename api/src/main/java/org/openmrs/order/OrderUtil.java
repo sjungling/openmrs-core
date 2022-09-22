@@ -17,10 +17,10 @@ import org.openmrs.util.OpenmrsUtil;
  * Contains convenience methods for working with Orders.
  */
 public class OrderUtil {
-	
+
 	private OrderUtil() {
 	}
-	
+
 	/**
 	 * Checks whether orderType2 matches or is a sub type of orderType1
 	 * 
@@ -45,11 +45,11 @@ public class OrderUtil {
 				}
 				parentType = parentType.getParent();
 			}
-			
+
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Checks if the schedules of the specified orders overlap, Note this only makes a check that is
 	 * purely based on dates ignoring other properties like patient, voided, careSetting and the
@@ -75,18 +75,18 @@ public class OrderUtil {
 		if (order2.getEffectiveStopDate() == null && order1.getEffectiveStopDate() == null) {
 			return true;
 		}
-		
+
 		if (order2.getEffectiveStopDate() == null) {
 			return OpenmrsUtil.compare(order1.getEffectiveStopDate(), order2.getEffectiveStartDate()) > -1;
 		}
-		
+
 		if (order1.getEffectiveStopDate() == null) {
 			return (OpenmrsUtil.compare(order1.getEffectiveStartDate(), order2.getEffectiveStartDate()) > -1)
-			        && (OpenmrsUtil.compare(order1.getEffectiveStartDate(), order2.getEffectiveStopDate()) < 1);
+											&& (OpenmrsUtil.compare(order1.getEffectiveStartDate(), order2.getEffectiveStopDate()) < 1);
 		}
-		
+
 		return (OpenmrsUtil.compare(order1.getEffectiveStartDate(), order2.getEffectiveStopDate()) < 1)
-		        && (OpenmrsUtil.compare(order1.getEffectiveStopDate(), order2.getEffectiveStartDate()) > -1);
+										&& (OpenmrsUtil.compare(order1.getEffectiveStopDate(), order2.getEffectiveStartDate()) > -1);
 	}
-	
+
 }

@@ -50,17 +50,17 @@ import org.hibernate.stat.SessionStatistics;
  * @since 1.12, 1.11.3, 1.10.2, 1.9.9
  */
 public class DbSession {
-	
+
 	private SessionFactory sessionFactory;
-	
+
 	public DbSession(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	private Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
-	
+
 	/**
 	 * Obtain the tenant identifier associated with this session.
 	 *
@@ -69,7 +69,7 @@ public class DbSession {
 	public String getTenantIdentifier() {
 		return getSession().getTenantIdentifier();
 	}
-	
+
 	/**
 	 * Begin a unit of work and return the associated {@link Transaction} object. If a new
 	 * underlying transaction is required, begin the transaction. Otherwise continue the new work in
@@ -81,7 +81,7 @@ public class DbSession {
 	public Transaction beginTransaction() {
 		return getSession().beginTransaction();
 	}
-	
+
 	/**
 	 * Get the {@link Transaction} instance associated with this session. The concrete type of the
 	 * returned {@link Transaction} object is determined by the
@@ -92,7 +92,7 @@ public class DbSession {
 	public Transaction getTransaction() {
 		return getSession().getTransaction();
 	}
-	
+
 	/**
 	 * Create a {@link Query} instance for the named query string defined in the metadata.
 	 *
@@ -102,7 +102,7 @@ public class DbSession {
 	public Query getNamedQuery(String queryName) {
 		return getSession().getNamedQuery(queryName);
 	}
-	
+
 	/**
 	 * Create a {@link Query} instance for the given HQL query string.
 	 *
@@ -112,7 +112,7 @@ public class DbSession {
 	public Query createQuery(String queryString) {
 		return getSession().createQuery(queryString);
 	}
-	
+
 	/**
 	 * Create a {@link SQLQuery} instance for the given SQL query string.
 	 *
@@ -122,7 +122,7 @@ public class DbSession {
 	public SQLQuery createSQLQuery(String queryString) {
 		return getSession().createSQLQuery(queryString);
 	}
-	
+
 	/**
 	 * Gets a ProcedureCall based on a named template
 	 *
@@ -133,7 +133,7 @@ public class DbSession {
 	public ProcedureCall getNamedProcedureCall(String name) {
 		return getSession().getNamedProcedureCall(name);
 	}
-	
+
 	/**
 	 * Creates a call to a stored procedure.
 	 *
@@ -143,7 +143,7 @@ public class DbSession {
 	public ProcedureCall createStoredProcedureCall(String procedureName) {
 		return getSession().createStoredProcedureCall(procedureName);
 	}
-	
+
 	/**
 	 * Creates a call to a stored procedure with specific result set entity mappings. Each class
 	 * named is considered a "root return".
@@ -155,7 +155,7 @@ public class DbSession {
 	public ProcedureCall createStoredProcedureCall(String procedureName, Class... resultClasses) {
 		return getSession().createStoredProcedureCall(procedureName, resultClasses);
 	}
-	
+
 	/**
 	 * Creates a call to a stored procedure with specific result set entity mappings.
 	 *
@@ -166,7 +166,7 @@ public class DbSession {
 	public ProcedureCall createStoredProcedureCall(String procedureName, String... resultSetMappings) {
 		return getSession().createStoredProcedureCall(procedureName, resultSetMappings);
 	}
-	
+
 	/**
 	 * Create {@link Criteria} instance for the given class (entity or subclasses/implementors).
 	 *
@@ -176,7 +176,7 @@ public class DbSession {
 	public Criteria createCriteria(Class persistentClass) {
 		return getSession().createCriteria(persistentClass);
 	}
-	
+
 	/**
 	 * Create {@link Criteria} instance for the given class (entity or subclasses/implementors),
 	 * using a specific alias.
@@ -188,7 +188,7 @@ public class DbSession {
 	public Criteria createCriteria(Class persistentClass, String alias) {
 		return getSession().createCriteria(persistentClass, alias);
 	}
-	
+
 	/**
 	 * Create {@link Criteria} instance for the given entity name.
 	 *
@@ -198,7 +198,7 @@ public class DbSession {
 	public Criteria createCriteria(String entityName) {
 		return getSession().createCriteria(entityName);
 	}
-	
+
 	/**
 	 * Create {@link Criteria} instance for the given entity name, using a specific alias.
 	 *
@@ -209,7 +209,7 @@ public class DbSession {
 	public Criteria createCriteria(String entityName, String alias) {
 		return getSession().createCriteria(entityName, alias);
 	}
-	
+
 	/**
 	 * Obtain a {@link Session} builder with the ability to grab certain information from this
 	 * session.
@@ -219,7 +219,7 @@ public class DbSession {
 	public SharedSessionBuilder sessionWithOptions() {
 		return getSession().sessionWithOptions();
 	}
-	
+
 	/**
 	 * Force this session to flush. Must be called at the end of a unit of work, before committing
 	 * the transaction and closing the session (depending on {@link #setFlushMode(FlushMode)},
@@ -234,7 +234,7 @@ public class DbSession {
 	public void flush() throws HibernateException {
 		getSession().flush();
 	}
-	
+
 	/**
 	 * Set the flush mode for this session.
 	 * <p>
@@ -252,7 +252,7 @@ public class DbSession {
 	public void setFlushMode(FlushMode flushMode) {
 		getSession().setHibernateFlushMode(flushMode);
 	}
-	
+
 	/**
 	 * Get the current flush mode for this session.
 	 *
@@ -261,7 +261,7 @@ public class DbSession {
 	public FlushMode getFlushMode() {
 		return getSession().getHibernateFlushMode();
 	}
-	
+
 	/**
 	 * Set the cache mode.
 	 * <p>
@@ -273,7 +273,7 @@ public class DbSession {
 	public void setCacheMode(CacheMode cacheMode) {
 		getSession().setCacheMode(cacheMode);
 	}
-	
+
 	/**
 	 * Get the current cache mode.
 	 *
@@ -282,7 +282,7 @@ public class DbSession {
 	public CacheMode getCacheMode() {
 		return getSession().getCacheMode();
 	}
-	
+
 	/**
 	 * Get the session factory which created this session.
 	 *
@@ -292,7 +292,7 @@ public class DbSession {
 	public SessionFactory getSessionFactory() {
 		return getSession().getSessionFactory();
 	}
-	
+
 	/**
 	 * End the session by releasing the JDBC connection and cleaning up. It is not strictly
 	 * necessary to close the session but you must at least {@link #disconnect()} it.
@@ -304,7 +304,7 @@ public class DbSession {
 		getSession().close();
 		return null;
 	}
-	
+
 	/**
 	 * Cancel the execution of the current query.
 	 * <p>
@@ -315,7 +315,7 @@ public class DbSession {
 	public void cancelQuery() throws HibernateException {
 		getSession().cancelQuery();
 	}
-	
+
 	/**
 	 * Check if the session is still open.
 	 *
@@ -324,7 +324,7 @@ public class DbSession {
 	public boolean isOpen() {
 		return getSession().isOpen();
 	}
-	
+
 	/**
 	 * Check if the session is currently connected.
 	 *
@@ -333,7 +333,7 @@ public class DbSession {
 	public boolean isConnected() {
 		return getSession().isConnected();
 	}
-	
+
 	/**
 	 * Does this session contain any changes which must be synchronized with the database? In other
 	 * words, would any DML operations be executed if we flushed this session?
@@ -344,7 +344,7 @@ public class DbSession {
 	public boolean isDirty() throws HibernateException {
 		return getSession().isDirty();
 	}
-	
+
 	/**
 	 * Will entities and proxies that are loaded into this session be made read-only by default? To
 	 * determine the read-only/modifiable setting for a particular entity or proxy:
@@ -356,7 +356,7 @@ public class DbSession {
 	public boolean isDefaultReadOnly() {
 		return getSession().isDefaultReadOnly();
 	}
-	
+
 	/**
 	 * Change the default for entities and proxies loaded into this session from modifiable to
 	 * read-only mode, or from modifiable to read-only mode. Read-only entities are not
@@ -366,7 +366,7 @@ public class DbSession {
 	 * session's current setting. To change the read-only/modifiable setting for a particular entity
 	 * or proxy that is already in this session:
 	 * 
-	 * @see Session#setReadOnly(Object,boolean) To override this session's read-only/modifiable
+	 * @see Session#setReadOnly(Object, boolean) To override this session's read-only/modifiable
 	 *      setting for entities and proxies loaded by a Query:
 	 * @see Query#setReadOnly(boolean)
 	 * @param readOnly true, the default for loaded entities/proxies is read-only; false, the
@@ -375,7 +375,7 @@ public class DbSession {
 	public void setDefaultReadOnly(boolean readOnly) {
 		getSession().setDefaultReadOnly(readOnly);
 	}
-	
+
 	/**
 	 * Return the identifier value of the given entity as associated with this session. An exception
 	 * is thrown if the given entity instance is transient or detached in relation to this session.
@@ -388,7 +388,7 @@ public class DbSession {
 	public Serializable getIdentifier(Object object) {
 		return getSession().getIdentifier(object);
 	}
-	
+
 	/**
 	 * Check if this instance is associated with this <tt>Session</tt>.
 	 *
@@ -398,7 +398,7 @@ public class DbSession {
 	public boolean contains(Object object) {
 		return getSession().contains(object);
 	}
-	
+
 	/**
 	 * Remove this instance from the session cache. Changes to the instance will not be synchronized
 	 * with the database. This operation cascades to associated instances if the association is
@@ -411,7 +411,7 @@ public class DbSession {
 	public void evict(Object object) {
 		getSession().evict(object);
 	}
-	
+
 	/**
 	 * Return the persistent instance of the given entity class with the given identifier, obtaining
 	 * the specified lock mode, assuming the instance exists.
@@ -424,7 +424,7 @@ public class DbSession {
 	public Object load(Class theClass, Serializable id, LockOptions lockOptions) {
 		return getSession().load(theClass, id, lockOptions);
 	}
-	
+
 	/**
 	 * Return the persistent instance of the given entity class with the given identifier, obtaining
 	 * the specified lock mode, assuming the instance exists.
@@ -437,7 +437,7 @@ public class DbSession {
 	public Object load(String entityName, Serializable id, LockOptions lockOptions) {
 		return getSession().load(entityName, id, lockOptions);
 	}
-	
+
 	/**
 	 * Return the persistent instance of the given entity class with the given identifier, assuming
 	 * that the instance exists. This method might return a proxied instance that is initialized
@@ -454,7 +454,7 @@ public class DbSession {
 	public Object load(Class theClass, Serializable id) {
 		return getSession().load(theClass, id);
 	}
-	
+
 	/**
 	 * Return the persistent instance of the given entity class with the given identifier, assuming
 	 * that the instance exists. This method might return a proxied instance that is initialized
@@ -471,7 +471,7 @@ public class DbSession {
 	public Object load(String entityName, Serializable id) {
 		return getSession().load(entityName, id);
 	}
-	
+
 	/**
 	 * Read the persistent state associated with the given identifier into the given transient
 	 * instance.
@@ -482,7 +482,7 @@ public class DbSession {
 	public void load(Object object, Serializable id) {
 		getSession().load(object, id);
 	}
-	
+
 	/**
 	 * Persist the state of the given detached instance, reusing the current identifier value. This
 	 * operation cascades to associated instances if the association is mapped with
@@ -494,7 +494,7 @@ public class DbSession {
 	public void replicate(Object object, ReplicationMode replicationMode) {
 		getSession().replicate(object, replicationMode);
 	}
-	
+
 	/**
 	 * Persist the state of the given detached instance, reusing the current identifier value. This
 	 * operation cascades to associated instances if the association is mapped with
@@ -507,7 +507,7 @@ public class DbSession {
 	public void replicate(String entityName, Object object, ReplicationMode replicationMode) {
 		getSession().replicate(entityName, object, replicationMode);
 	}
-	
+
 	/**
 	 * Persist the given transient instance, first assigning a generated identifier. (Or using the
 	 * current value of the identifier property if the <tt>assigned</tt> generator is used.) This
@@ -520,7 +520,7 @@ public class DbSession {
 	public Serializable save(Object object) {
 		return getSession().save(object);
 	}
-	
+
 	/**
 	 * Persist the given transient instance, first assigning a generated identifier. (Or using the
 	 * current value of the identifier property if the <tt>assigned</tt> generator is used.) This
@@ -534,7 +534,7 @@ public class DbSession {
 	public Serializable save(String entityName, Object object) {
 		return getSession().save(entityName, object);
 	}
-	
+
 	/**
 	 * Either {@link #save(Object)} or {@link #update(Object)} the given instance, depending upon
 	 * resolution of the unsaved-value checks (see the manual for discussion of unsaved-value
@@ -550,7 +550,7 @@ public class DbSession {
 	public void saveOrUpdate(Object object) {
 		getSession().saveOrUpdate(object);
 	}
-	
+
 	/**
 	 * Either {@link #save(String, Object)} or {@link #update(String, Object)} the given instance,
 	 * depending upon resolution of the unsaved-value checks (see the manual for discussion of
@@ -561,13 +561,13 @@ public class DbSession {
 	 *
 	 * @param entityName The entity name
 	 * @param object a transient or detached instance containing new or updated state
-	 * @see Session#save(String,Object)
-	 * @see Session#update(String,Object)
+	 * @see Session#save(String, Object)
+	 * @see Session#update(String, Object)
 	 */
 	public void saveOrUpdate(String entityName, Object object) {
 		getSession().saveOrUpdate(entityName, object);
 	}
-	
+
 	/**
 	 * Update the persistent instance with the identifier of the given detached instance. If there
 	 * is a persistent instance with the same identifier, an exception is thrown. This operation
@@ -579,7 +579,7 @@ public class DbSession {
 	public void update(Object object) {
 		getSession().update(object);
 	}
-	
+
 	/**
 	 * Update the persistent instance with the identifier of the given detached instance. If there
 	 * is a persistent instance with the same identifier, an exception is thrown. This operation
@@ -592,7 +592,7 @@ public class DbSession {
 	public void update(String entityName, Object object) {
 		getSession().update(entityName, object);
 	}
-	
+
 	/**
 	 * Copy the state of the given object onto the persistent object with the same identifier. If
 	 * there is no persistent instance currently associated with the session, it will be loaded.
@@ -609,7 +609,7 @@ public class DbSession {
 	public Object merge(Object object) {
 		return getSession().merge(object);
 	}
-	
+
 	/**
 	 * Copy the state of the given object onto the persistent object with the same identifier. If
 	 * there is no persistent instance currently associated with the session, it will be loaded.
@@ -627,7 +627,7 @@ public class DbSession {
 	public Object merge(String entityName, Object object) {
 		return getSession().merge(entityName, object);
 	}
-	
+
 	/**
 	 * Make a transient instance persistent. This operation cascades to associated instances if the
 	 * association is mapped with {@code cascade="persist"}
@@ -639,7 +639,7 @@ public class DbSession {
 	public void persist(Object object) {
 		getSession().persist(object);
 	}
-	
+
 	/**
 	 * Make a transient instance persistent. This operation cascades to associated instances if the
 	 * association is mapped with {@code cascade="persist"}
@@ -652,7 +652,7 @@ public class DbSession {
 	public void persist(String entityName, Object object) {
 		getSession().persist(entityName, object);
 	}
-	
+
 	/**
 	 * Remove a persistent instance from the datastore. The argument may be an instance associated
 	 * with the receiving <tt>Session</tt> or a transient instance with an identifier associated
@@ -664,7 +664,7 @@ public class DbSession {
 	public void delete(Object object) {
 		getSession().delete(object);
 	}
-	
+
 	/**
 	 * Remove a persistent instance from the datastore. The <b>object</b> argument may be an
 	 * instance associated with the receiving <tt>Session</tt> or a transient instance with an
@@ -677,7 +677,7 @@ public class DbSession {
 	public void delete(String entityName, Object object) {
 		getSession().delete(entityName, object);
 	}
-	
+
 	/**
 	 * Build a LockRequest that specifies the LockMode, pessimistic lock timeout and lock scope.
 	 * timeout and scope is ignored for optimistic locking. After building the LockRequest, call
@@ -692,7 +692,7 @@ public class DbSession {
 	public LockRequest buildLockRequest(LockOptions lockOptions) {
 		return getSession().buildLockRequest(lockOptions);
 	}
-	
+
 	/**
 	 * Re-read the state of the given instance from the underlying database. It is inadvisable to
 	 * use this to implement long-running sessions that span many business tasks. This method is,
@@ -708,7 +708,7 @@ public class DbSession {
 	public void refresh(Object object) {
 		getSession().refresh(object);
 	}
-	
+
 	/**
 	 * Re-read the state of the given instance from the underlying database. It is inadvisable to
 	 * use this to implement long-running sessions that span many business tasks. This method is,
@@ -725,7 +725,7 @@ public class DbSession {
 	public void refresh(String entityName, Object object) {
 		getSession().refresh(entityName, object);
 	}
-	
+
 	/**
 	 * Re-read the state of the given instance from the underlying database, with the given
 	 * <tt>LockMode</tt>. It is inadvisable to use this to implement long-running sessions that span
@@ -737,7 +737,7 @@ public class DbSession {
 	public void refresh(Object object, LockOptions lockOptions) {
 		getSession().refresh(object, lockOptions);
 	}
-	
+
 	/**
 	 * Re-read the state of the given instance from the underlying database, with the given
 	 * <tt>LockMode</tt>. It is inadvisable to use this to implement long-running sessions that span
@@ -750,7 +750,7 @@ public class DbSession {
 	public void refresh(String entityName, Object object, LockOptions lockOptions) {
 		getSession().refresh(entityName, object, lockOptions);
 	}
-	
+
 	/**
 	 * Determine the current lock mode of the given object.
 	 *
@@ -760,7 +760,7 @@ public class DbSession {
 	public LockMode getCurrentLockMode(Object object) {
 		return getSession().getCurrentLockMode(object);
 	}
-	
+
 	/**
 	 * Create a {@link Query} instance for the given collection and filter string. Contains an
 	 * implicit {@code FROM} element named {@code this} which refers to the defined table for the
@@ -774,7 +774,7 @@ public class DbSession {
 	public Query createFilter(Object collection, String queryString) {
 		return getSession().createFilter(collection, queryString);
 	}
-	
+
 	/**
 	 * Completely clear the session. Evict all loaded instances and cancel all pending saves,
 	 * updates and deletions. Do not close open iterators or instances of <tt>ScrollableResults</tt>
@@ -783,7 +783,7 @@ public class DbSession {
 	public void clear() {
 		getSession().clear();
 	}
-	
+
 	/**
 	 * Return the persistent instance of the given entity class with the given identifier, or null
 	 * if there is no such persistent instance. (If the instance is already associated with the
@@ -796,7 +796,7 @@ public class DbSession {
 	public Object get(Class clazz, Serializable id) {
 		return getSession().get(clazz, id);
 	}
-	
+
 	/**
 	 * Return the persistent instance of the given entity class with the given identifier, or null
 	 * if there is no such persistent instance. (If the instance is already associated with the
@@ -811,7 +811,7 @@ public class DbSession {
 	public Object get(Class clazz, Serializable id, LockOptions lockOptions) {
 		return getSession().get(clazz, id, lockOptions);
 	}
-	
+
 	/**
 	 * Return the persistent instance of the given named entity with the given identifier, or null
 	 * if there is no such persistent instance. (If the instance is already associated with the
@@ -824,7 +824,7 @@ public class DbSession {
 	public Object get(String entityName, Serializable id) {
 		return getSession().get(entityName, id);
 	}
-	
+
 	/**
 	 * Return the persistent instance of the given entity class with the given identifier, or null
 	 * if there is no such persistent instance. (If the instance is already associated with the
@@ -839,7 +839,7 @@ public class DbSession {
 	public Object get(String entityName, Serializable id, LockOptions lockOptions) {
 		return getSession().get(entityName, id, lockOptions);
 	}
-	
+
 	/**
 	 * Return the entity name for a persistent entity.
 	 * 
@@ -849,7 +849,7 @@ public class DbSession {
 	public String getEntityName(Object object) {
 		return getSession().getEntityName(object);
 	}
-	
+
 	/**
 	 * Create an {@link IdentifierLoadAccess} instance to retrieve the specified entity type by
 	 * primary key.
@@ -861,7 +861,7 @@ public class DbSession {
 	public IdentifierLoadAccess byId(String entityName) {
 		return getSession().byId(entityName);
 	}
-	
+
 	/**
 	 * Create an {@link IdentifierLoadAccess} instance to retrieve the specified entity by primary
 	 * key.
@@ -873,7 +873,7 @@ public class DbSession {
 	public IdentifierLoadAccess byId(Class entityClass) {
 		return getSession().byId(entityClass);
 	}
-	
+
 	/**
 	 * Create an {@link NaturalIdLoadAccess} instance to retrieve the specified entity by its
 	 * natural id.
@@ -885,7 +885,7 @@ public class DbSession {
 	public NaturalIdLoadAccess byNaturalId(String entityName) {
 		return getSession().byNaturalId(entityName);
 	}
-	
+
 	/**
 	 * Create an {@link NaturalIdLoadAccess} instance to retrieve the specified entity by its
 	 * natural id.
@@ -897,7 +897,7 @@ public class DbSession {
 	public NaturalIdLoadAccess byNaturalId(Class entityClass) {
 		return getSession().byNaturalId(entityClass);
 	}
-	
+
 	/**
 	 * Create an {@link SimpleNaturalIdLoadAccess} instance to retrieve the specified entity by its
 	 * natural id.
@@ -911,7 +911,7 @@ public class DbSession {
 	public SimpleNaturalIdLoadAccess bySimpleNaturalId(String entityName) {
 		return getSession().bySimpleNaturalId(entityName);
 	}
-	
+
 	/**
 	 * Create an {@link SimpleNaturalIdLoadAccess} instance to retrieve the specified entity by its
 	 * simple (single attribute) natural id.
@@ -925,7 +925,7 @@ public class DbSession {
 	public SimpleNaturalIdLoadAccess bySimpleNaturalId(Class entityClass) {
 		return getSession().bySimpleNaturalId(entityClass);
 	}
-	
+
 	/**
 	 * Enable the named filter for this current session.
 	 *
@@ -935,7 +935,7 @@ public class DbSession {
 	public Filter enableFilter(String filterName) {
 		return getSession().enableFilter(filterName);
 	}
-	
+
 	/**
 	 * Retrieve a currently enabled filter by name.
 	 *
@@ -945,7 +945,7 @@ public class DbSession {
 	public Filter getEnabledFilter(String filterName) {
 		return getSession().getEnabledFilter(filterName);
 	}
-	
+
 	/**
 	 * Disable the named filter for the current session.
 	 *
@@ -954,7 +954,7 @@ public class DbSession {
 	public void disableFilter(String filterName) {
 		getSession().disableFilter(filterName);
 	}
-	
+
 	/**
 	 * Get the statistics for this session.
 	 *
@@ -963,7 +963,7 @@ public class DbSession {
 	public SessionStatistics getStatistics() {
 		return getSession().getStatistics();
 	}
-	
+
 	/**
 	 * Is the specified entity or proxy read-only? To get the default read-only/modifiable setting
 	 * used for entities and proxies that are loaded into the session:
@@ -976,7 +976,7 @@ public class DbSession {
 	public boolean isReadOnly(Object entityOrProxy) {
 		return getSession().isReadOnly(entityOrProxy);
 	}
-	
+
 	/**
 	 * Set an unmodified persistent object to read-only mode, or a read-only object to modifiable
 	 * mode. In read-only mode, no snapshot is maintained, the instance is never dirty checked, and
@@ -994,7 +994,7 @@ public class DbSession {
 	public void setReadOnly(Object entityOrProxy, boolean readOnly) {
 		getSession().setReadOnly(entityOrProxy, readOnly);
 	}
-	
+
 	/**
 	 * Controller for allowing users to perform JDBC related work using the Connection managed by
 	 * this Session.
@@ -1005,7 +1005,7 @@ public class DbSession {
 	public void doWork(Work work) throws HibernateException {
 		getSession().doWork(work);
 	}
-	
+
 	/**
 	 * Controller for allowing users to perform JDBC related work using the Connection managed by
 	 * this Session. After execution returns the result of the {@link ReturningWork#execute} call.
@@ -1018,7 +1018,7 @@ public class DbSession {
 	public <T> T doReturningWork(ReturningWork<T> work) throws HibernateException {
 		return getSession().doReturningWork(work);
 	}
-	
+
 	/**
 	 * Disconnect the session from its underlying JDBC connection. This is intended for use in cases
 	 * where the application has supplied the JDBC connection to the session and which require
@@ -1036,7 +1036,7 @@ public class DbSession {
 	Connection disconnect() {
 		return getSession().disconnect();
 	}
-	
+
 	/**
 	 * Reconnect to the given JDBC connection.
 	 *
@@ -1046,7 +1046,7 @@ public class DbSession {
 	void reconnect(Connection connection) {
 		getSession().reconnect(connection);
 	}
-	
+
 	/**
 	 * Is a particular fetch profile enabled on this session?
 	 *
@@ -1059,7 +1059,7 @@ public class DbSession {
 	public boolean isFetchProfileEnabled(String name) throws UnknownProfileException {
 		return getSession().isFetchProfileEnabled(name);
 	}
-	
+
 	/**
 	 * Enable a particular fetch profile on this session. No-op if requested profile is already
 	 * enabled.
@@ -1072,7 +1072,7 @@ public class DbSession {
 	public void enableFetchProfile(String name) throws UnknownProfileException {
 		getSession().enableFetchProfile(name);
 	}
-	
+
 	/**
 	 * Disable a particular fetch profile on this session. No-op if requested profile is already
 	 * disabled.
@@ -1085,7 +1085,7 @@ public class DbSession {
 	public void disableFetchProfile(String name) throws UnknownProfileException {
 		getSession().disableFetchProfile(name);
 	}
-	
+
 	/**
 	 * Convenience access to the {@link TypeHelper} associated with this session's
 	 * {@link SessionFactory}.
@@ -1098,7 +1098,7 @@ public class DbSession {
 	public TypeHelper getTypeHelper() {
 		return getSession().getTypeHelper();
 	}
-	
+
 	/**
 	 * Retrieve this session's helper/delegate for creating LOB instances.
 	 *
@@ -1107,7 +1107,7 @@ public class DbSession {
 	public LobHelper getLobHelper() {
 		return getSession().getLobHelper();
 	}
-	
+
 	/**
 	 * Add one or more listeners to the Session
 	 *

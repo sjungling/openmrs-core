@@ -23,9 +23,9 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.10
  */
-@Handler(supports = { OrderType.class })
+@Handler(supports = {OrderType.class})
 public class OrderTypeValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -35,7 +35,7 @@ public class OrderTypeValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return OrderType.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Validates an Order object
 	 * 
@@ -66,17 +66,17 @@ public class OrderTypeValidator implements Validator {
 				errors.rejectValue("name", "error.name");
 				return;
 			}
-			
+
 			if (orderType.getParent() != null && OrderUtil.isType(orderType, orderType.getParent())) {
-				errors.rejectValue("parent", "OrderType.parent.amongDescendants", new Object[] { orderType.getName() },
-				    "Parent of " + orderType.getName() + " is among its descendants");
+				errors.rejectValue("parent", "OrderType.parent.amongDescendants", new Object[]{orderType.getName()},
+												"Parent of " + orderType.getName() + " is among its descendants");
 			}
-			
+
 			OrderType duplicate = Context.getOrderService().getOrderTypeByName(name);
 			if (duplicate != null && !orderType.equals(duplicate)) {
 				errors.rejectValue("name", "OrderType.duplicate.name", "Duplicate order type name: " + name);
 			}
-			
+
 			for (OrderType ot : Context.getOrderService().getOrderTypes(true)) {
 				if (ot != null) {
 					//If this was an edit, skip past the order we are actually validating 
@@ -86,16 +86,16 @@ public class OrderTypeValidator implements Validator {
 					int index = 0;
 					for (ConceptClass cc : ot.getConceptClasses()) {
 						if (cc != null && orderType.getConceptClasses().contains(cc)) {
-							errors.rejectValue("conceptClasses[" + index + "]", "OrderType.duplicate", new Object[] {
-							        cc.getName(), orderType.getName() }, cc.getName()
-							        + " is already associated to another order type:" + orderType.getName());
+							errors.rejectValue("conceptClasses[" + index + "]", "OrderType.duplicate", new Object[]{
+															cc.getName(), orderType.getName()}, cc.getName()
+															+ " is already associated to another order type:" + orderType.getName());
 						}
 						index++;
 					}
 				}
 			}
 			ValidateUtil
-			        .validateFieldLengths(errors, obj.getClass(), "name", "description", "retireReason", "javaClassName");
+											.validateFieldLengths(errors, obj.getClass(), "name", "description", "retireReason", "javaClassName");
 		}
 	}
 }

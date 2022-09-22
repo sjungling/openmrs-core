@@ -21,12 +21,12 @@ import org.openmrs.api.context.Context;
  * @see PersonAttribute
  */
 public class PersonAttributeEditor extends OpenmrsPropertyEditor<PersonAttribute> {
-	
+
 	@Override
 	protected PersonAttribute getObjectById(Integer id) {
 		return Context.getPersonService().getPersonAttribute(id);
 	}
-	
+
 	@Override
 	protected PersonAttribute getObjectByUuid(String uuid) {
 		return Context.getPersonService().getPersonAttributeByUuid(uuid);

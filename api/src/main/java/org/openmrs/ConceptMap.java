@@ -18,30 +18,30 @@ import org.hibernate.search.annotations.IndexedEmbedded;
  * N mappings to any and all concept sources in the database.
  */
 public class ConceptMap extends BaseConceptMap {
-	
+
 	public static final long serialVersionUID = 754677L;
-	
+
 	// Fields
 	@DocumentId
 	private Integer conceptMapId;
-	
+
 	@ContainedIn
 	private Concept concept;
-	
+
 	@IndexedEmbedded(includeEmbeddedObjectId = true)
 	private ConceptReferenceTerm conceptReferenceTerm;
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public ConceptMap() {
 	}
-	
+
 	/** constructor with concept map id */
 	public ConceptMap(Integer conceptMapId) {
 		this.conceptMapId = conceptMapId;
 	}
-	
+
 	/**
 	 * Convenience constructor that takes the term to be mapped to and the type of the map
 	 *
@@ -52,7 +52,7 @@ public class ConceptMap extends BaseConceptMap {
 		this.conceptReferenceTerm = conceptReferenceTerm;
 		setConceptMapType(conceptMapType);
 	}
-	
+
 	/**
 	 * @see org.openmrs.BaseOpenmrsObject#toString()
 	 */
@@ -63,14 +63,14 @@ public class ConceptMap extends BaseConceptMap {
 		}
 		return conceptMapId.toString();
 	}
-	
+
 	/**
 	 * @return the concept
 	 */
 	public Concept getConcept() {
 		return concept;
 	}
-	
+
 	/**
 	 * @param concept the concept to set
 	 */
@@ -84,14 +84,14 @@ public class ConceptMap extends BaseConceptMap {
 	public Integer getConceptMapId() {
 		return conceptMapId;
 	}
-	
+
 	/**
 	 * @param conceptMapId The conceptMapId to set.
 	 */
 	public void setConceptMapId(Integer conceptMapId) {
 		this.conceptMapId = conceptMapId;
 	}
-	
+
 	/**
 	 * @return the conceptReferenceTerm
 	 * @since 1.9
@@ -102,7 +102,7 @@ public class ConceptMap extends BaseConceptMap {
 		}
 		return conceptReferenceTerm;
 	}
-	
+
 	/**
 	 * @param conceptReferenceTerm the conceptReferenceTerm to set
 	 * @since 1.9
@@ -110,7 +110,7 @@ public class ConceptMap extends BaseConceptMap {
 	public void setConceptReferenceTerm(ConceptReferenceTerm conceptReferenceTerm) {
 		this.conceptReferenceTerm = conceptReferenceTerm;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
@@ -119,7 +119,7 @@ public class ConceptMap extends BaseConceptMap {
 	public Integer getId() {
 		return getConceptMapId();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -128,5 +128,5 @@ public class ConceptMap extends BaseConceptMap {
 	public void setId(Integer id) {
 		setConceptMapId(id);
 	}
-	
+
 }

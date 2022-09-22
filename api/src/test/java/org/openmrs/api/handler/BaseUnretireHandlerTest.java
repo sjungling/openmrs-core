@@ -24,9 +24,9 @@ import org.openmrs.User;
  * Tests the {@link BaseUnretireHandler} class.
  */
 public class BaseUnretireHandlerTest {
-	
+
 	/**
-	 * @see BaseUnretireHandler#handle(Retireable,User,Date,String)
+	 * @see BaseUnretireHandler#handle(Retireable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldUnsetTheRetiredBit() {
@@ -36,9 +36,9 @@ public class BaseUnretireHandlerTest {
 		handler.handle(retireable, null, null, null);
 		assertFalse(retireable.getRetired());
 	}
-	
+
 	/**
-	 * @see BaseUnretireHandler#handle(Retireable,User,Date,String)
+	 * @see BaseUnretireHandler#handle(Retireable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldUnsetTheRetirer() {
@@ -49,9 +49,9 @@ public class BaseUnretireHandlerTest {
 		handler.handle(retireable, null, null, null);
 		assertNull(retireable.getRetiredBy());
 	}
-	
+
 	/**
-	 * @see BaseUnretireHandler#handle(Retireable,User,Date,String)
+	 * @see BaseUnretireHandler#handle(Retireable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldUnsetTheDateRetired() {
@@ -62,9 +62,9 @@ public class BaseUnretireHandlerTest {
 		handler.handle(retireable, null, null, null);
 		assertNull(retireable.getDateRetired());
 	}
-	
+
 	/**
-	 * @see BaseUnretireHandler#handle(Retireable,User,Date,String)
+	 * @see BaseUnretireHandler#handle(Retireable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldUnsetTheRetireReason() {
@@ -75,9 +75,9 @@ public class BaseUnretireHandlerTest {
 		handler.handle(retireable, null, null, null);
 		assertNull(retireable.getRetireReason());
 	}
-	
+
 	/**
-	 * @see BaseUnretireHandler#handle(Retireable,User,Date,String)
+	 * @see BaseUnretireHandler#handle(Retireable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotActOnAlreadyUnretiredObjects() {
@@ -87,9 +87,9 @@ public class BaseUnretireHandlerTest {
 		handler.handle(retireable, null, null, "SOME REASON");
 		assertNull(retireable.getRetireReason());
 	}
-	
+
 	/**
-	 * @see BaseUnretireHandler#handle(Retireable,User,Date,String)
+	 * @see BaseUnretireHandler#handle(Retireable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotActOnRetiredObjectsWithADifferentDateRetired() {
@@ -99,9 +99,9 @@ public class BaseUnretireHandlerTest {
 		Retireable retireable = new Location();
 		retireable.setRetired(true);
 		retireable.setDateRetired(d);
-		
+
 		handler.handle(retireable, null, new Date(), "SOME REASON");
 		assertTrue(retireable.getRetired());
 	}
-	
+
 }

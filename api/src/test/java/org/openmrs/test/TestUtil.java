@@ -33,7 +33,7 @@ import org.openmrs.util.OpenmrsUtil;
  * Methods use by the Openmrs tests
  */
 public class TestUtil {
-	
+
 	/**
 	 * Additional assert method for testing that will test that two Collections have equal contents
 	 * The Collections must be of equal size, and each object from one Collection must equal an
@@ -52,7 +52,7 @@ public class TestUtil {
 			throw new AssertionError(e);
 		}
 	}
-	
+
 	/**
 	 * Mimics org.openmrs.web.Listener.getRuntimeProperties()
 	 * 
@@ -60,56 +60,60 @@ public class TestUtil {
 	 * @return Properties runtime
 	 */
 	public static Properties getRuntimeProperties(String webappName) {
-		
+
 		Properties props = new Properties();
-		
+
 		try {
 			FileInputStream propertyStream = null;
-			
+
 			// Look for environment variable
 			// {WEBAPP.NAME}_RUNTIME_PROPERTIES_FILE
 			String env = webappName.toUpperCase() + "_RUNTIME_PROPERTIES_FILE";
-			
+
 			String filepath = System.getenv(env);
-			
+
 			if (filepath != null) {
 				try {
 					propertyStream = new FileInputStream(filepath);
 				}
-				catch (IOException e) {}
+				catch (IOException e) {
+				}
 			}
-			
+
 			// env is the name of the file to look for in the directories
 			String filename = webappName + "-runtime.properties";
-			
+
 			if (propertyStream == null) {
 				filepath = OpenmrsUtil.getApplicationDataDirectory() + filename;
 				try {
 					propertyStream = new FileInputStream(filepath);
 				}
-				catch (IOException e) {}
+				catch (IOException e) {
+				}
 			}
-			
+
 			// look in current directory last
 			if (propertyStream == null) {
 				filepath = filename;
 				try {
 					propertyStream = new FileInputStream(filepath);
 				}
-				catch (IOException e) {}
+				catch (IOException e) {
+				}
 			}
-			
+
 			if (propertyStream == null)
 				throw new IOException("Could not open '" + filename + "' in user or local directory.");
 			OpenmrsUtil.loadProperties(props, propertyStream);
 			propertyStream.close();
-			
+
 		}
-		catch (IOException e) {}
-		
+		catch (IOException e) {
+		}
+
 		return props;
 	}
-	
+
 	/**
 	 * Convert the given xml output to a string that is assignable to a single String variable
 	 * 
@@ -120,7 +124,7 @@ public class TestUtil {
 		output = output.replace("\"", "\\\"");
 		System.out.println(output);
 	}
-	
+
 	/**
 	 * Convert the given multi-line output to lines of StringBuilder.append lines <br>
 	 * <br>
@@ -144,16 +148,16 @@ public class TestUtil {
 	public static void printStringBuilderOutput(String output) {
 		output = output.replace("\"", "\\\"");
 		String[] lines = output.split("\n");
-		
+
 		System.out.println("StringBuilder correctOutput = new StringBuilder();");
 		for (String line : lines) {
 			System.out.print("correctOutput.append(\"");
 			System.out.print(line);
 			System.out.println("\\n\");");
 		}
-		
+
 	}
-	
+
 	/**
 	 * Print the contents of the given tableName to system.out<br>
 	 * <br>
@@ -175,7 +179,7 @@ public class TestUtil {
 			FlatXmlDataSet.write(outputSet, System.out);
 		}
 	}
-	
+
 	/**
 	 * Utility method that allows tests to easily configure and save a global property
 	 * @param string the name of the property to save
@@ -189,7 +193,7 @@ public class TestUtil {
 		gp.setPropertyValue(value);
 		Context.getAdministrationService().saveGlobalProperty(gp);
 	}
-	
+
 	/**
 	 * Utility method to check if a list contains a BaseOpenmrsObject using the id
 	 * @param list
@@ -204,7 +208,7 @@ public class TestUtil {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Waits until System.currentTimeMillis() has flipped to the next second. Since the OpenMRS database is only precise
 	 * to the second, if you want to test something "later" you need to wait this long. (Also, useful because the granularity
@@ -218,10 +222,11 @@ public class TestUtil {
 			try {
 				Thread.sleep(100);
 			}
-			catch (InterruptedException ex) {}
+			catch (InterruptedException ex) {
+			}
 		}
 	}
-	
+
 	/**
 	 * Test utility method to create date time using standard 'yyyy-MM-dd hh:mm:ss' format
 	 * @param dateTimeString in 'yyyy-MM-dd hh:mm:ss' format

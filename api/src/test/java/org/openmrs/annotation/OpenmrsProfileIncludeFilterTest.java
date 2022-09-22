@@ -21,23 +21,23 @@ import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 
 public class OpenmrsProfileIncludeFilterTest extends BaseContextSensitiveTest {
-	
+
 	/**
-	 * @see OpenmrsProfileIncludeFilter#match(MetadataReader,MetadataReaderFactory)
+	 * @see OpenmrsProfileIncludeFilter#match(MetadataReader, MetadataReaderFactory)
 	 */
 	@Test
 	public void match_shouldCreateBeanForOpenmrs1_8AndLater() {
 		OpenmrsComponent1_8 bean = applicationContext.getBean(OpenmrsComponent1_8.class);
-		
+
 		assertThat(bean, is(notNullValue()));
 	}
-	
+
 	/**
-	 * @see OpenmrsProfileIncludeFilter#match(MetadataReader,MetadataReaderFactory)
+	 * @see OpenmrsProfileIncludeFilter#match(MetadataReader, MetadataReaderFactory)
 	 */
 	@Test
 	public void match_shouldNotCreateBeanForOpenmrs1_6To1_7() {
 		assertThrows(NoSuchBeanDefinitionException.class, () -> applicationContext.getBean(OpenmrsComponent1_6To1_7.class));
 	}
-	
+
 }

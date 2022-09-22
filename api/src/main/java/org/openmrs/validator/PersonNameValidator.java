@@ -24,11 +24,11 @@ import org.springframework.validation.Validator;
  *
  * @since 1.7
  */
-@Handler(supports = { PersonName.class }, order = 50)
+@Handler(supports = {PersonName.class}, order = 50)
 public class PersonNameValidator implements Validator {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(PersonNameValidator.class);
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
@@ -36,7 +36,7 @@ public class PersonNameValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return PersonName.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Checks whether person name has all required values, and whether values are proper length
 	 *
@@ -64,7 +64,7 @@ public class PersonNameValidator implements Validator {
 			errors.reject(e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Checks that the given {@link PersonName} is valid
 	 *
@@ -121,20 +121,20 @@ public class PersonNameValidator implements Validator {
 	 */
 	@Deprecated
 	public void validatePersonName(PersonName personName, Errors errors, boolean arrayInd, boolean testInd) {
-		
+
 		if (personName == null) {
 			errors.reject("error.name");
 			return;
 		}
 		// Make sure they assign a name
 		if (StringUtils.isBlank(personName.getGivenName())
-		        || StringUtils.isBlank(personName.getGivenName().replaceAll("\"", ""))) {
+										|| StringUtils.isBlank(personName.getGivenName().replaceAll("\"", ""))) {
 			errors.rejectValue(getFieldKey("givenName", arrayInd, testInd), "Patient.names.required.given.family");
 		}
 
 		// Make sure the entered name value is sensible 
 		String namePattern = Context.getAdministrationService().getGlobalProperty(
-		    OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_NAME_REGEX);
+										OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_NAME_REGEX);
 		if (StringUtils.isNotBlank(namePattern)) {
 			if (StringUtils.isNotBlank(personName.getGivenName()) && !personName.getGivenName().matches(namePattern)) {
 				errors.rejectValue(getFieldKey("givenName", arrayInd, testInd), "GivenName.invalid");
@@ -150,9 +150,9 @@ public class PersonNameValidator implements Validator {
 			}
 		}
 		ValidateUtil.validateFieldLengths(errors, personName.getClass(), "prefix", "givenName", "middleName",
-		    "familyNamePrefix", "familyName", "familyName2", "familyNameSuffix", "degree", "voidReason");
+										"familyNamePrefix", "familyName", "familyName2", "familyNameSuffix", "degree", "voidReason");
 	}
-	
+
 	/***********************************************************************************************************
 	 * @param field the field name
 	 * @param arrayInd indicates whether or not a names[0] array needs to be prepended to field
@@ -161,5 +161,5 @@ public class PersonNameValidator implements Validator {
 	private String getFieldKey(String field, boolean arrayInd, boolean testInd) {
 		return testInd ? field : arrayInd ? "names[0]." + field : "name." + field;
 	}
-	
+
 }

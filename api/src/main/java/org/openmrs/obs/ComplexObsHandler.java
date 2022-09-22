@@ -30,20 +30,20 @@ import org.openmrs.api.APIException;
  * @since 1.5
  */
 public interface ComplexObsHandler {
-	
+
 	// Complex observation views
 	public static final String RAW_VIEW = "RAW_VIEW";
-	
+
 	public static final String TITLE_VIEW = "TITLE_VIEW";
-	
+
 	public static final String TEXT_VIEW = "TEXT_VIEW";
-	
+
 	public static final String HTML_VIEW = "HTML_VIEW";
-	
+
 	public static final String PREVIEW_VIEW = "PREVIEW_VIEW";
-	
+
 	public static final String URI_VIEW = "URI_VIEW";
-	
+
 	/**
 	 * Save a complex obs. This extracts the ComplexData from an Obs, stores it to a location
 	 * determined by the handler, and returns the Obs with the ComplexData nullified.
@@ -52,7 +52,7 @@ public interface ComplexObsHandler {
 	 * @return the Obs with the ComplexData nullified
 	 */
 	public Obs saveObs(Obs obs) throws APIException;
-	
+
 	/**
 	 * Fetches the ComplexData from the location indicated from Obs.value_complex, attaches
 	 * ComplexData onto the Obs and returns the Obs. <br>
@@ -66,7 +66,7 @@ public interface ComplexObsHandler {
 	 * @see org.openmrs.util.OpenmrsConstants
 	 */
 	public Obs getObs(Obs obs, String view);
-	
+
 	/**
 	 * Completely removes the ComplexData Object from its storage location. <br>
 	 * <br>
@@ -76,7 +76,7 @@ public interface ComplexObsHandler {
 	 * @param obs
 	 */
 	public boolean purgeComplexData(Obs obs);
-	
+
 	/**
 	 * Supported views getter
 	 *
@@ -84,7 +84,7 @@ public interface ComplexObsHandler {
 	 * @since 1.12
 	 */
 	public String[] getSupportedViews();
-	
+
 	/**
 	 * View support check
 	 *

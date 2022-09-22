@@ -15,7 +15,7 @@ package org.openmrs;
  * @since  2.4.0
  */
 public interface FormRecordable {
-	
+
 	/**
 	 * Gets the namespace for the form field that was used to capture the obs details in the form
 	 *
@@ -26,7 +26,7 @@ public interface FormRecordable {
 	 * <strong>Should</strong> return null if the namespace is not specified
 	 */
 	String getFormFieldNamespace();
-	
+
 	/**
 	 * Gets the path for the form field that was used to capture the obs details in the form
 	 *
@@ -37,7 +37,7 @@ public interface FormRecordable {
 	 * <strong>Should</strong> return null if the path is not specified
 	 */
 	String getFormFieldPath();
-	
+
 	/**
 	 * Sets the namespace and path of the form field that was used to capture the obs details in the
 	 * form.<br>

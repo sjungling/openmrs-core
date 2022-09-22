@@ -21,10 +21,10 @@ import org.springframework.stereotype.Component;
  */
 @Component("immutableOrderInterceptor")
 public class ImmutableOrderInterceptor extends ImmutableEntityInterceptor {
-	
-	private static final String[] MUTABLE_PROPERTY_NAMES = new String[] { "dateStopped", "voided", "dateVoided", "voidedBy",
-	        "voidReason", "patient", "fulfillerStatus", "fulfillerComment", "accessionNumber"};
-	
+
+	private static final String[] MUTABLE_PROPERTY_NAMES = new String[]{"dateStopped", "voided", "dateVoided", "voidedBy",
+									"voidReason", "patient", "fulfillerStatus", "fulfillerComment", "accessionNumber"};
+
 	/**
 	 * @see ImmutableEntityInterceptor#getSupportedType()
 	 */
@@ -32,7 +32,7 @@ public class ImmutableOrderInterceptor extends ImmutableEntityInterceptor {
 	protected Class<?> getSupportedType() {
 		return Order.class;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.hibernate.ImmutableEntityInterceptor#getMutablePropertyNames()
 	 */
@@ -40,7 +40,7 @@ public class ImmutableOrderInterceptor extends ImmutableEntityInterceptor {
 	protected String[] getMutablePropertyNames() {
 		return MUTABLE_PROPERTY_NAMES;
 	}
-	
+
 	/**
 	 * @see ImmutableEntityInterceptor#ignoreVoidedOrRetiredObjects()
 	 */

@@ -29,9 +29,9 @@ import org.openmrs.aop.RequiredDataAdvice;
  * @see UnvoidHandler
  * @since 1.5
  */
-@Handler(supports = { Patient.class, Encounter.class, Obs.class, Cohort.class, Order.class }, order = 1 /* low order so this is run first */)
+@Handler(supports = {Patient.class, Encounter.class, Obs.class, Cohort.class, Order.class}, order = 1 /* low order so this is run first */)
 public class RequireVoidReasonVoidHandler implements VoidHandler<Voidable> {
-	
+
 	/**
 	 * Validates that the voidReason is non-null and non-empty for supported objects
 	 * 
@@ -43,10 +43,10 @@ public class RequireVoidReasonVoidHandler implements VoidHandler<Voidable> {
 	 */
 	@Override
 	public void handle(Voidable voidableObject, User voidingUser, Date voidedDate, String voidReason) {
-		
+
 		if (StringUtils.isBlank(voidReason)) {
 			throw new IllegalArgumentException("The 'reason' argument is required");
 		}
 	}
-	
+
 }

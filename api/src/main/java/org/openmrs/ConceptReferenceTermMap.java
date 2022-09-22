@@ -17,26 +17,26 @@ package org.openmrs;
  * @since 1.9
  */
 public class ConceptReferenceTermMap extends BaseConceptMap {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer conceptReferenceTermMapId;
-	
+
 	private ConceptReferenceTerm termA;
-	
+
 	private ConceptReferenceTerm termB;
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public ConceptReferenceTermMap() {
 	}
-	
+
 	/** constructor with concept reference term map id */
 	public ConceptReferenceTermMap(Integer conceptReferenceTermMapId) {
 		this.conceptReferenceTermMapId = conceptReferenceTermMapId;
 	}
-	
+
 	/**
 	 * Convenience constructor that takes the term to be mapped to and the type of the map
 	 *
@@ -47,49 +47,49 @@ public class ConceptReferenceTermMap extends BaseConceptMap {
 		this.termB = termB;
 		setConceptMapType(conceptMapType);
 	}
-	
+
 	/**
 	 * @return the conceptReferenceTermMapId
 	 */
 	public Integer getConceptReferenceTermMapId() {
 		return conceptReferenceTermMapId;
 	}
-	
+
 	/**
 	 * @param conceptReferenceTermMapId the conceptReferenceTermMapId to set
 	 */
 	public void setConceptReferenceTermMapId(Integer conceptReferenceTermMapId) {
 		this.conceptReferenceTermMapId = conceptReferenceTermMapId;
 	}
-	
+
 	/**
 	 * @return the termA
 	 */
 	public ConceptReferenceTerm getTermA() {
 		return termA;
 	}
-	
+
 	/**
 	 * @param termA the termA to set
 	 */
 	public void setTermA(ConceptReferenceTerm termA) {
 		this.termA = termA;
 	}
-	
+
 	/**
 	 * @return the termB
 	 */
 	public ConceptReferenceTerm getTermB() {
 		return termB;
 	}
-	
+
 	/**
 	 * @param termB the termB to set
 	 */
 	public void setTermB(ConceptReferenceTerm termB) {
 		this.termB = termB;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -97,7 +97,7 @@ public class ConceptReferenceTermMap extends BaseConceptMap {
 	public Integer getId() {
 		return getConceptReferenceTermMapId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -105,7 +105,7 @@ public class ConceptReferenceTermMap extends BaseConceptMap {
 	public void setId(Integer id) {
 		setConceptReferenceTermMapId(id);
 	}
-	
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -118,10 +118,10 @@ public class ConceptReferenceTermMap extends BaseConceptMap {
 		if (this.conceptReferenceTermMapId != null && rhs.conceptReferenceTermMapId != null) {
 			return this.conceptReferenceTermMapId.equals(rhs.conceptReferenceTermMapId);
 		}
-		
+
 		return this == obj;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -134,7 +134,7 @@ public class ConceptReferenceTermMap extends BaseConceptMap {
 		hash = hash + 31 * this.conceptReferenceTermMapId;
 		return hash;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -145,5 +145,5 @@ public class ConceptReferenceTermMap extends BaseConceptMap {
 		}
 		return conceptReferenceTermMapId.toString();
 	}
-	
+
 }

@@ -21,42 +21,42 @@ import org.springframework.validation.Errors;
  * Tests methods on the {@link RequireNameValidator} class.
  */
 public class RequireNameValidatorTest {
-	
+
 	/**
-	 * @see RequireNameValidator#validate(Object,Errors)
+	 * @see RequireNameValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfNameIsNullOrEmptyOrWhitespace() {
 		EncounterRole role = new EncounterRole();
 		role.setName(null);
 		role.setDescription(":(");
-		
+
 		Errors errors = new BindException(role, "type");
 		new RequireNameValidator().validate(role, errors);
 		assertTrue(errors.hasFieldErrors("name"));
-		
+
 		role.setName("");
 		errors = new BindException(role, "type");
 		new RequireNameValidator().validate(role, errors);
 		assertTrue(errors.hasFieldErrors("name"));
-		
+
 		role.setName(" ");
 		errors = new BindException(role, "type");
 		new RequireNameValidator().validate(role, errors);
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
-	 * @see RequireNameValidator#validate(Object,Errors)
+	 * @see RequireNameValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfNameHasProperValue() {
 		EncounterRole role = new EncounterRole();
 		role.setName("restraining");
-		
+
 		Errors errors = new BindException(role, "type");
 		new RequireNameValidator().validate(role, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
 }

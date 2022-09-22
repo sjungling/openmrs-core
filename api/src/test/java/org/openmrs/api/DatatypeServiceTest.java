@@ -22,9 +22,9 @@ import org.openmrs.customdatatype.datatype.LocationDatatype;
 import org.openmrs.test.jupiter.BaseContextSensitiveTest;
 
 public class DatatypeServiceTest extends BaseContextSensitiveTest {
-	
+
 	/**
-	 * @see DatatypeService#getHandler(CustomDatatype,String)
+	 * @see DatatypeService#getHandler(CustomDatatype, String)
 	 */
 	@Test
 	public void getHandler_shouldReturnAHandlerForTheSpecifiedDatatype() {
@@ -32,9 +32,9 @@ public class DatatypeServiceTest extends BaseContextSensitiveTest {
 		CustomDatatype dateDatatype = CustomDatatypeUtil.getDatatype(DateDatatype.class.getName(), null);
 		assertEquals(DateDatatypeHandler.class, service.getHandler(dateDatatype, null).getClass());
 	}
-	
+
 	/**
-	 * @see DatatypeService#getHandler(CustomDatatype,String)
+	 * @see DatatypeService#getHandler(CustomDatatype, String)
 	 */
 	@Test
 	public void getHandler_shouldReturnAHandlerForADatatypeThatExtendsAGenericSuperclass() {

@@ -27,9 +27,9 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
  * Tests for the {@link RequireVoidReasonSaveHandler} class.
  */
 public class RequiredReasonVoidSaveHandlerTest extends BaseContextSensitiveTest {
-	
+
 	/**
-	 * @see RequireVoidReasonSaveHandler#handle(Voidable,User,Date,String)
+	 * @see RequireVoidReasonSaveHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldThrowAPIExceptionIfPatientVoidReasonIsNull() {
@@ -38,9 +38,9 @@ public class RequiredReasonVoidSaveHandlerTest extends BaseContextSensitiveTest 
 		p.setVoidReason(null);
 		assertThrows(APIException.class, () -> Context.getPatientService().savePatient(p));
 	}
-	
+
 	/**
-	 * @see RequireVoidReasonSaveHandler#handle(Voidable,User,Date,String)
+	 * @see RequireVoidReasonSaveHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldThrowAPIExceptionIfEncounterVoidReasonIsEmpty() {
@@ -49,9 +49,9 @@ public class RequiredReasonVoidSaveHandlerTest extends BaseContextSensitiveTest 
 		e.setVoidReason("");
 		assertThrows(APIException.class, () -> Context.getEncounterService().saveEncounter(e));
 	}
-	
+
 	/**
-	 * @see RequireVoidReasonSaveHandler#handle(Voidable,User,Date,String)
+	 * @see RequireVoidReasonSaveHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldThrowAPIExceptionIfObsVoidReasonIsBlank() {
@@ -60,9 +60,9 @@ public class RequiredReasonVoidSaveHandlerTest extends BaseContextSensitiveTest 
 		e.setVoidReason("  ");
 		assertThrows(APIException.class, () -> Context.getEncounterService().saveEncounter(e));
 	}
-	
+
 	/**
-	 * @see RequireVoidReasonSaveHandler#handle(Voidable,User,Date,String)
+	 * @see RequireVoidReasonSaveHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotThrowExceptionIfVoidReasonIsNotBlank() {
@@ -71,9 +71,9 @@ public class RequiredReasonVoidSaveHandlerTest extends BaseContextSensitiveTest 
 		e.setVoidReason("Some Reason");
 		Context.getEncounterService().saveEncounter(e);
 	}
-	
+
 	/**
-	 * @see RequireVoidReasonSaveHandler#handle(Voidable,User,Date,String)
+	 * @see RequireVoidReasonSaveHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotThrowExceptionIfVoidReasonIsNullForUnsupportedTypes() {

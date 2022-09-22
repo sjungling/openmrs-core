@@ -34,7 +34,7 @@ public class DatabaseUtil {
 
 	private DatabaseUtil() {
 	}
-	
+
 	private static final Logger log = LoggerFactory.getLogger(DatabaseUtil.class);
 
 	public static final String ORDER_ENTRY_UPGRADE_SETTINGS_FILENAME = "order_entry_upgrade_settings.txt";
@@ -80,23 +80,23 @@ public class DatabaseUtil {
 		log.info("Set database driver class as " + connectionDriver);
 		return connectionDriver;
 	}
-	
+
 	/**
 	 * Executes the passed SQL query, enforcing select only if that parameter is set for given Session
 	 */
 	public static List<List<Object>> executeSQL(Session session, String sql, boolean selectOnly) throws DAOException {
 		sql = sql.trim();
 		boolean dataManipulation = checkQueryForManipulationCommands(sql, selectOnly);
-		
+
 		final List<List<Object>> result = new ArrayList<>();
 		final String query = sql;
 		final boolean sessionDataManipulation = dataManipulation;
-		
+
 		session.doWork(conn -> populateResultsFromSQLQuery(conn, query, sessionDataManipulation, result));
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * Executes the passed SQL query, enforcing select only if that parameter is set for given Connection
 	 */
@@ -107,25 +107,25 @@ public class DatabaseUtil {
 		populateResultsFromSQLQuery(conn, sql, dataManipulation, result);
 		return result;
 	}
-	
+
 	private static boolean checkQueryForManipulationCommands(String sql, boolean selectOnly) {
 		boolean dataManipulation = false;
-		
+
 		String sqlLower = sql.toLowerCase();
 		if (sqlLower.startsWith("insert") || sqlLower.startsWith("update") || sqlLower.startsWith("delete")
-		        || sqlLower.startsWith("alter") || sqlLower.startsWith("drop") || sqlLower.startsWith("create")
-		        || sqlLower.startsWith("rename")) {
+										|| sqlLower.startsWith("alter") || sqlLower.startsWith("drop") || sqlLower.startsWith("create")
+										|| sqlLower.startsWith("rename")) {
 			dataManipulation = true;
 		}
-		
+
 		if (selectOnly && dataManipulation) {
 			throw new IllegalArgumentException("Illegal command(s) found in query string");
 		}
 		return dataManipulation;
 	}
-	
+
 	private static void populateResultsFromSQLQuery(Connection conn, String sql, boolean dataManipulation,
-	        List<List<Object>> results) {
+									List<List<Object>> results) {
 		PreparedStatement ps = null;
 		try {
 			ps = conn.prepareStatement(sql);
@@ -136,10 +136,10 @@ public class DatabaseUtil {
 				results.add(row);
 			} else {
 				ResultSet resultSet = ps.executeQuery();
-				
+
 				ResultSetMetaData rmd = resultSet.getMetaData();
 				int columnCount = rmd.getColumnCount();
-				
+
 				while (resultSet.next()) {
 					List<Object> rowObjects = new ArrayList<>();
 					for (int x = 1; x <= columnCount; x++) {
@@ -164,7 +164,7 @@ public class DatabaseUtil {
 			}
 		}
 	}
-	
+
 	/**
 	 * Gets all unique values excluding nulls in the specified column and table
 	 *
@@ -175,17 +175,17 @@ public class DatabaseUtil {
 	 * @throws Exception
 	 */
 	public static <T> Set<T> getUniqueNonNullColumnValues(String columnName, String tableName, Class<T> type,
-	        Connection connection) throws Exception {
+									Connection connection) throws Exception {
 		Set<T> uniqueValues = new HashSet<>();
 		final String alias = "unique_values";
 		String select = "SELECT DISTINCT " + columnName + " AS " + alias + " FROM " + tableName + " WHERE " + columnName
-		        + " IS NOT NULL";
+										+ " IS NOT NULL";
 		List<List<Object>> rows = DatabaseUtil.executeSQL(connection, select, true);
 		for (List<Object> row : rows) {
 			//There can only be one column since we are selecting one
 			uniqueValues.add((T) row.get(0));
 		}
-		
+
 		return uniqueValues;
 	}
 }

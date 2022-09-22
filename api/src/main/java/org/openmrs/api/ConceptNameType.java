@@ -33,7 +33,7 @@ import org.openmrs.ConceptName;
  * @since Version 1.7
  */
 public enum ConceptNameType {
-	
+
 	FULLY_SPECIFIED,
 	SHORT,
 	INDEX_TERM

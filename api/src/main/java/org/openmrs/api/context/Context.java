@@ -195,13 +195,13 @@ public class Context {
 			authenticationScheme = Context.getServiceContext().getApplicationContext().getBean(AuthenticationScheme.class); // manual autowiring (from a module)
 			log.info("An authentication scheme override was provided. Using this one in place of the OpenMRS default authentication scheme.");
 		}
-		catch(NoUniqueBeanDefinitionException e) {
+		catch (NoUniqueBeanDefinitionException e) {
 			log.error("Multiple authentication schemes overrides are being provided, this is currently not supported. Sticking to OpenMRS default authentication scheme.");
 		}
-		catch(NoSuchBeanDefinitionException e) {
+		catch (NoSuchBeanDefinitionException e) {
 			log.debug("No authentication scheme override was provided. Sticking to OpenMRS default authentication scheme.");
 		}
-		catch(BeansException e){
+		catch (BeansException e) {
 			log.error("Fatal error encountered when injecting the authentication scheme override. Sticking to OpenMRS default authentication scheme.");
 		}
 	}
@@ -230,7 +230,7 @@ public class Context {
 	public static void setUserContext(UserContext ctx) {
 		log.trace("Setting user context {}", ctx);
 
-		Object[] arr = new Object[] { ctx };
+		Object[] arr = new Object[]{ctx};
 		userContextHolder.set(arr);
 	}
 
@@ -257,7 +257,7 @@ public class Context {
 		if (arr == null) {
 			log.trace("userContext is null.");
 			throw new APIException(
-					"A user context must first be passed to setUserContext()...use Context.openSession() (and closeSession() to prevent memory leaks!) before using the API");
+											"A user context must first be passed to setUserContext()...use Context.openSession() (and closeSession() to prevent memory leaks!) before using the API");
 		}
 		return (UserContext) userContextHolder.get()[0];
 	}
@@ -336,7 +336,7 @@ public class Context {
 
 		if (Daemon.isDaemonThread()) {
 			log.error("Authentication attempted while operating on a "
-					+ "daemon thread, authenticating is not necessary or allowed");
+											+ "daemon thread, authenticating is not necessary or allowed");
 			return new BasicAuthenticated(Daemon.getDaemonThreadUser(), "No auth scheme used by Context - Daemon user is always authenticated.");
 		}
 
@@ -463,7 +463,7 @@ public class Context {
 	 * 
 	 * @since 2.2
 	 */
-	public static ConditionService getConditionService(){
+	public static ConditionService getConditionService() {
 		return getServiceContext().getConditionService();
 	}
 
@@ -472,7 +472,7 @@ public class Context {
 	 *
 	 * @since 2.2
 	 */
-	public static DiagnosisService getDiagnosisService(){
+	public static DiagnosisService getDiagnosisService() {
 		return getServiceContext().getDiagnosisService();
 	}
 
@@ -480,7 +480,7 @@ public class Context {
 	 * @return MedicationDispense-related service
 	 * @since 2.6.0
 	 */
-	public static MedicationDispenseService getMedicationDispenseService(){
+	public static MedicationDispenseService getMedicationDispenseService() {
 		return getServiceContext().getMedicationDispenseService();
 	}
 
@@ -569,7 +569,7 @@ public class Context {
 	public static ProgramWorkflowService getProgramWorkflowService() {
 		return getServiceContext().getProgramWorkflowService();
 	}
-	
+
 	/**
 	 * Get the message service.
 	 *
@@ -649,8 +649,8 @@ public class Context {
 						@Override
 						public PasswordAuthentication getPasswordAuthentication() {
 							return new PasswordAuthentication(
-								ConfigUtil.getProperty("mail.user"),
-								ConfigUtil.getProperty("mail.password")
+															ConfigUtil.getProperty("mail.user"),
+															ConfigUtil.getProperty("mail.password")
 							);
 						}
 					};
@@ -755,7 +755,7 @@ public class Context {
 			String errorMessage;
 			if (StringUtils.isNotBlank(privilege)) {
 				errorMessage = Context.getMessageSourceService().getMessage("error.privilegesRequired",
-						new Object[] { privilege }, null);
+												new Object[]{privilege}, null);
 			} else {
 				//Should we even be here if the privilege is blank?
 				errorMessage = Context.getMessageSourceService().getMessage("error.privilegesRequiredNoArgs");
@@ -910,7 +910,7 @@ public class Context {
 	 *      the required question/datatypes
 	 */
 	public static synchronized void startup(Properties props) throws DatabaseUpdateException, InputRequiredException,
-	ModuleMustStartException {
+									ModuleMustStartException {
 		// do any context database specific startup
 		getContextDAO().startup(props);
 
@@ -954,7 +954,7 @@ public class Context {
 	 *      the required question/datatypes
 	 */
 	public static synchronized void startup(String url, String username, String password, Properties properties)
-			throws DatabaseUpdateException, InputRequiredException, ModuleMustStartException {
+									throws DatabaseUpdateException, InputRequiredException, ModuleMustStartException {
 		if (properties == null) {
 			properties = new Properties();
 		}
@@ -1181,10 +1181,10 @@ public class Context {
 		ValidateUtil.setDisableValidation(disableValidation);
 
 		PersonName.setFormat(Context.getAdministrationService().getGlobalProperty(
-				OpenmrsConstants.GLOBAL_PROPERTY_LAYOUT_NAME_FORMAT));
+										OpenmrsConstants.GLOBAL_PROPERTY_LAYOUT_NAME_FORMAT));
 
 		Allergen.setOtherNonCodedConceptUuid(Context.getAdministrationService().getGlobalProperty(
-				OpenmrsConstants.GP_ALLERGEN_OTHER_NON_CODED_UUID));
+										OpenmrsConstants.GP_ALLERGEN_OTHER_NON_CODED_UUID));
 	}
 
 	/**
@@ -1215,7 +1215,7 @@ public class Context {
 				DatabaseUpdater.executeChangelog();
 			} else {
 				throw new DatabaseUpdateException(
-						"Database updates are required.  Call Context.updateDatabase() before .startup() to continue.");
+												"Database updates are required.  Call Context.updateDatabase() before .startup() to continue.");
 			}
 		}
 	}

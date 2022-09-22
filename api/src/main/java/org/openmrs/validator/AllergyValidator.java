@@ -24,20 +24,20 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component("allergyValidator")
-@Handler(supports = { Allergy.class }, order = 50)
+@Handler(supports = {Allergy.class}, order = 50)
 public class AllergyValidator implements Validator {
-	
+
 	@Autowired
 	private MessageSourceService messageSourceService;
-	
+
 	@Autowired
 	private PatientService patientService;
-	
+
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return Allergy.class.isAssignableFrom(clazz);
 	}
-	
+
 	/**
 	 * @see Validator#validate(Object, org.springframework.validation.Errors)
 	 * @param target
@@ -55,15 +55,15 @@ public class AllergyValidator implements Validator {
 	 */
 	@Override
 	public void validate(Object target, Errors errors) {
-		
+
 		if (target == null) {
 			throw new IllegalArgumentException("Allergy should not be null");
 		}
-		
+
 		ValidationUtils.rejectIfEmpty(errors, "patient", "allergyapi.patient.required");
-		
+
 		Allergy allergy = (Allergy) target;
-		
+
 		if (allergy.getReactionNonCoded() != null) {
 			if (NumberUtils.isParsable(allergy.getReactionNonCoded())) {
 				errors.rejectValue("reactionNonCoded", "error.allergyapi.allergy.ReactionNonCoded.cannotBeNumeric");
@@ -76,13 +76,13 @@ public class AllergyValidator implements Validator {
 			if (allergen.getAllergenType() == null) {
 				errors.rejectValue("allergen", "allergyapi.allergenType.required");
 			}
-			
+
 			if (allergen.getCodedAllergen() == null && StringUtils.isBlank(allergen.getNonCodedAllergen())) {
 				errors.rejectValue("allergen", "allergyapi.allergen.codedOrNonCodedAllergen.required");
 			} else if (!allergen.isCoded() && StringUtils.isBlank(allergen.getNonCodedAllergen())) {
 				errors.rejectValue("allergen", "allergyapi.allergen.nonCodedAllergen.required");
 			}
-			
+
 			if (allergy.getAllergyId() == null && allergy.getPatient() != null) {
 				Allergies existingAllergies = patientService.getAllergies(allergy.getPatient());
 				if (existingAllergies.containsAllergen(allergy)) {
@@ -91,7 +91,7 @@ public class AllergyValidator implements Validator {
 					if (key.equals(name)) {
 						name = allergen.toString();
 					}
-					errors.rejectValue("allergen", "allergyapi.message.duplicateAllergen", new Object[] { name }, null);
+					errors.rejectValue("allergen", "allergyapi.message.duplicateAllergen", new Object[]{name}, null);
 				}
 			}
 		}

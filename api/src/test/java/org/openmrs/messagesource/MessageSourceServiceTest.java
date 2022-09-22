@@ -25,7 +25,7 @@ import org.springframework.validation.MapBindingResult;
  *
  */
 public class MessageSourceServiceTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * MessageSourceServiceImpl.getMessage()should return last error code if no localization found
 	 *

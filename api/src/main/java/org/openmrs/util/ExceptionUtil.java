@@ -20,7 +20,7 @@ public class ExceptionUtil {
 
 	private ExceptionUtil() {
 	}
-	
+
 	/**
 	 * If any cause in the exception chain is an instance of causeType, then rethrow that exception 
 	 *
@@ -34,7 +34,7 @@ public class ExceptionUtil {
 			throw (RuntimeException) ExceptionUtils.getThrowables(thrown)[index];
 		}
 	}
-	
+
 	/**
 	 * If any cause in the given exception chain is an APIAuthenticationException, rethrow that 
 	 *
@@ -43,5 +43,5 @@ public class ExceptionUtil {
 	public static void rethrowAPIAuthenticationException(Throwable thrown) {
 		rethrowIfCause(thrown, APIAuthenticationException.class);
 	}
-	
+
 }

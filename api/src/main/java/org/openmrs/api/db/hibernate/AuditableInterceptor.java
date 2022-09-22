@@ -40,11 +40,11 @@ import org.slf4j.LoggerFactory;
  */
 
 public class AuditableInterceptor extends EmptyInterceptor {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(AuditableInterceptor.class);
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * This method is only called when inserting new objects.
 	 * <strong>Should</strong> return true if dateCreated was null
@@ -59,7 +59,7 @@ public class AuditableInterceptor extends EmptyInterceptor {
 	public boolean onSave(Object entity, Serializable id, Object[] entityCurrentState, String[] propertyNames, Type[] types) {
 		return setCreatorAndDateCreatedIfNull(entity, entityCurrentState, propertyNames);
 	}
-	
+
 	/**
 	 * This class method is only called when flushing an updated dirty object, not inserting objects
 	 *
@@ -74,35 +74,35 @@ public class AuditableInterceptor extends EmptyInterceptor {
 	
 	@Override
 	public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState,
-	        String[] propertyNames, Type[] types) throws CallbackException {
+									String[] propertyNames, Type[] types) throws CallbackException {
 		boolean objectWasChanged;
-		
+
 		objectWasChanged = setCreatorAndDateCreatedIfNull(entity, currentState, propertyNames);
-		
+
 		if (entity instanceof Auditable && propertyNames != null) {
 			log.debug("Setting changed by fields on {}", entity.getClass());
-			
+
 			Map<String, Object> propertyValues = getPropertyValuesToUpdate();
 			objectWasChanged = changeProperties(currentState, propertyNames, objectWasChanged, propertyValues, false);
 		}
 		return objectWasChanged;
 	}
-	
+
 	@Override
 	public void onCollectionRecreate(Object collection, Serializable key) throws CallbackException {
 		handleCollectionChange(collection);
 	}
-	
+
 	@Override
 	public void onCollectionUpdate(Object collection, Serializable key) throws CallbackException {
 		handleCollectionChange(collection);
 	}
-	
+
 	@Override
 	public void onCollectionRemove(Object collection, Serializable key) throws CallbackException {
 		handleCollectionChange(collection);
 	}
-	
+
 	/**
 	 * Sets the creator and dateCreated fields to the current user and the current time if they are
 	 * null.
@@ -115,21 +115,21 @@ public class AuditableInterceptor extends EmptyInterceptor {
 	 * @return true if creator and dateCreated were changed
 	 */
 	private boolean setCreatorAndDateCreatedIfNull(Object entity, Object[] currentState, String[] propertyNames) {
-		
+
 		boolean objectWasChanged = false;
-		
+
 		if (entity instanceof OpenmrsObject) {
 			log.debug("Setting creator and dateCreated on {}", entity);
-			
+
 			Map<String, Object> propertyValues = getPropertyValuesToSave();
 			objectWasChanged = changeProperties(currentState, propertyNames, objectWasChanged, propertyValues, true);
 		}
 		return objectWasChanged;
 	}
-	
+
 	private boolean changeProperties(Object[] currentState, String[] propertyNames, boolean objectWasChanged,
-	        Map<String, Object> propertyValues, Boolean setNullOnly) {
-		
+									Map<String, Object> propertyValues, Boolean setNullOnly) {
+
 		for (Map.Entry<String, Object> e : propertyValues.entrySet()) {
 			if (changePropertyValue(currentState, propertyNames, e.getKey(), e.getValue(), setNullOnly)) {
 				objectWasChanged = true;
@@ -137,7 +137,7 @@ public class AuditableInterceptor extends EmptyInterceptor {
 		}
 		return objectWasChanged;
 	}
-	
+
 	private Map<String, Object> getPropertyValuesToSave() {
 		Map<String, Object> propertyValues = new HashMap<>();
 		propertyValues.put("creator", Context.getAuthenticatedUser());
@@ -146,7 +146,7 @@ public class AuditableInterceptor extends EmptyInterceptor {
 		propertyValues.put("personDateCreated", new Date());
 		return propertyValues;
 	}
-	
+
 	private Map<String, Object> getPropertyValuesToUpdate() {
 		Map<String, Object> propertyValues = new HashMap<>();
 		propertyValues.put("changedBy", Context.getAuthenticatedUser());
@@ -155,7 +155,7 @@ public class AuditableInterceptor extends EmptyInterceptor {
 		propertyValues.put("personDateChanged", new Date());
 		return propertyValues;
 	}
-	
+
 	/**
 	 * Sets the property to the given value.
 	 *
@@ -167,24 +167,24 @@ public class AuditableInterceptor extends EmptyInterceptor {
 	 * @return true if the property was changed
 	 */
 	private boolean changePropertyValue(Object[] currentState, String[] propertyNames, String propertyToSet, Object value,
-	        boolean setNullOnly) {
-		
+									boolean setNullOnly) {
+
 		int index = Arrays.asList(propertyNames).indexOf(propertyToSet);
-		
+
 		if (value == null) {
 			return false;
 		}
-		
+
 		if (index >= 0 && (currentState[index] == null || !setNullOnly) && !value.equals(currentState[index])) {
 			currentState[index] = value;
 			return true;
 		}
 		return false;
 	}
-	
+
 	private void handleCollectionChange(Object collection) {
 		if (collection instanceof PersistentSet) {
-			PersistentSet persistentCollection = (PersistentSet) collection; 
+			PersistentSet persistentCollection = (PersistentSet) collection;
 			if ("org.openmrs.User.roles".equals(persistentCollection.getRole())) {
 				Object owner = persistentCollection.getOwner();
 				if (owner instanceof User) {

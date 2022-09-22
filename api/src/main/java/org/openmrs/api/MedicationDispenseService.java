@@ -27,7 +27,7 @@ public interface MedicationDispenseService extends OpenmrsService {
 	 * @param medicationDispenseId the id of the MedicationDispense to retrieve
 	 * @return the MedicationDispense with the given id, or null if none exists
 	 */
-	@Authorized({ PrivilegeConstants.GET_MEDICATION_DISPENSE })
+	@Authorized({PrivilegeConstants.GET_MEDICATION_DISPENSE})
 	MedicationDispense getMedicationDispense(Integer medicationDispenseId);
 
 	/**
@@ -36,22 +36,22 @@ public interface MedicationDispenseService extends OpenmrsService {
 	 * @param uuid - uuid of the MedicationDispense to be returned
 	 * @return the MedicationDispense
 	 */
-	@Authorized({ PrivilegeConstants.GET_MEDICATION_DISPENSE })
+	@Authorized({PrivilegeConstants.GET_MEDICATION_DISPENSE})
 	MedicationDispense getMedicationDispenseByUuid(String uuid);
 
-    /**
-	 * Gets all MedicationDispense results that match the given criteria
-	 * @param criteria - the criteria for the returned MedicationDispense results
-	 * @return a list of MedicationDispenses
-	 */
-	@Authorized({ PrivilegeConstants.GET_MEDICATION_DISPENSE })
+	/**
+		* Gets all MedicationDispense results that match the given criteria
+		* @param criteria - the criteria for the returned MedicationDispense results
+		* @return a list of MedicationDispenses
+		*/
+	@Authorized({PrivilegeConstants.GET_MEDICATION_DISPENSE})
 	List<MedicationDispense> getMedicationDispenseByCriteria(MedicationDispenseCriteria criteria);
 
 	/**
 	 * Saves a MedicationDispense
 	 * @param medicationDispense - the MedicationDispense to be saved
 	 */
-	@Authorized({ PrivilegeConstants.EDIT_MEDICATION_DISPENSE })
+	@Authorized({PrivilegeConstants.EDIT_MEDICATION_DISPENSE})
 	MedicationDispense saveMedicationDispense(MedicationDispense medicationDispense);
 
 	/**
@@ -59,7 +59,7 @@ public interface MedicationDispenseService extends OpenmrsService {
 	 * @param medicationDispense the MedicationDispense to be voided
 	 * @param reason the reason for voiding the MedicationDispense
 	 */
-	@Authorized({ PrivilegeConstants.EDIT_MEDICATION_DISPENSE })
+	@Authorized({PrivilegeConstants.EDIT_MEDICATION_DISPENSE})
 	MedicationDispense voidMedicationDispense(MedicationDispense medicationDispense, String reason);
 
 	/**

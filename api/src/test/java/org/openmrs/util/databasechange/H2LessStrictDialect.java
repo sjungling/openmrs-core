@@ -17,18 +17,18 @@ import org.hibernate.dialect.H2Dialect;
  * custom implementation for the purpose of validation in {@link DatabaseUpgradeTestUtil}
  */
 public class H2LessStrictDialect extends H2Dialect {
-	
+
 	public H2LessStrictDialect() {
 		super();
-		
+
 		// H2Dialect incorrectly sets these to synonyms in H2
 		//
 		registerColumnType(Types.BIGINT, "integer");
-		
+
 		// Liquibase incorrectly creates varchar for clob in H2 so we just tell Hibernate it's ok
 		//
 		registerColumnType(Types.CLOB, "varchar");
-		
+
 		// H2 maps 'FLOAT' to 'double' as per http://www.h2database.com/html/datatypes.html#double_type
 		//
 		// Without mapping 'float' to 'double' the validation of Hibernate mappings fails:
@@ -37,15 +37,15 @@ public class H2LessStrictDialect extends H2Dialect {
 		//     found [double (Types#DOUBLE)], but expecting [float (Types#FLOAT)]
 		//
 		registerColumnType(Types.FLOAT, "double");
-		
+
 		//person.birthdate is not a timestamp, but date in db
 		//
 		registerColumnType(Types.TIMESTAMP, "date");
-		
+
 		// UUIDs are created as char(38), but H2Dialect maps them to varchars
 		//
 		registerColumnType(Types.VARCHAR, 38, "char($1)");
-		
+
 		// These mappings are required for "long" fields of type java.lang.String that are declared as 'text' 
 		// in Hibernate change sets.
 		//

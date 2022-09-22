@@ -18,9 +18,9 @@ import org.openmrs.attribute.BaseAttribute;
  * @since 1.9
  */
 public class LocationAttribute extends BaseAttribute<LocationAttributeType, Location> implements Attribute<LocationAttributeType, Location> {
-	
+
 	private Integer locationAttributeId;
-	
+
 	// BaseAttribute<Location> has an "owner" property of type Location, which we re-expose as "location"
 	
 	/**
@@ -29,28 +29,28 @@ public class LocationAttribute extends BaseAttribute<LocationAttributeType, Loca
 	public Integer getLocationAttributeId() {
 		return locationAttributeId;
 	}
-	
+
 	/**
 	 * @param locationAttributeId the locationAttributeId to set
 	 */
 	public void setLocationAttributeId(Integer locationAttributeId) {
 		this.locationAttributeId = locationAttributeId;
 	}
-	
+
 	/**
 	 * @return the location
 	 */
 	public Location getLocation() {
 		return getOwner();
 	}
-	
+
 	/**
 	 * @param location the location to set
 	 */
 	public void setLocation(Location location) {
 		setOwner(location);
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -58,7 +58,7 @@ public class LocationAttribute extends BaseAttribute<LocationAttributeType, Loca
 	public Integer getId() {
 		return getLocationAttributeId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -66,5 +66,5 @@ public class LocationAttribute extends BaseAttribute<LocationAttributeType, Loca
 	public void setId(Integer id) {
 		setLocationAttributeId(id);
 	}
-	
+
 }

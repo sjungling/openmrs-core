@@ -27,7 +27,7 @@ import org.openmrs.aop.RequiredDataAdvice;
  */
 @Handler(supports = Person.class)
 public class PersonUnvoidHandler implements UnvoidHandler<Person> {
-	
+
 	/**
 	 * Called around every unvoid* method to set everything to null.<br>
 	 * <br>
@@ -43,11 +43,11 @@ public class PersonUnvoidHandler implements UnvoidHandler<Person> {
 	 */
 	@Override
 	public void handle(Person person, User unvoidingUser, Date origParentVoidedDate, String unused) {
-		
+
 		// only operate on voided objects
 		if (person.getPersonVoided()
-		        && (origParentVoidedDate == null || origParentVoidedDate.equals(person.getPersonDateVoided()))) {
-			
+										&& (origParentVoidedDate == null || origParentVoidedDate.equals(person.getPersonDateVoided()))) {
+
 			// only unvoid objects that were voided at the same time as the parent object
 			person.setPersonVoided(false);
 			person.setPersonVoidedBy(null);
@@ -55,5 +55,5 @@ public class PersonUnvoidHandler implements UnvoidHandler<Person> {
 			person.setPersonVoidReason(null);
 		}
 	}
-	
+
 }

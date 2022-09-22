@@ -27,45 +27,45 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
  * Tests for the {@link RequireVoidReasonVoidHandler} class.
  */
 public class RequireVoidReasonVoidHandlerTest extends BaseContextSensitiveTest {
-	
+
 	/**
-	 * @see RequireVoidReasonVoidHandler#handle(Voidable,User,Date,String)
+	 * @see RequireVoidReasonVoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldThrowIllegalArgumentExceptionIfPatientVoidReasonIsNull() {
 		Patient p = Context.getPatientService().getPatient(2);
 		assertThrows(IllegalArgumentException.class, () -> Context.getPatientService().voidPatient(p, null));
 	}
-	
+
 	/**
-	 * @see RequireVoidReasonVoidHandler#handle(Voidable,User,Date,String)
+	 * @see RequireVoidReasonVoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldThrowIllegalArgumentExceptionIfEncounterVoidReasonIsEmpty() {
 		Encounter e = Context.getEncounterService().getEncounter(3);
 		assertThrows(IllegalArgumentException.class, () -> Context.getEncounterService().voidEncounter(e, ""));
 	}
-	
+
 	/**
-	 * @see RequireVoidReasonVoidHandler#handle(Voidable,User,Date,String)
+	 * @see RequireVoidReasonVoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldThrowIllegalArgumentExceptionIfObsVoidReasonIsBlank() {
 		Obs o = Context.getObsService().getObs(7);
 		assertThrows(IllegalArgumentException.class, () -> Context.getObsService().voidObs(o, "  "));
 	}
-	
+
 	/**
-	 * @see RequireVoidReasonVoidHandler#handle(Voidable,User,Date,String)
+	 * @see RequireVoidReasonVoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotThrowExceptionIfVoidReasonIsNotBlank() {
 		Obs o = Context.getObsService().getObs(7);
 		Context.getObsService().voidObs(o, "Some Reason");
 	}
-	
+
 	/**
-	 * @see RequireVoidReasonVoidHandler#handle(Voidable,User,Date,String)
+	 * @see RequireVoidReasonVoidHandler#handle(Voidable, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotThrowExceptionIfVoidReasonIsNullForUnsupportedTypes() {

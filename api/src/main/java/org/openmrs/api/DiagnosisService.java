@@ -38,7 +38,7 @@ public interface DiagnosisService extends OpenmrsService {
 	 * @param diagnosis - the diagnosis to be saved
 	 * @return the diagnosis
 	 */
-	@Authorized({ PrivilegeConstants.EDIT_DIAGNOSES })
+	@Authorized({PrivilegeConstants.EDIT_DIAGNOSES})
 	Diagnosis save(Diagnosis diagnosis);
 
 	/**
@@ -48,7 +48,7 @@ public interface DiagnosisService extends OpenmrsService {
 	 * @param voidReason - the reason for voiding the diagnosis
 	 * @return the diagnosis that was voided
 	 */
-	@Authorized({ PrivilegeConstants.EDIT_DIAGNOSES })
+	@Authorized({PrivilegeConstants.EDIT_DIAGNOSES})
 	Diagnosis voidDiagnosis(Diagnosis diagnosis, String voidReason);
 
 	/**
@@ -57,7 +57,7 @@ public interface DiagnosisService extends OpenmrsService {
 	 * @param uuid - uuid of the diagnosis to be returned
 	 * @return diagnosis matching the given uuid
 	 */
-	@Authorized({ PrivilegeConstants.GET_DIAGNOSES })
+	@Authorized({PrivilegeConstants.GET_DIAGNOSES})
 	Diagnosis getDiagnosisByUuid(String uuid);
 
 	/**
@@ -67,7 +67,7 @@ public interface DiagnosisService extends OpenmrsService {
 	 * @param fromDate the date used to filter diagnosis which happened from this date and later
 	 * @return the list of diagnoses for the given patient and starting from the given date
 	 */
-	@Authorized({ PrivilegeConstants.GET_DIAGNOSES })
+	@Authorized({PrivilegeConstants.GET_DIAGNOSES})
 	List<Diagnosis> getDiagnoses(Patient patient, Date fromDate);
 
 	/**
@@ -80,9 +80,9 @@ public interface DiagnosisService extends OpenmrsService {
 	 * 
 	 * @since 2.5.0
 	 */
-	@Authorized({ PrivilegeConstants.GET_DIAGNOSES })
+	@Authorized({PrivilegeConstants.GET_DIAGNOSES})
 	List<Diagnosis> getDiagnosesByEncounter(Encounter encounter, boolean primaryOnly, boolean confirmedOnly);
-	
+
 	/**
 	 * Gets diagnoses for a Visit.
 	 *
@@ -93,7 +93,7 @@ public interface DiagnosisService extends OpenmrsService {
 	 * 
 	 * @since 2.5.0
 	 */
-	@Authorized({ PrivilegeConstants.GET_DIAGNOSES })
+	@Authorized({PrivilegeConstants.GET_DIAGNOSES})
 	List<Diagnosis> getDiagnosesByVisit(Visit visit, boolean primaryOnly, boolean confirmedOnly);
 
 
@@ -124,7 +124,7 @@ public interface DiagnosisService extends OpenmrsService {
 	 * @param diagnosisId - id of the diagnosis to be returned
 	 * @return diagnosis matching the given id
 	 */
-	@Authorized({ PrivilegeConstants.GET_DIAGNOSES })
+	@Authorized({PrivilegeConstants.GET_DIAGNOSES})
 	Diagnosis getDiagnosis(Integer diagnosisId);
 
 	/**

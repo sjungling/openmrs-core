@@ -68,7 +68,7 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	private static DocumentBuilderFactory documentBuilderFactory;
 
 	private static DocumentBuilder documentBuilder;
-	
+
 	@TempDir
 	public Path temporaryFolder;
 
@@ -115,12 +115,12 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parseFromInputstream_shouldParseValidXmlConfig() throws IOException {
 
 		Document config = new ModuleConfigXmlBuilder(documentBuilder)
-			.withModuleRoot()
-			.withConfigVersion("1.6")
-			.withModuleName("Reporting")
-			.withModuleId("reporting")
-			.withPackage("org.openmrs.module.reporting")
-			.build();
+										.withModuleRoot()
+										.withConfigVersion("1.6")
+										.withModuleName("Reporting")
+										.withModuleId("reporting")
+										.withPackage("org.openmrs.module.reporting")
+										.build();
 
 		File moduleFile = writeConfigXmlToFile(config);
 		InputStream inputStream = new FileInputStream(moduleFile);
@@ -139,12 +139,12 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 		whenGettingMessageFromMessageSourceServiceWithKeyReturnSameKey(messageKey);
 
 		Document config = new ModuleConfigXmlBuilder(documentBuilder)
-			.withModuleRoot()
-			.withConfigVersion("1.6")
-			.withModuleName("Reporting")
-			.withModuleId("reporting")
-			.withPackage("org.openmrs.module.reporting")
-			.build();
+										.withModuleRoot()
+										.withConfigVersion("1.6")
+										.withModuleName("Reporting")
+										.withModuleId("reporting")
+										.withPackage("org.openmrs.module.reporting")
+										.build();
 
 		File moduleFile = writeConfigXmlToFile(config);
 		InputStream inputStream = new FileInputStream(moduleFile);
@@ -221,9 +221,9 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldFailIfModuleHasConfigWithNoModuleName() throws Exception {
 
 		Document config = new ModuleConfigXmlBuilder(documentBuilder)
-			.withModuleRoot()
-			.withConfigVersion("1.6")
-			.build();
+										.withModuleRoot()
+										.withConfigVersion("1.6")
+										.build();
 
 		String messageKey = "Module.error.nameCannotBeEmpty";
 		whenGettingMessageFromMessageSourceServiceWithKeyReturnSameKey(messageKey);
@@ -235,10 +235,10 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldFailIfModuleHasConfigWithEmptyModuleName() throws Exception {
 
 		Document config = new ModuleConfigXmlBuilder(documentBuilder)
-			.withModuleRoot()
-			.withConfigVersion("1.6")
-			.withModuleName("  ")
-			.build();
+										.withModuleRoot()
+										.withConfigVersion("1.6")
+										.withModuleName("  ")
+										.build();
 
 		String messageKey = "Module.error.nameCannotBeEmpty";
 		whenGettingMessageFromMessageSourceServiceWithKeyReturnSameKey(messageKey);
@@ -250,10 +250,10 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldFailIfModuleHasConfigWithNoModuleId() throws Exception {
 
 		Document config = new ModuleConfigXmlBuilder(documentBuilder)
-			.withModuleRoot()
-			.withConfigVersion("1.6")
-			.withModuleName("report")
-			.build();
+										.withModuleRoot()
+										.withConfigVersion("1.6")
+										.withModuleName("report")
+										.build();
 
 		String messageKey = "Module.error.idCannotBeEmpty";
 		whenGettingMessageFromMessageSourceServiceWithKeyReturnSameKey(messageKey);
@@ -265,11 +265,11 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldFailIfModuleHasConfigWithEmptyModuleId() throws Exception {
 
 		Document config = new ModuleConfigXmlBuilder(documentBuilder)
-			.withModuleRoot()
-			.withConfigVersion("1.6")
-			.withModuleName("Reporting")
-			.withModuleId("   ")
-			.build();
+										.withModuleRoot()
+										.withConfigVersion("1.6")
+										.withModuleName("Reporting")
+										.withModuleId("   ")
+										.build();
 
 		String messageKey = "Module.error.idCannotBeEmpty";
 		whenGettingMessageFromMessageSourceServiceWithKeyReturnSameKey(messageKey);
@@ -281,11 +281,11 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldFailIfModuleHasConfigWithNoPackageName() throws Exception {
 
 		Document config = new ModuleConfigXmlBuilder(documentBuilder)
-			.withModuleRoot()
-			.withConfigVersion("1.6")
-			.withModuleName("Reporting")
-			.withModuleId("reporting")
-			.build();
+										.withModuleRoot()
+										.withConfigVersion("1.6")
+										.withModuleName("Reporting")
+										.withModuleId("reporting")
+										.build();
 
 		String messageKey = "Module.error.packageCannotBeEmpty";
 		whenGettingMessageFromMessageSourceServiceWithKeyReturnSameKey(messageKey);
@@ -297,12 +297,12 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldFailIfModuleHasConfigWithEmptyPackageName() throws Exception {
 
 		Document config = new ModuleConfigXmlBuilder(documentBuilder)
-			.withModuleRoot()
-			.withConfigVersion("1.6")
-			.withModuleName("Reporting")
-			.withModuleId("reporting")
-			.withPackage("  ")
-			.build();
+										.withModuleRoot()
+										.withConfigVersion("1.6")
+										.withModuleName("Reporting")
+										.withModuleId("reporting")
+										.withPackage("  ")
+										.build();
 
 		String messageKey = "Module.error.packageCannotBeEmpty";
 		whenGettingMessageFromMessageSourceServiceWithKeyReturnSameKey(messageKey);
@@ -314,18 +314,18 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseValidXmlConfig() throws Exception {
 
 		Document config = new ModuleConfigXmlBuilder(documentBuilder)
-			.withModuleRoot()
-			.withConfigVersion("1.6")
-			.withModuleName("Reporting")
-			.withModuleId("reporting")
-			.withPackage("org.openmrs.module.reporting")
-			.withTextNode("author", "Community")
-			.withTextNode("description", "Reporting everything")
-			.withTextNode("activator", "org.openmrs.module.ReportingModuleActivator")
-			.withTextNode("require_database_version", "0.9.5")
-			.withTextNode("require_version", "1.11.3 - 1.11.*, 1.12")
-			.withTextNode("updateURL", "https://dev.openmrs.org/modules/download/reporting/update.rdf")
-			.build();
+										.withModuleRoot()
+										.withConfigVersion("1.6")
+										.withModuleName("Reporting")
+										.withModuleId("reporting")
+										.withPackage("org.openmrs.module.reporting")
+										.withTextNode("author", "Community")
+										.withTextNode("description", "Reporting everything")
+										.withTextNode("activator", "org.openmrs.module.ReportingModuleActivator")
+										.withTextNode("require_database_version", "0.9.5")
+										.withTextNode("require_version", "1.11.3 - 1.11.*, 1.12")
+										.withTextNode("updateURL", "https://dev.openmrs.org/modules/download/reporting/update.rdf")
+										.build();
 
 		File moduleFile = writeConfigXmlToFile(config);
 		Module module = parser.parse(moduleFile);
@@ -352,19 +352,19 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 
 		String configVersion = "1.6";
 		Document config = new ModuleConfigXmlBuilder(documentBuilder)
-			.withDoctype(configVersion)
-			.withModuleRoot()
-			.withConfigVersion(configVersion)
-			.withModuleName("Reporting")
-			.withModuleId("reporting")
-			.withPackage("org.openmrs.module.reporting")
-			.withTextNode("author", "Community")
-			.withTextNode("description", "Reporting everything")
-			.withTextNode("activator", "org.openmrs.module.ReportingModuleActivator")
-			.withTextNode("require_database_version", "0.9.5")
-			.withTextNode("require_version", "1.11.3 - 1.11.*, 1.12")
-			.withTextNode("updateURL", "https://dev.openmrs.org/modules/download/reporting/update.rdf")
-			.build();
+										.withDoctype(configVersion)
+										.withModuleRoot()
+										.withConfigVersion(configVersion)
+										.withModuleName("Reporting")
+										.withModuleId("reporting")
+										.withPackage("org.openmrs.module.reporting")
+										.withTextNode("author", "Community")
+										.withTextNode("description", "Reporting everything")
+										.withTextNode("activator", "org.openmrs.module.ReportingModuleActivator")
+										.withTextNode("require_database_version", "0.9.5")
+										.withTextNode("require_version", "1.11.3 - 1.11.*, 1.12")
+										.withTextNode("updateURL", "https://dev.openmrs.org/modules/download/reporting/update.rdf")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -375,13 +375,13 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseValidXmlConfigAndEmptyRequireModules() throws IOException {
 
 		Document config = new ModuleConfigXmlBuilder(documentBuilder)
-			.withModuleRoot()
-			.withConfigVersion("1.6")
-			.withModuleName("Reporting")
-			.withModuleId("reporting")
-			.withPackage("org.openmrs.module.reporting")
-			.withTextNode("require_modules", "")
-			.build();
+										.withModuleRoot()
+										.withConfigVersion("1.6")
+										.withModuleName("Reporting")
+										.withModuleId("reporting")
+										.withPackage("org.openmrs.module.reporting")
+										.withTextNode("require_modules", "")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -392,11 +392,11 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseRequireModulesContainingMultipleChildren() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withRequireModules(
-				new String[] { "org.openmrs.module.serialization.xstream", "1.0.3" },
-				new String[] { "org.openmrs.module.htmlwidgets", "2.0.4" }
-			)
-			.build();
+										.withRequireModules(
+																		new String[]{"org.openmrs.module.serialization.xstream", "1.0.3"},
+																		new String[]{"org.openmrs.module.htmlwidgets", "2.0.4"}
+										)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -407,13 +407,13 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 
 	@Test
 	public void parse_shouldParseRequireModulesContainingModuleWithoutVersionAttribute()
-		throws IOException {
+									throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withRequireModules(
-				new String[] { "org.openmrs.module.htmlwidgets" }
-			)
-			.build();
+										.withRequireModules(
+																		new String[]{"org.openmrs.module.htmlwidgets"}
+										)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -423,13 +423,13 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 
 	@Test
 	public void parse_shouldParseRequireModulesContainingModuleWithEmptyVersionAttribute()
-		throws IOException {
+									throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withRequireModules(
-				new String[] { "org.openmrs.module.htmlwidgets", "" }
-			)
-			.build();
+										.withRequireModules(
+																		new String[]{"org.openmrs.module.htmlwidgets", ""}
+										)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -439,15 +439,15 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 
 	@Test
 	public void parse_shouldParseRequireModulesContainingDuplicatesAndKeepOnlyTheLastOneRegardlessOfVersions()
-		throws IOException {
+									throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withRequireModules(
-				new String[] { "org.openmrs.module.serialization.xstream", "1.0.3" },
-				new String[] { "org.openmrs.module.serialization.xstream", "3.1.4" },
-				new String[] { "org.openmrs.module.serialization.xstream", "2.0.3" }
-			)
-			.build();
+										.withRequireModules(
+																		new String[]{"org.openmrs.module.serialization.xstream", "1.0.3"},
+																		new String[]{"org.openmrs.module.serialization.xstream", "3.1.4"},
+																		new String[]{"org.openmrs.module.serialization.xstream", "2.0.3"}
+										)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -457,16 +457,16 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 
 	@Test
 	public void parse_shouldParseRequireModulesByTakingTheFirstRequireModulesIfMultipleExist()
-		throws IOException {
+									throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withRequireModules(
-				new String[] { "org.openmrs.module.serialization.xstream", "1.0.3" }
-			)
-			.withRequireModules(
-				new String[] { "org.openmrs.module.htmlwidgets", "2.0.4" }
-			)
-			.build();
+										.withRequireModules(
+																		new String[]{"org.openmrs.module.serialization.xstream", "1.0.3"}
+										)
+										.withRequireModules(
+																		new String[]{"org.openmrs.module.htmlwidgets", "2.0.4"}
+										)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -478,8 +478,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseAwareOfModulesWithoutChildren() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withAwareOfModules()
-			.build();
+										.withAwareOfModules()
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -490,8 +490,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseAwareOfModulesOnlyContainingText() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withTextNode("aware_of_modules", "will be ignored")
-			.build();
+										.withTextNode("aware_of_modules", "will be ignored")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -500,14 +500,14 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 
 	@Test
 	public void parse_shouldParseAwareOfModulesContainingDuplicatesAndKeepOnlyOneModule()
-		throws IOException {
+									throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withAwareOfModules(
-				"org.openmrs.module.serialization.xstream",
-				"org.openmrs.module.serialization.xstream"
-			)
-			.build();
+										.withAwareOfModules(
+																		"org.openmrs.module.serialization.xstream",
+																		"org.openmrs.module.serialization.xstream"
+										)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -519,25 +519,25 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseAwareOfModulesContainingMultipleChildren() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withAwareOfModules(
-				"org.openmrs.module.serialization.xstream",
-				"org.openmrs.module.legacyui"
-			)
-			.build();
+										.withAwareOfModules(
+																		"org.openmrs.module.serialization.xstream",
+																		"org.openmrs.module.legacyui"
+										)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
 		assertThat(module.getAwareOfModules().size(), is(2));
 		assertThat(module.getAwareOfModules(),
-			hasItems("org.openmrs.module.serialization.xstream", "org.openmrs.module.legacyui"));
+										hasItems("org.openmrs.module.serialization.xstream", "org.openmrs.module.legacyui"));
 	}
 
 	@Test
 	public void parse_shouldParseExtensions() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withExtension("org.openmrs.admin.list", AccessibleExtension.class.getName())
-			.build();
+										.withExtension("org.openmrs.admin.list", AccessibleExtension.class.getName())
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -551,8 +551,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnoreExtensionWithExtensionIdSeparatorInPoint() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withExtension("org.openmrs.admin.list" + Extension.EXTENSION_ID_SEPARATOR, AccessibleExtension.class.getName())
-			.build();
+										.withExtension("org.openmrs.admin.list" + Extension.EXTENSION_ID_SEPARATOR, AccessibleExtension.class.getName())
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -576,8 +576,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnoreExtensionOnlyContainingText() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withTextNode("extension", "will be ignored")
-			.build();
+										.withTextNode("extension", "will be ignored")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -589,8 +589,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnoreExtensionWithoutClass() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withExtension("org.openmrs.admin.list", null)
-			.build();
+										.withExtension("org.openmrs.admin.list", null)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -602,8 +602,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnoreExtensionWithoutPoint() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withExtension(null, "org.openmrs.module.web.extension.ManageAdminListExt")
-			.build();
+										.withExtension(null, "org.openmrs.module.web.extension.ManageAdminListExt")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -617,9 +617,9 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 		Privilege p1 = new Privilege("Manage Reports", "Add report");
 		Privilege p2 = new Privilege("Manage Report Definitions", "Add report definitions");
 		Document config = buildOnValidConfigXml()
-			.withPrivilege(p1.getName(), p1.getDescription())
-			.withPrivilege(p2.getName(), p2.getDescription())
-			.build();
+										.withPrivilege(p1.getName(), p1.getDescription())
+										.withPrivilege(p2.getName(), p2.getDescription())
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -635,8 +635,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 
 		Privilege p1 = new Privilege("Manage Reports", "Add report");
 		Document config = buildOnValidConfigXml()
-			.withPrivilege(p1.getName(), p1.getDescription())
-			.build();
+										.withPrivilege(p1.getName(), p1.getDescription())
+										.build();
 		config.getElementsByTagName("privilege").item(0).appendChild(config.createElement("ignoreMe"));
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
@@ -661,8 +661,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnorePrivilegeOnlyContainingText() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withTextNode("privilege", "will be ignored")
-			.build();
+										.withTextNode("privilege", "will be ignored")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -673,8 +673,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnorePrivilegeWithoutDescription() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withPrivilege("Add Report", null)
-			.build();
+										.withPrivilege("Add Report", null)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -685,8 +685,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnorePrivilegeWithoutName() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withPrivilege(null, "Add report")
-			.build();
+										.withPrivilege(null, "Add report")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -698,12 +698,12 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 
 		GlobalProperty gp1 = new GlobalProperty("report.deleteReportsAgeInHours", "72", "delete reports after hours");
 		GlobalProperty gp2 = new GlobalProperty("report.validateInput", "2", "to validate input",
-			RegexValidatedTextDatatype.class, "^\\d+$");
+										RegexValidatedTextDatatype.class, "^\\d+$");
 		Document config = buildOnValidConfigXml()
-			.withGlobalProperty(gp1.getProperty(), gp1.getPropertyValue(), gp1.getDescription(), null, null)
-			.withGlobalProperty(gp2.getProperty(), gp2.getPropertyValue(), gp2.getDescription(), gp2.getDatatypeClassname(),
-				gp2.getDatatypeConfig())
-			.build();
+										.withGlobalProperty(gp1.getProperty(), gp1.getPropertyValue(), gp1.getDescription(), null, null)
+										.withGlobalProperty(gp2.getProperty(), gp2.getPropertyValue(), gp2.getDescription(), gp2.getDatatypeClassname(),
+																		gp2.getDatatypeConfig())
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -724,8 +724,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseGlobalPropertyAndTrimWhitespacesFromDescription() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withGlobalProperty("report.deleteReportsAgeInHours", "72", "  \n\t delete reports after\t hours  ", null, null)
-			.build();
+										.withGlobalProperty("report.deleteReportsAgeInHours", "72", "  \n\t delete reports after\t hours  ", null, null)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -737,8 +737,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseGlobalPropertyWithoutDescriptionElement() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withGlobalProperty("report.deleteReportsAgeInHours", "72", null, null, null)
-			.build();
+										.withGlobalProperty("report.deleteReportsAgeInHours", "72", null, null, null)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -752,8 +752,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 
 		GlobalProperty gp1 = new GlobalProperty("report.deleteReportsAgeInHours", "72", "delete reports after");
 		Document config = buildOnValidConfigXml()
-			.withGlobalProperty(gp1.getProperty(), gp1.getPropertyValue(), gp1.getDescription(), null, null)
-			.build();
+										.withGlobalProperty(gp1.getProperty(), gp1.getPropertyValue(), gp1.getDescription(), null, null)
+										.build();
 		config.getElementsByTagName("globalProperty").item(0).appendChild(config.createElement("ignoreMe"));
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
@@ -779,8 +779,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnoreGlobalPropertyOnlyContainingText() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withTextNode("globalProperty", "will be ignored")
-			.build();
+										.withTextNode("globalProperty", "will be ignored")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -791,8 +791,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnoreGlobalPropertyWithoutPropertyElement() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withGlobalProperty(null, "72", "some", null, null)
-			.build();
+										.withGlobalProperty(null, "72", "some", null, null)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -803,8 +803,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnoreGlobalPropertyWithEmptyProperty() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withGlobalProperty("  ", "72", "some", null, null)
-			.build();
+										.withGlobalProperty("  ", "72", "some", null, null)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -815,8 +815,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnoreGlobalPropertyWithDatatypeClassThatIsNotSubclassingCustomDatatype() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withGlobalProperty("report.deleteReportsAgeInHours", "72", "some", "java.lang.String", null)
-			.build();
+										.withGlobalProperty("report.deleteReportsAgeInHours", "72", "some", "java.lang.String", null)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -827,8 +827,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnoreGlobalPropertyWithDatatypeClassThatIsNotFound() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withGlobalProperty("report.deleteReportsAgeInHours", "72", "some", "String", null)
-			.build();
+										.withGlobalProperty("report.deleteReportsAgeInHours", "72", "some", "String", null)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -839,8 +839,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseMappingFiles() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withTextNode("mappingFiles", "\n  ReportDesign.hbm.xml ReportDesign.hbm.xml\n \t\tReportRequest.hbm.xml  \t")
-			.build();
+										.withTextNode("mappingFiles", "\n  ReportDesign.hbm.xml ReportDesign.hbm.xml\n \t\tReportRequest.hbm.xml  \t")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -852,8 +852,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnoreMappingFilesOnlyContainingWhitespaces() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withTextNode("mappingFiles", "\n  \n \t\t      \t")
-			.build();
+										.withTextNode("mappingFiles", "\n  \n \t\t      \t")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -864,24 +864,24 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParsePackagesWithMappedClasses() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withTextNode(
-				"packagesWithMappedClasses",
-				"\n  org.openmrs.module.openconceptlab org.openmrs.module.openconceptlab\n \torg.openmrs.module.systemmetrics  \t")
-			.build();
+										.withTextNode(
+																		"packagesWithMappedClasses",
+																		"\n  org.openmrs.module.openconceptlab org.openmrs.module.openconceptlab\n \torg.openmrs.module.systemmetrics  \t")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
 		assertThat(module.getPackagesWithMappedClasses().size(), is(2));
 		assertThat(module.getPackagesWithMappedClasses(),
-			hasItems("org.openmrs.module.openconceptlab", "org.openmrs.module.systemmetrics"));
+										hasItems("org.openmrs.module.openconceptlab", "org.openmrs.module.systemmetrics"));
 	}
 
 	@Test
 	public void parse_shouldIgnorePackagesWithMappedClassesOnlyContainingWhitespaces() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withTextNode("packagesWithMappedClasses", "\n  \n \t\t      \t")
-			.build();
+										.withTextNode("packagesWithMappedClasses", "\n  \n \t\t      \t")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -892,8 +892,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseMandatoryAtSpecificConfigVersion() throws IOException {
 
 		Document config = buildOnValidConfigXml("1.3")
-			.withTextNode("mandatory", " true   ")
-			.build();
+										.withTextNode("mandatory", " true   ")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -904,8 +904,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseMandatoryAfterSpecificConfigVersion() throws IOException {
 
 		Document config = buildOnValidConfigXml("1.4")
-			.withTextNode("mandatory", " true   ")
-			.build();
+										.withTextNode("mandatory", " true   ")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -916,8 +916,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseMandatoryAndSetToFalse() throws IOException {
 
 		Document config = buildOnValidConfigXml("1.4")
-			.withTextNode("mandatory", " false   ")
-			.build();
+										.withTextNode("mandatory", " false   ")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -928,8 +928,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnoreEmptyMandatory() throws IOException {
 
 		Document config = buildOnValidConfigXml("1.4")
-			.withTextNode("mandatory", "")
-			.build();
+										.withTextNode("mandatory", "")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -940,8 +940,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnoreMandatoryBeforeSpecificConfigVersion() throws IOException {
 
 		Document config = buildOnValidConfigXml("1.2")
-			.withTextNode("mandatory", " true   ")
-			.build();
+										.withTextNode("mandatory", " true   ")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -955,9 +955,9 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 		modules.put("metadatamapping", "1.0");
 		modules.put("reporting", "2.0");
 		Document config = buildOnValidConfigXml("1.2")
-			.withConditionalResource("/lib/htmlformentry-api-1.10*", "1.10")
-			.withConditionalResource("/lib/metadatasharing-api-1.9*", "1.9", modules)
-			.build();
+										.withConditionalResource("/lib/htmlformentry-api-1.10*", "1.10")
+										.withConditionalResource("/lib/metadatasharing-api-1.9*", "1.9", modules)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -985,12 +985,12 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseConditionalResourcesWithWhitespace() throws IOException {
 
 		Document config = buildOnValidConfigXml("1.2")
-			.withTextNode("conditionalResources", "        	")
-			.withConditionalResource("/lib/htmlformentry-api-1.10*", "1.10")
-			.build();
+										.withTextNode("conditionalResources", "        	")
+										.withConditionalResource("/lib/htmlformentry-api-1.10*", "1.10")
+										.build();
 		config.getElementsByTagName("conditionalResource")
-			.item(0)
-			.appendChild(config.createTextNode("        	"));
+										.item(0)
+										.appendChild(config.createTextNode("        	"));
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -1006,8 +1006,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseConditionalResourcesEvenIfVersionIsMissing() throws IOException {
 
 		Document config = buildOnValidConfigXml("1.2")
-			.withConditionalResource("/lib/htmlformentry-api-1.10*", null)
-			.build();
+										.withConditionalResource("/lib/htmlformentry-api-1.10*", null)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -1022,8 +1022,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseConditionalResourcesEvenIfPathIsMissing() throws IOException {
 
 		Document config = buildOnValidConfigXml("1.2")
-			.withConditionalResource(null, "1.10")
-			.build();
+										.withConditionalResource(null, "1.10")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -1038,8 +1038,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseConditionalResourcesEvenIfPathAndVersionAreMissing() throws IOException {
 
 		Document config = buildOnValidConfigXml("1.2")
-			.withConditionalResource(null, null)
-			.build();
+										.withConditionalResource(null, null)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -1051,9 +1051,9 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldFailIfMultipleConditionalResourcesTagsFound() throws IOException {
 
 		Document config = buildOnValidConfigXml("1.2")
-			.withTextNode("conditionalResources", "")
-			.withTextNode("conditionalResources", "")
-			.build();
+										.withTextNode("conditionalResources", "")
+										.withTextNode("conditionalResources", "")
+										.build();
 
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parser.parse(writeConfigXmlToFile(config)));
 		assertThat(exception.getMessage(), startsWith("Found multiple conditionalResources tags."));
@@ -1064,11 +1064,11 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 
 
 		Document config = buildOnValidConfigXml("1.2")
-			.withConditionalResource("/lib/reporting-api-1.9.*", "1.10")
-			.build();
+										.withConditionalResource("/lib/reporting-api-1.9.*", "1.10")
+										.build();
 		config.getElementsByTagName("conditionalResources")
-			.item(0)
-			.appendChild(config.createElement("invalidTag"));
+										.item(0)
+										.appendChild(config.createElement("invalidTag"));
 
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parser.parse(writeConfigXmlToFile(config)));
 		assertThat(exception.getMessage(), startsWith("Found the invalidTag node under conditionalResources."));
@@ -1079,8 +1079,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 
 
 		Document config = buildOnValidConfigXml("1.2")
-			.withConditionalResource("", "1.10")
-			.build();
+										.withConditionalResource("", "1.10")
+										.build();
 
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parser.parse(writeConfigXmlToFile(config)));
 		assertThat(exception.getMessage(), startsWith("The path of a conditional resource must not be blank"));
@@ -1092,9 +1092,9 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 		AdvicePoint a1 = new AdvicePoint("org.openmrs.api.PatientService", String.class);
 		AdvicePoint a2 = new AdvicePoint("org.openmrs.api.PersonService", String.class);
 		Document config = buildOnValidConfigXml()
-			.withAdvice(a1.getPoint(), "String")
-			.withAdvice(a2.getPoint(), "String")
-			.build();
+										.withAdvice(a1.getPoint(), "String")
+										.withAdvice(a2.getPoint(), "String")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -1109,8 +1109,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldParseAdviceContainingElementsOtherThanPointAndClass() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withAdvice("org.openmrs.api.PatientService", "String")
-			.build();
+										.withAdvice("org.openmrs.api.PatientService", "String")
+										.build();
 		config.getElementsByTagName("advice").item(0).appendChild(config.createElement("ignoreMe"));
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
@@ -1133,8 +1133,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnoreAdviceOnlyContainingText() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withTextNode("advice", "will be ignored")
-			.build();
+										.withTextNode("advice", "will be ignored")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -1145,8 +1145,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnoreAdviceWithoutClass() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withAdvice("org.openmrs.api.PatientService", null)
-			.build();
+										.withAdvice("org.openmrs.api.PatientService", null)
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -1157,8 +1157,8 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	public void parse_shouldIgnoreAdviceWithoutPoint() throws IOException {
 
 		Document config = buildOnValidConfigXml()
-			.withAdvice(null, "String")
-			.build();
+										.withAdvice(null, "String")
+										.build();
 
 		Module module = parser.parse(writeConfigXmlToFile(config));
 
@@ -1182,11 +1182,11 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 	private ModuleConfigXmlBuilder buildOnValidConfigXml(String version) {
 
 		return new ModuleConfigXmlBuilder(documentBuilder)
-			.withModuleRoot()
-			.withConfigVersion(version)
-			.withModuleName("Reporting")
-			.withModuleId("reporting")
-			.withPackage("org.openmrs.module.reporting");
+										.withModuleRoot()
+										.withConfigVersion(version)
+										.withModuleName("Reporting")
+										.withModuleId("reporting")
+										.withPackage("org.openmrs.module.reporting");
 	}
 
 	private class ModuleConfigXmlBuilder {
@@ -1200,9 +1200,9 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 		public ModuleConfigXmlBuilder withDoctype(String configVersion) {
 			DOMImplementation domImpl = this.configXml.getImplementation();
 			DocumentType doctype = domImpl.createDocumentType(
-				"module",
-				"-//OpenMRS//DTD OpenMRS Config 1.0//EN",
-				"https://resources.openmrs.org/doctype/config-" + configVersion + ".dtd"
+											"module",
+											"-//OpenMRS//DTD OpenMRS Config 1.0//EN",
+											"https://resources.openmrs.org/doctype/config-" + configVersion + ".dtd"
 			);
 			this.configXml.appendChild(doctype);
 			return this;
@@ -1300,7 +1300,7 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 		}
 
 		public ModuleConfigXmlBuilder withGlobalProperty(String property, String defaultValue, String description,
-			String datatypeClassname, String datatypeConfig) {
+										String datatypeClassname, String datatypeConfig) {
 			Map<String, String> children = new HashMap<>();
 			if (property != null) {
 				children.put("property", property);
@@ -1325,7 +1325,7 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 		}
 
 		public ModuleConfigXmlBuilder withConditionalResource(String path, String openmrsVersion,
-			Map<String, String> modules) {
+										Map<String, String> modules) {
 			Map<String, String> children = new HashMap<>();
 			if (path != null) {
 				children.put("path", path);
@@ -1349,7 +1349,7 @@ public class ModuleFileParserUnitTest extends BaseContextMockTest {
 		}
 
 		public ModuleConfigXmlBuilder withElementsAttachedToRoot(String parentElementName,
-			Map<String, String> childElements) {
+										Map<String, String> childElements) {
 			configXml.getDocumentElement().appendChild(createElementWithChildren(parentElementName, childElements));
 			return this;
 		}

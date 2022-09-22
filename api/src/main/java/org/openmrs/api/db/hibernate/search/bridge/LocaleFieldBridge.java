@@ -17,7 +17,7 @@ import org.hibernate.search.bridge.StringBridge;
  * Indexes locales as {@link Locale#toString()}.
  */
 public class LocaleFieldBridge implements StringBridge {
-	
+
 	/**
 	 * @see org.hibernate.search.bridge.StringBridge#objectToString(java.lang.Object)
 	 */

@@ -32,13 +32,13 @@ import org.openmrs.module.ModuleUtilTest;
  */
 @Deprecated
 public abstract class BaseContextMockTest {
-	
+
 	@Mock
 	protected UserContext userContext;
-	
+
 	@InjectMocks
 	protected ContextMockHelper contextMockHelper;
-	
+
 	/**
 	 * Initializes fields annotated with {@link Mock}. Sets userContext and authenticatedUser.
 	 */
@@ -46,7 +46,7 @@ public abstract class BaseContextMockTest {
 	public void initMocks() {
 		MockitoAnnotations.initMocks(this);
 	}
-	
+
 	@After
 	public void revertContextMocks() {
 		contextMockHelper.revertMocks();

@@ -22,7 +22,7 @@ import org.springframework.validation.Validator;
  * @since 1.5
  */
 public class RequireNameValidator implements Validator {
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
@@ -32,10 +32,11 @@ public class RequireNameValidator implements Validator {
 			PropertyDescriptor pd = new PropertyDescriptor("name", c);
 			return pd.getReadMethod() != null && pd.getWriteMethod() != null;
 		}
-		catch (Exception ex) {}
+		catch (Exception ex) {
+		}
 		return false;
 	}
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
 	 *      org.springframework.validation.Errors)
@@ -46,5 +47,5 @@ public class RequireNameValidator implements Validator {
 	public void validate(Object o, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name");
 	}
-	
+
 }

@@ -25,46 +25,46 @@ package org.openmrs;
  * @since 1.10
  */
 public class CareSetting extends BaseChangeableOpenmrsMetadata {
-	
+
 	public enum CareSettingType {
 		OUTPATIENT,
 		INPATIENT
 	}
-	
+
 	private Integer careSettingId;
-	
+
 	private CareSettingType careSettingType;
-	
+
 	public CareSetting() {
 	}
-	
+
 	public CareSetting(String name, String description, CareSettingType careSettingType) {
 		setName(name);
 		setDescription(description);
 		setCareSettingType(careSettingType);
 	}
-	
+
 	public Integer getCareSettingId() {
 		return careSettingId;
 	}
-	
+
 	public void setCareSettingId(Integer careSettingId) {
 		this.careSettingId = careSettingId;
 	}
-	
+
 	public CareSettingType getCareSettingType() {
 		return careSettingType;
 	}
-	
+
 	public void setCareSettingType(CareSettingType careSettingType) {
 		this.careSettingType = careSettingType;
 	}
-	
+
 	@Override
 	public Integer getId() {
 		return getCareSettingId();
 	}
-	
+
 	@Override
 	public void setId(Integer id) {
 		setCareSettingId(id);

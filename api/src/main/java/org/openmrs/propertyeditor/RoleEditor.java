@@ -27,12 +27,12 @@ import org.springframework.util.StringUtils;
  * @see Role
  */
 public class RoleEditor extends PropertyEditorSupport {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(RoleEditor.class);
-	
+
 	public RoleEditor() {
 	}
-	
+
 	/**
 	 * <strong>Should</strong> set using name
 	 * <strong>Should</strong> set using uuid
@@ -61,7 +61,7 @@ public class RoleEditor extends PropertyEditorSupport {
 			setValue(null);
 		}
 	}
-	
+
 	@Override
 	public String getAsText() {
 		Role r = (Role) getValue();
@@ -71,5 +71,5 @@ public class RoleEditor extends PropertyEditorSupport {
 			return r.getRole();
 		}
 	}
-	
+
 }

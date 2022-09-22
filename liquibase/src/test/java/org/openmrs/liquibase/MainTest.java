@@ -18,20 +18,20 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 
 public class MainTest {
-	
+
 	@Test
 	public void shouldCreateUpdatedSnapshotFiles() throws DocumentException, IOException {
 		CoreDataTuner coreDataTuner = Mockito.mock(CoreDataTuner.class);
 		SchemaOnlyTuner schemaOnlyTuner = Mockito.mock(SchemaOnlyTuner.class);
-		
+
 		Main.setCoreDataTuner(coreDataTuner);
 		Main.setSchemaOnlyTuner(schemaOnlyTuner);
-		
+
 		Main.main(new String[0]);
-		
+
 		Mockito.verify(coreDataTuner, times(1)).addLicenseHeaderToFileIfNeeded(any());
 		Mockito.verify(coreDataTuner, times(1)).createUpdatedChangeLogFile(any(), any());
-		
+
 		Mockito.verify(schemaOnlyTuner, times(1)).addLicenseHeaderToFileIfNeeded(any());
 		Mockito.verify(schemaOnlyTuner, times(1)).createUpdatedChangeLogFile(any(), any());
 	}

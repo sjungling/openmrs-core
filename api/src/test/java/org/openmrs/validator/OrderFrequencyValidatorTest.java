@@ -32,34 +32,34 @@ import org.springframework.validation.Errors;
  * Tests methods on the {@link OrderFrequencyValidator} class.
  */
 public class OrderFrequencyValidatorTest extends BaseContextSensitiveTest {
-	
-	
+
+
 	/**
-	 * @see OrderFrequencyValidator#validate(Object,Errors)
+	 * @see OrderFrequencyValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfOrderFrequencyIsNull() {
 		Errors errors = new BindException(new OrderFrequency(), "orderFrequency");
 		new OrderFrequencyValidator().validate(null, errors);
-		
+
 		assertTrue(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see OrderFrequencyValidator#validate(Object,Errors)
+	 * @see OrderFrequencyValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfConceptIsNull() {
 		OrderFrequency orderFrequency = new OrderFrequency();
-		
+
 		Errors errors = new BindException(orderFrequency, "orderFrequency");
 		new OrderFrequencyValidator().validate(orderFrequency, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("concept"));
 	}
-	
+
 	/**
-	 * @see OrderFrequencyValidator#validate(Object,Errors)
+	 * @see OrderFrequencyValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheConceptIsNotOfClassFrequency() {
@@ -67,12 +67,12 @@ public class OrderFrequencyValidatorTest extends BaseContextSensitiveTest {
 		orderFrequency.setConcept(Context.getConceptService().getConcept(88));
 		Errors errors = new BindException(orderFrequency, "orderFrequency");
 		new OrderFrequencyValidator().validate(orderFrequency, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("concept"));
 	}
-	
+
 	/**
-	 * @see OrderFrequencyValidator#validate(Object,Errors)
+	 * @see OrderFrequencyValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfConceptIsUsedByAnotherFrequency() {
@@ -80,10 +80,10 @@ public class OrderFrequencyValidatorTest extends BaseContextSensitiveTest {
 		orderFrequency.setConcept(Context.getConceptService().getConcept(113));
 		Errors errors = new BindException(orderFrequency, "orderFrequency");
 		new OrderFrequencyValidator().validate(orderFrequency, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("concept"));
 	}
-	
+
 	/**
 	 * @see OrderFrequencyValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -95,17 +95,17 @@ public class OrderFrequencyValidatorTest extends BaseContextSensitiveTest {
 		concept.setDatatype(cs.getConceptDatatype(1));
 		concept.setConceptClass(cs.getConceptClass(19));
 		concept.addName(cn);
-		concept.addDescription(new ConceptDescription("some description",null));
+		concept.addDescription(new ConceptDescription("some description", null));
 		cs.saveConcept(concept);
-		
+
 		OrderFrequency orderFrequency = new OrderFrequency();
 		orderFrequency.setConcept(concept);
 		Errors errors = new BindException(orderFrequency, "orderFrequency");
 		new OrderFrequencyValidator().validate(orderFrequency, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see OrderFrequencyValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -115,10 +115,10 @@ public class OrderFrequencyValidatorTest extends BaseContextSensitiveTest {
 		assertNotNull(orderFrequency);
 		Errors errors = new BindException(orderFrequency, "orderFrequency");
 		new OrderFrequencyValidator().validate(orderFrequency, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see OrderFrequencyValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -130,7 +130,7 @@ public class OrderFrequencyValidatorTest extends BaseContextSensitiveTest {
 		APIException exception = assertThrows(APIException.class, () -> Context.getOrderService().saveOrderFrequency(orderFrequency));
 		assertThat(exception.getMessage(), is(expectedMsg));
 	}
-	
+
 	/**
 	 * @see OrderFrequencyValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -142,20 +142,20 @@ public class OrderFrequencyValidatorTest extends BaseContextSensitiveTest {
 		concept.setDatatype(cs.getConceptDatatype(1));
 		concept.setConceptClass(cs.getConceptClass(19));
 		concept.addName(cn);
-		concept.addDescription(new ConceptDescription("some description",null));
+		concept.addDescription(new ConceptDescription("some description", null));
 		cs.saveConcept(concept);
-		
+
 		OrderFrequency orderFrequency = new OrderFrequency();
 		orderFrequency.setConcept(concept);
-		
+
 		orderFrequency.setRetireReason("retireReason");
-		
+
 		Errors errors = new BindException(orderFrequency, "orderFrequency");
 		new OrderFrequencyValidator().validate(orderFrequency, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see OrderFrequencyValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -167,18 +167,18 @@ public class OrderFrequencyValidatorTest extends BaseContextSensitiveTest {
 		concept.setDatatype(cs.getConceptDatatype(1));
 		concept.setConceptClass(cs.getConceptClass(19));
 		concept.addName(cn);
-		concept.addDescription(new ConceptDescription("some description",null));
+		concept.addDescription(new ConceptDescription("some description", null));
 		cs.saveConcept(concept);
-		
+
 		OrderFrequency orderFrequency = new OrderFrequency();
 		orderFrequency.setConcept(concept);
-		
+
 		orderFrequency
-		        .setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
-		
+										.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+
 		Errors errors = new BindException(orderFrequency, "orderFrequency");
 		new OrderFrequencyValidator().validate(orderFrequency, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("retireReason"));
 	}
 }

@@ -17,25 +17,25 @@ import org.openmrs.util.OpenmrsUtil;
  * PatientState
  */
 public class PatientState extends BaseFormRecordableOpenmrsData implements java.io.Serializable, Comparable<PatientState> {
-	
+
 	public static final long serialVersionUID = 0L;
-	
+
 	// ******************
 	// Properties
 	// ******************
 	
 	private Integer patientStateId;
-	
+
 	private PatientProgram patientProgram;
-	
+
 	private ProgramWorkflowState state;
-	
+
 	private Date startDate;
-	
+
 	private Date endDate;
-	
+
 	private Encounter encounter;
-	
+
 	// ******************
 	// Constructors
 	// ******************
@@ -43,12 +43,12 @@ public class PatientState extends BaseFormRecordableOpenmrsData implements java.
 	/** Default Constructor */
 	public PatientState() {
 	}
-	
+
 	/** Constructor with id */
 	public PatientState(Integer patientStateId) {
 		setPatientStateId(patientStateId);
 	}
-	
+
 	/**
 	 * Does a shallow copy of this PatientState. Does NOT copy patientStateId
 	 * 
@@ -57,7 +57,7 @@ public class PatientState extends BaseFormRecordableOpenmrsData implements java.
 	public PatientState copy() {
 		return copyHelper(new PatientState());
 	}
-	
+
 	/**
 	 * The purpose of this method is to allow subclasses of PatientState to delegate a portion of
 	 * their copy() method back to the superclass, in case the base class implementation changes.
@@ -81,7 +81,7 @@ public class PatientState extends BaseFormRecordableOpenmrsData implements java.
 		target.setVoidReason(this.getVoidReason());
 		return target;
 	}
-	
+
 	// ******************
 	// Instance methods
 	// ******************
@@ -106,9 +106,9 @@ public class PatientState extends BaseFormRecordableOpenmrsData implements java.
 			onDate = new Date();
 		}
 		return !getVoided() && (OpenmrsUtil.compareWithNullAsEarliest(startDate, onDate) <= 0)
-		        && (OpenmrsUtil.compareWithNullAsLatest(endDate, onDate) > 0);
+										&& (OpenmrsUtil.compareWithNullAsLatest(endDate, onDate) > 0);
 	}
-	
+
 	/**
 	 * Returns true if this {@link PatientState} is currently active
 	 * 
@@ -117,15 +117,15 @@ public class PatientState extends BaseFormRecordableOpenmrsData implements java.
 	public boolean getActive() {
 		return getActive(null);
 	}
-	
+
 	/** @see Object#toString() */
 	@Override
 	public String toString() {
 		return "id=" + getPatientStateId() + ", patientProgram=" + getPatientProgram() + ", state=" + getState()
-		        + ", startDate=" + getStartDate() + ", endDate=" + getEndDate() + ", encounter=" + getEncounter() + ", dateCreated=" + getDateCreated()
-		        + ", dateChanged=" + getDateChanged();
+										+ ", startDate=" + getStartDate() + ", endDate=" + getEndDate() + ", encounter=" + getEncounter() + ", dateCreated=" + getDateCreated()
+										+ ", dateChanged=" + getDateChanged();
 	}
-	
+
 	// ******************
 	// Property Access
 	// ******************
@@ -133,39 +133,39 @@ public class PatientState extends BaseFormRecordableOpenmrsData implements java.
 	public PatientProgram getPatientProgram() {
 		return patientProgram;
 	}
-	
+
 	public void setPatientProgram(PatientProgram patientProgram) {
 		this.patientProgram = patientProgram;
 	}
-	
+
 	public Integer getPatientStateId() {
 		return patientStateId;
 	}
-	
+
 	public void setPatientStateId(Integer patientStatusId) {
 		this.patientStateId = patientStatusId;
 	}
-	
+
 	public ProgramWorkflowState getState() {
 		return state;
 	}
-	
+
 	public void setState(ProgramWorkflowState state) {
 		this.state = state;
 	}
-	
+
 	public Date getEndDate() {
 		return endDate;
 	}
-	
+
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	
+
 	public Date getStartDate() {
 		return startDate;
 	}
-	
+
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
@@ -194,7 +194,7 @@ public class PatientState extends BaseFormRecordableOpenmrsData implements java.
 	public Integer getId() {
 		return getPatientStateId();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -203,7 +203,7 @@ public class PatientState extends BaseFormRecordableOpenmrsData implements java.
 	public void setId(Integer id) {
 		setPatientStateId(id);
 	}
-	
+
 	/**
 	 * Compares by startDate with null as earliest and endDate with null as latest.
 	 * 

@@ -30,9 +30,9 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
  * Tests for the {@link PersonVoidHandler} class.
  */
 public class PersonVoidHandlerTest extends BaseContextSensitiveTest {
-	
+
 	/**
-	 * @see PersonVoidHandler#handle(Person,User,Date,String)
+	 * @see PersonVoidHandler#handle(Person, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldSetThePersonVoidedBit() {
@@ -42,9 +42,9 @@ public class PersonVoidHandlerTest extends BaseContextSensitiveTest {
 		handler.handle(person, null, null, " ");
 		assertTrue(person.getPersonVoided());
 	}
-	
+
 	/**
-	 * @see PersonVoidHandler#handle(Person,User,Date,String)
+	 * @see PersonVoidHandler#handle(Person, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldSetThePersonVoidReason() {
@@ -53,9 +53,9 @@ public class PersonVoidHandlerTest extends BaseContextSensitiveTest {
 		handler.handle(person, null, null, "THE REASON");
 		assertEquals("THE REASON", person.getPersonVoidReason());
 	}
-	
+
 	/**
-	 * @see PersonVoidHandler#handle(Person,User,Date,String)
+	 * @see PersonVoidHandler#handle(Person, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldSetPersonVoidedBy() {
@@ -64,9 +64,9 @@ public class PersonVoidHandlerTest extends BaseContextSensitiveTest {
 		handler.handle(person, new User(2), null, " ");
 		assertEquals(2, person.getPersonVoidedBy().getId().intValue());
 	}
-	
+
 	/**
-	 * @see PersonVoidHandler#handle(Person,User,Date,String)
+	 * @see PersonVoidHandler#handle(Person, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotSetPersonVoidedByIfNonNull() {
@@ -76,22 +76,22 @@ public class PersonVoidHandlerTest extends BaseContextSensitiveTest {
 		handler.handle(person, new User(2), null, " ");
 		assertEquals(3, person.getPersonVoidedBy().getId().intValue());
 	}
-	
+
 	/**
-	 * @see PersonVoidHandler#handle(Person,User,Date,String)
+	 * @see PersonVoidHandler#handle(Person, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldSetPersonDateVoided() {
 		Date d = new Date();
-		
+
 		VoidHandler<Person> handler = new PersonVoidHandler();
 		Person person = new Person();
 		handler.handle(person, null, d, " ");
 		assertEquals(d, person.getPersonDateVoided());
 	}
-	
+
 	/**
-	 * @see PersonVoidHandler#handle(Person,User,Date,String)
+	 * @see PersonVoidHandler#handle(Person, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotSetPersonDateVoidedIfNonNull() {
@@ -104,22 +104,22 @@ public class PersonVoidHandlerTest extends BaseContextSensitiveTest {
 		handler.handle(person, null, new Date(), " ");
 		assertEquals(d, person.getPersonDateVoided());
 	}
-	
+
 	/**
-	 * @see PersonVoidHandler#handle(Person,User,Date,String)
+	 * @see PersonVoidHandler#handle(Person, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotSetThePersonVoidReasonIfAlreadyPersonVoided() {
 		VoidHandler<Person> handler = new PersonVoidHandler();
 		Person person = new Person();
 		person.setPersonVoided(true);
-		
+
 		handler.handle(person, null, null, "THE REASON");
 		assertNull(person.getPersonVoidReason());
 	}
-	
+
 	/**
-	 * @see PersonVoidHandler#handle(Person,User,Date,String)
+	 * @see PersonVoidHandler#handle(Person, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldRetireUsers() {
@@ -129,12 +129,12 @@ public class PersonVoidHandlerTest extends BaseContextSensitiveTest {
 		User user = new User(person);
 		Context.getUserService().createUser(user, "Admin123");
 		assertFalse(Context.getUserService().getUsersByPerson(person, false).isEmpty());
-		
+
 		//when
 		handler.handle(person, null, null, "reason");
-		
+
 		//then
 		assertThat(getUserService().getUsersByPerson(person, false), is(empty()));
 	}
-	
+
 }

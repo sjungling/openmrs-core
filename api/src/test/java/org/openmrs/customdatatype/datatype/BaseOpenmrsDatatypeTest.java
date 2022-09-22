@@ -16,7 +16,7 @@ import org.openmrs.Location;
 import org.openmrs.OpenmrsObject;
 
 public class BaseOpenmrsDatatypeTest {
-	
+
 	/**
 	 * @see BaseOpenmrsDatatype#serialize(org.openmrs.OpenmrsObject)
 	 */

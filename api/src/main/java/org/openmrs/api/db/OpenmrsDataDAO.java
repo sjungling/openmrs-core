@@ -21,7 +21,7 @@ import org.openmrs.BaseOpenmrsData;
  * @since 1.10
  */
 public interface OpenmrsDataDAO<T extends BaseOpenmrsData> extends OpenmrsObjectDAO<T> {
-	
+
 	/**
 	 * Return a list of persistents (optionally voided)
 	 * 
@@ -29,14 +29,14 @@ public interface OpenmrsDataDAO<T extends BaseOpenmrsData> extends OpenmrsObject
 	 * @return a list of persistents of the given class
 	 */
 	List<T> getAll(boolean includeVoided);
-	
+
 	/**
 	 * Returns total number of persistents (optionally voided)
 	 * @param includeVoided
 	 * @return total number of persistents
 	 */
 	int getAllCount(boolean includeVoided);
-	
+
 	/**
 	 * Return a lists of persistents optionally voided, with paging
 	 * @param includeVoided
@@ -45,5 +45,5 @@ public interface OpenmrsDataDAO<T extends BaseOpenmrsData> extends OpenmrsObject
 	 * @return list of persistents
 	 */
 	List<T> getAll(boolean includeVoided, Integer firstResult, Integer maxResults);
-	
+
 }

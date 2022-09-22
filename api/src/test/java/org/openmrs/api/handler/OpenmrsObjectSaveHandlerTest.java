@@ -29,9 +29,9 @@ import org.openmrs.annotation.AllowLeadingOrTrailingWhitespace;
  * Tests for {@link OpenmrsObjectSaveHandler}
  */
 public class OpenmrsObjectSaveHandlerTest {
-	
+
 	/**
-	 * @see OpenmrsObjectSaveHandler#handle(OpenmrsObject,User,Date,String)
+	 * @see OpenmrsObjectSaveHandler#handle(OpenmrsObject, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldSetEmptyStringPropertiesToNull() {
@@ -39,16 +39,16 @@ public class OpenmrsObjectSaveHandlerTest {
 		role.setName("");
 		role.setDescription("");
 		role.setRole("");
-		
+
 		new OpenmrsObjectSaveHandler().handle(role, null, null, null);
-		
+
 		assertNull(role.getName());
 		assertNull(role.getDescription());
 		assertNull(role.getRole());
 	}
-	
+
 	/**
-	 * @see OpenmrsObjectSaveHandler#handle(OpenmrsObject,User,Date,String)
+	 * @see OpenmrsObjectSaveHandler#handle(OpenmrsObject, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotSetEmptyStringPropertiesToNullForAllowEmptyStringsAnnotation() {
@@ -56,9 +56,9 @@ public class OpenmrsObjectSaveHandlerTest {
 		new OpenmrsObjectSaveHandler().handle(obj, null, null, null);
 		assertNotNull(obj.getName());
 	}
-	
+
 	/**
-	 * @see OpenmrsObjectSaveHandler#handle(OpenmrsObject,User,Date,String)
+	 * @see OpenmrsObjectSaveHandler#handle(OpenmrsObject, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotTrimEmptyStringsForAllowLeadingOrTrailingWhitespaceAnnotation() {
@@ -66,9 +66,9 @@ public class OpenmrsObjectSaveHandlerTest {
 		new OpenmrsObjectSaveHandler().handle(obj, null, null, null);
 		assertNotNull(obj.getDescription());
 	}
-	
+
 	/**
-	 * @see OpenmrsObjectSaveHandler#handle(OpenmrsObject,User,Date,String)
+	 * @see OpenmrsObjectSaveHandler#handle(OpenmrsObject, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldTrimStringsWithoutAllowLeadingOrTrailingWhitespaceAnnotation() {
@@ -78,9 +78,9 @@ public class OpenmrsObjectSaveHandlerTest {
 		new OpenmrsObjectSaveHandler().handle(term, null, null, null);
 		assertEquals("code", term.getCode());
 	}
-	
+
 	/**
-	 * @see OpenmrsObjectSaveHandler#handle(OpenmrsObject,User,Date,String)
+	 * @see OpenmrsObjectSaveHandler#handle(OpenmrsObject, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldTrimEmptyStringsForAllowEmptyStringsAnnotation() {
@@ -88,47 +88,47 @@ public class OpenmrsObjectSaveHandlerTest {
 		new OpenmrsObjectSaveHandler().handle(obj, null, null, null);
 		assertEquals("name", obj.getName());
 	}
-	
+
 	public class SomeClass extends BaseOpenmrsObject {
-		
+
 		private Integer id;
-		
+
 		private String name;
-		
+
 		private String description;
-		
+
 		public SomeClass(String name) {
 			setName(name);
 		}
-		
+
 		public SomeClass(String name, String description) {
 			setName(name);
 			setDescription(description);
 		}
-		
+
 		public String getName() {
 			return name;
 		}
-		
+
 		@AllowEmptyStrings
 		public void setName(String name) {
 			this.name = name;
 		}
-		
+
 		public String getDescription() {
 			return description;
 		}
-		
+
 		@AllowLeadingOrTrailingWhitespace
 		public void setDescription(String description) {
 			this.description = description;
 		}
-		
+
 		@Override
 		public void setId(Integer id) {
 			this.id = id;
 		}
-		
+
 		@Override
 		public Integer getId() {
 			return id;

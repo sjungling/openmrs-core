@@ -47,17 +47,17 @@ import org.openmrs.util.Reflect;
  * @see Obs
  */
 public class ObsTest {
-	
+
 	private static final String VERO = "Vero";
-	
+
 	private static final String FORM_NAMESPACE_PATH_SEPARATOR = "^";
-	
+
 	//ignore these fields, groupMembers and formNamespaceAndPath field are taken care of by other tests
 	private static final List<String> IGNORED_FIELDS = Arrays.asList("dirty", "log", "serialVersionUID",
-	    "DATE_TIME_PATTERN", "TIME_PATTERN", "DATE_PATTERN", "FORM_NAMESPACE_PATH_SEPARATOR",
-	    "FORM_NAMESPACE_PATH_MAX_LENGTH", "obsId", "groupMembers", "uuid", "changedBy", "dateChanged", "voided", "voidedBy",
-	    "voidReason", "dateVoided", "formNamespaceAndPath", "$jacocoData");
-	
+									"DATE_TIME_PATTERN", "TIME_PATTERN", "DATE_PATTERN", "FORM_NAMESPACE_PATH_SEPARATOR",
+									"FORM_NAMESPACE_PATH_MAX_LENGTH", "obsId", "groupMembers", "uuid", "changedBy", "dateChanged", "voided", "voidedBy",
+									"voidReason", "dateVoided", "formNamespaceAndPath", "$jacocoData");
+
 	private void resetObs(Obs obs) throws Exception {
 		Field field = Obs.class.getDeclaredField("dirty");
 		field.setAccessible(true);
@@ -69,7 +69,7 @@ public class ObsTest {
 		}
 		assertFalse(obs.isDirty());
 	}
-	
+
 	private Obs createObs(Integer id) throws Exception {
 		Obs obs = new Obs(id);
 		List<Field> fields = Reflect.getAllFields(Obs.class);
@@ -94,16 +94,16 @@ public class ObsTest {
 			//sanity check
 			if (setAlternateValue) {
 				assertNotEquals(oldFieldValue,
-					newFieldValue, "The old and new values should be different for field: Obs." + field.getName());
+												newFieldValue, "The old and new values should be different for field: Obs." + field.getName());
 			}
-			
+
 			field.set(obs, newFieldValue);
 		}
 		finally {
 			field.setAccessible(accessible);
 		}
 	}
-	
+
 	private Object generateValue(Field field, boolean setAlternateValue) throws Exception {
 		Object fieldValue;
 		if (field.getType().equals(Boolean.class)) {
@@ -134,10 +134,10 @@ public class ObsTest {
 			fieldValue = field.getType().newInstance();
 		}
 		assertNotNull("Failed to generate a value for field: Obs." + field.getName());
-		
+
 		return fieldValue;
 	}
-	
+
 	/**
 	 * Tests the addToGroup method in ObsGroup
 	 * 
@@ -145,11 +145,11 @@ public class ObsTest {
 	 */
 	@Test
 	public void shouldAddandRemoveObsToGroup() throws Exception {
-		
+
 		Obs obs = new Obs(1);
-		
+
 		Obs obsGroup = new Obs(755);
-		
+
 		// These methods should not fail even with null attributes on the obs
 		assertFalse(obsGroup.isObsGrouping());
 		assertFalse(obsGroup.hasGroupMembers(false));
@@ -159,29 +159,29 @@ public class ObsTest {
 		// should not throw an error
 		obsGroup.addGroupMember(obs);
 		assertEquals(1, obsGroup.getGroupMembers().size());
-		
+
 		// check duplicate add. should only be one
 		obsGroup.addGroupMember(obs);
 		assertTrue(obsGroup.hasGroupMembers(false));
 		assertEquals(1, obsGroup.getGroupMembers().size(), "Duplicate add should not increase the grouped obs size");
-		
+
 		Obs obs2 = new Obs(2);
-		
+
 		obsGroup.removeGroupMember(obs2);
 		assertTrue(obsGroup.hasGroupMembers(false));
 		assertEquals(1, obsGroup.getGroupMembers().size(), "Removing a non existent obs should not decrease the number of grouped obs");
-		
+
 		// testing removing an obs from a group that has a null obs list
 		new Obs().removeGroupMember(obs2);
-		
+
 		obsGroup.removeGroupMember(obs);
-		
+
 		assertEquals(0, obsGroup.getGroupMembers().size());
-		
+
 		// try to add an obs group to itself
 		assertThrows(APIException.class, () -> obsGroup.addGroupMember(obsGroup));
 	}
-	
+
 	/**
 	 * tests the getRelatedObservations method:
 	 */
@@ -194,7 +194,7 @@ public class ObsTest {
 		o.setObsDatetime(new Date());
 		o.setPerson(new Patient(2));
 		o.setValueText("childObs");
-		
+
 		// create its sibling
 		Obs oSibling = new Obs();
 		oSibling.setDateCreated(new Date());
@@ -202,7 +202,7 @@ public class ObsTest {
 		oSibling.setObsDatetime(new Date());
 		oSibling.setValueText("childObs2");
 		oSibling.setPerson(new Patient(2));
-		
+
 		// create a parent Obs
 		Obs oParent = new Obs();
 		oParent.setDateCreated(new Date());
@@ -210,7 +210,7 @@ public class ObsTest {
 		oParent.setObsDatetime(new Date());
 		oSibling.setValueText("parentObs");
 		oParent.setPerson(new Patient(2));
-		
+
 		// create a grandparent obs
 		Obs oGrandparent = new Obs();
 		oGrandparent.setDateCreated(new Date());
@@ -218,11 +218,11 @@ public class ObsTest {
 		oGrandparent.setObsDatetime(new Date());
 		oGrandparent.setPerson(new Patient(2));
 		oSibling.setValueText("grandParentObs");
-		
+
 		oParent.addGroupMember(o);
 		oParent.addGroupMember(oSibling);
 		oGrandparent.addGroupMember(oParent);
-		
+
 		// create a leaf observation at the grandparent level
 		Obs o2 = new Obs();
 		o2.setDateCreated(new Date());
@@ -230,9 +230,9 @@ public class ObsTest {
 		o2.setObsDatetime(new Date());
 		o2.setPerson(new Patient(2));
 		o2.setValueText("grandparentLeafObs");
-		
+
 		oGrandparent.addGroupMember(o2);
-		
+
 		/**
 		 * test to make sure that if the original child obs calls getRelatedObservations, it returns
 		 * itself and its siblings: original obs is one of two groupMembers, so relatedObservations
@@ -243,7 +243,7 @@ public class ObsTest {
 		 */
 		assertEquals(o.getRelatedObservations().size(), 2);
 		assertEquals(oParent.getRelatedObservations().size(), 3);
-		
+
 		// create a great-grandparent obs
 		Obs oGGP = new Obs();
 		oGGP.setDateCreated(new Date());
@@ -252,7 +252,7 @@ public class ObsTest {
 		oGGP.setPerson(new Patient(2));
 		oGGP.setValueText("grandParentObs");
 		oGGP.addGroupMember(oGrandparent);
-		
+
 		// create a leaf great-grandparent obs
 		Obs oGGPleaf = new Obs();
 		oGGPleaf.setDateCreated(new Date());
@@ -261,7 +261,7 @@ public class ObsTest {
 		oGGPleaf.setPerson(new Patient(2));
 		oGGPleaf.setValueText("grandParentObs");
 		oGGP.addGroupMember(oGGPleaf);
-		
+
 		/**
 		 * now run the previous assertions again. this time there are two ancestor leaf obs, so the
 		 * first assertion should still return a set of size 2, but the second assertion sould
@@ -269,15 +269,15 @@ public class ObsTest {
 		 */
 		assertEquals(o.getRelatedObservations().size(), 2);
 		assertEquals(oParent.getRelatedObservations().size(), 4);
-		
+
 		// remove the grandparent leaf observation:
 		
 		oGrandparent.removeGroupMember(o2);
-		
+
 		// now the there is only one ancestor leaf obs:
 		assertEquals(o.getRelatedObservations().size(), 2);
 		assertEquals(oParent.getRelatedObservations().size(), 3);
-		
+
 		/**
 		 * finally, test a non-obsGroup and non-member Obs to the function Obs o2 is now not
 		 * connected to our heirarchy: an empty set should be returned:
@@ -285,9 +285,9 @@ public class ObsTest {
 		
 		assertNotNull(o2.getRelatedObservations());
 		assertEquals(o2.getRelatedObservations().size(), 0);
-		
+
 	}
-	
+
 	/**
 	 * @see Obs#isComplex()
 	 */
@@ -296,16 +296,16 @@ public class ObsTest {
 		ConceptDatatype cd = new ConceptDatatype();
 		cd.setName("Complex");
 		cd.setHl7Abbreviation("ED");
-		
+
 		ConceptComplex complexConcept = new ConceptComplex();
 		complexConcept.setDatatype(cd);
-		
+
 		Obs obs = new Obs();
 		obs.setConcept(complexConcept);
-		
+
 		assertTrue(obs.isComplex());
 	}
-	
+
 	/**
 	 * @see Obs#setValueAsString(String)
 	 */
@@ -314,7 +314,7 @@ public class ObsTest {
 		Obs obs = new Obs();
 		assertThrows(RuntimeException.class, () -> obs.setValueAsString(""));
 	}
-	
+
 	/**
 	 * @see Obs#setValueAsString(String)
 	 */
@@ -323,7 +323,7 @@ public class ObsTest {
 		Obs obs = new Obs();
 		assertThrows(RuntimeException.class, () -> obs.setValueAsString(null));
 	}
-	
+
 	/**
 	 * @see Obs#getValueAsBoolean()
 	 */
@@ -333,7 +333,7 @@ public class ObsTest {
 		obs.setValueNumeric(0.0);
 		assertFalse(obs.getValueAsBoolean());
 	}
-	
+
 	/**
 	 * @see Obs#getValueAsBoolean()
 	 */
@@ -343,7 +343,7 @@ public class ObsTest {
 		obs.setValueNumeric(24.8);
 		assertNull(obs.getValueAsBoolean());
 	}
-	
+
 	@Test
 	public void getValueAsString_shouldReturnNonPreciseValuesForNumericConcepts() throws Exception {
 		Obs obs = new Obs();
@@ -357,7 +357,7 @@ public class ObsTest {
 		String str = "25";
 		assertEquals(str, obs.getValueAsString(Locale.US));
 	}
-	
+
 	@Test
 	public void getValueAsString_shouldNotReturnLongDecimalNumbersAsScientificNotation() throws Exception {
 		Obs obs = new Obs();
@@ -365,7 +365,7 @@ public class ObsTest {
 		String str = "123456789.0";
 		assertEquals(str, obs.getValueAsString(Locale.US));
 	}
-	
+
 	@Test
 	public void getValueAsString_shouldReturnDateInCorrectFormat() throws Exception {
 		Obs obs = new Obs();
@@ -375,13 +375,13 @@ public class ObsTest {
 		cdt.setHl7Abbreviation("DT");
 		cn.setDatatype(cdt);
 		obs.setConcept(cn);
-		
+
 		Date utilDate = new Date();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String dateString = dateFormat.format(utilDate);
 		assertEquals(dateString, obs.getValueAsString(Locale.US));
 	}
-	
+
 	/**
 	 * @see Obs#getValueAsBoolean()
 	 */
@@ -391,7 +391,7 @@ public class ObsTest {
 		obs.setValueNumeric(1.0);
 		assertTrue(obs.getValueAsBoolean());
 	}
-	
+
 	/**
 	 * @see Obs#getGroupMembers(boolean)
 	 */
@@ -412,7 +412,7 @@ public class ObsTest {
 		members = parent.getGroupMembers(); // should be same as false
 		assertEquals(2, members.size(), "default should return non-voided with length of 2");
 	}
-	
+
 	/**
 	 * @see Obs#hasGroupMembers(boolean)
 	 */
@@ -426,7 +426,7 @@ public class ObsTest {
 		assertFalse(parent.hasGroupMembers(false), "When checking for non-voided, should return false");
 		assertFalse(parent.hasGroupMembers(), "Default should check for non-voided");
 	}
-	
+
 	/**
 	 * @see Obs#isObsGrouping()
 	 */
@@ -438,7 +438,7 @@ public class ObsTest {
 		parent.addGroupMember(child);
 		assertTrue(parent.isObsGrouping(), "When checking for Obs grouping, should include voided Obs");
 	}
-	
+
 	/**
 	 * @see Obs#getValueAsString(Locale)
 	 */
@@ -449,7 +449,7 @@ public class ObsTest {
 		String str = "123456789,3";
 		assertEquals(str, obs.getValueAsString(Locale.GERMAN));
 	}
-	
+
 	/**
 	 * @see Obs#getValueAsString(Locale)
 	 */
@@ -460,7 +460,7 @@ public class ObsTest {
 		String str = "123456789.0";
 		assertEquals(str, obs.getValueAsString(Locale.ENGLISH));
 	}
-	
+
 	/**
 	 * @see Obs#getValueAsString(Locale)
 	 */
@@ -471,7 +471,7 @@ public class ObsTest {
 		String str = "1234567890.0";
 		assertEquals(str, obs.getValueAsString(Locale.ENGLISH));
 	}
-	
+
 	/**
 	 * @see Obs#getValueAsString(Locale)
 	 */
@@ -482,31 +482,31 @@ public class ObsTest {
 		String str = "123456789.012345";
 		assertEquals(str, obs.getValueAsString(Locale.ENGLISH));
 	}
-	
+
 	@Test
 	public void getValueAsString_shouldReturnLocalizedCodedConcept() throws Exception {
 		ConceptDatatype cdt = new ConceptDatatype();
 		cdt.setHl7Abbreviation("CWE");
-		
+
 		Concept cn = new Concept();
 		cn.setDatatype(cdt);
 		cn.addName(new ConceptName(VERO, Locale.ITALIAN));
-		
+
 		Obs obs = new Obs();
 		obs.setValueCoded(cn);
 		obs.setConcept(cn);
 		obs.setValueCodedName(new ConceptName("True", Locale.US));
-		
+
 		assertEquals(VERO, obs.getValueAsString(Locale.ITALIAN));
 	}
-	
+
 	/**
 	 * @see Obs#isDirty()
 	 */
 	@Test
 	public void isDirty_shouldReturnFalseWhenNoChangeHasBeenMade() throws Exception {
 		assertFalse(new Obs().isDirty());
-		
+
 		//Should also work if setters are called with same values as the original
 		Obs obs = createObs(2);
 		obs.setGroupMembers(new LinkedHashSet<>());
@@ -522,7 +522,7 @@ public class ObsTest {
 		BeanUtils.copyProperties(obs, BeanUtils.cloneBean(obs));
 		assertFalse(obs.isDirty());
 	}
-	
+
 	/**
 	 * @see Obs#isDirty()
 	 */
@@ -567,12 +567,12 @@ public class ObsTest {
 				//that matches that of person otherwise the test will fail for the personId field
 				obs.setPersonId(originalPersonId);
 			}
-			
+
 			//reset for next field
 			resetObs(obs);
 		}
 	}
-	
+
 	/**
 	 * @see Obs#isDirty()
 	 */
@@ -637,9 +637,9 @@ public class ObsTest {
 		obs.setComment("some non null value");
 		assertFalse(obs.isDirty());
 	}
-	
+
 	/**
-	 * @see Obs#setFormField(String,String)
+	 * @see Obs#setFormField(String, String)
 	 */
 	@Test
 	public void setFormField_shouldNotMarkTheObsAsDirtyWhenTheValueHasNotBeenChanged() throws Exception {
@@ -647,9 +647,9 @@ public class ObsTest {
 		obs.setFormField(obs.getFormFieldNamespace(), obs.getFormFieldPath());
 		assertFalse(obs.isDirty());
 	}
-	
+
 	/**
-	 * @see Obs#setFormField(String,String)
+	 * @see Obs#setFormField(String, String)
 	 */
 	@Test
 	public void setFormField_shouldMarkTheObsAsDirtyWhenTheValueHasBeenChanged() throws Exception {
@@ -661,9 +661,9 @@ public class ObsTest {
 		obs.setFormField(newNameSpace, newPath);
 		assertTrue(obs.isDirty());
 	}
-	
+
 	/**
-	 * @see Obs#setFormField(String,String)
+	 * @see Obs#setFormField(String, String)
 	 */
 	@Test
 	public void setFormField_shouldMarkTheObsAsDirtyWhenTheValueIsChangedFromANonNullToANullValue() throws Exception {
@@ -678,7 +678,7 @@ public class ObsTest {
 	}
 
 	/**
-	 * @see Obs#setFormField(String,String)
+	 * @see Obs#setFormField(String, String)
 	 */
 	@Test
 	public void setFormField_shouldMarkTheObsAsDirtyWhenTheValueIsChangedFromANullToANonNullValue() throws Exception {
@@ -688,7 +688,7 @@ public class ObsTest {
 		obs.setFormField("someNameSpace", "somePath");
 		assertTrue(obs.isDirty());
 	}
-	
+
 	/**
 	 * @see Obs#addGroupMember(Obs)
 	 */
@@ -716,7 +716,7 @@ public class ObsTest {
 		obs.addGroupMember(member);
 		assertFalse(obs.isDirty());
 	}
-	
+
 	/**
 	 * @see Obs#addGroupMember(Obs)
 	 */
@@ -731,7 +731,7 @@ public class ObsTest {
 		obs.addGroupMember(member2);
 		assertFalse(obs.isDirty());
 	}
-	
+
 	/**
 	 * @see Obs#removeGroupMember(Obs)
 	 */
@@ -741,7 +741,7 @@ public class ObsTest {
 		obs.removeGroupMember(new Obs());
 		assertFalse(obs.isDirty());
 	}
-	
+
 	/**
 	 * @see Obs#removeGroupMember(Obs)
 	 */
@@ -769,7 +769,7 @@ public class ObsTest {
 		obs.removeGroupMember(member);
 		assertFalse(obs.isDirty());
 	}
-	
+
 	/**
 	 * @see Obs#setGroupMembers(Set)
 	 */
@@ -801,7 +801,7 @@ public class ObsTest {
 	 */
 	@Test
 	public void setGroupMembers_shouldNotMarkTheExistingObsAsDirtyWhenTheSetIsReplacedWithAnotherWithDifferentMembers()
-	    throws Exception {
+									throws Exception {
 		Obs obs = new Obs(2);
 		Set<Obs> members1 = new HashSet<>();
 		members1.add(new Obs());
@@ -818,7 +818,7 @@ public class ObsTest {
 	 */
 	@Test
 	public void setGroupMembers_shouldNotMarkTheNewObsAsDirtyWhenTheSetIsReplacedWithAnotherWithDifferentMembers()
-			throws Exception {
+									throws Exception {
 		Obs obs = new Obs();
 		Set<Obs> members1 = new HashSet<>();
 		members1.add(new Obs());
@@ -829,7 +829,7 @@ public class ObsTest {
 		obs.setGroupMembers(members2);
 		assertFalse(obs.isDirty());
 	}
-	
+
 	/**
 	 * @see Obs#setGroupMembers(Set)
 	 */
@@ -840,7 +840,7 @@ public class ObsTest {
 		obs.setGroupMembers(new HashSet<>());
 		assertFalse(obs.isDirty());
 	}
-	
+
 	/**
 	 * @see Obs#setGroupMembers(Set)
 	 */
@@ -862,7 +862,7 @@ public class ObsTest {
 	 * @see Obs#setObsDatetime(Date)
 	 */
 	@Test
-	public void setObsDateTime_shouldNotMarkTheObsAsDirtyWhenDateIsNotChangedAndExistingValueIsOfTimeStampType(){
+	public void setObsDateTime_shouldNotMarkTheObsAsDirtyWhenDateIsNotChangedAndExistingValueIsOfTimeStampType() {
 		Obs obs = new Obs();
 		Date date = new Date();
 		Timestamp timestamp = new Timestamp(date.getTime());
@@ -874,13 +874,13 @@ public class ObsTest {
 
 		assertFalse(obs.isDirty());
 	}
-	
+
 	@Test
 	public void shouldSetFinalStatusOnNewObsByDefault() throws Exception {
 		Obs obs = new Obs();
 		assertThat(obs.getStatus(), is(Obs.Status.FINAL));
 	}
-	
+
 	@Test
 	public void newInstance_shouldCopyMostFields() throws Exception {
 		Obs obs = new Obs();
@@ -888,57 +888,57 @@ public class ObsTest {
 		obs.setInterpretation(Obs.Interpretation.LOW);
 		obs.setConcept(new Concept());
 		obs.setValueNumeric(1.2);
-		obs.setObsGroup(new  Obs());        
-        obs.setAccessionNumber("4849RDD");          
-        obs.setValueCoded(new Concept());                  
-        obs.setValueDrug(new Drug());                      
-        obs.setValueGroupId(new  Integer(23));
-        obs.setValueDatetime(new Date());
-        obs.setValueModifier("djfsihdihd");              
-        obs.setValueText("xyzABC");
-        obs.setComment("This is an example");
-        obs.setEncounter(new Encounter(3));  
-        obs.setCreator( new  User(1));                    
-        obs.setDateCreated(new Date());        
-        obs.setVoided(false);            
-        obs.setVoidedBy(new  User(2));      
-        obs.setDateVoided(new Date());                                
-        obs.setVoidReason("Some reason");    
-        obs.setValueComplex("SDIODF7980IDSISF");
-        obs.setComplexData(new ComplexData("Complex data", "Complex data".getBytes()));
-		
+		obs.setObsGroup(new  Obs());
+		obs.setAccessionNumber("4849RDD");
+		obs.setValueCoded(new Concept());
+		obs.setValueDrug(new Drug());
+		obs.setValueGroupId(new  Integer(23));
+		obs.setValueDatetime(new Date());
+		obs.setValueModifier("djfsihdihd");
+		obs.setValueText("xyzABC");
+		obs.setComment("This is an example");
+		obs.setEncounter(new Encounter(3));
+		obs.setCreator(new  User(1));
+		obs.setDateCreated(new Date());
+		obs.setVoided(false);
+		obs.setVoidedBy(new  User(2));
+		obs.setDateVoided(new Date());
+		obs.setVoidReason("Some reason");
+		obs.setValueComplex("SDIODF7980IDSISF");
+		obs.setComplexData(new ComplexData("Complex data", "Complex data".getBytes()));
+
 		Obs copy = Obs.newInstance(obs);
-		
+
 		// these fields are not copied
 		assertThat(copy.getObsId(), nullValue());
 		assertThat(copy.getUuid(), not(obs.getUuid()));
-		
+
 		// other fields are copied
 		assertThat(copy.getConcept(), is(obs.getConcept()));
 		assertThat(copy.getValueNumeric(), is(obs.getValueNumeric()));
 		assertThat(copy.getStatus(), is(obs.getStatus()));
 		assertThat(copy.getInterpretation(), is(obs.getInterpretation()));
 		assertThat(copy.getConcept(), is(obs.getConcept()));
-		assertThat(copy.getAccessionNumber(),  is(obs.getAccessionNumber()));                          
-		assertThat(copy.getValueDrug(),  is(obs.getValueDrug()));                      
+		assertThat(copy.getAccessionNumber(),  is(obs.getAccessionNumber()));
+		assertThat(copy.getValueDrug(),  is(obs.getValueDrug()));
 		assertThat(copy.getValueGroupId(),  is(obs.getValueGroupId()));
 		assertThat(copy.getValueDatetime(),  is(obs.getValueDatetime()));
-		assertThat(copy.getValueNumeric(),  is(obs.getValueNumeric()));      
-		assertThat(copy.getValueModifier(),  is(obs.getValueModifier()));              
+		assertThat(copy.getValueNumeric(),  is(obs.getValueNumeric()));
+		assertThat(copy.getValueModifier(),  is(obs.getValueModifier()));
 		assertThat(copy.getValueText(),  is(obs.getValueText()));
 		assertThat(copy.getComment(),  is(obs.getComment()));
 		assertThat(copy.getEncounter(),  is(obs.getEncounter()));
-		assertThat(copy.getCreator(),  is(obs.getCreator()));                  
-		assertThat(copy.getDateCreated(),  is(obs.getDateCreated()));        
-		assertThat(copy.getVoided(),  is(obs.getVoided()));          
-		assertThat(copy.getVoidedBy(),  is(obs.getVoidedBy()));    
-		assertThat(copy.getDateVoided(),  is(obs.getDateVoided()));                              
-		assertThat(copy.getVoidReason(),  is(obs.getVoidReason()));    
+		assertThat(copy.getCreator(),  is(obs.getCreator()));
+		assertThat(copy.getDateCreated(),  is(obs.getDateCreated()));
+		assertThat(copy.getVoided(),  is(obs.getVoided()));
+		assertThat(copy.getVoidedBy(),  is(obs.getVoidedBy()));
+		assertThat(copy.getDateVoided(),  is(obs.getDateVoided()));
+		assertThat(copy.getVoidReason(),  is(obs.getVoidReason()));
 		assertThat(copy.getValueComplex(),  is(obs.getValueComplex()));
 		assertThat(copy.getComplexData(),  is(obs.getComplexData()));
 
 	}
-	
+
 	@Test
 	public void shouldSupportInterpretationProperty() throws Exception {
 		Obs obs = new Obs();
@@ -947,7 +947,7 @@ public class ObsTest {
 		obs.setInterpretation(Obs.Interpretation.NORMAL);
 		assertThat(obs.getInterpretation(), is(Obs.Interpretation.NORMAL));
 	}
-	
+
 	@Test
 	public void setValueBoolean_shouldNotSetValueForNonBooleanConcept() throws Exception {
 		Obs obs = createObs(2);

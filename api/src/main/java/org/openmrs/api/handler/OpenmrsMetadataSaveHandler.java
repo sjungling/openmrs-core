@@ -19,7 +19,7 @@ import org.openmrs.User;
  * trailing whitespace around the name and description
  */
 public class OpenmrsMetadataSaveHandler implements SaveHandler<OpenmrsMetadata> {
-	
+
 	/**
 	 * @see org.openmrs.api.handler.SaveHandler#handle(org.openmrs.OpenmrsObject, org.openmrs.User,
 	 *      java.util.Date, java.lang.String)
@@ -31,10 +31,10 @@ public class OpenmrsMetadataSaveHandler implements SaveHandler<OpenmrsMetadata> 
 		if (object.getName() != null) {
 			object.setName(object.getName().trim());
 		}
-		
+
 		if (object.getDescription() != null) {
 			object.setDescription(object.getDescription().trim());
 		}
 	}
-	
+
 }

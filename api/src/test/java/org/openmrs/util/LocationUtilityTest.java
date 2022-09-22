@@ -24,7 +24,7 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
  * Consists of the tests for the methods in the location utility class
  */
 public class LocationUtilityTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see LocationUtility#getDefaultLocation()
 	 */
@@ -37,7 +37,7 @@ public class LocationUtilityTest extends BaseContextSensitiveTest {
 		Context.getAdministrationService().saveGlobalProperty(gp);
 		assertEquals("Xanadu", LocationUtility.getDefaultLocation().getName());
 	}
-	
+
 	/**
 	 * @see LocationUtility#getUserDefaultLocation()
 	 */

@@ -38,34 +38,34 @@ public class LuceneAnalyzerFactory {
 	public SearchMapping getSearchMapping() {
 		SearchMapping mapping = new SearchMapping();
 		mapping
-			.analyzerDef(LuceneAnalyzers.PHRASE_ANALYZER, KeywordTokenizerFactory.class)
-			.filter(ClassicFilterFactory.class)
-			.filter(LowerCaseFilterFactory.class)
-			.filter(ASCIIFoldingFilterFactory.class);
+										.analyzerDef(LuceneAnalyzers.PHRASE_ANALYZER, KeywordTokenizerFactory.class)
+										.filter(ClassicFilterFactory.class)
+										.filter(LowerCaseFilterFactory.class)
+										.filter(ASCIIFoldingFilterFactory.class);
 		mapping.analyzerDef(LuceneAnalyzers.EXACT_ANALYZER, WhitespaceTokenizerFactory.class)
-			.filter(ClassicFilterFactory.class)
-			.filter(LowerCaseFilterFactory.class)
-			.filter(ASCIIFoldingFilterFactory.class);
+										.filter(ClassicFilterFactory.class)
+										.filter(LowerCaseFilterFactory.class)
+										.filter(ASCIIFoldingFilterFactory.class);
 		mapping.analyzerDef(LuceneAnalyzers.START_ANALYZER, WhitespaceTokenizerFactory.class)
-			.filter(ClassicFilterFactory.class)
-			.filter(LowerCaseFilterFactory.class)
-			.filter(ASCIIFoldingFilterFactory.class)
-			.filter(EdgeNGramFilterFactory.class)
-			.param("minGramSize", "2")
-			.param("maxGramSize", "20");
+										.filter(ClassicFilterFactory.class)
+										.filter(LowerCaseFilterFactory.class)
+										.filter(ASCIIFoldingFilterFactory.class)
+										.filter(EdgeNGramFilterFactory.class)
+										.param("minGramSize", "2")
+										.param("maxGramSize", "20");
 		mapping.analyzerDef(LuceneAnalyzers.ANYWHERE_ANALYZER, WhitespaceTokenizerFactory.class)
-			.filter(ClassicFilterFactory.class)
-			.filter(LowerCaseFilterFactory.class)
-			.filter(ASCIIFoldingFilterFactory.class)
-			.filter(NGramFilterFactory.class)
-			.param("minGramSize", "2")
-			.param("maxGramSize", "20");
+										.filter(ClassicFilterFactory.class)
+										.filter(LowerCaseFilterFactory.class)
+										.filter(ASCIIFoldingFilterFactory.class)
+										.filter(NGramFilterFactory.class)
+										.param("minGramSize", "2")
+										.param("maxGramSize", "20");
 		mapping.analyzerDef(LuceneAnalyzers.SOUNDEX_ANALYZER, StandardTokenizerFactory.class)
-			.filter(ClassicFilterFactory.class) 
-			.filter(LowerCaseFilterFactory.class)
-			.filter(PhoneticFilterFactory.class)
-			.param("encoder", "Soundex");
-		
+										.filter(ClassicFilterFactory.class)
+										.filter(LowerCaseFilterFactory.class)
+										.filter(PhoneticFilterFactory.class)
+										.param("encoder", "Soundex");
+
 		return mapping;
 	}
 }

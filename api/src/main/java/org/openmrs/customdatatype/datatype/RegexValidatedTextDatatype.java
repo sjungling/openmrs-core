@@ -21,9 +21,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RegexValidatedTextDatatype extends SerializingCustomDatatype<String> {
-	
+
 	private Pattern pattern;
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.CustomDatatype#setConfiguration(java.lang.String)
 	 */
@@ -31,7 +31,7 @@ public class RegexValidatedTextDatatype extends SerializingCustomDatatype<String
 	public void setConfiguration(String regex) {
 		pattern = Pattern.compile(regex);
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#serialize(java.lang.Object)
 	 * <strong>Should</strong> fail if the string does not match the regex
@@ -40,7 +40,7 @@ public class RegexValidatedTextDatatype extends SerializingCustomDatatype<String
 	public String serialize(String typedValue) {
 		return typedValue;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#deserialize(java.lang.String)
 	 */
@@ -48,7 +48,7 @@ public class RegexValidatedTextDatatype extends SerializingCustomDatatype<String
 	public String deserialize(String serializedValue) {
 		return serializedValue;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.CustomDatatype#validate(java.lang.Object)
 	 * <strong>Should</strong> accept a string that matches the regex
@@ -60,5 +60,5 @@ public class RegexValidatedTextDatatype extends SerializingCustomDatatype<String
 			throw new InvalidCustomValueException("Doesn't match regex");
 		}
 	}
-	
+
 }

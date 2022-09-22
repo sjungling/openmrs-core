@@ -20,31 +20,31 @@ import org.openmrs.util.OpenmrsUtil;
  * PersonAttributeType
  */
 public class PersonAttributeType extends BaseChangeableOpenmrsMetadata implements java.io.Serializable, Comparable<PersonAttributeType> {
-	
+
 	public static final long serialVersionUID = 2112313431211L;
-	
+
 	private Integer personAttributeTypeId;
-	
+
 	private String format;
-	
+
 	private Integer foreignKey;
-	
+
 	private Double sortWeight;
 
 	@Field
 	private Boolean searchable = false;
-	
+
 	private Privilege editPrivilege;
-	
+
 	/** default constructor */
 	public PersonAttributeType() {
 	}
-	
+
 	/** constructor with id */
 	public PersonAttributeType(Integer myPersonAttributeTypeId) {
 		this.personAttributeTypeId = myPersonAttributeTypeId;
 	}
-	
+
 	// Property accessors
 	
 	/**
@@ -53,56 +53,56 @@ public class PersonAttributeType extends BaseChangeableOpenmrsMetadata implement
 	public String getFormat() {
 		return format;
 	}
-	
+
 	/**
 	 * @param format The format to set.
 	 */
 	public void setFormat(String format) {
 		this.format = format;
 	}
-	
+
 	/**
 	 * @return the foreignKey
 	 */
 	public Integer getForeignKey() {
 		return foreignKey;
 	}
-	
+
 	/**
 	 * @param foreignKey the foreignKey to set
 	 */
 	public void setForeignKey(Integer foreignKey) {
 		this.foreignKey = foreignKey;
 	}
-	
+
 	/**
 	 * @return the sortWeight
 	 */
 	public Double getSortWeight() {
 		return sortWeight;
 	}
-	
+
 	/**
 	 * @param sortWeight the formOrder to set
 	 */
 	public void setSortWeight(Double sortWeight) {
 		this.sortWeight = sortWeight;
 	}
-	
+
 	/**
 	 * @return Returns the PersonAttributeTypeId.
 	 */
 	public Integer getPersonAttributeTypeId() {
 		return personAttributeTypeId;
 	}
-	
+
 	/**
 	 * @param newPersonAttributeTypeId The PersonAttributeTypeId to set.
 	 */
 	public void setPersonAttributeTypeId(Integer newPersonAttributeTypeId) {
 		this.personAttributeTypeId = newPersonAttributeTypeId;
 	}
-	
+
 	/**
 	 * @return the searchable status
 	 * 
@@ -113,21 +113,21 @@ public class PersonAttributeType extends BaseChangeableOpenmrsMetadata implement
 	public Boolean isSearchable() {
 		return getSearchable();
 	}
-	
+
 	/**
 	 * @return the searchable status
 	 */
 	public Boolean getSearchable() {
 		return searchable;
 	}
-	
+
 	/**
 	 * @param searchable the searchable to set
 	 */
 	public void setSearchable(Boolean searchable) {
 		this.searchable = searchable;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -135,7 +135,7 @@ public class PersonAttributeType extends BaseChangeableOpenmrsMetadata implement
 	public String toString() {
 		return getName();
 	}
-	
+
 	/**
 	 * The privilege required in order to edit this attribute
 	 * 
@@ -145,7 +145,7 @@ public class PersonAttributeType extends BaseChangeableOpenmrsMetadata implement
 	public Privilege getEditPrivilege() {
 		return editPrivilege;
 	}
-	
+
 	/**
 	 * The privilege required in order to edit this attribute If <code>editPrivilege</code> is null,
 	 * no extra permissions are required to edit this type
@@ -156,7 +156,7 @@ public class PersonAttributeType extends BaseChangeableOpenmrsMetadata implement
 	public void setEditPrivilege(Privilege editPrivilege) {
 		this.editPrivilege = editPrivilege;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
@@ -165,7 +165,7 @@ public class PersonAttributeType extends BaseChangeableOpenmrsMetadata implement
 	public Integer getId() {
 		return getPersonAttributeTypeId();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -173,9 +173,9 @@ public class PersonAttributeType extends BaseChangeableOpenmrsMetadata implement
 	@Override
 	public void setId(Integer id) {
 		setPersonAttributeTypeId(id);
-		
+
 	}
-	
+
 	/**
 	*
 	* @deprecated since 1.12. Use DefaultComparator instead.
@@ -187,7 +187,7 @@ public class PersonAttributeType extends BaseChangeableOpenmrsMetadata implement
 		DefaultComparator patDefaultComparator = new DefaultComparator();
 		return patDefaultComparator.compare(this, other);
 	}
-	
+
 	/**
 	 Provides a default comparator.
 	 @since 1.12
@@ -195,12 +195,12 @@ public class PersonAttributeType extends BaseChangeableOpenmrsMetadata implement
 	public static class DefaultComparator implements Comparator<PersonAttributeType>, Serializable {
 
 		private static final long serialVersionUID = 1L;
-		
+
 		@Override
 		public int compare(PersonAttributeType pat1, PersonAttributeType pat2) {
 			return OpenmrsUtil.compareWithNullAsGreatest(pat1.getPersonAttributeTypeId(), pat2.getPersonAttributeTypeId());
-			
+
 		}
 	}
-	
+
 }

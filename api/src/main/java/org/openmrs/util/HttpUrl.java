@@ -19,23 +19,23 @@ import java.net.URL;
  * so that you can mock http calls as the URL class cannot be mocked.
  */
 public class HttpUrl {
-	
+
 	private final URL url;
-	
+
 	public HttpUrl(String url) throws MalformedURLException {
 		if (url == null) {
 			throw new MalformedURLException("Url cannot be null");
 		} else if (!url.startsWith("http://") && !url.startsWith("https://")) {
 			throw new MalformedURLException("Not a valid http(s) url");
 		}
-		
+
 		this.url = new URL(url);
 	}
-	
+
 	public HttpURLConnection openConnection() throws IOException {
 		return (HttpURLConnection) url.openConnection();
 	}
-	
+
 	@Override
 	public String toString() {
 		return url.toString();

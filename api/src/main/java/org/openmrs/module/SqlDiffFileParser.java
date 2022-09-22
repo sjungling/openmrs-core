@@ -38,11 +38,11 @@ public class SqlDiffFileParser {
 
 	private SqlDiffFileParser() {
 	}
-	
+
 	private static final Logger log = LoggerFactory.getLogger(SqlDiffFileParser.class);
-	
+
 	private static final String SQLDIFF_CHANGELOG_FILENAME = "sqldiff.xml";
-	
+
 	/**
 	 * Get the diff map. Return a sorted map&lt;version, sql statements&gt;
 	 *
@@ -53,11 +53,11 @@ public class SqlDiffFileParser {
 		if (module == null) {
 			throw new ModuleException("Module cannot be null");
 		}
-		
+
 		SortedMap<String, String> map = new TreeMap<>(new VersionComparator());
-		
+
 		InputStream diffStream;
-		
+
 		// get the diff stream
 		JarFile jarfile = null;
 		try {
@@ -67,9 +67,9 @@ public class SqlDiffFileParser {
 			catch (IOException e) {
 				throw new ModuleException("Unable to get jar file", module.getName(), e);
 			}
-			
+
 			diffStream = ModuleUtil.getResourceFromApi(jarfile, module.getModuleId(), module.getVersion(),
-			    SQLDIFF_CHANGELOG_FILENAME);
+											SQLDIFF_CHANGELOG_FILENAME);
 			if (diffStream == null) {
 				// Try the old way. Loading from the root of the omod
 				ZipEntry diffEntry = jarfile.getEntry(SQLDIFF_CHANGELOG_FILENAME);
@@ -85,7 +85,7 @@ public class SqlDiffFileParser {
 					}
 				}
 			}
-			
+
 			try {
 				// turn the diff stream into an xml document
 				Document diffDoc;
@@ -101,17 +101,17 @@ public class SqlDiffFileParser {
 				catch (Exception e) {
 					throw new ModuleException("Error parsing diff sqldiff.xml file", module.getName(), e);
 				}
-				
+
 				Element rootNode = diffDoc.getDocumentElement();
-				
+
 				String diffVersion = rootNode.getAttribute("version");
-				
+
 				if (!validConfigVersions().contains(diffVersion)) {
 					throw new ModuleException("Invalid config version: " + diffVersion, module.getModuleId());
 				}
-				
+
 				NodeList diffNodes = getDiffNodes(rootNode, diffVersion);
-				
+
 				if (diffNodes != null && diffNodes.getLength() > 0) {
 					int i = 0;
 					while (i < diffNodes.getLength()) {
@@ -131,11 +131,11 @@ public class SqlDiffFileParser {
 						log.error("Error while closing config stream for module: " + module.getModuleId(), io);
 					}
 				}
-				
+
 				// rethrow the moduleException
 				throw e;
 			}
-			
+
 		}
 		finally {
 			try {
@@ -149,7 +149,7 @@ public class SqlDiffFileParser {
 		}
 		return map;
 	}
-	
+
 	/**
 	 * Generic method to get a module tag
 	 *
@@ -164,7 +164,7 @@ public class SqlDiffFileParser {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * List of the valid sqldiff versions
 	 *
@@ -175,7 +175,7 @@ public class SqlDiffFileParser {
 		versions.add("1.0");
 		return versions;
 	}
-	
+
 	/**
 	 * Finds the nodes that contain diff information
 	 *
@@ -185,12 +185,12 @@ public class SqlDiffFileParser {
 	 */
 	private static NodeList getDiffNodes(Element element, String version) {
 		NodeList diffNodes = null;
-		
+
 		if ("1.0".equals(version)) {
 			diffNodes = element.getElementsByTagName("diff");
 		}
-		
+
 		return diffNodes;
 	}
-	
+
 }

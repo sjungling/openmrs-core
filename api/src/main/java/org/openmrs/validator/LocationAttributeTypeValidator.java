@@ -21,9 +21,9 @@ import org.springframework.validation.ValidationUtils;
  *
  * @since 1.9
  */
-@Handler(supports = { LocationAttributeType.class }, order = 50)
+@Handler(supports = {LocationAttributeType.class}, order = 50)
 public class LocationAttributeTypeValidator extends BaseAttributeTypeValidator<LocationAttributeType> {
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
@@ -31,7 +31,7 @@ public class LocationAttributeTypeValidator extends BaseAttributeTypeValidator<L
 	public boolean supports(Class<?> clazz) {
 		return LocationAttributeType.class.isAssignableFrom(clazz);
 	}
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
 	 *      org.springframework.validation.Errors)
@@ -56,7 +56,7 @@ public class LocationAttributeTypeValidator extends BaseAttributeTypeValidator<L
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "LocationAttributeType.error.nameEmpty");
 		}
 		ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "description", "datatypeClassname",
-		    "preferredHandlerClassname", "retireReason");
+										"preferredHandlerClassname", "retireReason");
 	}
-	
+
 }

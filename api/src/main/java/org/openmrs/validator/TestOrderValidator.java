@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * 
  * @since 1.10
  */
-@Handler(supports = { TestOrder.class }, order = 50)
+@Handler(supports = {TestOrder.class}, order = 50)
 @Component("testOrderValidator")
 public class TestOrderValidator extends ServiceOrderValidator {
 

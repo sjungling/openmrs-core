@@ -19,10 +19,10 @@ import org.openmrs.logic.LogicCriteria;
  * The above will give us a criteria to check if there's "CD4 COUNT" and "WEIGHT (KG)" observations
  */
 public class And implements LogicalOperator {
-	
+
 	@Override
 	public String toString() {
 		return "AND";
 	}
-	
+
 }

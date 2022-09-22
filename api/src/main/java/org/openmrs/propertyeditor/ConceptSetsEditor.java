@@ -25,11 +25,11 @@ import org.springframework.util.StringUtils;
  * Turns a list of concept ids "123 1234 1235" into a List of ConceptSets
  */
 public class ConceptSetsEditor extends PropertyEditorSupport {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ConceptSetsEditor.class);
-	
+
 	private Collection<ConceptSet> originalConceptSets;
-	
+
 	/**
 	 * Default constructor taking in the current sets on a concept
 	 * 
@@ -39,17 +39,17 @@ public class ConceptSetsEditor extends PropertyEditorSupport {
 		if (conceptSets == null) {
 			originalConceptSets = new ArrayList<>();
 		}
-		
+
 		this.originalConceptSets = conceptSets;
 	}
-	
+
 	/**
 	 * @see java.beans.PropertyEditorSupport#setAsText(java.lang.String)
 	 */
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
 		log.debug("setting conceptSets with text: " + text);
-		
+
 		if (StringUtils.hasText(text)) {
 			ConceptService cs = Context.getConceptService();
 			String[] conceptIds = text.split(" ");
@@ -62,26 +62,26 @@ public class ConceptSetsEditor extends PropertyEditorSupport {
 					requestConceptIds.add(Integer.valueOf(id));
 				}
 			}
-			
+
 			// used when adding in concept sets
 			List<Integer> originalConceptSetIds = new ArrayList<>(originalConceptSets.size());
-			
+
 			// remove all sets that aren't in the request (aka, that have been deleted by the user)
 			Collection<ConceptSet> copyOfOriginalConceptSets = new ArrayList<>(originalConceptSets);
 			for (ConceptSet origConceptSet : copyOfOriginalConceptSets) {
 				if (!requestConceptIds.contains(origConceptSet.getConcept().getConceptId())) {
 					originalConceptSets.remove(origConceptSet);
 				}
-				
+
 				// add to quick list used when adding later
 				originalConceptSetIds.add(origConceptSet.getConcept().getConceptId());
 			}
-			
+
 			// insert all sets that are new (aka, that have been added by the user).
 			// Also normalize all weight attributes
 			for (int x = 0; x < requestConceptIds.size(); x++) {
 				Integer requestConceptId = requestConceptIds.get(x);
-				
+
 				// if this isn't in the originalList, add it
 				
 				if (!originalConceptSetIds.contains(requestConceptId)) {
@@ -96,12 +96,12 @@ public class ConceptSetsEditor extends PropertyEditorSupport {
 					}
 				}
 			}
-			
+
 		} else {
 			originalConceptSets.clear();
 		}
-		
+
 		setValue(originalConceptSets);
 	}
-	
+
 }

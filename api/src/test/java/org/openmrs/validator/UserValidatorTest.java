@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Tests methods on the {@link UserValidator} class.
  */
 public class UserValidatorTest extends BaseContextSensitiveTest {
-	
+
 	private static final String STRING_WITH_LENGTH_GREATER_THAN_50 = "too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text";
 
 	@Autowired
@@ -39,7 +39,7 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 
 	@Autowired
 	private UserService userService;
-	
+
 	/**
 	 * @see UserValidator#isUserNameValid(String)
 	 */
@@ -47,7 +47,7 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 	public void isUserNameValid_shouldValidateUsernameWithOnlyAlphaNumerics() {
 		assertTrue(validator.isUserNameValid("AB"));
 	}
-	
+
 	/**
 	 * @see UserValidator#isUserNameValid(String)
 	 */
@@ -55,7 +55,7 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 	public void isUserNameValid_shouldValidateUsernameWithAlphaDashAndUnderscore() {
 		assertTrue(validator.isUserNameValid("A-_."));
 	}
-	
+
 	/**
 	 * @see UserValidator#isUserNameValid(String)
 	 */
@@ -63,7 +63,7 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 	public void isUserNameValid_shouldValidateUsernameWithAlphaDashUnderscoreAndDot() {
 		assertTrue(validator.isUserNameValid("A-_.B"));
 	}
-	
+
 	/**
 	 * @see UserValidator#isUserNameValid(String)
 	 */
@@ -71,10 +71,10 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 	public void isUserNameValid_shouldValidateUsernameWithExactlyMaxSizeName() {
 		String username = "12345678901234567890123456789012345678901234567890";
 		assertEquals(50, username.length());
-		
+
 		assertTrue(validator.isUserNameValid(username));
 	}
-	
+
 	/**
 	 * @see UserValidator#isUserNameValid(String)
 	 */
@@ -82,7 +82,7 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 	public void isUserNameValid_shouldNotValidateUsernameWithLessThanMinimumLength() {
 		assertFalse(validator.isUserNameValid("A"));
 	}
-	
+
 	/**
 	 * @see UserValidator#isUserNameValid(String)
 	 */
@@ -90,7 +90,7 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 	public void isUserNameValid_shouldNotValidateUsernameWithInvalidCharacter() {
 		assertFalse(validator.isUserNameValid("A*"));
 	}
-	
+
 	/**
 	 * @see UserValidator#isUserNameValid(String)
 	 */
@@ -102,7 +102,7 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 	}
 
 	/**
-	 * @see UserValidator#validate(Object,Errors)
+	 * @see UserValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfRetiredAndRetireReasonIsNull() {
@@ -111,36 +111,36 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 	}
 
 	/**
-	 * @see UserValidator#validate(Object,Errors)
+	 * @see UserValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfRetiredAndRetireReasonIsEmpty() {
 		String retireReason = "";
 		invokeValidateAndAssertHasErrorRetireReason(retireReason);
 	}
-	
+
 	/**
-	 * @see UserValidator#validate(Object,Errors)
+	 * @see UserValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfRetiredAndRetireReasonIsWhitespace() {
 		String retireReason = "   ";
 		invokeValidateAndAssertHasErrorRetireReason(retireReason);
 	}
-	
+
 	private void invokeValidateAndAssertHasErrorRetireReason(String invalidRetireReason) {
 		User user = new User();
 		user.setUsername("test");
 		user.setRetireReason(invalidRetireReason);
 		user.setRetired(true);
-		
+
 		Errors errors = new BindException(user, "user");
 		validator.validate(user, errors);
 		assertTrue(errors.hasFieldErrors("retireReason"));
 	}
 
 	/**
-	 * @see UserValidator#validate(Object,Errors)
+	 * @see UserValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfAllRequiredFieldsHaveProperValues() {
@@ -151,13 +151,13 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 		user.setPerson(new Person(999));
 		user.getPerson().addName(new PersonName("Users", "Need", "People"));
 		user.getPerson().setGender("F");
-		
+
 		Errors errors = new BindException(user, "user");
 		validator.validate(user, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see UserValidator#isUserNameValid(String)
 	 */
@@ -165,7 +165,7 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 	public void isUserNameValid_shouldValidateWhenUsernameIsNull() {
 		assertTrue(validator.isUserNameValid(null));
 	}
-	
+
 	/**
 	 * @see UserValidator#isUserNameValid(String)
 	 */
@@ -173,7 +173,7 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 	public void isUserNameValid_shouldValidateWhenUsernameIsTheEmptyString() {
 		assertTrue(validator.isUserNameValid(""));
 	}
-	
+
 	/**
 	 * @see UserValidator#isUserNameValid(String)
 	 */
@@ -181,68 +181,68 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 	public void isUserNameValid_shouldNotValidateWhenUsernameIsWhitespaceOnly() {
 		assertFalse(validator.isUserNameValid("  "));
 	}
-	
+
 	/**
 	 * @see UserValidator#isUserNameAsEmailValid(String)
 	 */
 	@Test
 	public void isUserNameAsEmailValid_shouldReturnFalseIfEmailInvalid() {
-		String[] invalids = new String[] { "mkyong", "mkyong123@.com", "my@kong", "my.kong", 
-				"my.@kong", "@kong.my" };
+		String[] invalids = new String[]{"mkyong", "mkyong123@.com", "my@kong", "my.kong",
+										"my.@kong", "@kong.my"};
 		for (String email : invalids) {
 			assertFalse(validator.isUserNameAsEmailValid(email));
 		}
 	}
-	
+
 	/**
 	 * @see UserValidator#isUserNameAsEmailValid(String)
 	 */
 	@Test
 	public void isUserNameAsEmailValid_shouldReturnTrueIfEmailValid() {
-		String[] valids = new String[] { "mkyong@yahoo.com", "mkyong-100@yahoo.com", "mkyong.100@yahoo.com",
-		        "mkyong111@mkyong.com", "mkyong-100@mkyong.net", "mkyong.100@mkyong.com.au", "mkyong@1.com",
-		        "mkyong@gmail.com.com", "mk@t-yong.de" };
+		String[] valids = new String[]{"mkyong@yahoo.com", "mkyong-100@yahoo.com", "mkyong.100@yahoo.com",
+										"mkyong111@mkyong.com", "mkyong-100@mkyong.net", "mkyong.100@mkyong.com.au", "mkyong@1.com",
+										"mkyong@gmail.com.com", "mk@t-yong.de"};
 		for (String email : valids) {
 			assertTrue(validator.isUserNameAsEmailValid(email));
 		}
 	}
-	
+
 	/**
-	 * @see UserValidator#validate(Object,Errors)
+	 * @see UserValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfEmailAsUsernameEnabledAndEmailInvalid() {
 		User user = new User();
 		user.setUsername("test@example.com");
-		
+
 		AdministrationService as = Context.getAdministrationService();
 		as.saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_USER_REQUIRE_EMAIL_AS_USERNAME, "true"));
-		
+
 		Errors errors = new BindException(user, "user");
 		validator.validate(user, errors);
-		
+
 		assertFalse(errors.hasFieldErrors("username"));
 	}
-	
+
 	/**
-	 * @see UserValidator#validate(Object,Errors)
+	 * @see UserValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfEmailAsUsernameDisabledAndEmailProvided() {
 		User user = new User();
 		user.setUsername("test@example.com");
-		
+
 		AdministrationService as = Context.getAdministrationService();
 		as.saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_USER_REQUIRE_EMAIL_AS_USERNAME, "false"));
-		
+
 		Errors errors = new BindException(user, "user");
 		validator.validate(user, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("username"));
 	}
-	
+
 	/**
-	 * @see UserValidator#validate(Object,Errors)
+	 * @see UserValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldNotThrowNPEWhenUserIsNull() {
@@ -250,9 +250,9 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(null, errors);
 		assertTrue(true);
 	}
-	
+
 	/**
-	 * @see UserValidator#validate(Object,Errors)
+	 * @see UserValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() {
@@ -263,15 +263,15 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 		user.setPerson(new Person(999));
 		user.getPerson().addName(new PersonName("Users", "Need", "People"));
 		user.getPerson().setGender("F");
-		
+
 		Errors errors = new BindException(user, "user");
 		validator.validate(user, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see UserValidator#validate(Object,Errors)
+	 * @see UserValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() {
@@ -282,10 +282,10 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 		user.setPerson(new Person(999));
 		user.getPerson().addName(new PersonName(STRING_WITH_LENGTH_GREATER_THAN_50, STRING_WITH_LENGTH_GREATER_THAN_50, STRING_WITH_LENGTH_GREATER_THAN_50));
 		user.getPerson().setGender(STRING_WITH_LENGTH_GREATER_THAN_50);
-		
+
 		Errors errors = new BindException(user, "user");
 		validator.validate(user, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("username"));
 		assertTrue(errors.hasFieldErrors("systemId"));
 		assertTrue(errors.hasFieldErrors("retireReason"));
@@ -294,44 +294,44 @@ public class UserValidatorTest extends BaseContextSensitiveTest {
 		assertTrue(errors.hasFieldErrors("person.names[0].familyName"));
 		assertTrue(errors.hasFieldErrors("person.gender"));
 	}
-	
+
 	/**
-	 * @see UserValidator#validate(Object,Errors)
+	 * @see UserValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfEmailIsInvalid() {
 		User user = new User();
 		user.setEmail("mkyong123@.com");
-		
+
 		Errors errors = new BindException(user, "user");
-		validator.validate(user, errors);		
+		validator.validate(user, errors);
 		assertTrue(errors.hasFieldErrors("email"));
 	}
-	
+
 	/**
-	 * @see UserValidator#validate(Object,Errors)
+	 * @see UserValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfEmailIsValid() {
 		User user = new User();
 		user.setEmail("test@example.com");
-				
+
 		Errors errors = new BindException(user, "user");
-		validator.validate(user, errors);	
+		validator.validate(user, errors);
 		assertFalse(errors.hasFieldErrors("email"));
 	}
 
 	/**
-	 * @see UserValidator#validate(Object,Errors)
+	 * @see UserValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfEmailIsNotUnique() {
 		User existingUser = userService.getAllUsers().get(0);
 		existingUser.setEmail("test@example.com");
 		userService.saveUser(existingUser);
-		
+
 		User newUser = new User();
-		
+
 		newUser.setEmail("test@example.org");
 		Errors errors = new BindException(newUser, "user");
 		validator.validate(newUser, errors);

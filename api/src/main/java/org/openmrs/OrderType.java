@@ -23,30 +23,30 @@ import org.openmrs.api.context.Context;
  *
  */
 public class OrderType extends BaseChangeableOpenmrsMetadata {
-	
+
 	public static final long serialVersionUID = 23232L;
-	
+
 	public static final String DRUG_ORDER_TYPE_UUID = "131168f4-15f5-102d-96e4-000c29c2a5d7";
-	
+
 	public static final String TEST_ORDER_TYPE_UUID = "52a447d3-a64a-11e3-9aeb-50e549534c5e";
-	
+
 	public static final String REFERRAL_ORDER_TYPE_UUID = "f1b63696-2b6c-11ec-8d3d-0242ac130003";
-	
+
 	private Integer orderTypeId;
-	
+
 	private String javaClassName;
-	
+
 	private OrderType parent;
-	
+
 	@Independent
 	private Collection<ConceptClass> conceptClasses;
-	
+
 	/**
 	 * default constructor
 	 */
 	public OrderType() {
 	}
-	
+
 	/**
 	 * Constructor with ID
 	 * 
@@ -55,7 +55,7 @@ public class OrderType extends BaseChangeableOpenmrsMetadata {
 	public OrderType(Integer orderTypeId) {
 		this.orderTypeId = orderTypeId;
 	}
-	
+
 	/**
 	 * Convenience constructor that takes in the elements required to save this OrderType to the
 	 * database
@@ -69,21 +69,21 @@ public class OrderType extends BaseChangeableOpenmrsMetadata {
 		setDescription(description);
 		setJavaClassName(javaClassName);
 	}
-	
+
 	/**
 	 * @return Returns the orderTypeId.
 	 */
 	public Integer getOrderTypeId() {
 		return orderTypeId;
 	}
-	
+
 	/**
 	 * @param orderTypeId The orderTypeId to set.
 	 */
 	public void setOrderTypeId(Integer orderTypeId) {
 		this.orderTypeId = orderTypeId;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -91,44 +91,44 @@ public class OrderType extends BaseChangeableOpenmrsMetadata {
 	public Integer getId() {
 		return getOrderTypeId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
 	@Override
 	public void setId(Integer id) {
 		setOrderTypeId(id);
-		
+
 	}
-	
+
 	/**
 	 * @return Returns the Java className as String
 	 */
 	public String getJavaClassName() {
 		return javaClassName;
 	}
-	
+
 	/**
 	 * @param javaClassName The Java class to set as String
 	 */
 	public void setJavaClassName(String javaClassName) {
 		this.javaClassName = javaClassName;
 	}
-	
+
 	/**
 	 * @return Returns the {@link org.openmrs.OrderType}
 	 */
 	public OrderType getParent() {
 		return parent;
 	}
-	
+
 	/**
 	 * @param parent The {@link org.openmrs.OrderType} to set
 	 */
 	public void setParent(OrderType parent) {
 		this.parent = parent;
 	}
-	
+
 	/**
 	 * @return Get the {@link org.openmrs.ConceptClass}es
 	 */
@@ -138,14 +138,14 @@ public class OrderType extends BaseChangeableOpenmrsMetadata {
 		}
 		return conceptClasses;
 	}
-	
+
 	/**
 	 * @param conceptClasses the collection containing the {@link org.openmrs.ConceptClass}es
 	 */
 	public void setConceptClasses(Collection<ConceptClass> conceptClasses) {
 		this.conceptClasses = conceptClasses;
 	}
-	
+
 	/**
 	 * Convenience method that returns a {@link java.lang.Class} object for the associated
 	 * javaClassName
@@ -159,10 +159,10 @@ public class OrderType extends BaseChangeableOpenmrsMetadata {
 		}
 		catch (ClassNotFoundException e) {
 			//re throw as a runtime exception
-			throw new APIException("OrderType.failed.load.class", new Object[] { javaClassName }, e);
+			throw new APIException("OrderType.failed.load.class", new Object[]{javaClassName}, e);
 		}
 	}
-	
+
 	/**
 	 * Convenience method that adds the specified concept class
 	 * 
@@ -173,7 +173,7 @@ public class OrderType extends BaseChangeableOpenmrsMetadata {
 	public void addConceptClass(ConceptClass conceptClass) {
 		getConceptClasses().add(conceptClass);
 	}
-	
+
 	/**
 	 * @see org.openmrs.BaseOpenmrsObject#toString()
 	 */

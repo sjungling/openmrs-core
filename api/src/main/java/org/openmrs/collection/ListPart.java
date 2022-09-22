@@ -19,9 +19,9 @@ import java.util.List;
  * @since 1.11
  */
 public class ListPart<E> extends CollectionPart<E> {
-	
+
 	private final List<E> list;
-	
+
 	/**
 	 * @param list
 	 * @param firstElement
@@ -32,19 +32,19 @@ public class ListPart<E> extends CollectionPart<E> {
 		super(list, firstElement, maxElements, totalElements, totalElementsExact);
 		this.list = list;
 	}
-	
+
 	@Override
 	public Collection<E> getCollection() {
 		return list;
 	}
-	
+
 	public List<E> getList() {
 		return list;
 	}
-	
+
 	public static <T> ListPart<T> newListPart(List<T> list, Long firstElement, Long maxElements, Long totalElements,
-	        Boolean totalElementsExact) {
+									Boolean totalElementsExact) {
 		return new ListPart<>(list, firstElement, maxElements, totalElements, totalElementsExact);
 	}
-	
+
 }

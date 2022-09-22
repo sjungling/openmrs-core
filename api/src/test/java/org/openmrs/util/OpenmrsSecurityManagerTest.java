@@ -19,7 +19,7 @@ import org.openmrs.api.APIException;
  * Tests methods on the {@link OpenmrsSecurityManager} class
  */
 public class OpenmrsSecurityManagerTest {
-	
+
 	/**
 	 * @see OpenmrsSecurityManager#getCallerClass(int)
 	 */
@@ -29,7 +29,7 @@ public class OpenmrsSecurityManagerTest {
 		Class<?> callerClass = openmrsSecurityManager.getCallerClass(0);
 		assertTrue(callerClass.getPackage().getName().contains("junit"), "Oops, didn't get a junit type of class: " + callerClass);
 	}
-	
+
 	/**
 	 * @see OpenmrsSecurityManager#getCallerClass(int)
 	 */

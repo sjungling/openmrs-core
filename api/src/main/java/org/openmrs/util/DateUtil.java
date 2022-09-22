@@ -18,10 +18,10 @@ import java.util.Date;
  * @since 2.0
  */
 public class DateUtil {
-	
+
 	private DateUtil() {
 	}
-	
+
 	/**
 	 * @param date
 	 * @return date truncated to second precision (e.g. with milliseconds dropped)
@@ -30,5 +30,5 @@ public class DateUtil {
 		Instant instant = date.toInstant().truncatedTo(ChronoUnit.SECONDS);
 		return Date.from(instant);
 	}
-	
+
 }

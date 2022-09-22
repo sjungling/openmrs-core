@@ -16,7 +16,7 @@ import org.openmrs.OpenmrsObject;
  * Indexes {@link OpenmrsObject} as ID.
  */
 public class OpenmrsObjectFieldBridge implements StringBridge {
-	
+
 	/**
 	 * @see org.hibernate.search.bridge.StringBridge#objectToString(java.lang.Object)
 	 */
@@ -25,5 +25,5 @@ public class OpenmrsObjectFieldBridge implements StringBridge {
 		OpenmrsObject openmrsObject = (OpenmrsObject) obj;
 		return openmrsObject.getId().toString();
 	}
-	
+
 }

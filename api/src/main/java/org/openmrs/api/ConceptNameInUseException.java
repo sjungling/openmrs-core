@@ -17,16 +17,16 @@ package org.openmrs.api;
  * @see ConceptService#saveConcept(org.openmrs.Concept)
  */
 public class ConceptNameInUseException extends APIException {
-	
+
 	private static final long serialVersionUID = 1034355111901825174L;
-	
+
 	/**
 	 * Generic constructor that gives a normal message about editing not being allowed to the user.
 	 */
 	public ConceptNameInUseException() {
 		this("The conceptName cannot be changed if it is already used/associated to an observation");
 	}
-	
+
 	/**
 	 * Convenience constructor to give the user a message other than normal default one
 	 * 
@@ -36,7 +36,7 @@ public class ConceptNameInUseException extends APIException {
 	public ConceptNameInUseException(String message) {
 		super(message);
 	}
-	
+
 	/**
 	 * Convenience constructor to give the user a message other than the normal one and to chain
 	 * this exception with a parent exception.
@@ -48,7 +48,7 @@ public class ConceptNameInUseException extends APIException {
 	public ConceptNameInUseException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	/**
 	 * Convenience constructor used to only set the parent exception to chain with. This does not
 	 * set the error message for the user as to why an exception is being thrown. The

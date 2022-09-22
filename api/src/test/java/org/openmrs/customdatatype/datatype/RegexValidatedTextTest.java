@@ -16,15 +16,15 @@ import org.junit.jupiter.api.Test;
 import org.openmrs.customdatatype.InvalidCustomValueException;
 
 public class RegexValidatedTextTest {
-	
+
 	RegexValidatedTextDatatype datatype;
-	
+
 	@BeforeEach
 	public void before() {
 		datatype = new RegexValidatedTextDatatype();
 		datatype.setConfiguration("[a-z]+");
 	}
-	
+
 	/**
 	 * @see RegexValidatedTextDatatype#validate(String)
 	 */
@@ -32,7 +32,7 @@ public class RegexValidatedTextTest {
 	public void validate_shouldAcceptAStringThatMatchesTheRegex() {
 		datatype.validate("thisisgood");
 	}
-	
+
 	/**
 	 * @see RegexValidatedTextDatatype#validate(String)
 	 */
@@ -40,7 +40,7 @@ public class RegexValidatedTextTest {
 	public void validate_shouldFailIfTheStringDoesNotMatchTheRegex() {
 		assertThrows(InvalidCustomValueException.class, () -> datatype.validate("spaces not allowed"));
 	}
-	
+
 	/**
 	 * @see RegexValidatedTextDatatype#save(String, String))
 	 */

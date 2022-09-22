@@ -37,17 +37,17 @@ import java.util.List;
  * @since 1.10
  */
 public abstract class ImmutableEntityInterceptor extends EmptyInterceptor {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ImmutableEntityInterceptor.class);
-	
+
 	// This thread local enables storing additional mutable properties to allow for a given thread
 	private final ThreadLocal<String[]> additionalMutableProperties = new ThreadLocal<>();
-	
+
 	/**
 	 * Returns the class handled by the interceptor
 	 */
 	protected abstract Class<?> getSupportedType();
-	
+
 	/**
 	 * Subclasses can override this to return fields that are allowed to be edited, returning null
 	 * or an empty array implies the entity is immutable
@@ -57,7 +57,7 @@ public abstract class ImmutableEntityInterceptor extends EmptyInterceptor {
 	protected String[] getMutablePropertyNames() {
 		return null;
 	}
-	
+
 	/**
 	 * Subclasses can override this to specify whether voided or retired items are mutable
 	 * 
@@ -67,7 +67,7 @@ public abstract class ImmutableEntityInterceptor extends EmptyInterceptor {
 	protected boolean ignoreVoidedOrRetiredObjects() {
 		return false;
 	}
-	
+
 	/**
 	 * @see org.hibernate.EmptyInterceptor#onFlushDirty(Object, java.io.Serializable, Object[],
 	 *      Object[], String[], org.hibernate.type.Type[])
@@ -78,8 +78,8 @@ public abstract class ImmutableEntityInterceptor extends EmptyInterceptor {
 	 */
 	@Override
 	public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState,
-	                            String[] propertyNames, Type[] types) {
-		
+									String[] propertyNames, Type[] types) {
+
 		if (getSupportedType().isAssignableFrom(entity.getClass())) {
 			List<String> changedProperties = null;
 			for (int i = 0; i < propertyNames.length; i++) {
@@ -87,7 +87,7 @@ public abstract class ImmutableEntityInterceptor extends EmptyInterceptor {
 				if (isMutableProperty(property)) {
 					continue;
 				}
-				
+
 				boolean isVoidedOrRetired = false;
 				if (Voidable.class.isAssignableFrom(entity.getClass())) {
 					isVoidedOrRetired = ((Voidable) entity).getVoided();
@@ -97,7 +97,7 @@ public abstract class ImmutableEntityInterceptor extends EmptyInterceptor {
 				if (isVoidedOrRetired && ignoreVoidedOrRetiredObjects()) {
 					continue;
 				}
-				
+
 				Object previousValue = (previousState != null) ? previousState[i] : null;
 				Object currentValue = (currentState != null) ? currentState[i] : null;
 				if (!OpenmrsUtil.nullSafeEquals(currentValue, previousValue)) {
@@ -109,12 +109,12 @@ public abstract class ImmutableEntityInterceptor extends EmptyInterceptor {
 			}
 			if (CollectionUtils.isNotEmpty(changedProperties)) {
 				log.debug("The following fields cannot be changed for {} : {}", getSupportedType(), changedProperties);
-				
-				throw new UnchangeableObjectException("editing.fields.not.allowed", new Object[] { changedProperties,
-				        getSupportedType().getSimpleName() });
+
+				throw new UnchangeableObjectException("editing.fields.not.allowed", new Object[]{changedProperties,
+												getSupportedType().getSimpleName()});
 			}
 		}
-		
+
 		return false;
 	}
 

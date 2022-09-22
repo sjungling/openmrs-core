@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class FreeTextDatatype extends SerializingCustomDatatype<String> {
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#serialize(java.lang.Object)
 	 */
@@ -26,7 +26,7 @@ public class FreeTextDatatype extends SerializingCustomDatatype<String> {
 	public String serialize(String typedValue) {
 		return typedValue;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#deserialize(java.lang.String)
 	 */
@@ -34,5 +34,5 @@ public class FreeTextDatatype extends SerializingCustomDatatype<String> {
 	public String deserialize(String serializedValue) {
 		return serializedValue;
 	}
-	
+
 }

@@ -13,20 +13,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AdvicePoint {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(AdvicePoint.class);
-	
+
 	private String point;
-	
+
 	private Object classInstance;
-	
+
 	private Module module;
-	
+
 	private String className;
-	
+
 	public AdvicePoint() {
 	}
-	
+
 	public AdvicePoint(String point, Class<?> clazz) {
 		this.point = point;
 		try {
@@ -36,17 +36,17 @@ public class AdvicePoint {
 			log.error("Unable to get instance of: [{}]", clazz.getName(), e);
 		}
 	}
-	
+
 	public AdvicePoint(Module mod, String point, String className) {
 		this.point = point;
 		this.module = mod;
 		this.className = className;
 	}
-	
+
 	public String getPoint() {
 		return point;
 	}
-	
+
 	/**
 	 * @return the classInstance
 	 */
@@ -54,7 +54,7 @@ public class AdvicePoint {
 		if (classInstance != null) {
 			return classInstance;
 		}
-		
+
 		Object o = null;
 		try {
 			Class<?> c = ModuleFactory.getModuleClassLoader(getModule()).loadClass(getClassName());
@@ -66,21 +66,21 @@ public class AdvicePoint {
 		classInstance = o;
 		return o;
 	}
-	
+
 	/**
 	 * @return the className
 	 */
 	public String getClassName() {
 		return className;
 	}
-	
+
 	/**
 	 * @return the module
 	 */
 	public Module getModule() {
 		return module;
 	}
-	
+
 	public void disposeClassInstance() {
 		classInstance = null;
 	}

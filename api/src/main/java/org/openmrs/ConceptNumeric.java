@@ -22,39 +22,39 @@ import org.hibernate.search.annotations.Indexed;
  */
 @Indexed
 public class ConceptNumeric extends Concept {
-	
+
 	public static final long serialVersionUID = 47323L;
-	
+
 	// Fields
 	
 	private Double hiAbsolute;
-	
+
 	private Double hiCritical;
-	
+
 	private Double hiNormal;
-	
+
 	private Double lowAbsolute;
-	
+
 	private Double lowCritical;
-	
+
 	private Double lowNormal;
-	
+
 	private String units;
-	
+
 	private Boolean allowDecimal = false;
-	
+
 	/**
 	 * displayPrecision, represents the number of significant digits
 	 * to be used for display of a numeric value
 	 */
 	private Integer displayPrecision;
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public ConceptNumeric() {
 	}
-	
+
 	/**
 	 * Generic constructor taking the primary key
 	 * 
@@ -63,7 +63,7 @@ public class ConceptNumeric extends Concept {
 	public ConceptNumeric(Integer conceptId) {
 		setConceptId(conceptId);
 	}
-	
+
 	/**
 	 * Optional constructor for turning a Concept into a ConceptNumeric <br>
 	 * <br>
@@ -91,32 +91,32 @@ public class ConceptNumeric extends Concept {
 		this.setRetireReason(c.getRetireReason());
 		this.setVersion(c.getVersion());
 		this.setUuid(c.getUuid());
-		
+
 		this.setNames(new HashSet<>(c.getNames()));
 		for (ConceptName cName : this.getNames()) {
 			cName.setConcept(this);
 		}
-		
+
 		this.setAnswers(new HashSet<>(c.getAnswers(true)));
 		for (ConceptAnswer cAnswer : this.getAnswers()) {
 			cAnswer.setConcept(this);
 		}
-		
+
 		this.setConceptSets(new TreeSet<>(c.getConceptSets()));
 		for (ConceptSet cSet : this.getConceptSets()) {
 			cSet.setConceptSet(this);
 		}
-		
+
 		this.setDescriptions(new HashSet<>(c.getDescriptions()));
 		for (ConceptDescription cDescription : this.getDescriptions()) {
 			cDescription.setConcept(this);
 		}
-		
+
 		this.setConceptMappings(new HashSet<>(c.getConceptMappings()));
 		for (ConceptMap cMap : this.getConceptMappings()) {
 			cMap.setConcept(this);
 		}
-		
+
 		this.hiAbsolute = null;
 		this.hiCritical = null;
 		this.hiNormal = null;
@@ -126,61 +126,61 @@ public class ConceptNumeric extends Concept {
 		this.units = "";
 		this.allowDecimal = false;
 	}
-	
+
 	// Property accessors
 	
 	public Double getHiAbsolute() {
 		return this.hiAbsolute;
 	}
-	
+
 	public void setHiAbsolute(Double hiAbsolute) {
 		this.hiAbsolute = hiAbsolute;
 	}
-	
+
 	public Double getHiCritical() {
 		return this.hiCritical;
 	}
-	
+
 	public void setHiCritical(Double hiCritical) {
 		this.hiCritical = hiCritical;
 	}
-	
+
 	public Double getHiNormal() {
 		return this.hiNormal;
 	}
-	
+
 	public void setHiNormal(Double hiNormal) {
 		this.hiNormal = hiNormal;
 	}
-	
+
 	public Double getLowAbsolute() {
 		return this.lowAbsolute;
 	}
-	
+
 	public void setLowAbsolute(Double lowAbsolute) {
 		this.lowAbsolute = lowAbsolute;
 	}
-	
+
 	public Double getLowCritical() {
 		return this.lowCritical;
 	}
-	
+
 	public void setLowCritical(Double lowCritical) {
 		this.lowCritical = lowCritical;
 	}
-	
+
 	public Double getLowNormal() {
 		return this.lowNormal;
 	}
-	
+
 	public void setLowNormal(Double lowNormal) {
 		this.lowNormal = lowNormal;
 	}
-	
+
 	public String getUnits() {
 		return this.units;
 	}
-	
+
 	public void setUnits(String units) {
 		this.units = units;
 	}
@@ -195,7 +195,7 @@ public class ConceptNumeric extends Concept {
 	public boolean isNumeric() {
 		return "Numeric".equals(getDatatype().getName());
 	}
-	
+
 	/**
 	 * @return displayPrecision to be used for the display of a numeric value
 	 */
@@ -209,15 +209,15 @@ public class ConceptNumeric extends Concept {
 	public void setDisplayPrecision(Integer displayPrecision) {
 		this.displayPrecision = displayPrecision;
 	}
-	
+
 	public Boolean getAllowDecimal() {
 		return allowDecimal == null ? Boolean.FALSE : allowDecimal;
 	}
-	
+
 	public void setAllowDecimal(Boolean allowDecimal) {
 		this.allowDecimal = allowDecimal;
 	}
-	
+
 	/**
 	 * @deprecated as of 2.0, use {@link #getAllowDecimal()}
 	 */

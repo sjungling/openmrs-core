@@ -21,14 +21,14 @@ import org.springframework.validation.Validator;
  * Validates attributes on the {@link ImplementationId} object.
  * 
  */
-@Handler(supports = { ImplementationId.class }, order = 50)
+@Handler(supports = {ImplementationId.class}, order = 50)
 public class ImplementationIdValidator implements Validator {
-	
+
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return clazz.equals(ImplementationId.class);
 	}
-	
+
 	/*
 	 * <strong>Should</strong> should fail validation if implementation id is null
 	 * <strong>Should</strong> should fail validation if description is null
@@ -41,7 +41,7 @@ public class ImplementationIdValidator implements Validator {
 	@Override
 	public void validate(Object obj, Errors errors) throws APIException {
 		ImplementationId implId = (ImplementationId) obj;
-		char[] illegalChars = { '^', '|' };
+		char[] illegalChars = {'^', '|'};
 		if (implId == null) {
 			throw new APIException("ImplementationId.null", (Object[]) null);
 		} else {

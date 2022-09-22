@@ -18,32 +18,32 @@ import org.openmrs.util.OpenmrsUtil;
  * @since 2.1.0
  */
 public class CohortMembership extends BaseChangeableOpenmrsData implements Comparable<CohortMembership> {
-	
+
 	public static final long serialVersionUID = 0L;
 
 	private Integer cohortMemberId;
-	
+
 	private Cohort cohort;
-	
+
 	private Integer patientId;
-	
+
 	private Date startDate;
-	
+
 	private Date endDate;
-	
+
 	// Constructor
 	public CohortMembership() {
 	}
-	
+
 	public CohortMembership(Integer patientId, Date startDate) {
 		this.patientId = patientId;
 		this.startDate = startDate;
 	}
-	
+
 	public CohortMembership(Integer patientId) {
 		this(patientId, new Date());
 	}
-	
+
 	/**
 	 * Compares asOfDate to [startDate, endDate], inclusive of both endpoints.
 	 * @param asOfDate date to compare if membership is active or inactive
@@ -52,59 +52,59 @@ public class CohortMembership extends BaseChangeableOpenmrsData implements Compa
 	public boolean isActive(Date asOfDate) {
 		Date date = asOfDate == null ? new Date() : asOfDate;
 		return !this.getVoided() && OpenmrsUtil.compare(startDate, date) <= 0
-			&& OpenmrsUtil.compareWithNullAsLatest(date, endDate) <= 0;
+										&& OpenmrsUtil.compareWithNullAsLatest(date, endDate) <= 0;
 	}
-	
+
 	public boolean isActive() {
 		return isActive(null);
 	}
-	
+
 	@Override
 	public Integer getId() {
 		return getCohortMemberId();
 	}
-	
+
 	@Override
 	public void setId(Integer id) {
 		setCohortMemberId(id);
 	}
-	
+
 	public Integer getCohortMemberId() {
 		return cohortMemberId;
 	}
-	
+
 	public void setCohortMemberId(Integer cohortMemberId) {
 		this.cohortMemberId = cohortMemberId;
 	}
-	
+
 	public Cohort getCohort() {
 		return cohort;
 	}
-	
+
 	public void setCohort(Cohort cohort) {
 		this.cohort = cohort;
 	}
-	
+
 	public Integer getPatientId() {
 		return patientId;
 	}
-	
+
 	public void setPatientId(Integer patientId) {
 		this.patientId = patientId;
 	}
-	
+
 	public Date getStartDate() {
 		return startDate != null ? (Date) startDate.clone() : null;
 	}
-	
+
 	public void setStartDate(Date startDate) {
-		 this.startDate = startDate != null ? new Date(startDate.getTime()) : null;
+		this.startDate = startDate != null ? new Date(startDate.getTime()) : null;
 	}
-	
+
 	public Date getEndDate() {
 		return endDate != null ? (Date) endDate.clone() : null;
 	}
-	
+
 	/**
 	 * OpenMRS treats a membership as active from its startDate to endDate <em>inclusive</em> of both.
 	 * The underlying database field stores a date+time, so in the common case (where you don't care about the time of day
@@ -114,8 +114,8 @@ public class CohortMembership extends BaseChangeableOpenmrsData implements Compa
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate != null ? new Date(endDate.getTime()) : null;
 	}
-	
-	
+
+
 	/**
 	 * Sorts by following fields, in order:
 	 * <ol>
@@ -160,7 +160,7 @@ public class CohortMembership extends BaseChangeableOpenmrsData implements Compa
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * @since 2.3.0
 	 * Indicates if a given cohortMembership object is equal to this one
@@ -170,26 +170,27 @@ public class CohortMembership extends BaseChangeableOpenmrsData implements Compa
 	 */
 	@Override
 	public boolean equals(Object otherCohortMembershipObject) {
-		if(otherCohortMembershipObject == null || !(otherCohortMembershipObject instanceof CohortMembership)){
+		if (otherCohortMembershipObject == null || !(otherCohortMembershipObject instanceof CohortMembership)) {
 			return false;
 		}
-		CohortMembership otherCohortMembership = (CohortMembership)otherCohortMembershipObject;
-		if(this == otherCohortMembership){
+		CohortMembership otherCohortMembership = (CohortMembership) otherCohortMembershipObject;
+		if (this == otherCohortMembership) {
 			return true;
-		} 
-		
-		
-		return ((endDate != null ) ? endDate.equals(otherCohortMembership.getEndDate()) : otherCohortMembership.getEndDate() == null)
-			&&
-			((startDate !=null) ? startDate.equals(otherCohortMembership.getStartDate())  : otherCohortMembership.getStartDate() == null)
-			&& 
-			((patientId != null) ? patientId.equals(otherCohortMembership.getPatientId()) : otherCohortMembership.getPatientId() == null);
+		}
+
+
+		return ((endDate != null) ? endDate.equals(otherCohortMembership.getEndDate()) : otherCohortMembership.getEndDate() == null)
+										&&
+										((startDate != null) ? startDate.equals(otherCohortMembership.getStartDate())  : otherCohortMembership.getStartDate() == null)
+										&&
+										((patientId != null) ? patientId.equals(otherCohortMembership.getPatientId()) : otherCohortMembership.getPatientId() == null);
 	}
+
 	/**
 	 * @since 2.3.0
 	 * 
 	 * Creates a hash code of this object
-    */
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(patientId, endDate, startDate);

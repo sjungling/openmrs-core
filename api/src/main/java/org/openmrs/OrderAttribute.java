@@ -18,7 +18,7 @@ import org.openmrs.attribute.BaseAttribute;
  * @since 2.5.0
  */
 public class OrderAttribute extends BaseAttribute<OrderAttributeType, Order>
-		implements Attribute<OrderAttributeType, Order> {
+								implements Attribute<OrderAttributeType, Order> {
 
 	private Integer orderAttributeId;
 

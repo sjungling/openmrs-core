@@ -51,7 +51,7 @@ import org.openmrs.logic.op.Within;
  * <code>new LogicCriteriaImpl("CD4 COUNT").lt(200).within(Duration.months(6))</code>
  */
 public interface LogicCriteria {
-	
+
 	/**
 	 * Create a new LogicExpression using the <code>operand</code> and <code>operator</code> and
 	 * then append them to the current LogicCriteria
@@ -61,17 +61,17 @@ public interface LogicCriteria {
 	 * @return a new LogicCriteria containing the existing and new LogicExpression
 	 */
 	public LogicCriteria appendExpression(Operator operator, Operand operand);
-	
+
 	/**
 	 * @see LogicCriteria#appendExpression(Operator, Operand)
 	 */
 	public LogicCriteria appendExpression(Operator operator, String operand);
-	
+
 	/**
 	 * @see LogicCriteria#appendExpression(Operator, Operand)
 	 */
 	public LogicCriteria appendExpression(Operator operator, double operand);
-	
+
 	/**
 	 * Apply a transformation operator to a logic expression
 	 * 
@@ -79,7 +79,7 @@ public interface LogicCriteria {
 	 * @return new logic criteria containing the {@link TransformOperator}
 	 */
 	public LogicCriteria applyTransform(Operator operator);
-	
+
 	// --Logic Operators joining criteria
 	/**
 	 * Append a LogicCriteria with another LogicCriteria using an operator
@@ -89,7 +89,7 @@ public interface LogicCriteria {
 	 * @return new {@link LogicCriteria} containing existing and the new {@link LogicCriteria}
 	 */
 	public LogicCriteria appendCriteria(Operator operator, LogicCriteria logicCriteria);
-	
+
 	/**
 	 * Append the LogicCriteria using the {@link And} operator
 	 * 
@@ -98,7 +98,7 @@ public interface LogicCriteria {
 	 * @see And
 	 */
 	public LogicCriteria and(LogicCriteria logicCriteria);
-	
+
 	/**
 	 * Append the LogicCriteria using the {@link Or} operator
 	 * 
@@ -107,9 +107,9 @@ public interface LogicCriteria {
 	 * @see Or
 	 */
 	public LogicCriteria or(LogicCriteria logicCriteria);
-	
+
 	public LogicCriteria not();
-	
+
 	//--Transform Operators
 	/**
 	 * Apply the {@link Count} operator to the LogicCriteria
@@ -118,7 +118,7 @@ public interface LogicCriteria {
 	 * @see Count
 	 */
 	public LogicCriteria count();
-	
+
 	/**
 	 * Apply the {@link Average} operator to the LogicCriteria
 	 * 
@@ -126,7 +126,7 @@ public interface LogicCriteria {
 	 * @see Average
 	 */
 	public LogicCriteria average();
-	
+
 	/**
 	 * Apply the {@link Last} operator to the LogicCriteria
 	 * 
@@ -134,12 +134,12 @@ public interface LogicCriteria {
 	 * @see Last
 	 */
 	public LogicCriteria last();
-	
+
 	/**
 	 * @see LogicCriteria#last()
 	 */
 	public LogicCriteria last(Integer numResults);
-	
+
 	/**
 	 * Apply the {@link First} operator to the LogicCriteria
 	 * 
@@ -147,22 +147,22 @@ public interface LogicCriteria {
 	 * @see First
 	 */
 	public LogicCriteria first();
-	
+
 	/**
 	 * @see LogicCriteria#first()
 	 */
 	public LogicCriteria first(Integer numResults);
-	
+
 	/**
 	 * @see LogicCriteria#first()
 	 */
 	public LogicCriteria first(String sortComponent);
-	
+
 	/**
 	 * @see LogicCriteria#first()
 	 */
 	public LogicCriteria first(Integer numResults, String sortComponent);
-	
+
 	/**
 	 * Apply the {@link Distinct} operator to the LogicCriteria
 	 * 
@@ -170,11 +170,11 @@ public interface LogicCriteria {
 	 * @see org.openmrs.logic.op.Distinct
 	 */
 	public LogicCriteria distinct();
-	
+
 	public LogicCriteria exists();
-	
+
 	public LogicCriteria notExists();
-	
+
 	//--Comparison Operators
 	/**
 	 * Add a {@link AsOf} expression to the current LogicCriteria
@@ -184,7 +184,7 @@ public interface LogicCriteria {
 	 * @see AsOf
 	 */
 	public LogicCriteria asOf(Date value);
-	
+
 	/**
 	 * Add a {@link org.openmrs.logic.op.Before} expression to the current LogicCriteria
 	 * 
@@ -193,7 +193,7 @@ public interface LogicCriteria {
 	 * @see org.openmrs.logic.op.Before
 	 */
 	public LogicCriteria before(Date value);
-	
+
 	/**
 	 * Add a {@link In} expression to the current LogicCriteria
 	 * 
@@ -202,7 +202,7 @@ public interface LogicCriteria {
 	 * @see In
 	 */
 	public LogicCriteria after(Date value);
-	
+
 	/**
 	 * Add a {@link org.openmrs.logic.op.After} expression to the current LogicCriteria
 	 * 
@@ -211,27 +211,27 @@ public interface LogicCriteria {
 	 * @see org.openmrs.logic.op.After
 	 */
 	public LogicCriteria in(Collection<?> value);
-	
+
 	/**
 	 * @see LogicCriteria#contains(String)
 	 */
 	public LogicCriteria contains(Operand value);
-	
+
 	/**
 	 * @see LogicCriteria#contains(String)
 	 */
 	public LogicCriteria contains(int value);
-	
+
 	/**
 	 * @see LogicCriteria#contains(String)
 	 */
 	public LogicCriteria contains(float value);
-	
+
 	/**
 	 * @see LogicCriteria#contains(String)
 	 */
 	public LogicCriteria contains(double value);
-	
+
 	/**
 	 * Add a {@link org.openmrs.logic.op.Contains} expression to the current LogicCriteria
 	 * 
@@ -240,27 +240,27 @@ public interface LogicCriteria {
 	 * @see org.openmrs.logic.op.Contains
 	 */
 	public LogicCriteria contains(String value);
-	
+
 	/**
 	 * @see LogicCriteria#equalTo(String)
 	 */
 	public LogicCriteria equalTo(Operand value);
-	
+
 	/**
 	 * @see LogicCriteria#equalTo(String)
 	 */
 	public LogicCriteria equalTo(int value);
-	
+
 	/**
 	 * @see LogicCriteria#equalTo(String)
 	 */
 	public LogicCriteria equalTo(float value);
-	
+
 	/**
 	 * @see LogicCriteria#equalTo(String)
 	 */
 	public LogicCriteria equalTo(double value);
-	
+
 	/**
 	 * Add a {@link org.openmrs.logic.op.Equals} expression to the current LogicCriteria
 	 * 
@@ -269,22 +269,22 @@ public interface LogicCriteria {
 	 * @see org.openmrs.logic.op.Equals
 	 */
 	public LogicCriteria equalTo(String value);
-	
+
 	/**
 	 * @see LogicCriteria#gte(double)
 	 */
 	public LogicCriteria gte(Operand value);
-	
+
 	/**
 	 * @see LogicCriteria#gte(double)
 	 */
 	public LogicCriteria gte(int value);
-	
+
 	/**
 	 * @see LogicCriteria#gte(double)
 	 */
 	public LogicCriteria gte(float value);
-	
+
 	/**
 	 * Add a {@link GreaterThanEquals} expression to the current LogicCriteria
 	 * 
@@ -293,22 +293,22 @@ public interface LogicCriteria {
 	 * @see GreaterThanEquals
 	 */
 	public LogicCriteria gte(double value);
-	
+
 	/**
 	 * @see LogicCriteria#gt(double)
 	 */
 	public LogicCriteria gt(Operand value);
-	
+
 	/**
 	 * @see LogicCriteria#gt(double)
 	 */
 	public LogicCriteria gt(int value);
-	
+
 	/**
 	 * @see LogicCriteria#gt(double)
 	 */
 	public LogicCriteria gt(float value);
-	
+
 	/**
 	 * Add a {@link GreaterThan} expression to the current LogicCriteria
 	 * 
@@ -317,22 +317,22 @@ public interface LogicCriteria {
 	 * @see GreaterThan
 	 */
 	public LogicCriteria gt(double value);
-	
+
 	/**
 	 * @see LogicCriteria#lt(double)
 	 */
 	public LogicCriteria lt(Operand value);
-	
+
 	/**
 	 * @see LogicCriteria#lt(double)
 	 */
 	public LogicCriteria lt(int value);
-	
+
 	/**
 	 * @see LogicCriteria#lt(double)
 	 */
 	public LogicCriteria lt(float value);
-	
+
 	/**
 	 * Add a {@link LessThan} expression to the current LogicCriteria
 	 * 
@@ -341,22 +341,22 @@ public interface LogicCriteria {
 	 * @see LessThan
 	 */
 	public LogicCriteria lt(double value);
-	
+
 	/**
 	 * @see LogicCriteria#lte(double)
 	 */
 	public LogicCriteria lte(Operand value);
-	
+
 	/**
 	 * @see LogicCriteria#lte(double)
 	 */
 	public LogicCriteria lte(int value);
-	
+
 	/**
 	 * @see LogicCriteria#lte(double)
 	 */
 	public LogicCriteria lte(float value);
-	
+
 	/**
 	 * Add a {@link LessThanEquals} expression to the current LogicCriteria
 	 * 
@@ -365,7 +365,7 @@ public interface LogicCriteria {
 	 * @see LessThanEquals
 	 */
 	public LogicCriteria lte(double value);
-	
+
 	/**
 	 * Add a duration expression to the current LogicCriteria
 	 * 
@@ -374,17 +374,17 @@ public interface LogicCriteria {
 	 * @see Within
 	 */
 	public LogicCriteria within(Duration duration);
-	
+
 	/**
 	 * @return logic parameters
 	 */
 	public Map<String, Object> getLogicParameters();
-	
+
 	/**
 	 * @param logicParameters
 	 */
 	public void setLogicParameters(Map<String, Object> logicParameters);
-	
+
 	/**
 	 * Method to get the root token of the current LogicCriteria. <code>
 	 * logicService.parseString("'CD4 COUNT'").getRootToken().equals("CD4 COUNT");
@@ -393,12 +393,12 @@ public interface LogicCriteria {
 	 * @return the root token of the LogicCriteria
 	 */
 	public String getRootToken();
-	
+
 	/**
 	 * Method to get the LogicExpression backing the current LogicCriteria
 	 * 
 	 * @return the LogicExpression of the current LogicCriteria
 	 */
 	public LogicExpression getExpression();
-	
+
 }

@@ -258,7 +258,7 @@ public class FormServiceTest extends BaseContextSensitiveTest {
 
 	/**
 	 * @
-	 * @see FormService#getForms(String,Boolean,Collection,Boolean,Collection,Collection,Collection)
+	 * @see FormService#getForms(String, Boolean, Collection, Boolean, Collection, Collection, Collection)
 	 */
 	@Test
 	public void getForms_shouldReturnFormsContainingAllFormFieldsInContainingAllFormFields() {
@@ -308,7 +308,7 @@ public class FormServiceTest extends BaseContextSensitiveTest {
 
 		assertEquals(numberOfExpectedForms, currentNumberOfForms);
 		assertTrue(wasFormsSuccessfullyFilteredByMatchingFormFieldsInContainingAnyFormField(containingAnyFormField,
-			formsReturned));
+										formsReturned));
 
 	}
 
@@ -325,7 +325,7 @@ public class FormServiceTest extends BaseContextSensitiveTest {
 	}
 
 	private boolean wasFormsSuccessfullyFilteredByMatchingFormFieldsInContainingAnyFormField(
-		Collection<FormField> containingAnyFormField, List<Form> formsReturned) {
+									Collection<FormField> containingAnyFormField, List<Form> formsReturned) {
 
 		for (Form form : formsReturned) {
 			if (!doesFormContainAnyFormField(form, containingAnyFormField)) {
@@ -622,7 +622,7 @@ public class FormServiceTest extends BaseContextSensitiveTest {
 
 	/**
 	 * @throws ParseException
-	 * @see FormService#purgeFormResource(Form,String,String)
+	 * @see FormService#purgeFormResource(Form, String, String)
 	 */
 	@Test
 	public void purgeFormResource_shouldDeleteAFormResource() throws ParseException {
@@ -1057,7 +1057,7 @@ public class FormServiceTest extends BaseContextSensitiveTest {
 		Context.getFormService().saveForm(createMockForm(true));
 
 		forms = Context.getFormService().getAllForms(true);
-		assertEquals(currentFormsSize + 1 , forms.size());
+		assertEquals(currentFormsSize + 1, forms.size());
 	}
 
 	/**
@@ -1072,7 +1072,7 @@ public class FormServiceTest extends BaseContextSensitiveTest {
 		Context.getFormService().saveForm(createMockForm(true));
 
 		forms = Context.getFormService().getAllForms(false);
-		assertEquals(currentFormsSize , forms.size());
+		assertEquals(currentFormsSize, forms.size());
 	}
 
 	/**
@@ -1083,7 +1083,7 @@ public class FormServiceTest extends BaseContextSensitiveTest {
 		List<Form> forms = Context.getFormService().getAllForms();
 		boolean formNameFound = false;
 		final String formName = "Sample_Form_Not_In_List";
-		for (Form node:forms) {
+		for (Form node :forms) {
 			if (node.getName().equals(formName)) {
 				formNameFound = true;
 			}

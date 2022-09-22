@@ -22,38 +22,38 @@ import org.openmrs.customdatatype.SingleCustomValue;
  * something similar to environment variables used in operating systems.
  */
 public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDescriptor, SingleCustomValue<GlobalProperty> {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private String property = "";
-	
+
 	private String propertyValue = "";
-	
+
 	private transient Object typedValue;
-	
+
 	// if true, indicates that setValue has been called, and we need to invoke CustomDatatype's save
 	private boolean dirty = false;
-	
+
 	private String description = "";
-	
+
 	private String datatypeClassname;
-	
+
 	private String datatypeConfig;
-	
+
 	private String preferredHandlerClassname;
-	
+
 	private String handlerConfig;
-	
+
 	private User changedBy;
-	
+
 	private Date dateChanged;
-	
+
 	/**
 	 * Default empty constructor
 	 */
 	public GlobalProperty() {
 	}
-	
+
 	/**
 	 * Constructor defining the key for this GP
 	 *
@@ -62,7 +62,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public GlobalProperty(String property) {
 		this.property = property;
 	}
-	
+
 	/**
 	 * Constructor defining the key and value of this GP
 	 *
@@ -73,7 +73,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 		this(property);
 		this.propertyValue = value;
 	}
-	
+
 	/**
 	 * Constructor defining key/value/description for this GP
 	 *
@@ -85,7 +85,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 		this(property, value);
 		this.description = description;
 	}
-	
+
 	/**
 	 * Constructor defining key/value/description/customDatatype/datatypeConfig
 	 *
@@ -98,54 +98,54 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	 * @since 1.9
 	 */
 	public GlobalProperty(String property, String value, String description,
-	    Class<? extends CustomDatatype<?>> datatypeClass, String datatypeConfig) {
+									Class<? extends CustomDatatype<?>> datatypeClass, String datatypeConfig) {
 		this(property, value, description);
 		this.datatypeClassname = datatypeClass.getName();
 		this.datatypeConfig = datatypeConfig;
 	}
-	
+
 	/**
 	 * @return Returns the property.
 	 */
 	public String getProperty() {
 		return property;
 	}
-	
+
 	/**
 	 * @param property The property to set.
 	 */
 	public void setProperty(String property) {
 		this.property = property;
 	}
-	
+
 	/**
 	 * @return Returns the propertyValue.
 	 */
 	public String getPropertyValue() {
 		return propertyValue;
 	}
-	
+
 	/**
 	 * @param propertyValue The propertyValue to set.
 	 */
 	public void setPropertyValue(String propertyValue) {
 		this.propertyValue = propertyValue;
 	}
-	
+
 	/**
 	 * @return the description
 	 */
 	public String getDescription() {
 		return description;
 	}
-	
+
 	/**
 	 * @param description the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
@@ -154,7 +154,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public Integer getId() {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -163,7 +163,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public void setId(Integer id) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.CustomValueDescriptor#getDatatypeClassname()
 	 * @since 1.9
@@ -172,7 +172,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public String getDatatypeClassname() {
 		return datatypeClassname;
 	}
-	
+
 	/**
 	 * @param datatypeClassname the datatypeClassname to set
 	 * @since 1.9
@@ -180,7 +180,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public void setDatatypeClassname(String datatypeClassname) {
 		this.datatypeClassname = datatypeClassname;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.CustomValueDescriptor#getDatatypeConfig()
 	 * @since 1.9
@@ -189,7 +189,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public String getDatatypeConfig() {
 		return datatypeConfig;
 	}
-	
+
 	/**
 	 * @param datatypeConfig the datatypeConfig to set
 	 * @since 1.9
@@ -197,7 +197,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public void setDatatypeConfig(String datatypeConfig) {
 		this.datatypeConfig = datatypeConfig;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.CustomValueDescriptor#getPreferredHandlerClassname()
 	 * @since 1.9
@@ -206,7 +206,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public String getPreferredHandlerClassname() {
 		return preferredHandlerClassname;
 	}
-	
+
 	/**
 	 * @param preferredHandlerClassname the preferredHandlerClassname to set
 	 * @since 1.9
@@ -214,7 +214,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public void setPreferredHandlerClassname(String preferredHandlerClassname) {
 		this.preferredHandlerClassname = preferredHandlerClassname;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.CustomValueDescriptor#getHandlerConfig()
 	 * @since 1.9
@@ -223,7 +223,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public String getHandlerConfig() {
 		return handlerConfig;
 	}
-	
+
 	/**
 	 * @param handlerConfig the handlerConfig to set
 	 * @since 1.9
@@ -231,7 +231,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public void setHandlerConfig(String handlerConfig) {
 		this.handlerConfig = handlerConfig;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -239,7 +239,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public String toString() {
 		return "property: " + getProperty() + " value: " + getPropertyValue();
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SingleCustomValue#getDescriptor()
 	 *
@@ -249,7 +249,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public GlobalProperty getDescriptor() {
 		return this;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SingleCustomValue#getValueReference()
 	 *
@@ -259,7 +259,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public String getValueReference() {
 		return getPropertyValue();
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SingleCustomValue#setValueReferenceInternal(java.lang.String)
 	 *
@@ -269,7 +269,7 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public void setValueReferenceInternal(String valueToPersist) {
 		setPropertyValue(valueToPersist);
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SingleCustomValue#getValue()
 	 *
@@ -282,18 +282,18 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 		}
 		return typedValue;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SingleCustomValue#setValue(java.lang.Object)
 	 *
 	 * @since 1.9
 	 */
 	@Override
-	public <T> void setValue(T typedValue){
+	public <T> void setValue(T typedValue) {
 		this.typedValue = typedValue;
 		dirty = true;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SingleCustomValue#isDirty()
 	 *
@@ -305,32 +305,32 @@ public class GlobalProperty extends BaseOpenmrsObject implements CustomValueDesc
 	public boolean isDirty() {
 		return getDirty();
 	}
-	
+
 	public boolean getDirty() {
 		return dirty;
 	}
-	
+
 	/**
 	 * @return Returns the changedBy.
 	 */
 	public User getChangedBy() {
 		return changedBy;
 	}
-	
+
 	/**
 	 * @param changedBy The user that changed this object
 	 */
 	public void setChangedBy(User changedBy) {
 		this.changedBy = changedBy;
 	}
-	
+
 	/**
 	 * @return Returns the date this object was changed
 	 */
 	public Date getDateChanged() {
 		return dateChanged;
 	}
-	
+
 	/**
 	 * @param dateChanged The date this object was changed
 	 */

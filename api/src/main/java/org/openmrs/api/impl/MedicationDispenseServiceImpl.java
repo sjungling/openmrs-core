@@ -65,7 +65,7 @@ public class MedicationDispenseServiceImpl extends BaseOpenmrsService implements
 
 	@Override
 	public MedicationDispense voidMedicationDispense(
-		MedicationDispense medicationDispense, String reason) {
+									MedicationDispense medicationDispense, String reason) {
 		if (StringUtils.isBlank(reason)) {
 			throw new IllegalArgumentException("voidReason cannot be null or empty");
 		}

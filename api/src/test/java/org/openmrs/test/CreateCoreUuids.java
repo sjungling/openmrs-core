@@ -29,15 +29,15 @@ import org.openmrs.util.OpenmrsConstants;
  */
 @Disabled
 public class CreateCoreUuids extends BaseContextSensitiveTest {
-	
+
 	//@Test
 	@SkipBaseSetup
 	public void getUUIDs() throws Exception {
 		Context.authenticate("admin", "test");
 		System.out.println("db: " + OpenmrsConstants.DATABASE_NAME);
-		
+
 		Map<String, List<? extends OpenmrsMetadata>> coremetadatas = new LinkedHashMap<>();
-		
+
 		coremetadatas.put("field_type", Context.getFormService().getAllFieldTypes(true));
 		coremetadatas.put("person_attribute_type", Context.getPersonService().getAllPersonAttributeTypes(true));
 		coremetadatas.put("encounter_type", Context.getEncounterService().getAllEncounterTypes(true));
@@ -46,19 +46,19 @@ public class CreateCoreUuids extends BaseContextSensitiveTest {
 		coremetadatas.put("patient_identifier_type", Context.getPatientService().getAllPatientIdentifierTypes(true));
 		coremetadatas.put("location", Context.getLocationService().getAllLocations(true));
 		coremetadatas.put("hl7_source", Context.getHL7Service().getAllHL7Sources());
-		
+
 		for (Map.Entry<String, List<? extends OpenmrsMetadata>> entry : coremetadatas.entrySet()) {
 			System.out.println("new table: " + entry.getKey());
-			
+
 			for (OpenmrsMetadata obj : entry.getValue()) {
-				
+
 				String output = "<update tableName=\"" + entry.getKey() + "\"><column name=\"uuid\" value=\""
-				        + obj.getUuid() + "\"/><where>" + entry.getKey() + "_id" + "= '" + obj.getId() + "' and name = '"
-				        + obj.getName().replace("'", "\\'") + "'</where></update>";
+												+ obj.getUuid() + "\"/><where>" + entry.getKey() + "_id" + "= '" + obj.getId() + "' and name = '"
+												+ obj.getName().replace("'", "\\'") + "'</where></update>";
 				System.out.println(output);
 			}
 		}
-		
+
 		///////////////////////////////////////
 		// exceptions:
 		//
@@ -67,31 +67,31 @@ public class CreateCoreUuids extends BaseContextSensitiveTest {
 		System.out.println("Relationship type");
 		for (RelationshipType type : Context.getPersonService().getAllRelationshipTypes()) {
 			String output = "<update tableName=\"relationship_type\"><column name=\"uuid\" value=\"" + type.getUuid()
-			        + "\"/><where> relationship_type_id = '" + type.getRelationshipTypeId() + "' and a_is_to_b = '"
-			        + type.getaIsToB().replace("'", "\\'") + "' and b_is_to_a = '" + type.getbIsToA().replace("'", "\\'")
-			        + "'</where></update>";
+											+ "\"/><where> relationship_type_id = '" + type.getRelationshipTypeId() + "' and a_is_to_b = '"
+											+ type.getaIsToB().replace("'", "\\'") + "' and b_is_to_a = '" + type.getbIsToA().replace("'", "\\'")
+											+ "'</where></update>";
 			System.out.println(output);
 		}
-		
+
 		// roles:
 		System.out.println("Roles");
 		for (Role role : Context.getUserService().getAllRoles()) {
 			String output = "<update tableName=\"role\"><column name=\"uuid\" value=\"" + role.getUuid()
-			        + "\"/><where> role = '" + role.getRole().replace("'", "\\'") + "'</where></update>";
+											+ "\"/><where> role = '" + role.getRole().replace("'", "\\'") + "'</where></update>";
 			System.out.println(output);
 		}
-		
+
 		// user:
 		System.out.println("Users");
 		for (User user : Context.getUserService().getAllUsers()) {
 			String output = "<update tableName=\"users\"><column name=\"uuid\" value=\"" + user.getUuid()
-			        + "\"/><where> user_id = '" + user.getUserId() + "' and system_id = '"
-			        + user.getSystemId().replace("'", "\\'") + "'</where></update>";
+											+ "\"/><where> user_id = '" + user.getUserId() + "' and system_id = '"
+											+ user.getSystemId().replace("'", "\\'") + "'</where></update>";
 			System.out.println(output);
 		}
-		
+
 	}
-	
+
 	/**
 	 * Make sure we use the database defined by the runtime properties and not the hsql in-memory
 	 * database

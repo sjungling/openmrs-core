@@ -24,25 +24,25 @@ import org.slf4j.LoggerFactory;
  * @since 2.4
  */
 public class PostgreSQLUuidType extends CharType {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(PostgreSQLUuidType.class);
-	
+
 	@Override
 	public DatabaseDataType toDatabaseDataType(Database database) {
 		if (database instanceof PostgresDatabase && getSize() == 38) {
 			DatabaseDataType result = new DatabaseDataType("CHARACTER", 36);
-			
+
 			log.debug("uuid type for PostgreSQL is '{}' ", result.getType());
-			
+
 			return result;
 		}
-		
+
 		log.debug("delegating the choice of char(38) type for database '{}' to super class of PostgreSQLUuidType",
-		    database.getDatabaseProductName());
-		
+										database.getDatabaseProductName());
+
 		return super.toDatabaseDataType(database);
 	}
-	
+
 	@Override
 	public int getPriority() {
 		return super.getPriority() + 1;

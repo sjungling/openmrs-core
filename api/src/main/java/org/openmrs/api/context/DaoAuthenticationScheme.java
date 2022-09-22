@@ -19,7 +19,7 @@ import org.openmrs.api.db.ContextDAO;
  * @since 2.3.0
  */
 public abstract class DaoAuthenticationScheme implements AuthenticationScheme {
-	
+
 	protected ContextDAO getContextDAO() {
 		return Context.getContextDAO();
 	}

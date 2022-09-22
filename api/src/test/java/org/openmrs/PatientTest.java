@@ -30,21 +30,21 @@ import org.junit.jupiter.api.Test;
  * by testing all other non getter/setters in the patient object
  */
 public class PatientTest {
-	
+
 	/**
 	 * Test the constructor method in patient object that takes in a patient as object and creates a copy
 	 */
 	@Test
 	public void patient_shouldConstructCloneWhenPassedPatient() {
 		Patient p = new Patient();
-		
+
 		Set<PersonName> pnSet = new HashSet<>();
 		PersonName pn = new PersonName();
 		pn.setFamilyName("familyName");
 		pn.setGivenName("givenName");
 		pn.setMiddleName("middleName");
 		pnSet.add(pn);
-			
+
 		PatientIdentifier pi1 = new PatientIdentifier();
 		PatientIdentifierType identifierType = new PatientIdentifierType(1);
 		Location location = new Location(1);
@@ -62,20 +62,20 @@ public class PatientTest {
 		pi2.setIdentifierType(identifierType2);
 		pi2.setLocation(location2);
 		pi2.setVoided(false);
-		
+
 		p.setNames(pnSet);
 		p.addIdentifier(pi1);
 		p.addIdentifier(pi2);
 		p.setAllergyStatus("TestAllergy");
 		p.setId(1);
-		
+
 		Patient p2 = new Patient(p);
 
 		assertEquals(p, p2);
 		assertEquals(p.getAllergyStatus(), p2.getAllergyStatus());
 		assertEquals(p.getNames(), p2.getNames());
 		assertEquals(p.getGivenName(), p2.getGivenName());
-		assertEquals(p.getIdentifiers(),p2.getIdentifiers());
+		assertEquals(p.getIdentifiers(), p2.getIdentifiers());
 		// Check that each identifier refers to the correct patient object
 		for (PatientIdentifier pid : p2.getIdentifiers()) {
 			assertSame(p2, pid.getPatient());
@@ -88,7 +88,7 @@ public class PatientTest {
 		assertEquals(p.getId(), p2.getId());
 		assertEquals(p.getPerson(), p2.getPerson());
 	}
-	
+
 	/**
 	 * Test the add/removeIdentifiers method in the patient object
 	 * 
@@ -96,59 +96,59 @@ public class PatientTest {
 	 */
 	@Test
 	public void addIdentifier_shouldAddIdentifierToCurrentList() {
-		
+
 		Patient p = new Patient();
-		
+
 		assertNotNull(p.getIdentifiers());
-		
+
 		PatientIdentifier pa1 = new PatientIdentifier();
-		
+
 		pa1.setIdentifier("firsttest");
 		pa1.setIdentifierType(new PatientIdentifierType(1));
 		pa1.setDateCreated(new Date());
 		pa1.setVoided(false);
 		p.addIdentifier(pa1);
-		
+
 		// make sure the identifier is added.
 		assertThat(p.getIdentifiers(), hasSize(1));
-		
+
 		// adding the same identifier should not increment the size
 		p.addIdentifier(pa1);
 		assertThat(p.getIdentifiers(), hasSize(1));
-		
+
 		PatientIdentifier pa2 = new PatientIdentifier();
 		pa2.setIdentifier("secondtest");
 		pa2.setIdentifierType(new PatientIdentifierType(2));
 		pa2.setVoided(false);
-		
+
 		p.addIdentifier(pa2);
-		
+
 		// make sure the identifier is added
 		assertThat(p.getIdentifiers(), hasSize(2));
-		
+
 		PatientIdentifier pa3 = new PatientIdentifier();
 		pa3.setIdentifier(pa1.getIdentifier());
 		pa3.setIdentifierType(pa1.getIdentifierType());
 		pa3.setDateCreated(pa1.getDateCreated());
 		pa3.setVoided(false);
-		
+
 		p.addIdentifier(pa3);
 		// make sure the identifier is NOT added
 		assertThat(p.getIdentifiers(), hasSize(2));
-		
+
 		pa3.setIdentifier(pa3.getIdentifier() + "some new string to make sure it gets added");
 		p.addIdentifier(pa3);
 		// make sure the identifier IS added
 		assertThat(p.getIdentifiers(), hasSize(3));
-		
+
 		p.removeIdentifier(pa3);
 		assertThat(p.getIdentifiers(), hasSize(2));
-		
+
 		pa3.setDateCreated(new Date(pa1.getDateCreated().getTime() + 1));
 		p.addIdentifier(pa3);
 		// make sure the identifier IS added
 		assertThat(p.getIdentifiers(), hasSize(3));
-		
+
 		// test removing all of the identifiers
 		p.removeIdentifier(pa3);
 		assertThat(p.getIdentifiers(), hasSize(2));
@@ -159,7 +159,7 @@ public class PatientTest {
 		p.removeIdentifier(pa1);
 		assertThat(p.getIdentifiers(), hasSize(0));
 	}
-	
+
 	/**
 	 * Regression test for TRUNK-3118
 	 */
@@ -169,26 +169,26 @@ public class PatientTest {
 		PatientIdentifier pa1 = new PatientIdentifier();
 		PatientIdentifierType identifierType = new PatientIdentifierType(1);
 		Location location = new Location(1);
-		
+
 		pa1.setIdentifier("theid");
 		pa1.setIdentifierType(identifierType);
 		pa1.setLocation(location);
 		pa1.setVoided(true);
 		p.addIdentifier(pa1);
-		
+
 		PatientIdentifier pa2 = new PatientIdentifier();
 		pa2.setIdentifier("theid");
 		pa2.setIdentifierType(identifierType);
 		pa1.setLocation(location);
 		pa2.setVoided(false);
-		
+
 		// this should not fail
 		p.addIdentifier(pa2);
-		
+
 		// make sure we still have it in there
 		assertTrue(p.getActiveIdentifiers().contains(pa2), "The second identifier has not been added as a new identifier");
 	}
-	
+
 	/**
 	 * @see Patient#addIdentifier(PatientIdentifier)
 	 */
@@ -198,7 +198,7 @@ public class PatientTest {
 		p.setIdentifiers(null);
 		p.addIdentifier(new PatientIdentifier());
 	}
-	
+
 	/**
 	 * @see Patient#getIdentifiers()
 	 */
@@ -208,62 +208,62 @@ public class PatientTest {
 		p.setIdentifiers(null);
 		assertNotNull(p.getIdentifiers());
 	}
-	
+
 	/**
 	 * @see Patient#addIdentifier(PatientIdentifier)
 	 */
 	@Test
 	public void addIdentifier_shouldNotAddIdentifierThatIsInListAlready() {
 		Patient p = new Patient();
-		
+
 		assertNotNull(p.getIdentifiers());
-		
+
 		PatientIdentifier pa1 = new PatientIdentifier();
-		
+
 		pa1.setIdentifier("firsttest");
 		pa1.setIdentifierType(new PatientIdentifierType(1));
 		pa1.setDateCreated(new Date());
 		pa1.setVoided(false);
 		p.addIdentifier(pa1);
-		
+
 		// adding the same identifier should not increment the size
 		p.addIdentifier(pa1);
 		assertThat(p.getIdentifiers(), hasSize(1));
-		
+
 	}
-	
+
 	/**
 	 * @see Patient#removeIdentifier(PatientIdentifier)
 	 */
 	@Test
 	public void removeIdentifier_shouldRemoveIdentifierIfExists() {
 		Patient p = new Patient();
-		
+
 		PatientIdentifier pa1 = new PatientIdentifier();
-		
+
 		pa1.setIdentifier("firsttest");
 		pa1.setIdentifierType(new PatientIdentifierType(1));
 		pa1.setDateCreated(new Date());
 		pa1.setVoided(false);
 		p.addIdentifier(pa1);
-		
+
 		// adding the same identifier should not increment the size
 		p.addIdentifier(pa1);
-		
+
 		PatientIdentifier pa2 = new PatientIdentifier();
 		pa2.setIdentifier("secondtest");
 		pa2.setIdentifierType(new PatientIdentifierType(2));
 		pa2.setVoided(false);
-		
+
 		p.addIdentifier(pa2);
-		
+
 		PatientIdentifier pa3 = new PatientIdentifier();
 		pa3.setIdentifierType(pa1.getIdentifierType());
 		pa3.setIdentifier(pa3.getIdentifier() + "some new string to make sure it gets added");
 		pa3.setVoided(true);
 		pa3.setDateCreated(new Date(pa1.getDateCreated().getTime() + 1));
 		p.addIdentifier(pa3);
-		
+
 		// test removing all of the identifiers
 		p.removeIdentifier(pa3);
 		assertThat(p.getIdentifiers(), hasSize(2));
@@ -274,42 +274,42 @@ public class PatientTest {
 		p.removeIdentifier(pa1);
 		assertThat(p.getIdentifiers(), hasSize(0));
 	}
-	
+
 	@Test
 	public void removeIdentifier_shouldTestIdentifierCollectionChanged() {
 		Patient p = new Patient();
-		
+
 		PatientIdentifier pa1 = new PatientIdentifier();
 		PatientIdentifier pa2 = new PatientIdentifier();
 		PatientIdentifier pa3 = new PatientIdentifier();
 		PatientIdentifier pa4 = new PatientIdentifier();
-		
+
 		pa2.setIdentifier("2nd-date");
 		pa2.setIdentifierType(new PatientIdentifierType(1));
 		pa2.setDateCreated(new Date(1000));
 		pa2.setVoided(false);
 		p.addIdentifier(pa2);
-		
+
 		pa4.setIdentifier("last-date");
 		pa4.setIdentifierType(new PatientIdentifierType(1));
 		pa4.setDateCreated(new Date(pa2.getDateCreated().getTime() + 1000));
 		pa4.setVoided(false);
 		p.addIdentifier(pa4);
-		
+
 		pa1.setIdentifier("first-date");
 		pa1.setIdentifierType(new PatientIdentifierType(1));
 		pa1.setDateCreated(new Date(pa2.getDateCreated().getTime() - 1000));
 		pa1.setVoided(false);
 		p.addIdentifier(pa1);
-		
+
 		pa3.setIdentifier("3rd-date");
 		pa3.setIdentifierType(new PatientIdentifierType(1));
 		pa3.setDateCreated(new Date(pa2.getDateCreated().getTime() + 500));
 		pa3.setVoided(false);
 		p.addIdentifier(pa3);
-		
+
 		//now the order should be: first-date, 2nd-date, 3rd-date, last-date
-		PatientIdentifier[] pis = new PatientIdentifier[] {};
+		PatientIdentifier[] pis = new PatientIdentifier[]{};
 		pis = p.getIdentifiers().toArray(pis); //NOTE: this is correct -- see the order in array in debug
 		assertTrue(p.getIdentifiers().contains(pa3)); //this works
 		
@@ -319,7 +319,7 @@ public class PatientTest {
 		p.addIdentifier((pa3));
 		pis = p.getIdentifiers().toArray(pis);
 		assertThat(p.getIdentifiers(), contains(pa1, pa2, pa4, pa3));
-		
+
 		//THIS IS RIGHT
 		pa3.setVoided(false); //set it back to false so we can remove it
 		p.removeIdentifier(pa3);
@@ -329,7 +329,7 @@ public class PatientTest {
 		pis = p.getIdentifiers().toArray(pis); //pis is sorted correctly
 		assertTrue(p.getIdentifiers().contains(pa3)); //this works too
 	}
-	
+
 	/**
 	 * @see Patient#getActiveIdentifiers()
 	 */
@@ -340,33 +340,33 @@ public class PatientTest {
 		PatientIdentifier pa1 = new PatientIdentifier();
 		PatientIdentifier pa2 = new PatientIdentifier();
 		PatientIdentifier pa3 = new PatientIdentifier();
-		
+
 		pa1.setIdentifier("first");
 		pa1.setIdentifierType(new PatientIdentifierType(1));
 		pa1.setDateCreated(new Date());
 		pa1.setVoided(false);
 		pa1.setPreferred(true);
-		
+
 		pa2.setIdentifier("second");
 		pa2.setIdentifierType(new PatientIdentifierType(1));
 		pa2.setDateCreated(new Date());
 		pa2.setVoided(false);
 		pa2.setPreferred(false);
-		
+
 		pa3.setIdentifier("third");
 		pa3.setIdentifierType(new PatientIdentifierType(1));
 		pa3.setDateCreated(new Date());
 		pa3.setVoided(false);
 		pa3.setPreferred(false);
-		
+
 		p.addIdentifier(pa1);
 		p.addIdentifier(pa2);
 		p.addIdentifier(pa3);
-		
+
 		pa1.setPreferred(false);
 		pa2.setPreferred(true);
 		pa3.setVoided(true);
-		
+
 		assertThat(p.getActiveIdentifiers(), hasSize(2));
 		assertEquals(pa2, p.getActiveIdentifiers().get(0), "Preferred identifier should be first in the list");
 		assertEquals(pa1, p.getActiveIdentifiers().get(1), "Non-preferred identifier should be last in the list");

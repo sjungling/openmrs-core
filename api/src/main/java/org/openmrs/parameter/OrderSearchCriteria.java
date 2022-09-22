@@ -83,9 +83,9 @@ public class OrderSearchCriteria {
 	 */
 	private final Boolean includeNullFulfillerStatus;
 
-    /**
-     * Matches on action
-     */
+	/**
+		 Matches on action
+		*/
 	private final Order.Action action;
 
 	private final boolean includeVoided;
@@ -107,16 +107,16 @@ public class OrderSearchCriteria {
 	 * @param includeVoided whether to include the voided orders or not
 	 */
 	public OrderSearchCriteria(Patient patient, CareSetting careSetting, Collection<Concept> concepts,
-							   Collection<OrderType> orderTypes, String accessionNumber, String orderNumber,
-							   Date activatedOnOrBeforeDate, Date activatedOnOrAfterDate, boolean isStopped,
-							   Date autoExpireOnOrBeforeDate,
-							   Date canceledOrExpiredOnOrBeforeDate,
-							   Order.Action action,
-							   Order.FulfillerStatus fulfillerStatus,
-							   Boolean includeNullFulfillerStatus,
-							   boolean excludeCanceledAndExpired,
-							   boolean excludeDiscontinueOrders,
-							   boolean includeVoided) {
+									Collection<OrderType> orderTypes, String accessionNumber, String orderNumber,
+									Date activatedOnOrBeforeDate, Date activatedOnOrAfterDate, boolean isStopped,
+									Date autoExpireOnOrBeforeDate,
+									Date canceledOrExpiredOnOrBeforeDate,
+									Order.Action action,
+									Order.FulfillerStatus fulfillerStatus,
+									Boolean includeNullFulfillerStatus,
+									boolean excludeCanceledAndExpired,
+									boolean excludeDiscontinueOrders,
+									boolean includeVoided) {
 		this.patient = patient;
 		this.careSetting = careSetting;
 		this.concepts = concepts;
@@ -149,41 +149,49 @@ public class OrderSearchCriteria {
 	 */
 	@Deprecated
 	public OrderSearchCriteria(Patient patient, CareSetting careSetting, Collection<Concept> concepts,
-							   Collection<OrderType> orderTypes, Date activatedOnOrBeforeDate,
-							   Date activatedOnOrAfterDate, boolean isStopped, Date autoExpireOnOrBeforeDate,
-							   Date canceledOrExpiredOnOrBeforeDate,
-							   Order.Action action,
-							   Order.FulfillerStatus fulfillerStatus,
-							   Boolean includeNullFulfillerStatus,
-							   boolean excludeCanceledAndExpired,
-							   boolean excludeDiscontinueOrders,
-							   boolean includeVoided) {
+									Collection<OrderType> orderTypes, Date activatedOnOrBeforeDate,
+									Date activatedOnOrAfterDate, boolean isStopped, Date autoExpireOnOrBeforeDate,
+									Date canceledOrExpiredOnOrBeforeDate,
+									Order.Action action,
+									Order.FulfillerStatus fulfillerStatus,
+									Boolean includeNullFulfillerStatus,
+									boolean excludeCanceledAndExpired,
+									boolean excludeDiscontinueOrders,
+									boolean includeVoided) {
 
 		this(patient, careSetting, concepts, orderTypes, null, null,
-			activatedOnOrBeforeDate, activatedOnOrAfterDate, isStopped, autoExpireOnOrBeforeDate, canceledOrExpiredOnOrBeforeDate,
-			action, fulfillerStatus, includeNullFulfillerStatus, excludeCanceledAndExpired, excludeDiscontinueOrders, includeVoided);
+										activatedOnOrBeforeDate, activatedOnOrAfterDate, isStopped, autoExpireOnOrBeforeDate, canceledOrExpiredOnOrBeforeDate,
+										action, fulfillerStatus, includeNullFulfillerStatus, excludeCanceledAndExpired, excludeDiscontinueOrders, includeVoided);
 
 	}
 
 	/**
 	 * @return the patient the order is for
 	 */
-	public Patient getPatient() { return patient; }
+	public Patient getPatient() {
+		return patient;
+	}
 
 	/**
 	 * @return the care setting to match on
 	 */
-	public CareSetting getCareSetting() { return careSetting; }
+	public CareSetting getCareSetting() {
+		return careSetting;
+	}
 
 	/**
 	 * @return the concepts defining the order must be in this collection
 	 */
-	public Collection<Concept> getConcepts() { return concepts; }
+	public Collection<Concept> getConcepts() {
+		return concepts;
+	}
 
 	/**
 	 * @return the order types to match on must be in this collection
 	 */
-	public Collection<OrderType> getOrderTypes() { return orderTypes; }
+	public Collection<OrderType> getOrderTypes() {
+		return orderTypes;
+	}
 
 	/**
 	 * @return the accession number to match on; must be case-insensitive exact-match
@@ -204,12 +212,16 @@ public class OrderSearchCriteria {
 	/**
 	 * @return orders must have dateActivated on or before this date
 	 */
-	public Date getActivatedOnOrBeforeDate() { return activatedOnOrBeforeDate; }
+	public Date getActivatedOnOrBeforeDate() {
+		return activatedOnOrBeforeDate;
+	}
 
 	/**
 	 * @return orders must have dateActivated on or after this date
 	 */
-	public Date getActivatedOnOrAfterDate() { return activatedOnOrAfterDate; }
+	public Date getActivatedOnOrAfterDate() {
+		return activatedOnOrAfterDate;
+	}
 
 	/**
 	 *
@@ -236,17 +248,17 @@ public class OrderSearchCriteria {
 	}
 
 	/**
-     *
-     * @return orders must match the action
-     */
+		
+		 @return orders must match the action
+		*/
 	public Order.Action getAction() {
-        return action;
-    }
+		return action;
+	}
 
-    /**
-	 *
-	 * @return orders must match the fulfillerstatus
-	 */
+	/**
+		*
+		* @return orders must match the fulfillerstatus
+		*/
 	public Order.FulfillerStatus getFulfillerStatus() {
 		return fulfillerStatus;
 	}
@@ -271,6 +283,8 @@ public class OrderSearchCriteria {
 	/**
 	 * @return whether to include the voided orders or not
 	 */
-	public boolean getIncludeVoided() { return includeVoided; }
+	public boolean getIncludeVoided() {
+		return includeVoided;
+	}
 
 }

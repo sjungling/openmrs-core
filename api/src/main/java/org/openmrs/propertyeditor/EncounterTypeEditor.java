@@ -21,15 +21,15 @@ import org.openmrs.api.context.Context;
  * @see EncounterType
  */
 public class EncounterTypeEditor extends OpenmrsPropertyEditor<EncounterType> {
-	
+
 	public EncounterTypeEditor() {
 	}
-	
+
 	@Override
 	protected EncounterType getObjectById(Integer id) {
 		return Context.getEncounterService().getEncounterType(id);
 	}
-	
+
 	@Override
 	protected EncounterType getObjectByUuid(String uuid) {
 		return Context.getEncounterService().getEncounterTypeByUuid(uuid);

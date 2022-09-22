@@ -28,7 +28,7 @@ import org.springframework.validation.Errors;
  * @since 1.10
  */
 public interface DosingInstructions {
-	
+
 	/**
 	 * Get human-readable version of dosing instructions for a particular locale All dosing
 	 * instructions can be localized, so the result, especially any free text may remain in the
@@ -40,14 +40,14 @@ public interface DosingInstructions {
 	 * @return localized drug instructions string
 	 */
 	public String getDosingInstructionsAsString(Locale locale);
-	
+
 	/**
 	 * Serialize dosing instructions into order
 	 * 
 	 * @param order DrugOrder to set dosing instructions
 	 */
 	public void setDosingInstructions(DrugOrder order);
-	
+
 	/**
 	 * Get dosing instructions from order
 	 * 
@@ -57,9 +57,9 @@ public interface DosingInstructions {
 	 *             implementing dosing instruction
 	 */
 	public DosingInstructions getDosingInstructions(DrugOrder order);
-	
+
 	public void validate(DrugOrder order, Errors errors);
-	
+
 	/**
 	 * Implementations of this interface may be able to infer the auto-expiration date from other
 	 * fields on the DrugOrder.  If the expiration date cannot be determined, then this method

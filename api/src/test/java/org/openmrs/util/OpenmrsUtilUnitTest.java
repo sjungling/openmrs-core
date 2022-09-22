@@ -57,7 +57,7 @@ public class OpenmrsUtilUnitTest {
 	public void parseParameterList_shouldReturnKeyPairsGivenParametersSeparatedByPipe() {
 
 		Map<String, String> actual = OpenmrsUtil.parseParameterList("role_id=role|person_id=person");
-		
+
 		assertThat(actual, hasEntry("role_id", "role"));
 		assertThat(actual, hasEntry("person_id", "person"));
 		assertEquals(2, actual.size());
@@ -67,7 +67,7 @@ public class OpenmrsUtilUnitTest {
 	public void parseParameterList_shouldReturnKeyPairsGivenOnePairAndOmitTrailingPipe() {
 
 		Map<String, String> actual = OpenmrsUtil.parseParameterList("role_id=role|");
-		
+
 		assertThat(actual, hasEntry("role_id", "role"));
 		assertEquals(1, actual.size());
 	}
@@ -76,40 +76,40 @@ public class OpenmrsUtilUnitTest {
 	public void parseParameterList_shouldReturnKeyPairsGivenOnePairWithoutValue() {
 
 		Map<String, String> actual = OpenmrsUtil.parseParameterList("role_id=");
-		
+
 		assertThat(actual, hasEntry("role_id", ""));
 		assertEquals(1, actual.size());
 	}
-	
+
 	@Test
 	public void parseParameterList_shouldReturnEmptyMapGivenNull() {
 
 		assertThat(OpenmrsUtil.parseParameterList(null), equalTo(Collections.EMPTY_MAP));
 	}
-	
+
 	@Test
 	public void parseParameterList_shouldReturnEmptyMapGivenEmptyString() {
 
 		assertThat(OpenmrsUtil.parseParameterList(""), equalTo(Collections.EMPTY_MAP));
 	}
-	
+
 	@Test
 	public void parseParameterList_shouldReturnEmptyMapGivenOnlyPipesAndNoWhitespace() {
 
 		assertThat(OpenmrsUtil.parseParameterList("||||"), equalTo(Collections.EMPTY_MAP));
 	}
-	
+
 	@Test
 	public void parseParameterList_shouldFailGivenOnlyWhitespaces() {
 
 		assertThrows(IllegalArgumentException.class, () -> OpenmrsUtil.parseParameterList("   "));
 	}
-	
+
 	@Test
 	public void parseParameterList_shouldFailGivenOnlyAKey() {
 		assertThrows(IllegalArgumentException.class, () -> OpenmrsUtil.parseParameterList("role_id"));
 	}
-	
+
 	@Test
 	public void parseParameterList_shouldFailGivenOnlyKeysSeparatedByPipes() {
 
@@ -118,10 +118,10 @@ public class OpenmrsUtilUnitTest {
 
 	@Test
 	public void join_shouldReturnEmptyStringGivenNullForCollection() {
-		
+
 		assertThat(OpenmrsUtil.join(null, ""), is(""));
 	}
-	
+
 	@Test
 	public void join_shouldReturnEmptyStringGivenEmptyCollection() {
 
@@ -133,7 +133,7 @@ public class OpenmrsUtilUnitTest {
 
 		assertThat(OpenmrsUtil.join(moduleList, ","), is("module1,module2"));
 	}
-	
+
 	@Test
 	public void join_shouldReturnListElementsJoinedBySeparatorIfGivenCollectionContainsNull() {
 
@@ -157,7 +157,7 @@ public class OpenmrsUtilUnitTest {
 	@Test
 	public void isStringInArray_shouldReturnTrueIfStringIsInArray() {
 
-		String[] array = new String[]{"element1","element2","element3"};
+		String[] array = new String[]{"element1", "element2", "element3"};
 
 		assertTrue(OpenmrsUtil.isStringInArray("element1", array));
 	}
@@ -165,7 +165,7 @@ public class OpenmrsUtilUnitTest {
 	@Test
 	public void isStringInArray_shouldReturnFalseIfStringIsNotInArray() {
 
-		String[] array = new String[]{"element1","element2","element3"};
+		String[] array = new String[]{"element1", "element2", "element3"};
 
 		assertFalse(OpenmrsUtil.isStringInArray("element4", array));
 	}
@@ -441,7 +441,7 @@ public class OpenmrsUtilUnitTest {
 
 		assertFalse(OpenmrsUtil.isInAbsoluteNumericRange(4.34f, concept));
 	}
-	
+
 	@Test
 	public void isTestMode_shouldReturnTrueIfFunctionalTestModeIsEnabled() {
 
@@ -449,7 +449,7 @@ public class OpenmrsUtilUnitTest {
 
 		assertTrue(OpenmrsUtil.isTestMode());
 	}
-	
+
 	@Test
 	public void isTestMode_shouldReturnFalseIfFunctionalTestModeIsDisabled() {
 
@@ -461,17 +461,17 @@ public class OpenmrsUtilUnitTest {
 	@Test
 	public void compareLists_shouldPassIfMapOfDifferencesIsCorrect() {
 
-		LinkedList<Integer> origList = new LinkedList<>(Arrays.asList(1,2,3));
-		LinkedList<Integer> newList = new LinkedList<>(Arrays.asList(2,3,4));
+		LinkedList<Integer> origList = new LinkedList<>(Arrays.asList(1, 2, 3));
+		LinkedList<Integer> newList = new LinkedList<>(Arrays.asList(2, 3, 4));
 
 		Collection<Collection<Integer>> result = OpenmrsUtil.compareLists(origList, newList);
 		Iterator<Collection<Integer>> it = result.iterator();
-		
+
 		assertThat(result.size(), is(2));
 		assertThat(it.next(), contains(4));
 		assertThat(it.next(), contains(1));
 	}
-	
+
 	@Test
 	public void getRuntimePropertiesFilePathName_shouldReturnNullIfPropertyFileNotExist() {
 

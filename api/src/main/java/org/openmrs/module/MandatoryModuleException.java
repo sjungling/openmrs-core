@@ -21,11 +21,11 @@ import java.util.List;
  * @see ModuleUtil#getMandatoryModules()
  */
 public class MandatoryModuleException extends ModuleMustStartException {
-	
+
 	public static final long serialVersionUID = 236472655L;
-	
+
 	private String moduleId;
-	
+
 	/**
 	 * This constructor is used when a user tries to stop a mandatory module.
 	 * 
@@ -34,7 +34,7 @@ public class MandatoryModuleException extends ModuleMustStartException {
 	public MandatoryModuleException(String moduleId) {
 		this(moduleId, "");
 	}
-	
+
 	/**
 	 * This constructor is used when a user tries to stop a mandatory module.
 	 * 
@@ -43,19 +43,19 @@ public class MandatoryModuleException extends ModuleMustStartException {
 	 */
 	public MandatoryModuleException(String moduleId, String extraErrorMessage) {
 		super("The " + moduleId + " module is marked as 'mandatory' and so cannot be stopped or unloaded. "
-		        + extraErrorMessage);
+										+ extraErrorMessage);
 		this.moduleId = moduleId;
 	}
-	
+
 	/**
 	 * @param moduleIds list of module ids that are mandatory and didn't start
 	 */
 	public MandatoryModuleException(List<String> moduleIds) {
 		super("The following modules are marked as 'mandatory' but were unable to start: "
-		        + String.join(",", moduleIds));
+										+ String.join(",", moduleIds));
 		this.moduleId = String.join(",", moduleIds);
 	}
-	
+
 	/**
 	 * The id (or ids) of the module that is mandatory
 	 * 

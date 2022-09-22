@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
  * @see org.openmrs.OrderType
  */
 public class OrderTypeTest {
-	
+
 	/**
 	 * @see org.openmrs.OrderType#getJavaClass()
 	 */
@@ -29,14 +29,14 @@ public class OrderTypeTest {
 	public void setJavaClass_shouldGetJavaClassObject() {
 		//Create a new OrderType
 		OrderType orderType = new OrderType();
-		
+
 		//Test with Integer class
 		Class<?> clazz = Integer.class;
-		
+
 		orderType.setJavaClassName(clazz.getName());
 		assertEquals(clazz, orderType.getJavaClass());
 	}
-	
+
 	/**
 	 * @see OrderType#addConceptClass(ConceptClass)
 	 */
@@ -47,7 +47,7 @@ public class OrderTypeTest {
 		ot.addConceptClass(cc);
 		assertTrue(ot.getConceptClasses().contains(cc));
 	}
-	
+
 	/**
 	 * Ensures that if the collection implementation gets changed from a set, that duplicates are
 	 * not added

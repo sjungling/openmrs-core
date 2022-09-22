@@ -21,7 +21,7 @@ import org.openmrs.api.context.UserContext;
  * @since 1.8.4, 1.9.1, 1.10
  */
 public interface PrivilegeListener {
-	
+
 	/**
 	 * Called whenever a privilege is checked.
 	 *

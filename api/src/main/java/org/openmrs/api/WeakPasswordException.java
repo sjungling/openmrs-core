@@ -21,13 +21,13 @@ import org.openmrs.util.OpenmrsUtil;
  * @since 1.5
  */
 public class WeakPasswordException extends PasswordException {
-	
+
 	private static final long serialVersionUID = 31620091004L;
-	
+
 	public WeakPasswordException() {
 		super("error.password.weak");
 	}
-	
+
 	public WeakPasswordException(String message) {
 		super(message);
 	}

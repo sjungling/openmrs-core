@@ -22,28 +22,28 @@ import org.openmrs.attribute.Attribute;
  */
 @SuppressWarnings("rawtypes")
 public interface Customizable<A extends Attribute> {
-	
+
 	/**
 	 * @return all attributes (including voided ones)
 	 */
 	Collection<A> getAttributes();
-	
+
 	/**
 	 * @return non-voided attributes
 	 */
 	Collection<A> getActiveAttributes();
-	
+
 	/**
 	 * @param ofType
 	 * @return non-voided attributes of the given type
 	 */
 	List<A> getActiveAttributes(CustomValueDescriptor ofType);
-	
+
 	/**
 	 * Adds an attribute.
 	 * 
 	 * @param attribute
 	 */
 	void addAttribute(A attribute);
-	
+
 }

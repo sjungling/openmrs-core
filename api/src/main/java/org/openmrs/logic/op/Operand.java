@@ -16,7 +16,7 @@ import org.openmrs.logic.LogicExpression;
  * {@link LogicExpression}
  */
 public interface Operand {
-	
+
 	/**
 	 * Sanity check for this Operand vs a given operator.
 	 * 
@@ -24,5 +24,5 @@ public interface Operand {
 	 * @return true/false about whether this Operand supports this {@link ComparisonOperator}
 	 */
 	public boolean supports(ComparisonOperator operator);
-	
+
 }

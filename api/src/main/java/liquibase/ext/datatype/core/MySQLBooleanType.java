@@ -24,25 +24,25 @@ import org.slf4j.LoggerFactory;
  * @since 2.4
  */
 public class MySQLBooleanType extends BooleanType {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(MySQLBooleanType.class);
-	
+
 	@Override
 	public DatabaseDataType toDatabaseDataType(Database database) {
 		if (database instanceof MySQLDatabase) {
 			DatabaseDataType result = new DatabaseDataType("TINYINT", 1);
-			
+
 			log.debug("boolean type for MySQL is '{}' ", result.getType());
-			
+
 			return result;
 		}
-		
+
 		log.debug("delegating the choice of boolean type for database '{}' to super class of MySQLBooleanType",
-		    database.getDatabaseProductName());
-		
+										database.getDatabaseProductName());
+
 		return super.toDatabaseDataType(database);
 	}
-	
+
 	@Override
 	public int getPriority() {
 		return super.getPriority() + 1;

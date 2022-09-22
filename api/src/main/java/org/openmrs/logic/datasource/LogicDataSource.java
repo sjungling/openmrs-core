@@ -81,14 +81,14 @@ import org.openmrs.logic.result.Result;
  * each key.
  */
 public interface LogicDataSource {
-	
+
 	/**
 	 * The name by which this data source should be registered when it is loaded.
 	 * Implementations should override this like
 	 *     public static final String NAME = "person";
 	 */
 	public static String NAME = "org.openmrs.logic.LogicDataSource.name";
-	
+
 	/**
 	 * Extracts data from the data source. Actually, this function only checks for cached data and
 	 * forwards all non-cached requests to its subclass(es).
@@ -99,11 +99,11 @@ public interface LogicDataSource {
 	 * @return <code>Map</code> of results for each patient, grouped by requested data element
 	 */
 	public Map<Integer, Result> read(LogicContext context, Cohort patients, LogicCriteria criteria) throws LogicException;
-	
+
 	public abstract Collection<String> getKeys();
-	
+
 	public boolean hasKey(String key);
-	
+
 	public abstract int getDefaultTTL();
-	
+
 }

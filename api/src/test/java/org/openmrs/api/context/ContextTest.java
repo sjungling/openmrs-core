@@ -41,7 +41,7 @@ import org.springframework.validation.Validator;
  * @see Context
  */
 public class ContextTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * Methods in this class might authenticate with a different user, so log that user out after
 	 * this whole junit class is done.
@@ -50,60 +50,60 @@ public class ContextTest extends BaseContextSensitiveTest {
 	public static void logOutAfterThisTestClass() {
 		Context.logout();
 	}
-	
+
 	/**
-	 * @see Context#authenticate(String,String)
+	 * @see Context#authenticate(String, String)
 	 */
 	@Test
 	public void authenticate_shouldNotAuthenticateWithNullPassword() {
 		assertThrows(ContextAuthenticationException.class, () -> Context.authenticate("some username", null));
 	}
-	
+
 	/**
-	 * @see Context#authenticate(String,String)
+	 * @see Context#authenticate(String, String)
 	 */
 	@Test
 	public void authenticate_shouldNotAuthenticateWithNullPasswordAndProperSystemId() {
 		assertThrows(ContextAuthenticationException.class, () -> Context.authenticate("1-8", null));
 	}
-	
+
 	/**
-	 * @see Context#authenticate(String,String)
+	 * @see Context#authenticate(String, String)
 	 */
 	@Test
 	public void authenticate_shouldNotAuthenticateWithNullPasswordAndProperUsername() {
 		assertThrows(ContextAuthenticationException.class, () -> Context.authenticate("admin", null));
 	}
-	
+
 	/**
-	 * @see Context#authenticate(String,String)
+	 * @see Context#authenticate(String, String)
 	 */
 	@Test
 	public void authenticate_shouldNotAuthenticateWithNullUsername() {
 		assertThrows(ContextAuthenticationException.class, () -> Context.authenticate(null, "some password"));
 	}
-	
+
 	/**
-	 * @see Context#authenticate(String,String)
+	 * @see Context#authenticate(String, String)
 	 */
 	@Test
 	public void authenticate_shouldNotAuthenticateWithNullUsernameAndPassword() {
 		assertThrows(ContextAuthenticationException.class, () -> Context.authenticate((String) null, (String) null));
 	}
-	
+
 	/**
-	 * @see Context#authenticate(String,String)
+	 * @see Context#authenticate(String, String)
 	 */
 	@Test
 	public void authenticate_shouldAuthenticateUserWithUsernameAndPassword() {
 		// replay
 		Context.logout();
 		Context.authenticate("admin", "test");
-		
+
 		// verif
 		assertEquals("admin", Context.getAuthenticatedUser().getUsername());
 	}
-	
+
 	/**
 	 * @see Context#getLocale()
 	 */
@@ -112,7 +112,7 @@ public class ContextTest extends BaseContextSensitiveTest {
 		Context.closeSession();
 		assertEquals(LocaleUtility.getDefaultLocale(), Context.getLocale());
 	}
-	
+
 	/**
 	 * @see Context#getUserContext()
 	 */
@@ -121,7 +121,7 @@ public class ContextTest extends BaseContextSensitiveTest {
 		Context.closeSession();
 		assertThrows(APIException.class, () -> Context.getUserContext()); // trigger the api exception
 	}
-	
+
 	/**
 	 * @see Context#logout()
 	 */
@@ -130,7 +130,7 @@ public class ContextTest extends BaseContextSensitiveTest {
 		Context.closeSession();
 		Context.logout();
 	}
-	
+
 	/**
 	 * @see Context#isSessionOpen()
 	 */
@@ -140,7 +140,7 @@ public class ContextTest extends BaseContextSensitiveTest {
 		Context.closeSession();
 		assertFalse(Context.isSessionOpen());
 	}
-	
+
 	/**
 	 * @see Context#refreshAuthenticatedUser()
 	 */
@@ -148,20 +148,20 @@ public class ContextTest extends BaseContextSensitiveTest {
 	public void refreshAuthenticatedUser_shouldGetFreshValuesFromTheDatabase() {
 		User evictedUser = Context.getAuthenticatedUser();
 		Context.evictFromSession(evictedUser);
-		
+
 		User fetchedUser = Context.getUserService().getUser(evictedUser.getUserId());
 		fetchedUser.getPersonName().setGivenName("new username");
-		
+
 		Context.getUserService().saveUser(fetchedUser);
-		
+
 		// sanity check to make sure the cached object wasn't updated already
 		assertNotSame(Context.getAuthenticatedUser().getGivenName(), fetchedUser.getGivenName());
-		
+
 		Context.refreshAuthenticatedUser();
-		
+
 		assertEquals("new username", Context.getAuthenticatedUser().getGivenName());
 	}
-	
+
 	/**
 	 * @see Context#getRegisteredComponents(Class)
 	 */
@@ -171,7 +171,7 @@ public class ContextTest extends BaseContextSensitiveTest {
 		assertTrue(validators.size() > 0);
 		assertTrue(Validator.class.isAssignableFrom(validators.iterator().next().getClass()));
 	}
-	
+
 	/**
 	 * @see Context#getRegisteredComponents(Class)
 	 */
@@ -181,19 +181,19 @@ public class ContextTest extends BaseContextSensitiveTest {
 		assertNotNull(l);
 		assertEquals(0, l.size());
 	}
-	
+
 	/**
-	 * @see Context#getRegisteredComponent(String,Class)
+	 * @see Context#getRegisteredComponent(String, Class)
 	 */
 	@Test
 	public void getRegisteredComponent_shouldReturnBeanHaveBeenRegisteredOfThePassedTypeAndName() {
-		
+
 		EncounterVisitHandler registeredComponent = Context.getRegisteredComponent("existingOrNewVisitAssignmentHandler",
-		    EncounterVisitHandler.class);
-		
+										EncounterVisitHandler.class);
+
 		assertTrue(registeredComponent instanceof ExistingOrNewVisitAssignmentHandler);
 	}
-	
+
 	/**
 	 * @see Context#getRegisteredComponent(String, Class)
 	 */
@@ -201,9 +201,9 @@ public class ContextTest extends BaseContextSensitiveTest {
 	public void getRegisteredComponent_shouldFailIfBeanHaveBeenREgisteredOfThePassedTypeAndNameDoesntExist()
 	{
 		assertThrows(APIException.class, () -> Context.getRegisteredComponent("invalidBeanName", EncounterVisitHandler.class));
-		
+
 	}
-	
+
 	/**
 	 * Prevents regression after patch from #2174:
 	 * "Prevent duplicate proxies and AOP in context services"
@@ -216,26 +216,26 @@ public class ContextTest extends BaseContextSensitiveTest {
 		PatientService ps2 = Context.getService(PatientService.class);
 		assertEquals(ps2, ps1);
 	}
-	
+
 	/**
 	 * @see Context#becomeUser(String)
 	 */
 	@Test
 	public void becomeUser_shouldChangeLocaleWhenBecomeAnotherUser() {
 		UserService userService = Context.getUserService();
-		
+
 		User user = new User(new Person());
 		user.addName(new PersonName("givenName", "middleName", "familyName"));
 		user.getPerson().setGender("M");
 		user.setUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE, "pt_BR");
 		userService.createUser(user, "TestPass123");
-		
+
 		Context.becomeUser(user.getSystemId());
-		
+
 		Locale locale = Context.getLocale();
 		assertEquals("pt", locale.getLanguage());
 		assertEquals("BR", locale.getCountry());
-		
+
 		Context.logout();
 	}
 }

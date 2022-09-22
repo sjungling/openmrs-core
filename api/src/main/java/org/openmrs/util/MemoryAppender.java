@@ -30,25 +30,25 @@ import org.apache.logging.log4j.core.config.Property;
  */
 @Deprecated
 public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
-	
+
 	private final org.openmrs.logging.MemoryAppender implementation;
-	
+
 	MemoryAppender(org.openmrs.logging.MemoryAppender implementation) {
 		super(implementation.getName(), implementation.getFilter(),
-			(StringLayout) implementation.getLayout(), implementation.ignoreExceptions(),
-			implementation.getPropertyArray(), 1);
-		
+										(StringLayout) implementation.getLayout(), implementation.ignoreExceptions(),
+										implementation.getPropertyArray(), 1);
+
 		this.implementation = implementation;
 	}
-	
+
 	protected MemoryAppender(String name, Filter filter,
-		StringLayout layout, boolean ignoreExceptions,
-		Property[] properties, int bufferSize) {
+									StringLayout layout, boolean ignoreExceptions,
+									Property[] properties, int bufferSize) {
 		super(name, filter, layout, ignoreExceptions, properties, bufferSize);
-		
+
 		implementation = null;
 	}
-	
+
 	@Override
 	public void append(LogEvent logEvent) {
 		if (implementation != null) {
@@ -57,7 +57,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			super.append(logEvent);
 		}
 	}
-	
+
 	@Override
 	public int getBufferSize() {
 		if (implementation != null) {
@@ -66,7 +66,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.getBufferSize();
 		}
 	}
-	
+
 	@Override
 	public List<String> getLogLines() {
 		if (implementation != null) {
@@ -75,7 +75,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.getLogLines();
 		}
 	}
-	
+
 	@Override
 	public boolean requiresLocation() {
 		if (implementation != null) {
@@ -84,7 +84,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.requiresLocation();
 		}
 	}
-	
+
 	@Override
 	public void error(String msg) {
 		if (implementation != null) {
@@ -93,7 +93,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			super.error(msg);
 		}
 	}
-	
+
 	@Override
 	public void error(String msg, LogEvent event, Throwable t) {
 		if (implementation != null) {
@@ -102,7 +102,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			super.error(msg, event, t);
 		}
 	}
-	
+
 	@Override
 	public void error(String msg, Throwable t) {
 		if (implementation != null) {
@@ -111,7 +111,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			super.error(msg, t);
 		}
 	}
-	
+
 	@Override
 	public ErrorHandler getHandler() {
 		if (implementation != null) {
@@ -120,7 +120,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.getHandler();
 		}
 	}
-	
+
 	@Override
 	public Layout<? extends Serializable> getLayout() {
 		if (implementation != null) {
@@ -129,7 +129,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.getLayout();
 		}
 	}
-	
+
 	@Override
 	public String getName() {
 		if (implementation != null) {
@@ -138,7 +138,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.getName();
 		}
 	}
-	
+
 	@Override
 	public boolean ignoreExceptions() {
 		if (implementation != null) {
@@ -147,7 +147,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.ignoreExceptions();
 		}
 	}
-	
+
 	@Override
 	public void setHandler(ErrorHandler handler) {
 		if (implementation != null) {
@@ -156,7 +156,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			super.setHandler(handler);
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		if (implementation != null) {
@@ -165,7 +165,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.toString();
 		}
 	}
-	
+
 	@Override
 	public synchronized void addFilter(Filter filter) {
 		if (implementation != null) {
@@ -174,7 +174,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			super.addFilter(filter);
 		}
 	}
-	
+
 	@Override
 	public Filter getFilter() {
 		if (implementation != null) {
@@ -183,7 +183,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.getFilter();
 		}
 	}
-	
+
 	@Override
 	public boolean hasFilter() {
 		if (implementation != null) {
@@ -192,7 +192,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.hasFilter();
 		}
 	}
-	
+
 	@Override
 	public boolean isFiltered(LogEvent event) {
 		if (implementation != null) {
@@ -201,7 +201,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.isFiltered(event);
 		}
 	}
-	
+
 	@Override
 	public synchronized void removeFilter(Filter filter) {
 		if (implementation != null) {
@@ -210,7 +210,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			super.removeFilter(filter);
 		}
 	}
-	
+
 	@Override
 	public void start() {
 		if (implementation != null) {
@@ -219,7 +219,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			super.start();
 		}
 	}
-	
+
 	@Override
 	public boolean stop(long timeout, TimeUnit timeUnit) {
 		if (implementation != null) {
@@ -228,7 +228,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.stop(timeout, timeUnit);
 		}
 	}
-	
+
 	@Override
 	public Property[] getPropertyArray() {
 		if (implementation != null) {
@@ -237,7 +237,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.getPropertyArray();
 		}
 	}
-	
+
 	@Override
 	public State getState() {
 		if (implementation != null) {
@@ -246,7 +246,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.getState();
 		}
 	}
-	
+
 	@Override
 	public boolean isInitialized() {
 		if (implementation != null) {
@@ -255,7 +255,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.isInitialized();
 		}
 	}
-	
+
 	@Override
 	public boolean isStarted() {
 		if (implementation != null) {
@@ -264,7 +264,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.isStarted();
 		}
 	}
-	
+
 	@Override
 	public boolean isStarting() {
 		if (implementation != null) {
@@ -273,7 +273,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.isStarting();
 		}
 	}
-	
+
 	@Override
 	public boolean isStopped() {
 		if (implementation != null) {
@@ -282,7 +282,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.isStopped();
 		}
 	}
-	
+
 	@Override
 	public boolean isStopping() {
 		if (implementation != null) {
@@ -291,7 +291,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			return super.isStopping();
 		}
 	}
-	
+
 	@Override
 	public void initialize() {
 		if (implementation != null) {
@@ -300,7 +300,7 @@ public class MemoryAppender extends org.openmrs.logging.MemoryAppender {
 			super.initialize();
 		}
 	}
-	
+
 	@Override
 	public void stop() {
 		if (implementation != null) {

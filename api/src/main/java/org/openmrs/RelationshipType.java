@@ -32,33 +32,33 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * In English, we run into a tricky RelationshipType with aunts and uncles. We have chosen to define
  * them as aunt/uncle-niece/nephew.
  */
-public class RelationshipType extends BaseChangeableOpenmrsMetadata{
-	
+public class RelationshipType extends BaseChangeableOpenmrsMetadata {
+
 	public static final long serialVersionUID = 4223L;
-	
+
 	// Fields
 	
 	private Integer relationshipTypeId;
-	
+
 	private String aIsToB;
-	
+
 	private String bIsToA;
-	
+
 	private Integer weight = 0;
-	
+
 	private Boolean preferred = false;
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public RelationshipType() {
 	}
-	
+
 	/** constructor with id */
 	public RelationshipType(Integer relationshipTypeId) {
 		this.relationshipTypeId = relationshipTypeId;
 	}
-	
+
 	// Property accessors
 	
 	/**
@@ -67,28 +67,28 @@ public class RelationshipType extends BaseChangeableOpenmrsMetadata{
 	public Integer getRelationshipTypeId() {
 		return relationshipTypeId;
 	}
-	
+
 	/**
 	 * @param relationshipTypeId The relationshipTypeId to set.
 	 */
 	public void setRelationshipTypeId(Integer relationshipTypeId) {
 		this.relationshipTypeId = relationshipTypeId;
 	}
-	
+
 	/**
 	 * @return the weight
 	 */
 	public Integer getWeight() {
 		return weight;
 	}
-	
+
 	/**
 	 * @param weight the weight to set
 	 */
 	public void setWeight(Integer weight) {
 		this.weight = weight;
 	}
-	
+
 	/**
 	 * The java bean specifications says that if an attribute has the second letter capitalized (as
 	 * the "I" is), the initial "a" is not to be capitalized. Both Spring and Hibernate use this
@@ -99,21 +99,21 @@ public class RelationshipType extends BaseChangeableOpenmrsMetadata{
 	public String getaIsToB() {
 		return aIsToB;
 	}
-	
+
 	/**
 	 * @param aisToB the aIsToB to set
 	 */
 	public void setaIsToB(String aisToB) {
 		aIsToB = aisToB;
 	}
-	
+
 	/**
 	 * @return the bIsToA
 	 */
 	public String getbIsToA() {
 		return bIsToA;
 	}
-	
+
 	/**
 	 * "Preferred" relationship types are those that should be shown as default types when
 	 * adding/editing a person's relationships
@@ -127,11 +127,11 @@ public class RelationshipType extends BaseChangeableOpenmrsMetadata{
 	public Boolean isPreferred() {
 		return getPreferred();
 	}
-	
+
 	public Boolean getPreferred() {
 		return preferred;
 	}
-	
+
 	/**
 	 * "Preferred" relationship types are those that should be shown as default types when
 	 * adding/editing a person's relationships
@@ -141,14 +141,14 @@ public class RelationshipType extends BaseChangeableOpenmrsMetadata{
 	public void setPreferred(Boolean preferred) {
 		this.preferred = preferred;
 	}
-	
+
 	/**
 	 * @param bisToA the bIsToA to set
 	 */
 	public void setbIsToA(String bisToA) {
 		bIsToA = bisToA;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -156,7 +156,7 @@ public class RelationshipType extends BaseChangeableOpenmrsMetadata{
 	public String toString() {
 		return getaIsToB() + "/" + getbIsToA();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
@@ -165,7 +165,7 @@ public class RelationshipType extends BaseChangeableOpenmrsMetadata{
 	public Integer getId() {
 		return getRelationshipTypeId();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -173,7 +173,7 @@ public class RelationshipType extends BaseChangeableOpenmrsMetadata{
 	@Override
 	public void setId(Integer id) {
 		setRelationshipTypeId(id);
-		
+
 	}
-	
+
 }

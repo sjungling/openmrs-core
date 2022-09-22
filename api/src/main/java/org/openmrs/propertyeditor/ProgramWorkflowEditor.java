@@ -21,15 +21,15 @@ import org.openmrs.api.context.Context;
  * @see ProgramWorkflow
  */
 public class ProgramWorkflowEditor extends OpenmrsPropertyEditor<ProgramWorkflow> {
-	
+
 	public ProgramWorkflowEditor() {
 	}
-	
+
 	@Override
 	protected ProgramWorkflow getObjectById(Integer id) {
 		return Context.getProgramWorkflowService().getWorkflow(id);
 	}
-	
+
 	@Override
 	protected ProgramWorkflow getObjectByUuid(String uuid) {
 		return Context.getProgramWorkflowService().getWorkflowByUuid(uuid);

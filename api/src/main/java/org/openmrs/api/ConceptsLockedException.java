@@ -21,16 +21,16 @@ import org.openmrs.util.OpenmrsConstants;
  * @see ConceptService#saveConcept(org.openmrs.Concept)
  */
 public class ConceptsLockedException extends APIException {
-	
+
 	private static final long serialVersionUID = 132352321232223L;
-	
+
 	/**
 	 * Generic constructor that gives a normal message about editing not being allowed to the user.
 	 */
 	public ConceptsLockedException() {
 		this("The concepts are currently locked. Editing of concepts is not allowed at this time.");
 	}
-	
+
 	/**
 	 * Convenience constructor to give the user a message other than normal default one
 	 * 
@@ -39,7 +39,7 @@ public class ConceptsLockedException extends APIException {
 	public ConceptsLockedException(String message) {
 		super(message);
 	}
-	
+
 	/**
 	 * Convenience constructor to give the user a message other than the normal one and to chain
 	 * this exception with a parent exception.
@@ -50,7 +50,7 @@ public class ConceptsLockedException extends APIException {
 	public ConceptsLockedException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	/**
 	 * Convenience constructor used to only set the parent exception to chain with. This does not
 	 * set the error message for the user as to why an exception is being thrown. The

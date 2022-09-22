@@ -22,9 +22,9 @@ import org.openmrs.User;
  * Tests for {@link OpenmrsMetadataSaveHandler}
  */
 public class OpenmrsMetadataSaveHandlerTest {
-	
+
 	/**
-	 * @see OpenmrsMetadataSaveHandler#handle(OpenmrsMetadata,User,Date,String)
+	 * @see OpenmrsMetadataSaveHandler#handle(OpenmrsMetadata, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldTrimWhitespaceFromName() {
@@ -35,9 +35,9 @@ public class OpenmrsMetadataSaveHandlerTest {
 		handler.handle(loc, null, null, null);
 		assertEquals(NAME, loc.getName());
 	}
-	
+
 	/**
-	 * @see OpenmrsMetadataSaveHandler#handle(OpenmrsMetadata,User,Date,String)
+	 * @see OpenmrsMetadataSaveHandler#handle(OpenmrsMetadata, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldTrimWhitespaceFromDescription() {

@@ -24,10 +24,10 @@ import org.springframework.validation.Validator;
  * 
  * @since 2.5.0
  */
-@Handler(supports = { ServiceOrder.class }, order = 50)
+@Handler(supports = {ServiceOrder.class}, order = 50)
 @Component("serviceOrderValidator")
 public class ServiceOrderValidator extends OrderValidator implements Validator {
-	
+
 	/**
 	 * Determines if the object being submitted is a valid type
 	 * 
@@ -37,7 +37,7 @@ public class ServiceOrderValidator extends OrderValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return ServiceOrder.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 

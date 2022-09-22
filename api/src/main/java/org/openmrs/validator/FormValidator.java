@@ -20,9 +20,9 @@ import org.springframework.validation.Validator;
  * This checks a Form object to make sure that it passes all API requirements. E.g. it must have a
  * name and version, if it is retired it must have metadata about that, etc.
  */
-@Handler(supports = { Form.class }, order = 50)
+@Handler(supports = {Form.class}, order = 50)
 public class FormValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 *
@@ -32,7 +32,7 @@ public class FormValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return c.equals(Form.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 *
@@ -49,26 +49,26 @@ public class FormValidator implements Validator {
 	 */
 	@Override
 	public void validate(Object obj, Errors errors) {
-		
+
 		obj = HibernateUtil.getRealObjectFromProxy(obj);
-		
+
 		Form form = (Form) obj;
 		if (form == null) {
 			errors.rejectValue("form", "error.general");
 		} else {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name");
-			
+
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "version", "error.null");
-			
+
 			if (form.getVersion() != null && !form.getVersion().matches("^\\d.*$")) {
 				errors.rejectValue("version", "Form.version.invalid");
 			}
-			
+
 			if (form.getRetired()) {
 				ValidationUtils.rejectIfEmptyOrWhitespace(errors, "retireReason", "general.retiredReason.empty");
 			}
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "version", "description", "retireReason");
 		}
 	}
-	
+
 }

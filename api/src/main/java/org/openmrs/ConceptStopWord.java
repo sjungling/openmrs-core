@@ -22,16 +22,16 @@ import org.springframework.util.StringUtils;
  * @since 1.8
  */
 public class ConceptStopWord extends BaseOpenmrsObject {
-	
+
 	private static final long serialVersionUID = 3671020002642184656L;
-	
+
 	// Fields
 	private Integer conceptStopWordId;
-	
+
 	private String value;
-	
+
 	private Locale locale;
-	
+
 	// Constructors
 	
 	/**
@@ -39,7 +39,7 @@ public class ConceptStopWord extends BaseOpenmrsObject {
 	 */
 	public ConceptStopWord() {
 	}
-	
+
 	/**
 	 * Convenience constructor to create a ConceptStopWord object with default
 	 * locale English
@@ -49,7 +49,7 @@ public class ConceptStopWord extends BaseOpenmrsObject {
 	public ConceptStopWord(String value) {
 		this(value, Context.getLocale());
 	}
-	
+
 	/**
 	 * Convenience constructor to create a ConceptStopWord object with value and
 	 * locale
@@ -61,43 +61,43 @@ public class ConceptStopWord extends BaseOpenmrsObject {
 		setValue(value);
 		setLocale(locale);
 	}
-	
+
 	public String getValue() {
 		return value;
 	}
-	
+
 	public void setValue(String value) {
 		if (StringUtils.hasText(value)) {
 			this.value = value.toUpperCase();
 		}
 	}
-	
+
 	public Locale getLocale() {
 		return locale;
 	}
-	
+
 	public void setLocale(Locale locale) {
 		this.locale = locale == null ? Context.getLocale() : locale;
 	}
-	
+
 	public Integer getConceptStopWordId() {
 		return conceptStopWordId;
 	}
-	
+
 	public void setConceptStopWordId(Integer conceptStopWordId) {
 		this.conceptStopWordId = conceptStopWordId;
 	}
-	
+
 	@Override
 	public Integer getId() {
 		return getConceptStopWordId();
 	}
-	
+
 	@Override
 	public void setId(Integer id) {
 		setConceptStopWordId(id);
 	}
-	
+
 	/**
 	 * @see Object#toString()
 	 */

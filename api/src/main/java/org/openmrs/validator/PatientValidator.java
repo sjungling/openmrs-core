@@ -23,14 +23,14 @@ import org.springframework.validation.ValidationUtils;
 /**
  * This class validates a Patient object.
  */
-@Handler(supports = { Patient.class }, order = 25)
+@Handler(supports = {Patient.class}, order = 25)
 public class PatientValidator extends PersonValidator {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(PersonNameValidator.class);
-	
+
 	@Autowired
 	private PatientIdentifierValidator patientIdentifierValidator;
-	
+
 	/**
 	 * Returns whether or not this validator supports validating a given class.
 	 * 
@@ -42,7 +42,7 @@ public class PatientValidator extends PersonValidator {
 		log.debug("{}.supports: {}", this.getClass().getName(), c.getName());
 		return Patient.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Validates the given Patient. Currently just checks for errors in identifiers. TODO: Check for
 	 * errors in all Patient fields.
@@ -65,23 +65,23 @@ public class PatientValidator extends PersonValidator {
 	@Override
 	public void validate(Object obj, Errors errors) {
 		log.debug("{}.validate...", this.getClass().getName());
-		
+
 		if (obj == null) {
 			return;
 		}
-		
+
 		super.validate(obj, errors);
-		
+
 		Patient patient = (Patient) obj;
-		
+
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "gender", "Person.gender.required");
-		
+
 		// Make sure they chose a preferred ID
 		Boolean preferredIdentifierChosen = false;
 		//Voided patients have only voided identifiers since they were voided with the patient, 
 		//so get all otherwise get the active ones
 		Collection<PatientIdentifier> identifiers = patient.getVoided() ? patient.getIdentifiers() : patient
-		        .getActiveIdentifiers();
+										.getActiveIdentifiers();
 		for (PatientIdentifier pi : identifiers) {
 			if (pi.getPreferred()) {
 				preferredIdentifierChosen = true;

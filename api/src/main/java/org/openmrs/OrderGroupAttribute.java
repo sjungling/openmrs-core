@@ -20,7 +20,7 @@ import org.openmrs.attribute.BaseAttribute;
 public class OrderGroupAttribute extends BaseAttribute<OrderGroupAttributeType, OrderGroup> implements Attribute<OrderGroupAttributeType, OrderGroup> {
 
 	private Integer orderGroupAttributeId;
-	
+
 	/**
 	 * @return the order group attribute Id
 	 */
@@ -38,17 +38,17 @@ public class OrderGroupAttribute extends BaseAttribute<OrderGroupAttributeType, 
 	/**
 	 * @return the order group
 	 */
-	public OrderGroup getOrderGroup(){
+	public OrderGroup getOrderGroup() {
 		return getOwner();
 	}
-	
+
 	/**
 	 * @param orderGroup the order group to set
 	 */
-	public void setOrderGroup(OrderGroup orderGroup){
+	public void setOrderGroup(OrderGroup orderGroup) {
 		setOwner(orderGroup);
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */

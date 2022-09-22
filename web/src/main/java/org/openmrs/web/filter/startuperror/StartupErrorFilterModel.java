@@ -19,11 +19,11 @@ import org.openmrs.web.filter.update.UpdateFilter;
  * the {@link StartupFilter}.
  */
 public class StartupErrorFilterModel {
-	
+
 	public Throwable errorAtStartup;
-	
+
 	public String stacktrace;
-	
+
 	/**
 	 * Default constructor that sets up some of the properties
 	 */
@@ -31,5 +31,5 @@ public class StartupErrorFilterModel {
 		errorAtStartup = t;
 		stacktrace = ExceptionUtils.getStackTrace(t);
 	}
-	
+
 }

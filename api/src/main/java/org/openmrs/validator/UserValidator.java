@@ -33,12 +33,12 @@ import org.springframework.validation.Validator;
  *
  * @since 1.5
  */
-@Handler(supports = { User.class }, order = 50)
+@Handler(supports = {User.class}, order = 50)
 public class UserValidator implements Validator {
-	
+
 	/** Logger for this class and subclasses */
 	private static final Logger log = LoggerFactory.getLogger(UserValidator.class);
-	
+
 	@Autowired
 	private PersonValidator personValidator;
 
@@ -51,7 +51,7 @@ public class UserValidator implements Validator {
 	public boolean supports(Class<?> clazz) {
 		return User.class.isAssignableFrom(clazz);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 *
@@ -99,20 +99,20 @@ public class UserValidator implements Validator {
 				} finally {
 					errors.popNestedPath();
 				}
-					
+
 			}
-			
+
 			AdministrationService as = Context.getAdministrationService();
 			boolean emailAsUsername;
 			try {
 				Context.addProxyPrivilege(PrivilegeConstants.GET_GLOBAL_PROPERTIES);
 				emailAsUsername = Boolean.parseBoolean(as.getGlobalProperty(
-				    OpenmrsConstants.GLOBAL_PROPERTY_USER_REQUIRE_EMAIL_AS_USERNAME, "false"));
+												OpenmrsConstants.GLOBAL_PROPERTY_USER_REQUIRE_EMAIL_AS_USERNAME, "false"));
 			}
 			finally {
 				Context.removeProxyPrivilege(PrivilegeConstants.GET_GLOBAL_PROPERTIES);
 			}
-			
+
 			if (emailAsUsername) {
 				boolean isValidUserName = isUserNameAsEmailValid(user.getUsername());
 				if (!isValidUserName) {
@@ -137,11 +137,11 @@ public class UserValidator implements Validator {
 					}
 				}
 			}
-			
+
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "username", "systemId", "retireReason");
 		}
 	}
-	
+
 	/**
 	 * Convenience method to check the given username against the regular expression. <br>
 	 * <br>
@@ -175,7 +175,7 @@ public class UserValidator implements Validator {
 		if (StringUtils.isEmpty(username)) {
 			return true;
 		}
-		
+
 		try {
 			//Make the comparison case-insensitive.
 			Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
@@ -187,7 +187,7 @@ public class UserValidator implements Validator {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Returns true if the given username is a valid e-mail.
 	 *
@@ -200,7 +200,7 @@ public class UserValidator implements Validator {
 	public boolean isUserNameAsEmailValid(String username) {
 		return EmailValidator.getInstance().isValid(username);
 	}
-	
+
 	/**
 	 * @return true if email is valid or false otherwise
 	 * @param email

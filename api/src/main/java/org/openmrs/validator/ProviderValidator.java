@@ -25,11 +25,11 @@ import org.springframework.validation.Validator;
  *
  * @since 1.9
  */
-@Handler(supports = { Provider.class }, order = 50)
+@Handler(supports = {Provider.class}, order = 50)
 public class ProviderValidator extends BaseCustomizableValidator implements Validator {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ProviderValidator.class);
-	
+
 	/**
 	 * Returns whether or not this validator supports validating a given class.
 	 *
@@ -41,7 +41,7 @@ public class ProviderValidator extends BaseCustomizableValidator implements Vali
 		log.debug("{}.supports: {}", this.getClass().getName(), c.getName());
 		return Provider.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Validates the given Provider. checks to see if a provider is valid (Either of Person or
 	 * Provider name should be set and not both) Checks to see if there is a retired Reason in case
@@ -68,24 +68,24 @@ public class ProviderValidator extends BaseCustomizableValidator implements Vali
 	@Override
 	public void validate(Object obj, Errors errors) throws APIException {
 		log.debug("{}.validate...", this.getClass().getName());
-		
+
 		if (obj == null || !(obj instanceof Provider)) {
 			throw new IllegalArgumentException("The parameter obj should not be null and must be of type " + Provider.class);
 		}
-		
+
 		Provider provider = (Provider) obj;
-		
+
 		if (provider.getPerson() == null && StringUtils.isBlank(provider.getName())) {
 			errors.rejectValue("name", "Provider.error.personOrName.required");
 			errors.rejectValue("person", "Provider.error.personOrName.required");
 		}
-		
+
 		if (provider.getRetired() && StringUtils.isEmpty(provider.getRetireReason())) {
 			errors.rejectValue("retireReason", "Provider.error.retireReason.required");
 		}
-		
+
 		ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "identifier", "retireReason");
 		super.validateAttributes(provider, errors, Context.getProviderService().getAllProviderAttributeTypes());
 	}
-	
+
 }

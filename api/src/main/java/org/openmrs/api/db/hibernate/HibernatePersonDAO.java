@@ -54,14 +54,14 @@ import org.slf4j.LoggerFactory;
  * @see org.openmrs.api.context.Context
  */
 public class HibernatePersonDAO implements PersonDAO {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(HibernatePersonDAO.class);
-	
+
 	/**
 	 * Hibernate session factory
 	 */
 	private SessionFactory sessionFactory;
-	
+
 	/**
 	 * Set session factory
 	 * 
@@ -70,7 +70,7 @@ public class HibernatePersonDAO implements PersonDAO {
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	/**
 	 * This method executes a Lucene search on persons based on the soundex filter with one search name given
 	 * 
@@ -80,20 +80,20 @@ public class HibernatePersonDAO implements PersonDAO {
 	 * @param gender of the person to search for 
 	 * @return the set of Persons that match the search criteria 
 	 */
-	private Set<Person> executeSoundexOnePersonNameQuery(String name, Integer birthyear, boolean includeVoided , String gender) {
+	private Set<Person> executeSoundexOnePersonNameQuery(String name, Integer birthyear, boolean includeVoided, String gender) {
 		PersonLuceneQuery personLuceneQuery = new PersonLuceneQuery(sessionFactory);
 		String query = LuceneQuery.escapeQuery(name);
 		int maxResults = HibernatePersonDAO.getMaximumSearchResults();
 		LinkedHashSet<Person> people = new LinkedHashSet<>();
-		
+
 		LuceneQuery<PersonName> luceneQuery = personLuceneQuery.getSoundexPersonNameQuery(query, birthyear, false, gender);
 		ListPart<Object[]> names = luceneQuery.listPartProjection(0, maxResults, "person.personId");
 		names.getList().forEach(x -> people.add(getPerson((Integer) x[0])));
-		
+
 		return people;
 	}
-	
-	
+
+
 	/**
 	 * This method executes a Lucene search on persons based on the soundex filter with three name elements given
 	 *
@@ -105,18 +105,19 @@ public class HibernatePersonDAO implements PersonDAO {
 	 * @param gender of the person to search for 
 	 * @return the set of Persons that match the search criteria 
 	 */
-	private Set<Person> executeSoundexThreePersonNamesQuery(String name1, String name2, String name3, Integer birthyear, boolean includeVoided , String gender) {
+	private Set<Person> executeSoundexThreePersonNamesQuery(String name1, String name2, String name3, Integer birthyear, boolean includeVoided, String gender) {
 		PersonLuceneQuery personLuceneQuery = new PersonLuceneQuery(sessionFactory);
 		int maxResults = HibernatePersonDAO.getMaximumSearchResults();
 		LinkedHashSet<Person> people = new LinkedHashSet<>();
-		
-		LuceneQuery<PersonName> luceneQuery = personLuceneQuery.getSoundexPersonNameSearchOnThreeNames(name1, name2, name3, birthyear, false, gender);;
+
+		LuceneQuery<PersonName> luceneQuery = personLuceneQuery.getSoundexPersonNameSearchOnThreeNames(name1, name2, name3, birthyear, false, gender);
+		;
 		ListPart<Object[]> names = luceneQuery.listPartProjection(0, maxResults, "person.personId");
 		names.getList().forEach(x -> people.add(getPerson((Integer) x[0])));
-		
+
 		return people;
 	}
-	
+
 	/**
 	 * This method executes a Lucene search on persons based on the soundex filter with two search names given
 	 *
@@ -127,18 +128,19 @@ public class HibernatePersonDAO implements PersonDAO {
 	 * @param gender of the person to search for 
 	 * @return the set of Persons that match the search criteria
 	 */
-	private Set<Person> executeSoundexTwoPersonNamesQuery(String searchName1, String searchName2, Integer birthyear, boolean includeVoided , String gender) {
+	private Set<Person> executeSoundexTwoPersonNamesQuery(String searchName1, String searchName2, Integer birthyear, boolean includeVoided, String gender) {
 		PersonLuceneQuery personLuceneQuery = new PersonLuceneQuery(sessionFactory);
 		int maxResults = HibernatePersonDAO.getMaximumSearchResults();
 		LinkedHashSet<Person> people = new LinkedHashSet<>();
-		
-		LuceneQuery<PersonName> luceneQuery = personLuceneQuery.getSoundexPersonNameSearchOnTwoNames(searchName1, searchName2, birthyear, false, gender);;
+
+		LuceneQuery<PersonName> luceneQuery = personLuceneQuery.getSoundexPersonNameSearchOnTwoNames(searchName1, searchName2, birthyear, false, gender);
+		;
 		ListPart<Object[]> names = luceneQuery.listPartProjection(0, maxResults, "person.personId");
 		names.getList().forEach(x -> people.add(getPerson((Integer) x[0])));
-		
+
 		return people;
 	}
-	
+
 	/**
 	 * This method executes a Lucence search based on the soundex filter with more than three search names given 
 	 * 
@@ -148,19 +150,19 @@ public class HibernatePersonDAO implements PersonDAO {
 	 * @param gender of the person to search for 
 	 * @return the set of Persons that match the search criteria
 	 */
-	private Set<Person> executeSoundexNPersonNamesQuery(String[] searchNames, Integer birthyear, boolean includeVoided , String gender) {
+	private Set<Person> executeSoundexNPersonNamesQuery(String[] searchNames, Integer birthyear, boolean includeVoided, String gender) {
 		PersonLuceneQuery personLuceneQuery = new PersonLuceneQuery(sessionFactory);
 		int maxResults = HibernatePersonDAO.getMaximumSearchResults();
 		LinkedHashSet<Person> people = new LinkedHashSet<>();
-		
+
 		LuceneQuery<PersonName> luceneQuery = personLuceneQuery.getSoundexPersonNameSearchOnNNames(searchNames, birthyear, includeVoided, gender);
 		ListPart<Object[]> names = luceneQuery.listPartProjection(0, maxResults, "person.personId");
 		names.getList().forEach(x -> people.add(getPerson((Integer) x[0])));
-		
+
 		return people;
-		
+
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#getSimilarPeople(String name, Integer birthyear, String gender)
 	 * @see org.openmrs.api.db.PersonDAO#getSimilarPeople(String name, Integer birthyear, String gender)
@@ -175,7 +177,7 @@ public class HibernatePersonDAO implements PersonDAO {
 		name = name.replaceAll("  ", " ");
 		name = name.replace(", ", " ");
 		String[] names = name.split(" ");
-		
+
 		if (names.length == 1) {
 			return  executeSoundexOnePersonNameQuery(name, birthyear, false, gender);
 		} else if (names.length == 2) {
@@ -188,7 +190,7 @@ public class HibernatePersonDAO implements PersonDAO {
 		}
 		return new LinkedHashSet<>();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.PersonDAO#getPeople(java.lang.String, java.lang.Boolean)
 	 * <strong>Should</strong> get no one by null
@@ -272,12 +274,12 @@ public class HibernatePersonDAO implements PersonDAO {
 
 		return people;
 	}
-	
+
 	@Override
 	public List<Person> getPeople(String searchString, Boolean dead) {
 		return getPeople(searchString, dead, null);
 	}
-	
+
 	/**
 	 * Fetch the max results value from the global properties table
 	 * 
@@ -286,18 +288,18 @@ public class HibernatePersonDAO implements PersonDAO {
 	public static Integer getMaximumSearchResults() {
 		try {
 			return Integer.valueOf(Context.getAdministrationService().getGlobalProperty(
-			    OpenmrsConstants.GLOBAL_PROPERTY_PERSON_SEARCH_MAX_RESULTS,
-			    String.valueOf(OpenmrsConstants.GLOBAL_PROPERTY_PERSON_SEARCH_MAX_RESULTS_DEFAULT_VALUE)));
+											OpenmrsConstants.GLOBAL_PROPERTY_PERSON_SEARCH_MAX_RESULTS,
+											String.valueOf(OpenmrsConstants.GLOBAL_PROPERTY_PERSON_SEARCH_MAX_RESULTS_DEFAULT_VALUE)));
 		}
 		catch (Exception e) {
 			log.warn("Unable to convert the global property " + OpenmrsConstants.GLOBAL_PROPERTY_PERSON_SEARCH_MAX_RESULTS
-			        + "to a valid integer. Returning the default "
-			        + OpenmrsConstants.GLOBAL_PROPERTY_PERSON_SEARCH_MAX_RESULTS_DEFAULT_VALUE);
+											+ "to a valid integer. Returning the default "
+											+ OpenmrsConstants.GLOBAL_PROPERTY_PERSON_SEARCH_MAX_RESULTS_DEFAULT_VALUE);
 		}
-		
+
 		return OpenmrsConstants.GLOBAL_PROPERTY_PERSON_SEARCH_MAX_RESULTS_DEFAULT_VALUE;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#getPerson(java.lang.Integer)
 	 * @see org.openmrs.api.db.PersonDAO#getPerson(java.lang.Integer)
@@ -306,7 +308,7 @@ public class HibernatePersonDAO implements PersonDAO {
 	public Person getPerson(Integer personId) {
 		return (Person) sessionFactory.getCurrentSession().get(Person.class, personId);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#purgePersonAttributeType(org.openmrs.PersonAttributeType)
 	 * @see org.openmrs.api.db.PersonDAO#deletePersonAttributeType(org.openmrs.PersonAttributeType)
@@ -315,7 +317,7 @@ public class HibernatePersonDAO implements PersonDAO {
 	public void deletePersonAttributeType(PersonAttributeType type) {
 		sessionFactory.getCurrentSession().delete(type);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#savePersonAttributeType(org.openmrs.PersonAttributeType)
 	 * @see org.openmrs.api.db.PersonDAO#savePersonAttributeType(org.openmrs.PersonAttributeType)
@@ -325,7 +327,7 @@ public class HibernatePersonDAO implements PersonDAO {
 		sessionFactory.getCurrentSession().saveOrUpdate(type);
 		return type;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#getPersonAttributeType(java.lang.Integer)
 	 * @see org.openmrs.api.db.PersonDAO#getPersonAttributeType(java.lang.Integer)
@@ -334,7 +336,7 @@ public class HibernatePersonDAO implements PersonDAO {
 	public PersonAttributeType getPersonAttributeType(Integer typeId) {
 		return (PersonAttributeType) sessionFactory.getCurrentSession().get(PersonAttributeType.class, typeId);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#getPersonAttribute(java.lang.Integer)
 	 * @see org.openmrs.api.db.PersonDAO#getPersonAttribute(java.lang.Integer)
@@ -343,7 +345,7 @@ public class HibernatePersonDAO implements PersonDAO {
 	public PersonAttribute getPersonAttribute(Integer id) {
 		return (PersonAttribute) sessionFactory.getCurrentSession().get(PersonAttribute.class, id);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#getAllPersonAttributeTypes(boolean)
 	 * @see org.openmrs.api.db.PersonDAO#getAllPersonAttributeTypes(boolean)
@@ -352,16 +354,16 @@ public class HibernatePersonDAO implements PersonDAO {
 	@SuppressWarnings("unchecked")
 	public List<PersonAttributeType> getAllPersonAttributeTypes(boolean includeRetired) throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PersonAttributeType.class, "r");
-		
+
 		if (!includeRetired) {
 			criteria.add(Restrictions.eq("retired", false));
 		}
-		
+
 		criteria.addOrder(Order.asc("sortWeight"));
-		
+
 		return criteria.list();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.PersonDAO#getPersonAttributeTypes(java.lang.String, java.lang.String,
 	 *      java.lang.Integer, java.lang.Boolean)
@@ -370,28 +372,28 @@ public class HibernatePersonDAO implements PersonDAO {
 	// TODO - PersonServiceTest fails here
 	@SuppressWarnings("unchecked")
 	public List<PersonAttributeType> getPersonAttributeTypes(String exactName, String format, Integer foreignKey,
-	        Boolean searchable) throws DAOException {
+									Boolean searchable) throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PersonAttributeType.class, "r");
-		
+
 		if (exactName != null) {
 			criteria.add(Restrictions.eq("name", exactName));
 		}
-		
+
 		if (format != null) {
 			criteria.add(Restrictions.eq("format", format));
 		}
-		
+
 		if (foreignKey != null) {
 			criteria.add(Restrictions.eq("foreignKey", foreignKey));
 		}
-		
+
 		if (searchable != null) {
 			criteria.add(Restrictions.eq("searchable", searchable));
 		}
-		
+
 		return criteria.list();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#getRelationship(java.lang.Integer)
 	 * @see org.openmrs.api.db.PersonDAO#getRelationship(java.lang.Integer)
@@ -400,9 +402,9 @@ public class HibernatePersonDAO implements PersonDAO {
 	public Relationship getRelationship(Integer relationshipId) throws DAOException {
 
 		return (Relationship) sessionFactory.getCurrentSession()
-		        .get(Relationship.class, relationshipId);
+										.get(Relationship.class, relationshipId);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#getAllRelationships(boolean)
 	 * @see org.openmrs.api.db.PersonDAO#getAllRelationships(boolean)
@@ -411,14 +413,14 @@ public class HibernatePersonDAO implements PersonDAO {
 	@SuppressWarnings("unchecked")
 	public List<Relationship> getAllRelationships(boolean includeVoided) throws DAOException {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Relationship.class, "r");
-		
+
 		if (!includeVoided) {
 			criteria.add(Restrictions.eq("voided", false));
 		}
-		
+
 		return criteria.list();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#getRelationships(org.openmrs.Person, org.openmrs.Person,
 	 *      org.openmrs.RelationshipType)
@@ -429,7 +431,7 @@ public class HibernatePersonDAO implements PersonDAO {
 	@SuppressWarnings("unchecked")
 	public List<Relationship> getRelationships(Person fromPerson, Person toPerson, RelationshipType relType) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Relationship.class, "r");
-		
+
 		if (fromPerson != null) {
 			criteria.add(Restrictions.eq("personA", fromPerson));
 		}
@@ -439,12 +441,12 @@ public class HibernatePersonDAO implements PersonDAO {
 		if (relType != null) {
 			criteria.add(Restrictions.eq("relationshipType", relType));
 		}
-		
+
 		criteria.add(Restrictions.eq("voided", false));
-		
+
 		return criteria.list();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#getRelationships(org.openmrs.Person, org.openmrs.Person,
 	 *      org.openmrs.RelationshipType, java.util.Date, java.util.Date)
@@ -454,9 +456,9 @@ public class HibernatePersonDAO implements PersonDAO {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Relationship> getRelationships(Person fromPerson, Person toPerson, RelationshipType relType,
-	        Date startEffectiveDate, Date endEffectiveDate) {
+									Date startEffectiveDate, Date endEffectiveDate) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Relationship.class, "r");
-		
+
 		if (fromPerson != null) {
 			criteria.add(Restrictions.eq("personA", fromPerson));
 		}
@@ -468,25 +470,25 @@ public class HibernatePersonDAO implements PersonDAO {
 		}
 		if (startEffectiveDate != null) {
 			criteria.add(Restrictions.disjunction().add(
-			    Restrictions.and(Restrictions.le("startDate", startEffectiveDate), Restrictions.ge("endDate",
-			        startEffectiveDate))).add(
-			    Restrictions.and(Restrictions.le("startDate", startEffectiveDate), Restrictions.isNull("endDate"))).add(
-			    Restrictions.and(Restrictions.isNull("startDate"), Restrictions.ge("endDate", startEffectiveDate))).add(
-			    Restrictions.and(Restrictions.isNull("startDate"), Restrictions.isNull("endDate"))));
+											Restrictions.and(Restrictions.le("startDate", startEffectiveDate), Restrictions.ge("endDate",
+																			startEffectiveDate))).add(
+											Restrictions.and(Restrictions.le("startDate", startEffectiveDate), Restrictions.isNull("endDate"))).add(
+											Restrictions.and(Restrictions.isNull("startDate"), Restrictions.ge("endDate", startEffectiveDate))).add(
+											Restrictions.and(Restrictions.isNull("startDate"), Restrictions.isNull("endDate"))));
 		}
 		if (endEffectiveDate != null) {
 			criteria.add(Restrictions.disjunction().add(
-			    Restrictions.and(Restrictions.le("startDate", endEffectiveDate), Restrictions
-			            .ge("endDate", endEffectiveDate))).add(
-			    Restrictions.and(Restrictions.le("startDate", endEffectiveDate), Restrictions.isNull("endDate"))).add(
-			    Restrictions.and(Restrictions.isNull("startDate"), Restrictions.ge("endDate", endEffectiveDate))).add(
-			    Restrictions.and(Restrictions.isNull("startDate"), Restrictions.isNull("endDate"))));
+											Restrictions.and(Restrictions.le("startDate", endEffectiveDate), Restrictions
+																			.ge("endDate", endEffectiveDate))).add(
+											Restrictions.and(Restrictions.le("startDate", endEffectiveDate), Restrictions.isNull("endDate"))).add(
+											Restrictions.and(Restrictions.isNull("startDate"), Restrictions.ge("endDate", endEffectiveDate))).add(
+											Restrictions.and(Restrictions.isNull("startDate"), Restrictions.isNull("endDate"))));
 		}
 		criteria.add(Restrictions.eq("voided", false));
-		
+
 		return criteria.list();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#getRelationshipType(java.lang.Integer)
 	 * @see org.openmrs.api.db.PersonDAO#getRelationshipType(java.lang.Integer)
@@ -495,9 +497,9 @@ public class HibernatePersonDAO implements PersonDAO {
 	public RelationshipType getRelationshipType(Integer relationshipTypeId) throws DAOException {
 
 		return (RelationshipType) sessionFactory.getCurrentSession().get(
-		    RelationshipType.class, relationshipTypeId);
+										RelationshipType.class, relationshipTypeId);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#getRelationshipTypes(java.lang.String, java.lang.Boolean)
 	 * @see org.openmrs.api.db.PersonDAO#getRelationshipTypes(java.lang.String, java.lang.Boolean)
@@ -505,18 +507,18 @@ public class HibernatePersonDAO implements PersonDAO {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<RelationshipType> getRelationshipTypes(String relationshipTypeName, Boolean preferred) throws DAOException {
-		
+
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(RelationshipType.class);
 		criteria.add(Restrictions.sqlRestriction("CONCAT(a_Is_To_B, CONCAT('/', b_Is_To_A)) like (?)", relationshipTypeName,
-		    new StringType()));
-		
+										new StringType()));
+
 		if (preferred != null) {
 			criteria.add(Restrictions.eq("preferred", preferred));
 		}
-		
+
 		return criteria.list();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#saveRelationshipType(org.openmrs.RelationshipType)
 	 * @see org.openmrs.api.db.PersonDAO#saveRelationshipType(org.openmrs.RelationshipType)
@@ -526,7 +528,7 @@ public class HibernatePersonDAO implements PersonDAO {
 		sessionFactory.getCurrentSession().saveOrUpdate(relationshipType);
 		return relationshipType;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#purgeRelationshipType(org.openmrs.RelationshipType)
 	 * @see org.openmrs.api.db.PersonDAO#deleteRelationshipType(org.openmrs.RelationshipType)
@@ -535,7 +537,7 @@ public class HibernatePersonDAO implements PersonDAO {
 	public void deleteRelationshipType(RelationshipType relationshipType) throws DAOException {
 		sessionFactory.getCurrentSession().delete(relationshipType);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#purgePerson(org.openmrs.Person)
 	 * @see org.openmrs.api.db.PersonDAO#deletePerson(org.openmrs.Person)
@@ -544,7 +546,7 @@ public class HibernatePersonDAO implements PersonDAO {
 	public void deletePerson(Person person) throws DAOException {
 		HibernatePersonDAO.deletePersonAndAttributes(sessionFactory, person);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#savePerson(org.openmrs.Person)
 	 * @see org.openmrs.api.db.PersonDAO#savePerson(org.openmrs.Person)
@@ -554,7 +556,7 @@ public class HibernatePersonDAO implements PersonDAO {
 		sessionFactory.getCurrentSession().saveOrUpdate(person);
 		return person;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#saveRelationship(org.openmrs.Relationship)
 	 * @see org.openmrs.api.db.PersonDAO#saveRelationship(org.openmrs.Relationship)
@@ -564,7 +566,7 @@ public class HibernatePersonDAO implements PersonDAO {
 		sessionFactory.getCurrentSession().saveOrUpdate(relationship);
 		return relationship;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#purgeRelationship(org.openmrs.Relationship)
 	 * @see org.openmrs.api.db.PersonDAO#deleteRelationship(org.openmrs.Relationship)
@@ -573,7 +575,7 @@ public class HibernatePersonDAO implements PersonDAO {
 	public void deleteRelationship(Relationship relationship) throws DAOException {
 		sessionFactory.getCurrentSession().delete(relationship);
 	}
-	
+
 	/**
 	 * Used by deletePerson, deletePatient, and deleteUser to remove all properties of a person
 	 * before deleting them.
@@ -591,7 +593,7 @@ public class HibernatePersonDAO implements PersonDAO {
 			}
 		}
 		person.setAddresses(null);
-		
+
 		for (PersonAttribute attribute : person.getAttributes()) {
 			if (attribute.getDateCreated() == null) {
 				sessionFactory.getCurrentSession().evict(attribute);
@@ -600,7 +602,7 @@ public class HibernatePersonDAO implements PersonDAO {
 			}
 		}
 		person.setAttributes(null);
-		
+
 		for (PersonName name : person.getNames()) {
 			if (name.getDateCreated() == null) {
 				sessionFactory.getCurrentSession().evict(name);
@@ -609,27 +611,27 @@ public class HibernatePersonDAO implements PersonDAO {
 			}
 		}
 		person.setNames(null);
-		
+
 		// finally, just tell hibernate to delete our object
 		sessionFactory.getCurrentSession().delete(person);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.PersonDAO#getPersonAttributeTypeByUuid(java.lang.String)
 	 */
 	@Override
 	public PersonAttributeType getPersonAttributeTypeByUuid(String uuid) {
 		return (PersonAttributeType) sessionFactory.getCurrentSession().createQuery(
-		    "from PersonAttributeType pat where pat.uuid = :uuid").setString("uuid", uuid).uniqueResult();
+										"from PersonAttributeType pat where pat.uuid = :uuid").setString("uuid", uuid).uniqueResult();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.PersonDAO#getSavedPersonAttributeTypeName(org.openmrs.PersonAttributeType)
 	 */
 	@Override
 	public String getSavedPersonAttributeTypeName(PersonAttributeType personAttributeType) {
 		SQLQuery sql = sessionFactory.getCurrentSession().createSQLQuery(
-		    "select name from person_attribute_type where person_attribute_type_id = :personAttributeTypeId");
+										"select name from person_attribute_type where person_attribute_type_id = :personAttributeTypeId");
 		sql.setInteger("personAttributeTypeId", personAttributeType.getId());
 		return (String) sql.uniqueResult();
 	}
@@ -637,7 +639,7 @@ public class HibernatePersonDAO implements PersonDAO {
 	@Override
 	public Boolean getSavedPersonAttributeTypeSearchable(PersonAttributeType personAttributeType) {
 		SQLQuery sql = sessionFactory.getCurrentSession().createSQLQuery(
-			"select searchable from person_attribute_type where person_attribute_type_id = :personAttributeTypeId");
+										"select searchable from person_attribute_type where person_attribute_type_id = :personAttributeTypeId");
 		sql.setInteger("personAttributeTypeId", personAttributeType.getId());
 		return (Boolean) sql.uniqueResult();
 	}
@@ -648,15 +650,15 @@ public class HibernatePersonDAO implements PersonDAO {
 	@Override
 	public Person getPersonByUuid(String uuid) {
 		return (Person) sessionFactory.getCurrentSession().createQuery("from Person p where p.uuid = :uuid").setString(
-		    "uuid", uuid).uniqueResult();
+										"uuid", uuid).uniqueResult();
 	}
-	
+
 	@Override
 	public PersonAddress getPersonAddressByUuid(String uuid) {
 		return (PersonAddress) sessionFactory.getCurrentSession().createQuery("from PersonAddress p where p.uuid = :uuid")
-		        .setString("uuid", uuid).uniqueResult();
+										.setString("uuid", uuid).uniqueResult();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.PersonDAO#savePersonMergeLog(PersonMergeLog)
 	 */
@@ -665,7 +667,7 @@ public class HibernatePersonDAO implements PersonDAO {
 		sessionFactory.getCurrentSession().saveOrUpdate(personMergeLog);
 		return personMergeLog;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.PersonDAO#getPersonMergeLog(java.lang.Integer)
 	 */
@@ -673,16 +675,16 @@ public class HibernatePersonDAO implements PersonDAO {
 	public PersonMergeLog getPersonMergeLog(Integer id) throws DAOException {
 		return (PersonMergeLog) sessionFactory.getCurrentSession().get(PersonMergeLog.class, id);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.PersonDAO#getPersonMergeLogByUuid(String)
 	 */
 	@Override
 	public PersonMergeLog getPersonMergeLogByUuid(String uuid) throws DAOException {
 		return (PersonMergeLog) sessionFactory.getCurrentSession().createQuery("from PersonMergeLog p where p.uuid = :uuid")
-		        .setString("uuid", uuid).uniqueResult();
+										.setString("uuid", uuid).uniqueResult();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.PersonDAO#getWinningPersonMergeLogs(org.openmrs.Person)
 	 */
@@ -690,18 +692,18 @@ public class HibernatePersonDAO implements PersonDAO {
 	@SuppressWarnings("unchecked")
 	public List<PersonMergeLog> getWinningPersonMergeLogs(Person person) throws DAOException {
 		return (List<PersonMergeLog>) sessionFactory.getCurrentSession().createQuery(
-		    "from PersonMergeLog p where p.winner.id = :winnerId").setInteger("winnerId", person.getId()).list();
+										"from PersonMergeLog p where p.winner.id = :winnerId").setInteger("winnerId", person.getId()).list();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.PersonDAO#getLosingPersonMergeLogs(org.openmrs.Person)
 	 */
 	@Override
 	public PersonMergeLog getLosingPersonMergeLogs(Person person) throws DAOException {
 		return (PersonMergeLog) sessionFactory.getCurrentSession().createQuery(
-		    "from PersonMergeLog p where p.loser.id = :loserId").setInteger("loserId", person.getId()).uniqueResult();
+										"from PersonMergeLog p where p.loser.id = :loserId").setInteger("loserId", person.getId()).uniqueResult();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.PersonDAO#getAllPersonMergeLogs()
 	 */
@@ -710,13 +712,13 @@ public class HibernatePersonDAO implements PersonDAO {
 	public List<PersonMergeLog> getAllPersonMergeLogs() throws DAOException {
 		return (List<PersonMergeLog>) sessionFactory.getCurrentSession().createQuery("from PersonMergeLog p").list();
 	}
-	
+
 	@Override
 	public PersonAttribute getPersonAttributeByUuid(String uuid) {
 		return (PersonAttribute) sessionFactory.getCurrentSession().createQuery(
-		    "from PersonAttribute p where p.uuid = :uuid").setString("uuid", uuid).uniqueResult();
+										"from PersonAttribute p where p.uuid = :uuid").setString("uuid", uuid).uniqueResult();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.PersonDAO#getPersonName(Integer)
 	 */
@@ -724,34 +726,34 @@ public class HibernatePersonDAO implements PersonDAO {
 	public PersonName getPersonName(Integer personNameId) {
 		return (PersonName) sessionFactory.getCurrentSession().get(PersonName.class, personNameId);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.PersonDAO#getPersonNameByUuid(String)
 	 */
 	@Override
 	public PersonName getPersonNameByUuid(String uuid) {
 		return (PersonName) sessionFactory.getCurrentSession().createQuery("from PersonName p where p.uuid = :uuid")
-		        .setString("uuid", uuid).uniqueResult();
+										.setString("uuid", uuid).uniqueResult();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.PersonDAO#getRelationshipByUuid(java.lang.String)
 	 */
 	@Override
 	public Relationship getRelationshipByUuid(String uuid) {
 		return (Relationship) sessionFactory.getCurrentSession().createQuery("from Relationship r where r.uuid = :uuid")
-		        .setString("uuid", uuid).uniqueResult();
+										.setString("uuid", uuid).uniqueResult();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.PersonDAO#getRelationshipTypeByUuid(java.lang.String)
 	 */
 	@Override
 	public RelationshipType getRelationshipTypeByUuid(String uuid) {
 		return (RelationshipType) sessionFactory.getCurrentSession().createQuery(
-		    "from RelationshipType rt where rt.uuid = :uuid").setString("uuid", uuid).uniqueResult();
+										"from RelationshipType rt where rt.uuid = :uuid").setString("uuid", uuid).uniqueResult();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.PersonDAO#getAllRelationshipTypes(boolean)
 	 */
@@ -760,14 +762,14 @@ public class HibernatePersonDAO implements PersonDAO {
 	public List<RelationshipType> getAllRelationshipTypes(boolean includeRetired) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(RelationshipType.class);
 		criteria.addOrder(Order.asc("weight"));
-		
+
 		if (!includeRetired) {
 			criteria.add(Restrictions.eq("retired", false));
 		}
-		
+
 		return criteria.list();
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#savePersonName(org.openmrs.PersonName)
 	 * @see org.openmrs.api.db.PersonDAO#savePersonName(org.openmrs.PersonName)
@@ -777,7 +779,7 @@ public class HibernatePersonDAO implements PersonDAO {
 		sessionFactory.getCurrentSession().saveOrUpdate(personName);
 		return personName;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.PersonService#savePersonAddress(org.openmrs.PersonAddress)
 	 * @see org.openmrs.api.db.PersonDAO#savePersonAddress(org.openmrs.PersonAddress)
@@ -787,5 +789,5 @@ public class HibernatePersonDAO implements PersonDAO {
 		sessionFactory.getCurrentSession().saveOrUpdate(personAddress);
 		return personAddress;
 	}
-	
+
 }

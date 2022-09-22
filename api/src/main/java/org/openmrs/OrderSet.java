@@ -21,9 +21,9 @@ import org.openmrs.api.APIException;
  * @since 1.12
  */
 public class OrderSet extends BaseCustomizableMetadata<OrderSetAttribute> {
-	
+
 	public static final long serialVersionUID = 72232L;
-	
+
 	/**
 	 * Restrictions put on saving an orderSet.
 	 * ALL: All the members of the orderSet need to be selected for saving
@@ -33,13 +33,13 @@ public class OrderSet extends BaseCustomizableMetadata<OrderSetAttribute> {
 	public enum Operator {
 		ALL, ONE, ANY
 	}
-	
+
 	private Integer orderSetId;
-	
+
 	private Operator operator;
-	
+
 	private List<OrderSetMember> orderSetMembers;
-	
+
 	private Concept category;
 
 	/**
@@ -50,7 +50,7 @@ public class OrderSet extends BaseCustomizableMetadata<OrderSetAttribute> {
 	public Integer getOrderSetId() {
 		return orderSetId;
 	}
-	
+
 	/**
 	 * Sets the orderSetId
 	 *
@@ -59,7 +59,7 @@ public class OrderSet extends BaseCustomizableMetadata<OrderSetAttribute> {
 	public void setOrderSetId(Integer orderSetId) {
 		this.orderSetId = orderSetId;
 	}
-	
+
 	/**
 	 * Gets the operator
 	 *
@@ -68,7 +68,7 @@ public class OrderSet extends BaseCustomizableMetadata<OrderSetAttribute> {
 	public Operator getOperator() {
 		return operator;
 	}
-	
+
 	/**
 	 * Sets the operator
 	 *
@@ -77,7 +77,7 @@ public class OrderSet extends BaseCustomizableMetadata<OrderSetAttribute> {
 	public void setOperator(Operator operator) {
 		this.operator = operator;
 	}
-	
+
 	/**
 	 * Gets the orderSetMembers
 	 *
@@ -89,7 +89,7 @@ public class OrderSet extends BaseCustomizableMetadata<OrderSetAttribute> {
 		}
 		return orderSetMembers;
 	}
-	
+
 	/**
 	 * Sets the orderSetMembers
 	 *
@@ -105,7 +105,7 @@ public class OrderSet extends BaseCustomizableMetadata<OrderSetAttribute> {
 	 * @return the category
 	 * @since 2.3.0
 	 */
-	public Concept getCategory () {
+	public Concept getCategory() {
 		return category;
 	}
 
@@ -131,7 +131,7 @@ public class OrderSet extends BaseCustomizableMetadata<OrderSetAttribute> {
 		orderSetMember.setOrderSet(this);
 		getOrderSetMembers().add(listIndex, orderSetMember);
 	}
-	
+
 	private Integer findListIndexForGivenPosition(Integer position) {
 		Integer size = getOrderSetMembers().size();
 		if (position != null) {
@@ -145,7 +145,7 @@ public class OrderSet extends BaseCustomizableMetadata<OrderSetAttribute> {
 		}
 		return position;
 	}
-	
+
 	/**
 	 * Adds an orderSetMember to the existing list of orderSetMembers
 	 *
@@ -155,12 +155,12 @@ public class OrderSet extends BaseCustomizableMetadata<OrderSetAttribute> {
 	public void addOrderSetMember(OrderSetMember orderSetMember) {
 		this.addOrderSetMember(orderSetMember, null);
 	}
-	
+
 	@Override
 	public Integer getId() {
 		return getOrderSetId();
 	}
-	
+
 	@Override
 	public void setId(Integer id) {
 		setOrderSetId(id);
@@ -201,5 +201,5 @@ public class OrderSet extends BaseCustomizableMetadata<OrderSetAttribute> {
 	public void retireOrderSetMember(OrderSetMember orderSetMember) {
 		orderSetMember.setRetired(true);
 	}
-	
+
 }

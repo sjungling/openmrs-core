@@ -39,7 +39,7 @@ import org.openmrs.aop.RequiredDataAdvice;
  */
 @Handler(supports = Retireable.class)
 public class RetireSaveHandler implements SaveHandler<Retireable> {
-	
+
 	/**
 	 * This method does not set "retired" to true, but rather only sets the retiredBy/dateRetired if
 	 * they are null and retired==true. <br>
@@ -61,12 +61,12 @@ public class RetireSaveHandler implements SaveHandler<Retireable> {
 	 */
 	@Override
 	public void handle(Retireable retireableObject, User currentUser, Date currentDate, String notUsed) {
-		
+
 		// retire reason is not set here, it should be set prior to this method
 		
 		// only set the values if the user saved this object and set the retired bit
 		if (retireableObject.getRetired()) {
-			
+
 			if (retireableObject.getRetiredBy() == null) {
 				retireableObject.setRetiredBy(currentUser);
 			}
@@ -79,7 +79,7 @@ public class RetireSaveHandler implements SaveHandler<Retireable> {
 			retireableObject.setDateRetired(null);
 			retireableObject.setRetireReason(null);
 		}
-		
+
 	}
-	
+
 }

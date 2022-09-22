@@ -27,100 +27,100 @@ import org.springframework.validation.Errors;
  * @since 1.10
  */
 public class ConceptNameTagValidatorTest extends BaseContextSensitiveTest {
-	
+
 	@Test
 	public void validate_shouldFailValidationIfConceptNameTagIsNull() {
 		Errors errors = new BindException(new ConceptNameTag(), "cnt");
 		assertThrows(IllegalArgumentException.class, () -> new ConceptNameTagValidator().validate(null, errors));
 	}
-	
+
 	/**
-	 * @see ConceptNameTagValidator#validate(Object,Errors)
+	 * @see ConceptNameTagValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfTagIsNullOrEmptyOrWhitespace() {
 		ConceptNameTag cnt = new ConceptNameTag();
-		
+
 		Errors errors = new BindException(cnt, "cnt");
 		new ConceptNameTagValidator().validate(cnt, errors);
 		assertTrue(errors.hasFieldErrors("tag"));
-		
+
 		cnt.setTag("");
 		errors = new BindException(cnt, "cnt");
 		new ConceptNameTagValidator().validate(cnt, errors);
 		assertTrue(errors.hasFieldErrors("tag"));
-		
+
 		cnt.setTag(" ");
 		errors = new BindException(cnt, "cnt");
 		new ConceptNameTagValidator().validate(cnt, errors);
 		assertTrue(errors.hasFieldErrors("tag"));
 	}
-	
+
 	/**
-	 * @see ConceptNameTagValidator#validate(Object,Errors)
+	 * @see ConceptNameTagValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfAllRequiredFieldsHaveProperValues() {
 		ConceptNameTag cnt = new ConceptNameTag();
-		
+
 		cnt.setTag("tag");
-		
+
 		Errors errors = new BindException(cnt, "cnt");
 		new ConceptNameTagValidator().validate(cnt, errors);
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see ConceptNameTagValidator#validate(Object,Errors)
+	 * @see ConceptNameTagValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheConceptNameTagIsADuplicate() {
 		String objectName = "duplicate concept name tag";
-		
+
 		ConceptNameTag existing = Context.getConceptService().getConceptNameTag(1);
-		
+
 		ConceptNameTag cnt = new ConceptNameTag();
 		cnt.setTag(existing.getTag());
-		
+
 		Errors errors = new BindException(cnt, objectName);
 		new ConceptNameTagValidator().validate(cnt, errors);
 		assertTrue(errors.hasErrors());
 		assertTrue(errors.hasFieldErrors("tag"));
 	}
-	
+
 	/**
-	 * @see ConceptNameTagValidator#validate(Object,Errors)
+	 * @see ConceptNameTagValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() {
 		ConceptNameTag cnt = new ConceptNameTag();
-		
+
 		cnt.setTag("tag");
 		cnt.setVoidReason("VoidReason");
-		
+
 		Errors errors = new BindException(cnt, "cnt");
 		new ConceptNameTagValidator().validate(cnt, errors);
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see ConceptNameTagValidator#validate(Object,Errors)
+	 * @see ConceptNameTagValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() {
 		ConceptNameTag cnt = new ConceptNameTag();
-		
+
 		cnt
-		        .setTag("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setTag("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		cnt
-		        .setVoidReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
-		
+										.setVoidReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+
 		Errors errors = new BindException(cnt, "cnt");
 		new ConceptNameTagValidator().validate(cnt, errors);
 		assertTrue(errors.hasFieldErrors("tag"));
 		assertTrue(errors.hasFieldErrors("voidReason"));
 	}
-	
+
 	@Test
 	public void validate_shouldNotFailIfTheConceptNameTagIsTheSame() {
 		String objectName = "duplicate concept name tag";

@@ -42,9 +42,9 @@ import org.w3c.dom.Element;
  *
  */
 public class WebModuleUtilTest {
-	
+
 	private static final String REAL_PATH = "/usr/local/apache-tomcat-7.0.27/webapps/openmrs";
-	
+
 	/**
 	 * @see WebModuleUtil#isModulePackageNameInTaskClass(String, String)
 	 * @throws Exception
@@ -56,7 +56,7 @@ public class WebModuleUtilTest {
 		boolean result = WebModuleUtil.isModulePackageNameInTaskClass(modulePackageName, taskClass);
 		assertFalse(result);
 	}
-	
+
 	/**
 	 * @see WebModuleUtil#isModulePackageNameInTaskClass(String, String)
 	 * @throws Exception
@@ -68,7 +68,7 @@ public class WebModuleUtilTest {
 		boolean result = WebModuleUtil.isModulePackageNameInTaskClass(modulePackageName, taskClass);
 		assertFalse(result);
 	}
-	
+
 	/**
 	 * @see WebModuleUtil#isModulePackageNameInTaskClass(String, String)
 	 * @throws Exception
@@ -80,7 +80,7 @@ public class WebModuleUtilTest {
 		boolean result = WebModuleUtil.isModulePackageNameInTaskClass(modulePackageName, taskClass);
 		assertTrue(result);
 	}
-	
+
 	/**
 	 * @see WebModuleUtil#isModulePackageNameInTaskClass(String, String)
 	 * @throws Exception
@@ -92,7 +92,7 @@ public class WebModuleUtilTest {
 		boolean result = WebModuleUtil.isModulePackageNameInTaskClass(modulePackageName, taskClass);
 		assertFalse(result);
 	}
-	
+
 	/**
 	 * @throws ParserConfigurationException
 	 * @see WebModuleUtil#startModule(Module, ServletContext, boolean)
@@ -102,25 +102,25 @@ public class WebModuleUtilTest {
 		// create dummy module and start it
 		Module mod = buildModuleForMessageTest();
 		ModuleFactory.getStartedModulesMap().put(mod.getModuleId(), mod);
-		
+
 		ServletContext servletContext = mock(ServletContext.class);
 		String realPath = servletContext.getRealPath("");
 		if (realPath == null)
 			realPath = System.getProperty("user.dir");
-		
+
 		// manually delete dwr-modules.xml 
 		File f = new File(realPath + "/WEB-INF/dwr-modules.xml");
 		f.delete();
-		
+
 		// start the dummy module
 		WebModuleUtil.startModule(mod, servletContext, true);
-		
+
 		// test if dwr-modules.xml is created
 		assertTrue(f.exists());
-		
+
 		ModuleFactory.getStartedModulesMap().clear();
 	}
-	
+
 	/**
 	 * @throws ParserConfigurationException
 	 * @throws FileNotFoundException
@@ -128,18 +128,18 @@ public class WebModuleUtilTest {
 	 */
 	@Test
 	public void startModule_dwrModuleXmlshouldContainModuleInfo()
-	        throws ParserConfigurationException, FileNotFoundException {
+									throws ParserConfigurationException, FileNotFoundException {
 		// create dummy module and start it
 		Module mod = buildModuleForMessageTest();
 		ModuleFactory.getStartedModulesMap().put(mod.getModuleId(), mod);
-		
+
 		ServletContext servletContext = mock(ServletContext.class);
 		String realPath = servletContext.getRealPath("");
 		if (realPath == null)
 			realPath = System.getProperty("user.dir");
-		
+
 		WebModuleUtil.startModule(mod, servletContext, true);
-		
+
 		// test if dwr-modules.xml contains id of started dummy module
 		File f = new File(realPath + "/WEB-INF/dwr-modules.xml");
 		Scanner scanner = new Scanner(f);
@@ -153,51 +153,51 @@ public class WebModuleUtilTest {
 		}
 		if (scanner != null)
 			scanner.close();
-		
+
 		assertTrue(found);
-		
+
 		ModuleFactory.getStartedModulesMap().clear();
 	}
-	
+
 	private Module buildModuleForMessageTest() throws ParserConfigurationException {
 		Properties englishMessages = new Properties();
 		englishMessages.put("withoutPrefix", "Without prefix");
-		
+
 		Module mod = new Module("My Module");
 		mod.setModuleId("mymodule");
 		mod.setMessages(new HashMap<>());
 		mod.getMessages().put("en", englishMessages);
 		mod.setFile(new File("sampleFile.jar"));
 		mod.setConfig(buildModuleConfig());
-		
+
 		return mod;
 	}
-	
+
 	private Document buildModuleConfig() throws ParserConfigurationException {
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 		Document doc = docBuilder.newDocument();
 		Element rootElement = doc.createElement("module");
 		doc.appendChild(rootElement);
-		
+
 		Element dwr = doc.createElement("dwr");
 		dwr.appendChild(doc.createTextNode(""));
 		rootElement.appendChild(dwr);
-		
+
 		Element allow = doc.createElement("allow");
 		allow.appendChild(doc.createTextNode(""));
 		dwr.appendChild(allow);
-		
+
 		Attr attr = doc.createAttribute("moduleId");
 		attr.setValue("mymodule");
 		allow.setAttributeNode(attr);
-		
+
 		Element create = doc.createElement("create");
 		allow.appendChild(create);
-		
+
 		return doc;
 	}
-	
+
 	/**
 	 * @see WebModuleUtil#getModuleWebFolder(String)
 	 */
@@ -207,7 +207,7 @@ public class WebModuleUtilTest {
 		WebModuleUtil.setDispatcherServlet(null);
 		assertThrows(ModuleException.class, () -> WebModuleUtil.getModuleWebFolder(""));
 	}
-	
+
 	/**
 	 * @see WebModuleUtil#getModuleWebFolder(String)
 	 */
@@ -216,12 +216,12 @@ public class WebModuleUtilTest {
 		setupMocks(false);
 		String moduleId = "basicmodule";
 		String expectedPath = Paths.get(REAL_PATH, "WEB-INF", "view", "module", moduleId).toString();
-		
+
 		String actualPath = WebModuleUtil.getModuleWebFolder(moduleId);
-		
+
 		assertEquals(expectedPath, actualPath);
 	}
-	
+
 	/**
 	 * @see WebModuleUtil#getModuleWebFolder(String)
 	 */
@@ -231,22 +231,22 @@ public class WebModuleUtilTest {
 		String moduleId = "basicmodule";
 		String expectedPath = Paths.get(REAL_PATH, "WEB-INF", "view", "module", moduleId).toString();
 		String actualPath = WebModuleUtil.getModuleWebFolder(moduleId);
-		
+
 		assertEquals(expectedPath, actualPath);
 	}
-	
+
 	private static void setupMocks(boolean includeTrailingSlash) {
 		ServletConfig servletConfig = mock(ServletConfig.class);
-		
+
 		ServletContext servletContext = mock(ServletContext.class);
 		String realPath = (includeTrailingSlash) ? REAL_PATH + "/" : REAL_PATH;
 		when(servletContext.getRealPath("")).thenReturn(realPath);
-		
+
 		DispatcherServlet dispatcherServlet = mock(DispatcherServlet.class);
 		when(dispatcherServlet.getServletConfig()).thenReturn(servletConfig);
 		when(dispatcherServlet.getServletContext()).thenReturn(servletContext);
-		
+
 		WebModuleUtil.setDispatcherServlet(dispatcherServlet);
 	}
-	
+
 }

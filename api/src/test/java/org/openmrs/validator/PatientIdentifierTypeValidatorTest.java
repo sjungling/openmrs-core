@@ -23,9 +23,9 @@ import org.springframework.validation.Errors;
  * Tests methods on the {@link PatientIdentifierTypeValidator} class.
  */
 public class PatientIdentifierTypeValidatorTest extends BaseContextSensitiveTest {
-	
+
 	/**
-	 * @see PatientIdentifierTypeValidator#validate(Object,Errors)
+	 * @see PatientIdentifierTypeValidator#validate(Object, Errors)
 	 * 
 	 */
 	@Test
@@ -33,24 +33,24 @@ public class PatientIdentifierTypeValidatorTest extends BaseContextSensitiveTest
 		PatientIdentifierType type = new PatientIdentifierType();
 		type.setName(null);
 		type.setDescription("some text");
-		
+
 		Errors errors = new BindException(type, "type");
 		new PatientIdentifierTypeValidator().validate(type, errors);
 		assertTrue(errors.hasFieldErrors("name"));
-		
+
 		type.setName("");
 		errors = new BindException(type, "type");
 		new PatientIdentifierTypeValidator().validate(type, errors);
 		assertTrue(errors.hasFieldErrors("name"));
-		
+
 		type.setName(" ");
 		errors = new BindException(type, "type");
 		new PatientIdentifierTypeValidator().validate(type, errors);
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
-	 * @see PatientIdentifierTypeValidator#validate(Object,Errors)
+	 * @see PatientIdentifierTypeValidator#validate(Object, Errors)
 	 * 
 	 */
 	@Test
@@ -58,24 +58,24 @@ public class PatientIdentifierTypeValidatorTest extends BaseContextSensitiveTest
 		PatientIdentifierType type = new PatientIdentifierType();
 		type.setName("name");
 		type.setDescription(null);
-		
+
 		Errors errors = new BindException(type, "type");
 		new PatientIdentifierTypeValidator().validate(type, errors);
 		assertFalse(errors.hasFieldErrors("description"));
-		
+
 		type.setDescription("");
 		errors = new BindException(type, "type");
 		new PatientIdentifierTypeValidator().validate(type, errors);
 		assertFalse(errors.hasFieldErrors("description"));
-		
+
 		type.setDescription(" ");
 		errors = new BindException(type, "type");
 		new PatientIdentifierTypeValidator().validate(type, errors);
 		assertFalse(errors.hasFieldErrors("description"));
 	}
-	
+
 	/**
-	 * @see PatientIdentifierTypeValidator#validate(Object,Errors)
+	 * @see PatientIdentifierTypeValidator#validate(Object, Errors)
 	 * 
 	 */
 	@Test
@@ -83,13 +83,13 @@ public class PatientIdentifierTypeValidatorTest extends BaseContextSensitiveTest
 		PatientIdentifierType type = new PatientIdentifierType();
 		type.setName("restraining");
 		type.setDescription(":(");
-		
+
 		Errors errors = new BindException(type, "type");
 		new PatientIdentifierTypeValidator().validate(type, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see	PatientIdentifierTypeValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -100,13 +100,13 @@ public class PatientIdentifierTypeValidatorTest extends BaseContextSensitiveTest
 		type.setDescription("helps");
 		String valid50charInput = "12345678901234567890123456789012345678901234567890";
 		type.setFormat(valid50charInput);
-		
+
 		Errors errors = new BindException(type, "type");
 		new PatientIdentifierTypeValidator().validate(type, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see	PatientIdentifierTypeValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -117,14 +117,14 @@ public class PatientIdentifierTypeValidatorTest extends BaseContextSensitiveTest
 		type.setDescription("helps");
 		String invalid255charInput = "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456";
 		type.setFormat(invalid255charInput);
-		
+
 		Errors errors = new BindException(type, "type");
 		new PatientIdentifierTypeValidator().validate(type, errors);
-		
+
 		assertTrue(errors.hasErrors());
 		assertEquals(1, errors.getFieldErrorCount("format"));
 	}
-	
+
 	/**
 	 * @see	PatientIdentifierTypeValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -135,16 +135,16 @@ public class PatientIdentifierTypeValidatorTest extends BaseContextSensitiveTest
 		type.setName(invalid51charInput);
 		type.setDescription("helps");
 		type.setFormat("format");
-		
+
 		Errors errors = new BindException(type, "type");
 		new PatientIdentifierTypeValidator().validate(type, errors);
-		
+
 		assertTrue(errors.hasErrors());
 		assertEquals(1, errors.getFieldErrorCount("name"));
 	}
-	
+
 	/**
-	 * @see org.openmrs.validator.PatientIdentifierTypeValidator#validate(Object,Errors)
+	 * @see org.openmrs.validator.PatientIdentifierTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfPatientIdentifierTypeNameAlreadyExist() {
@@ -153,15 +153,15 @@ public class PatientIdentifierTypeValidatorTest extends BaseContextSensitiveTest
 		type.setDescription("helps");
 		String valid50charInput = "12345678901234567890123456789012345678901234567890";
 		type.setFormat(valid50charInput);
-		
+
 		Errors errors = new BindException(type, "type");
 		new PatientIdentifierTypeValidator().validate(type, errors);
-		
+
 		assertTrue(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see PatientIdentifierTypeValidator#validate(Object,Errors)
+	 * @see PatientIdentifierTypeValidator#validate(Object, Errors)
 	 *
 	 */
 	@Test
@@ -172,34 +172,34 @@ public class PatientIdentifierTypeValidatorTest extends BaseContextSensitiveTest
 		type.setFormatDescription("formatDescription");
 		type.setValidator("validator");
 		type.setRetireReason("retireReason");
-		
+
 		Errors errors = new BindException(type, "type");
 		new PatientIdentifierTypeValidator().validate(type, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see PatientIdentifierTypeValidator#validate(Object,Errors)
+	 * @see PatientIdentifierTypeValidator#validate(Object, Errors)
 	 *
 	 */
 	@Test
 	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() {
 		PatientIdentifierType type = new PatientIdentifierType();
 		type
-		        .setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		type
-		        .setFormat("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setFormat("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		type
-		        .setFormatDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setFormatDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		type
-		        .setValidator("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setValidator("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		type
-		        .setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
-		
+										.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+
 		Errors errors = new BindException(type, "type");
 		new PatientIdentifierTypeValidator().validate(type, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("name"));
 		assertTrue(errors.hasFieldErrors("format"));
 		assertTrue(errors.hasFieldErrors("formatDescription"));

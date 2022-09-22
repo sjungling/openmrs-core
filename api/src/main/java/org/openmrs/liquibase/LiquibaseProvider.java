@@ -21,7 +21,7 @@ import liquibase.Liquibase;
  * @since 2.4
  */
 public interface LiquibaseProvider {
-	
+
 	/**
 	 * Returns a Liquibase instance
 	 * 

@@ -24,13 +24,13 @@ import ca.uhn.hl7v2.HL7Exception;
  * @version 1.1 1.1 - made processor static to ensure only one HL7 processor runs
  */
 public class ProcessHL7InQueueTask extends AbstractTask {
-	
+
 	// Logger
 	private static final Logger log = LoggerFactory.getLogger(ProcessHL7InQueueTask.class);
-	
+
 	// Instance of hl7 processor
 	private static HL7InQueueProcessor processor = null;
-	
+
 	/**
 	 * Default Constructor (Uses SchedulerConstants.username and SchedulerConstants.password
 	 */
@@ -39,7 +39,7 @@ public class ProcessHL7InQueueTask extends AbstractTask {
 			processor = new HL7InQueueProcessor();
 		}
 	}
-	
+
 	/**
 	 * Process the next form entry in the database and then remove the form entry from the database.
 	 */
@@ -58,5 +58,5 @@ public class ProcessHL7InQueueTask extends AbstractTask {
 			Context.closeSession();
 		}
 	}
-	
+
 }

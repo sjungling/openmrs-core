@@ -18,9 +18,9 @@ import org.springframework.validation.Errors;
  *
  * @since 1.9
  */
-@Handler(supports = { ProviderAttributeType.class }, order = 50)
+@Handler(supports = {ProviderAttributeType.class}, order = 50)
 public class ProviderAttributeTypeValidator extends BaseAttributeTypeValidator<ProviderAttributeType> {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 *
@@ -32,13 +32,13 @@ public class ProviderAttributeTypeValidator extends BaseAttributeTypeValidator<P
 	public boolean supports(Class<?> c) {
 		return ProviderAttributeType.class.isAssignableFrom(c);
 	}
-	
+
 	@Override
 	public void validate(Object obj, Errors errors) {
 		if (obj != null) {
 			super.validate(obj, errors);
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "description", "datatypeClassname",
-			    "preferredHandlerClassname", "retireReason");
+											"preferredHandlerClassname", "retireReason");
 		}
 	}
 }

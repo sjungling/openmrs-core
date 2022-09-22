@@ -30,121 +30,121 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class HibernateConceptDAOTest extends BaseContextSensitiveTest {
-	
+
 	private static final String PROVIDERS_INITIAL_XML = "org/openmrs/api/db/hibernate/include/HibernateConceptTestDataSet.xml";
 	protected static final String CONCEPT_ATTRIBUTE_TYPE_XML = "org/openmrs/api/include/ConceptServiceTest-conceptAttributeType.xml";
 
 	@Autowired
 	private HibernateConceptDAO dao;
-	
+
 	@BeforeEach
 	public void setUp() {
 		executeDataSet(PROVIDERS_INITIAL_XML);
-		
+
 		updateSearchIndex();
 	}
-	
+
 	/**
-	 * @see HibernateConceptDAO#getDrugs(String,Concept,boolean,boolean,boolean,Integer,Integer)
+	 * @see HibernateConceptDAO#getDrugs(String, Concept, boolean, boolean, boolean, Integer, Integer)
 	 */
 	@Test
 	public void getDrugs_shouldReturnDrugIf_eitherDrugNameOrConceptNameMatchesThePhaseNotBoth() {
 		Concept concept = dao.getConcept(3);
-		
+
 		// concept has "COUGH SYRUP" as a concept_name and also Drug has
 		// Drug_name as "COUGH" so return two distinct drugs that means search
 		// either drug name or concept name match the phase
 		List<Drug> drugList = dao.getDrugs("COUGH", concept, true, true, false, 0, 10);
 		assertEquals(2, drugList.size());
 	}
-	
+
 	/**
-	 * @see HibernateConceptDAO#getDrugs(String,Concept,boolean,boolean,boolean,Integer,Integer)
+	 * @see HibernateConceptDAO#getDrugs(String, Concept, boolean, boolean, boolean, Integer, Integer)
 	 */
 	@Test
 	public void getDrugs_shouldReturnDistinctDrugs() {
 		Concept concept1 = dao.getConcept(14);
-		
+
 		List<Drug> drugList = dao.getDrugs("TEST_DRUG", concept1, true, true, false, 0, 10);
 		assertEquals(1, drugList.size());
-		
+
 	}
-	
+
 	/**
-	 * @see HibernateConceptDAO#getDrugs(String,Concept,boolean)
+	 * @see HibernateConceptDAO#getDrugs(String, Concept, boolean)
 	 */
 	@Test
 	public void getDrugs_shouldReturnDrugIf_EitherDrugNameIsUpperOrLowerCase() {
 		List<Drug> drugList1 = dao.getDrugs("Triomune-30", null, true);
 		assertEquals(1, drugList1.size());
-		
+
 		List<Drug> drugList2 = dao.getDrugs("triomune-30", null, true);
 		assertEquals(1, drugList2.size());
-		
+
 	}
-	
+
 	/**
-	 * @see HibernateConceptDAO#getDrugs(String,Concept,boolean,boolean,boolean,Integer,Integer)
+	 * @see HibernateConceptDAO#getDrugs(String, Concept, boolean, boolean, boolean, Integer, Integer)
 	 */
 	@Test
 	public void getDrugs_shouldReturnDrugIfPhraseMatchDrugNameNoNeedToMatchBothConceptNameAndDrugName() {
 		// This concept does not contain concept_name with "Triomune"
 		Concept concept2 = dao.getConcept(3);
-		
+
 		// In this test there is no any concept_name match with "Triomune" but
 		// Drug name match with "Trimonue" so no need to match both drug_name
 		// and the concept_name to find drug
 		List<Drug> drugList = dao.getDrugs("Triomune", concept2, true, true, false, 0, 10);
 		assertEquals(1, drugList.size());
-		
+
 	}
-	
+
 	/**
-	 * @see HibernateConceptDAO#getDrugs(String,Concept,boolean,boolean,boolean,Integer,Integer)
+	 * @see HibernateConceptDAO#getDrugs(String, Concept, boolean, boolean, boolean, Integer, Integer)
 	 */
 	@Test
 	public void getDrugs_shouldReturnDrugIfPhaseMatchConceptNameNoNeedToMatchBothConceptNameAndDrugName() {
 		Concept concept4 = dao.getConcept(7);
-		
+
 		//In this test, there is no any drug_name with "VOIDED" but concept_name
 		//match with "VOIDED" so this prove no need to match both drug_name and the
 		//concept_name
 		List<Drug> drugList = dao.getDrugs("VOIDED", concept4, true, true, false, 0, 10);
 		assertEquals(1, drugList.size());
-		
+
 	}
-	
+
 	/**
-	 * @see HibernateConceptDAO#getDrugs(String,Concept,boolean,boolean,boolean,Integer,Integer)
+	 * @see HibernateConceptDAO#getDrugs(String, Concept, boolean, boolean, boolean, Integer, Integer)
 	 */
 	@Test
 	public void getDrugs_shouldReturnDrugWhenPhraseMatchDrugNameEvenSerchDrugConceeptNameIsfalse() {
-		
+
 		List<Drug> drugList = dao.getDrugs("Triomune-30", null, true, false, false, 0, 10);
 		assertEquals(1, drugList.size());
-		
+
 	}
-	
+
 	/**
 	 * @see HibernateConceptDAO#getDrugs(String)
 	 */
 	@Test
 	public void getDrugs_shouldNotReturnRetired() {
-		
+
 		List<Drug> drugList = dao.getDrugs("TEST_DRUG_NAME_RETIRED");
 		assertEquals(0, drugList.size());
-		
+
 	}
-	
+
 	/**
 	 * @see HibernateConceptDAO#getDrugs(String)
 	 */
 	@Test
 	public void getDrugs_shouldReturnNonRetired() {
-		
+
 		List<Drug> drugList = dao.getDrugs("TEST_DRUG_NAME");
 		assertEquals(1, drugList.size());
-		
+
 	}
 
 	@Test

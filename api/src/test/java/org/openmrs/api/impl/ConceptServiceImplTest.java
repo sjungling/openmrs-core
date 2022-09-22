@@ -52,10 +52,10 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
  * would span implementations should go on the {@link ConceptService}.
  */
 public class ConceptServiceImplTest extends BaseContextSensitiveTest {
-	
+
 	protected ConceptService conceptService = null;
-	
-	
+
+
 	/**
 	 * Run this before each unit test in this class. The "@Before" method in
 	 * {@link BaseContextSensitiveTest} is run right before this method.
@@ -66,7 +66,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 	public void runBeforeAllTests() {
 		conceptService = Context.getConceptService();
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#saveConcept(Concept)
 	 */
@@ -82,7 +82,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		assertNotNull(savedC);
 		assertTrue(savedC.getConceptId() > 0);
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#saveConcept(Concept)
 	 */
@@ -101,7 +101,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		assertNotNull(updatedC);
 		assertEquals(updatedC.getConceptId(), savedC.getConceptId());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#saveConcept(Concept)
 	 */
@@ -119,13 +119,13 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		
 		//saveConcept never picks an index term for default, so we'll use it for the test
 		indexTerm.setLocalePreferred(true);
-		
+
 		Concept c = new Concept();
 		c.addName(fullySpecifiedName);
 		c.addName(synonym);
 		c.addName(indexTerm);
 		c.addName(shortName);
-		
+
 		//ignore it so we can test the set default preferred name  functionality
 		try {
 			Context.getConceptService().saveConcept(c);
@@ -137,7 +137,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		assertTrue(c.getPreferredName(loc).isPreferred(), "name was explicitly marked preferred");
 		assertEquals(c.getPreferredName(loc).getName(), indexTerm.getName(), "name matches");
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#saveConcept(Concept)
 	 */
@@ -154,7 +154,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		allNames.add(indexTerm);
 		allNames.add(shortName);
 		c.setNames(allNames);
-		
+
 		//The API will throw a validation error because preferred name is an index term
 		//ignore it so we can test the set default preferred name  functionality
 		try {
@@ -167,7 +167,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		assertFalse(shortName.isPreferred(), "name was explicitly marked preferred");
 		assertFalse(indexTerm.isPreferred(), "name was explicitly marked preferred");
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#saveConcept(Concept)
 	 *           Concept.getPreferredName(locale) returns null, saveConcept chooses one. The default
@@ -195,15 +195,15 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		c.setDatatype(new ConceptDatatype(1));
 		c.setConceptClass(new ConceptClass(1));
 		assertFalse(c.getFullySpecifiedName(loc).isPreferred(), "check test assumption - the API didn't automatically set preferred vlag");
-			
+
 		assertNotNull(Context.getConceptService().saveConcept(c), "Concept is legit, save succeeds");
-		
+
 		Context.getConceptService().saveConcept(c);
 		assertNotNull(c.getPreferredName(loc), "there's a preferred name");
 		assertTrue(c.getPreferredName(loc).isPreferred(), "name was explicitly marked preferred");
 		assertEquals(c.getPreferredName(loc).getName(), fullySpecifiedName.getName(), "name matches");
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#saveConcept(Concept)
 	 *           returns null, saveConcept chooses one. The default first choice is the fully
@@ -233,17 +233,17 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		c.addDescription(new ConceptDescription("some description", null));
 		c.setDatatype(new ConceptDatatype(1));
 		c.setConceptClass(new ConceptClass(1));
-		
+
 		assertNull(c.getFullySpecifiedName(loc), "check test assumption - the API hasn't promoted a name to a fully specified name");
-			
+
 		Context.getConceptService().saveConcept(c);
 		assertNotNull(c.getPreferredName(loc), "there's a preferred name");
 		assertTrue(c.getPreferredName(loc).isPreferred(), "name was explicitly marked preferred");
 		assertEquals(c.getPreferredName(loc).getName(), synonym.getName(), "name matches");
 		assertEquals(c.getPreferredName(otherLocale).getName(), fullySpecifiedName.getName(), "fully specified name unchanged");
-			
+
 	}
-	
+
 	@Test
 	public void saveConcept_shouldTrimWhitespacesInConceptName() {
 		//Given
@@ -259,7 +259,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		assertNotEquals(concept.getName().getName(), nameWithSpaces);
 		assertEquals(concept.getName().getName(), "jwm");
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#saveConcept(Concept)
 	 */
@@ -284,7 +284,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		//Then
 		assertTrue(concept.getSet());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#saveDrug(Drug) 
 	 */
@@ -342,7 +342,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		conceptService.saveDrug(savedDrug);
 		assertTrue(conceptService.getDrug(savedDrug.getDrugId()).getCombination());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#purgeConcept(Concept)
 	 */
@@ -352,18 +352,18 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		conceptService.purgeConcept(conceptService.getConcept(conceptId));
 		assertNull(conceptService.getConcept(conceptId));
 	}
-	
+
 	/**
-	 * @see ConceptServiceImpl#retireConcept(Concept,String)
+	 * @see ConceptServiceImpl#retireConcept(Concept, String)
 	 */
 	@Test
 	public void retireConcept_shouldFailIfNoReasonIsGiven() {
 		Concept concept = conceptService.getConcept(3);
 		assertThrows(IllegalArgumentException.class, () -> conceptService.retireConcept(concept, ""));
 	}
-	
+
 	/**
-	 * @see ConceptServiceImpl#retireConcept(Concept,String)
+	 * @see ConceptServiceImpl#retireConcept(Concept, String)
 	 */
 	@Test
 	public void retireConcept_shouldRetireTheGivenConcept() {
@@ -374,7 +374,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		assertTrue(concept.getRetired());
 		assertEquals(retireReason, concept.getRetireReason());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#purgeDrug(Drug)
 	 */
@@ -384,7 +384,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		conceptService.purgeDrug(conceptService.getDrug(drugId));
 		assertNull(conceptService.getDrug(drugId));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getAllDrugs()
 	 */
@@ -394,7 +394,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<Drug> allDrugs = conceptService.getAllDrugs();
 		assertEquals(resultWhenTrue, allDrugs.size());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getAllDrugs(boolean)
 	 */
@@ -404,7 +404,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<Drug> allDrugs = conceptService.getAllDrugs(true);
 		assertEquals(resultWhenTrue, allDrugs.size());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getAllDrugs(boolean)
 	 */
@@ -414,7 +414,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<Drug> allDrugs = conceptService.getAllDrugs(false);
 		assertEquals(resultWhenTrue, allDrugs.size());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getDrugs(String, Concept, boolean, boolean, boolean, Integer,
 	 *      Integer)
@@ -427,7 +427,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<Drug> drugs = conceptService.getDrugs(drugName, concept, true, true, true, 0, 100);
 		assertTrue(drugs.contains(conceptService.getDrug(drugName)));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getDrug(String)
 	 */
@@ -438,7 +438,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		Drug drug = conceptService.getDrugByUuid(drugUuid);
 		assertEquals(drug, conceptService.getDrug(drugName));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getDrug(String)
 	 */
@@ -447,7 +447,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		int drugIdNotPresent = 1234;
 		assertNull(conceptService.getDrug(drugIdNotPresent));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#retireDrug(Drug, String)
 	 */
@@ -458,7 +458,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		conceptService.retireDrug(drug, "some dummy reason");
 		assertTrue(drug.getRetired());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#unretireDrug(Drug)
 	 */
@@ -469,7 +469,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		conceptService.unretireDrug(drug);
 		assertFalse(drug.getRetired());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#unretireDrug(Drug)
 	 */
@@ -481,7 +481,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		conceptService.unretireDrug(drug);
 		assertFalse(drug.getRetired());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getAllConceptClasses()
 	 */
@@ -491,7 +491,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<ConceptClass> conceptClasses = conceptService.getAllConceptClasses();
 		assertEquals(resultSize, conceptClasses.size());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getAllConceptClasses(boolean)
 	 */
@@ -501,7 +501,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<ConceptClass> conceptClasses = conceptService.getAllConceptClasses(true);
 		assertEquals(resultSizeWhenTrue, conceptClasses.size());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getAllConceptClasses(boolean)
 	 */
@@ -511,7 +511,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<ConceptClass> conceptClasses = conceptService.getAllConceptClasses(false);
 		assertEquals(resultSizeWhenFalse, conceptClasses.size());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#saveConceptClass(ConceptClass)
 	 */
@@ -524,7 +524,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		conceptService.saveConceptClass(conceptClass);
 		assertEquals(conceptClass, conceptService.getConceptClass(unusedConceptClassId));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#purgeConceptClass(ConceptClass)
 	 */
@@ -536,7 +536,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		conceptService.purgeConceptClass(cc);
 		assertNull(conceptService.getConceptClass(conceptClassId));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getAllConceptDatatypes()
 	 */
@@ -548,7 +548,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		assertEquals(resultSize, conceptDatatypes.size());
 		assertTrue(conceptDatatypes.contains(conceptService.getConceptDatatypeByUuid(uuid)));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getAllConceptDatatypes(boolean)
 	 */
@@ -560,7 +560,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		assertEquals(resultSize, conceptDatatypes.size());
 		assertTrue(conceptDatatypes.contains(conceptService.getConceptDatatypeByUuid(uuid)));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getAllConceptDatatypes(boolean)
 	 */
@@ -572,7 +572,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		assertEquals(resultSize, conceptDatatypes.size());
 		assertTrue(conceptDatatypes.contains(conceptService.getConceptDatatypeByUuid(uuid)));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getSetsContainingConcept(Concept)
 	 */
@@ -583,7 +583,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		assertNotNull(conceptSets);
 		assertEquals(conceptSets.get(0).getConcept(), concept);
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getSetsContainingConcept(Concept)
 	 */
@@ -594,7 +594,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<ConceptSet> conceptSets = conceptService.getSetsContainingConcept(concept);
 		assertEquals(conceptSets, Collections.emptyList());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getSetsContainingConcept(Concept)
 	 */
@@ -603,7 +603,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<ConceptSet> conceptSets = conceptService.getSetsContainingConcept(new Concept());
 		assertEquals(conceptSets, Collections.emptyList());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getConcepts(String, Locale, boolean)
 	 */
@@ -614,7 +614,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<ConceptSearchResult> res = conceptService.getConcepts(phrase, locale, true);
 		assertEquals(res.get(0).getConceptName().getName(), phrase);
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getDrugsByIngredient(Concept)
 	 */
@@ -623,7 +623,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> conceptService.getDrugsByIngredient(null));
 		assertThat(exception.getMessage(), is("ingredient is required"));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getAllConceptProposals(boolean)
 	 */
@@ -633,7 +633,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<ConceptProposal> conceptProposals = conceptService.getAllConceptProposals(true);
 		assertEquals(matchedConceptProposals, conceptProposals.size());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getAllConceptProposals(boolean)
 	 */
@@ -643,7 +643,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<ConceptProposal> conceptProposals = conceptService.getAllConceptProposals(false);
 		assertEquals(matchedConceptProposals, conceptProposals.size());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#purgeConceptProposal(ConceptProposal)
 	 */
@@ -653,7 +653,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		conceptService.purgeConceptProposal(conceptService.getConceptProposal(conceptProposalId));
 		assertNull(conceptService.getConceptProposal(conceptProposalId));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getPrevConcept(Concept)
 	 */
@@ -664,7 +664,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		Concept returnedConcept = conceptService.getPrevConcept(conceptService.getConcept(conceptId));
 		assertEquals(returnedConcept, conceptService.getConcept(prevConceptId));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getNextConcept(Concept)
 	 */
@@ -675,7 +675,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		Concept returnedConcept = conceptService.getNextConcept(conceptService.getConcept(conceptId));
 		assertEquals(returnedConcept, conceptService.getConcept(nextConceptId));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getConceptsWithDrugsInFormulary()
 	 */
@@ -685,7 +685,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<Concept> concepts = conceptService.getConceptsWithDrugsInFormulary();
 		assertEquals(matchingConcepts, concepts.size());
 	}
-	
+
 	/**
 	 * @see ConceptService#getConceptsByAnswer(Concept)
 	 */
@@ -694,7 +694,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<Concept> concepts = conceptService.getConceptsByAnswer(new Concept());
 		assertEquals(concepts, Collections.emptyList());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getMaxConceptId()
 	 */
@@ -703,7 +703,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		int maxConceptId = 5497;
 		assertEquals(new Integer(maxConceptId), conceptService.getMaxConceptId());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getLocalesOfConceptNames()
 	 */
@@ -713,7 +713,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		Set<Locale> locales = conceptService.getLocalesOfConceptNames();
 		assertTrue(locales.contains(localeToSearch));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getAllConceptSources(boolean)
 	 */
@@ -723,7 +723,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<ConceptSource> conceptSources = conceptService.getAllConceptSources(true);
 		assertEquals(conceptSourcesInDataset, conceptSources.size());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getAllConceptSources(boolean)
 	 */
@@ -733,7 +733,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<ConceptSource> conceptSources = conceptService.getAllConceptSources(false);
 		assertEquals(conceptSourcesInDataset, conceptSources.size());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getAllConceptNameTags()
 	 */
@@ -743,7 +743,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		List<ConceptNameTag> conceptNameTags = conceptService.getAllConceptNameTags();
 		assertEquals(conceptNameTagsInDataset, conceptNameTags.size());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#purgeConceptSource(ConceptSource)
 	 */
@@ -754,7 +754,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		conceptService.purgeConceptSource(conceptSource);
 		assertNull(conceptService.getConceptSource(conceptSourceId));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#purgeConceptMapType(ConceptMapType)
 	 */
@@ -766,7 +766,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		conceptService.purgeConceptMapType(mapType);
 		assertNull(conceptService.getConceptMapType(conceptMapTypeId));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#purgeConceptReferenceTerm(ConceptReferenceTerm)
 	 */
@@ -777,7 +777,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		conceptService.purgeConceptReferenceTerm(refTerm);
 		assertNull(conceptService.getConceptReferenceTerm(conceptReferenceTermId));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getConceptReferenceTermByName(String, ConceptSource)
 	 */
@@ -785,7 +785,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 	public void getConceptReferenceTermByName_shouldReturnNullIfNoConceptReferenceTermIsFound() {
 		assertNull(conceptService.getConceptReferenceTermByName(null, new ConceptSource()));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#purgeConceptReferenceTerm(ConceptReferenceTerm)
 	 */
@@ -796,7 +796,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		APIException exception = assertThrows(APIException.class, () -> conceptService.purgeConceptReferenceTerm(refTerm));
 		assertThat(exception.getMessage(), is("Reference term is in use"));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#findConceptAnswers(String, Locale, Concept)
 	 */
@@ -806,10 +806,10 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		String phrase = "CD4 COUNT";
 		int conceptId = 5497;
 		List<ConceptSearchResult> concepts = conceptService.findConceptAnswers(phrase, locale,
-		    conceptService.getConcept(conceptId));
+										conceptService.getConcept(conceptId));
 		assertEquals(concepts.get(0).getConceptName().getName(), phrase);
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getOrderableConcepts(String, List, boolean, Integer, Integer)
 	 */
@@ -818,10 +818,10 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		Integer someStartLength = 0;
 		Integer someEndLength = 10;
 		List<ConceptSearchResult> result = conceptService.getOrderableConcepts("some phrase", null, true, someStartLength,
-		    someEndLength);
+										someEndLength);
 		assertEquals(result, Collections.emptyList());
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#mapConceptProposalToConcept(ConceptProposal, Concept, Locale)
 	 */
@@ -831,7 +831,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		Locale locale = new Locale("en", "GB");
 		assertThrows(APIException.class, () -> conceptService.mapConceptProposalToConcept(cp, null, locale));
 	}
-	
+
 	/**
 	 * @see ConceptServiceImpl#getCountOfDrugs(String, Concept, boolean, boolean, boolean)
 	 */
@@ -840,7 +840,7 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		String phrase = "Triomune-30";
 		int conceptId = 792;
 		assertEquals(new Integer(1),
-		    conceptService.getCountOfDrugs(phrase, conceptService.getConcept(conceptId), true, true, true));
+										conceptService.getCountOfDrugs(phrase, conceptService.getConcept(conceptId), true, true, true));
 	}
 
 	/**

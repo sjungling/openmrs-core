@@ -22,12 +22,12 @@ import org.springframework.validation.Validator;
  *
  * @since 1.9
  */
-@Handler(supports = { Drug.class }, order = 50)
+@Handler(supports = {Drug.class}, order = 50)
 public class ConceptDrugValidator implements Validator {
-	
+
 	// Logger for this class
 	private static final Logger log = LoggerFactory.getLogger(ConceptDrugValidator.class);
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 *
@@ -39,7 +39,7 @@ public class ConceptDrugValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return Drug.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Checks that a given <code>Drug</code> object is valid.
 	 *
@@ -59,5 +59,5 @@ public class ConceptDrugValidator implements Validator {
 		log.debug("request to validate drug having concept: " + ((Drug) obj).getConcept());
 		ValidationUtils.rejectIfEmpty(errors, "concept", "ConceptDrug.error.conceptRequired");
 	}
-	
+
 }

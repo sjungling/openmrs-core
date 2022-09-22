@@ -30,21 +30,21 @@ import org.openmrs.util.OpenmrsUtil;
 @SuppressWarnings("rawtypes")
 @MappedSuperclass
 public abstract class BaseAttribute<AT extends AttributeType, OwningType extends Customizable<?>> extends BaseChangeableOpenmrsData implements Attribute<AT, OwningType>, Comparable<Attribute> {
-	
+
 	private OwningType owner;
-	
+
 	private AT attributeType;
-	
+
 	// value pulled from the database
 	@Field
 	@Column(name = "value_reference", nullable = false, length = 65535)
 	private String valueReference;
-	
+
 	// temporarily holds a typed value, either when getValue() is called the first time (causing valueReference to be converted) or when setValue has been called, but this attribute has not yet been committed to persistent storage
 	private transient Object value;
-	
+
 	private transient boolean dirty = false;
-	
+
 	/**
 	 * @see org.openmrs.attribute.Attribute#getOwner()
 	 */
@@ -52,7 +52,7 @@ public abstract class BaseAttribute<AT extends AttributeType, OwningType extends
 	public OwningType getOwner() {
 		return owner;
 	}
-	
+
 	/**
 	 * @see org.openmrs.attribute.Attribute#setOwner(org.openmrs.customdatatype.Customizable)
 	 */
@@ -60,14 +60,14 @@ public abstract class BaseAttribute<AT extends AttributeType, OwningType extends
 	public void setOwner(OwningType owner) {
 		this.owner = owner;
 	}
-	
+
 	/**
 	 * @param attributeType the attributeType to set
 	 */
 	public void setAttributeType(AT attributeType) {
 		this.attributeType = attributeType;
 	}
-	
+
 	/**
 	 * @see org.openmrs.attribute.Attribute#getAttributeType()
 	 */
@@ -75,7 +75,7 @@ public abstract class BaseAttribute<AT extends AttributeType, OwningType extends
 	public AT getAttributeType() {
 		return attributeType;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SingleCustomValue#getDescriptor()
 	 */
@@ -83,7 +83,7 @@ public abstract class BaseAttribute<AT extends AttributeType, OwningType extends
 	public AT getDescriptor() {
 		return getAttributeType();
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SingleCustomValue#getValueReference()
 	 */
@@ -95,7 +95,7 @@ public abstract class BaseAttribute<AT extends AttributeType, OwningType extends
 			return valueReference;
 		}
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SingleCustomValue#setValueReferenceInternal(java.lang.String)
 	 */
@@ -104,7 +104,7 @@ public abstract class BaseAttribute<AT extends AttributeType, OwningType extends
 		this.valueReference = valueReference;
 		this.dirty = false;
 	}
-	
+
 	/**
 	 * @see org.openmrs.attribute.Attribute#getValue()
 	 */
@@ -115,7 +115,7 @@ public abstract class BaseAttribute<AT extends AttributeType, OwningType extends
 		}
 		return value;
 	}
-	
+
 	/**
 	 * @see org.openmrs.attribute.Attribute#setValue(java.lang.Object)
 	 */
@@ -124,7 +124,7 @@ public abstract class BaseAttribute<AT extends AttributeType, OwningType extends
 		dirty = true;
 		value = typedValue;
 	}
-	
+
 	/**
 	 * @return the dirty
 	 */
@@ -132,7 +132,7 @@ public abstract class BaseAttribute<AT extends AttributeType, OwningType extends
 	public boolean isDirty() {
 		return dirty;
 	}
-	
+
 	/**
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 * Note: this comparator imposes orderings that are inconsistent with equals.
@@ -155,5 +155,5 @@ public abstract class BaseAttribute<AT extends AttributeType, OwningType extends
 		}
 		return retValue;
 	}
-	
+
 }

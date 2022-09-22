@@ -28,22 +28,22 @@ import org.openmrs.customdatatype.SingleCustomValue;
  * @since 1.9
  */
 public interface Attribute<AT extends AttributeType, OT extends Customizable<?>> extends OpenmrsData, SingleCustomValue<AT> {
-	
+
 	/**
 	 * @return the owner that this attribute belongs to
 	 */
 	OT getOwner();
-	
+
 	/**
 	 * Sets the owner of this attribute
 	 * 
 	 * @param owner
 	 */
 	void setOwner(OT owner);
-	
+
 	/**
 	 * @return the AttributeType that controls the behaviour of this attribute
 	 */
 	AT getAttributeType();
-	
+
 }

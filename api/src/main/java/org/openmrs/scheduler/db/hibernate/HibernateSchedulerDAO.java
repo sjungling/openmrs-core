@@ -25,23 +25,23 @@ import org.springframework.orm.ObjectRetrievalFailureException;
 /**
  */
 public class HibernateSchedulerDAO implements SchedulerDAO {
-	
+
 	/**
 	 * Logger
 	 */
 	private static final Logger log = LoggerFactory.getLogger(HibernateSchedulerDAO.class);
-	
+
 	/**
 	 * Hibernate session factory
 	 */
 	private SessionFactory sessionFactory;
-	
+
 	/**
 	 * Default Public constructor
 	 */
 	public HibernateSchedulerDAO() {
 	}
-	
+
 	/**
 	 * Set session factory
 	 * 
@@ -50,7 +50,7 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	/**
 	 * Creates a new task.
 	 * 
@@ -62,7 +62,7 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 		// add all data minus the password as a new user
 		sessionFactory.getCurrentSession().save(task);
 	}
-	
+
 	/**
 	 * Get task by internal identifier
 	 * 
@@ -73,14 +73,14 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 	@Override
 	public TaskDefinition getTask(Integer taskId) throws DAOException {
 		TaskDefinition task = (TaskDefinition) sessionFactory.getCurrentSession().get(TaskDefinition.class, taskId);
-		
+
 		if (task == null) {
 			log.warn("Task '" + taskId + "' not found");
 			throw new ObjectRetrievalFailureException(TaskDefinition.class, taskId);
 		}
 		return task;
 	}
-	
+
 	/**
 	 * Get task by public name.
 	 * 
@@ -91,17 +91,17 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 	@Override
 	public TaskDefinition getTaskByName(String name) throws DAOException {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(TaskDefinition.class).add(
-		    Restrictions.eq("name", name));
-		
+										Restrictions.eq("name", name));
+
 		TaskDefinition task = (TaskDefinition) crit.uniqueResult();
-		
+
 		if (task == null) {
 			log.warn("Task '" + name + "' not found");
 			throw new ObjectRetrievalFailureException(TaskDefinition.class, name);
 		}
 		return task;
 	}
-	
+
 	/**
 	 * Update task
 	 * 
@@ -112,7 +112,7 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 	public void updateTask(TaskDefinition task) throws DAOException {
 		sessionFactory.getCurrentSession().merge(task);
 	}
-	
+
 	/**
 	 * Find all tasks in the database
 	 * 
@@ -124,7 +124,7 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 	public List<TaskDefinition> getTasks() throws DAOException {
 		return sessionFactory.getCurrentSession().createCriteria(TaskDefinition.class).list();
 	}
-	
+
 	/**
 	 * Delete task from database.
 	 * 
@@ -136,7 +136,7 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 		TaskDefinition taskConfig = getTask(taskId);
 		deleteTask(taskConfig);
 	}
-	
+
 	/**
 	 * Delete task from database.
 	 * 
@@ -147,7 +147,7 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 	public void deleteTask(TaskDefinition taskConfig) throws DAOException {
 		sessionFactory.getCurrentSession().delete(taskConfig);
 	}
-	
+
 	/**
 	 * Get schedule by internal identifier
 	 * 
@@ -158,7 +158,7 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 	@Override
 	public Schedule getSchedule(Integer scheduleId) throws DAOException {
 		Schedule schedule = (Schedule) sessionFactory.getCurrentSession().get(Schedule.class, scheduleId);
-		
+
 		if (schedule == null) {
 			log.error("Schedule '" + scheduleId + "' not found");
 			throw new ObjectRetrievalFailureException(Schedule.class, scheduleId);
@@ -173,6 +173,6 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 	@Override
 	public TaskDefinition getTaskByUuid(String uuid) throws DAOException {
 		return (TaskDefinition) sessionFactory.getCurrentSession()
-				.createQuery("from TaskDefinition o where o.uuid = :uuid").setString("uuid", uuid).uniqueResult();
+										.createQuery("from TaskDefinition o where o.uuid = :uuid").setString("uuid", uuid).uniqueResult();
 	}
 }

@@ -30,47 +30,47 @@ import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 
 public class MySQLBooleanTypeTest {
-	
+
 	@Test
 	public void shouldReturnTinyIntForMySQLDatabase() {
 		MySQLBooleanType dataType = new MySQLBooleanType();
 		DatabaseDataType actual = dataType.toDatabaseDataType(new MySQLDatabase());
-		
+
 		String expected = "TINYINT(1)";
 		assertEquals(expected, actual.getType());
 	}
-	
+
 	@Test
 	public void shouldDelegateToLiquibaseDatabases()
-	        throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+									throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 		BooleanType booleanType = new BooleanType();
-		
+
 		Reflections reflections = new Reflections("liquibase.database", new SubTypesScanner());
 		Set<Class<? extends Database>> databaseClasses = reflections.getSubTypesOf(Database.class);
-		
+
 		databaseClasses.remove(AbstractDb2Database.class);
 		databaseClasses.remove(AbstractJdbcDatabase.class);
 		databaseClasses.remove(MariaDBDatabase.class);
 		databaseClasses.remove(MySQLDatabase.class);
 		databaseClasses.remove(UnsupportedDatabase.class);
-		
+
 		for (Class<? extends Database> clazz : new ArrayList<>(databaseClasses)) {
 			Constructor<?> clazzConstructor = clazz.getConstructor();
 			Database database = (Database) clazzConstructor.newInstance();
 			DatabaseDataType expected = booleanType.toDatabaseDataType(database);
-			
+
 			MySQLBooleanType dataType = new MySQLBooleanType();
 			DatabaseDataType actual = dataType.toDatabaseDataType(database);
-			
+
 			assertEquals(expected.getType(), actual.getType());
 		}
 	}
-	
+
 	@Test
 	public void shouldHaveHigherPriority() {
 		int priorityOne = new MySQLBooleanType().getPriority();
 		int priorityTwo = new BooleanType().getPriority();
-		
+
 		assertTrue(priorityOne > priorityTwo);
 	}
 }

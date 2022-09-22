@@ -26,45 +26,45 @@ import org.openmrs.api.context.Context;
  */
 @Indexed
 public class Drug extends BaseChangeableOpenmrsMetadata {
-	
+
 	public static final long serialVersionUID = 285L;
-	
+
 	// Fields
 	@DocumentId
 	private Integer drugId;
-	
+
 	private Boolean combination = false;
-	
+
 	private Concept dosageForm;
-	
+
 	private Double maximumDailyDose;
-	
+
 	private Double minimumDailyDose;
-	
+
 	private String strength;
-	
+
 	private Concept doseLimitUnits;
-	
+
 	@IndexedEmbedded(includeEmbeddedObjectId = true)
 	private Concept concept;
-	
+
 	@IndexedEmbedded(includeEmbeddedObjectId = true)
 	private Set<DrugReferenceMap> drugReferenceMaps;
-	
+
 	private Collection<DrugIngredient> ingredients;
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public Drug() {
 		ingredients = new LinkedHashSet<>();
 	}
-	
+
 	/** constructor with id */
 	public Drug(Integer drugId) {
 		this.drugId = drugId;
 	}
-	
+
 	// Property accessors
 	
 	/**
@@ -75,7 +75,7 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 	public Integer getDrugId() {
 		return this.drugId;
 	}
-	
+
 	/**
 	 * Sets the internal identification number for this drug
 	 *
@@ -84,7 +84,7 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 	public void setDrugId(Integer drugId) {
 		this.drugId = drugId;
 	}
-	
+
 	/**
 	 * Gets the entries concept drug name in the form of CONCEPTNAME (Drug: DRUGNAME)
 	 * 
@@ -98,7 +98,7 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 			return getName() + " (" + concept.getName(locale).getName() + ")";
 		}
 	}
-	
+
 	/**
 	 * Gets whether or not this is a combination drug
 	 *
@@ -111,11 +111,11 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 	public Boolean isCombination() {
 		return getCombination();
 	}
-	
+
 	public Boolean getCombination() {
 		return combination;
 	}
-	
+
 	/**
 	 * Sets whether or not this is a combination drug
 	 *
@@ -124,7 +124,7 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 	public void setCombination(Boolean combination) {
 		this.combination = combination;
 	}
-	
+
 	/**
 	 * Gets the strength
 	 *
@@ -134,7 +134,7 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 	public String getStrength() {
 		return strength;
 	}
-	
+
 	/**
 	 * Sets the strength
 	 *
@@ -144,7 +144,7 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 	public void setStrength(String strength) {
 		this.strength = strength;
 	}
-	
+
 	/**
 	 * Gets the concept this drug is tied to
 	 *
@@ -153,7 +153,7 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 	public Concept getConcept() {
 		return this.concept;
 	}
-	
+
 	/**
 	 * Sets the concept this drug is tied to
 	 *
@@ -162,31 +162,31 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 	public void setConcept(Concept concept) {
 		this.concept = concept;
 	}
-	
+
 	public Concept getDosageForm() {
 		return dosageForm;
 	}
-	
+
 	public void setDosageForm(Concept dosageForm) {
 		this.dosageForm = dosageForm;
 	}
-	
+
 	public Double getMaximumDailyDose() {
 		return maximumDailyDose;
 	}
-	
+
 	public void setMaximumDailyDose(Double maximumDailyDose) {
 		this.maximumDailyDose = maximumDailyDose;
 	}
-	
+
 	public Double getMinimumDailyDose() {
 		return minimumDailyDose;
 	}
-	
+
 	public void setMinimumDailyDose(Double minimumDailyDose) {
 		this.minimumDailyDose = minimumDailyDose;
 	}
-	
+
 	/**
 	 * @return Returns the ingredients
 	 * @since 1.10
@@ -194,7 +194,7 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 	public Collection<DrugIngredient> getIngredients() {
 		return ingredients;
 	}
-	
+
 	/**
 	 * @param ingredients
 	 *            The ingredients to set
@@ -203,17 +203,17 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 	public void setIngredients(Collection<DrugIngredient> ingredients) {
 		this.ingredients = ingredients;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
 	@Override
 	public Integer getId() {
-		
+
 		return getDrugId();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -222,7 +222,7 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 	public void setId(Integer id) {
 		setDrugId(id);
 	}
-	
+
 	/**
 	 * Convenience method that returns a display name for the drug, defaults to drug.name
 	 *
@@ -238,7 +238,7 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * @return Returns the drugReferenceMaps.
 	 * @since 1.10
@@ -249,7 +249,7 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 		}
 		return drugReferenceMaps;
 	}
-	
+
 	/**
 	 * @param drugReferenceMaps The drugReferenceMaps to set.
 	 * @since 1.10
@@ -257,7 +257,7 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 	public void setDrugReferenceMaps(Set<DrugReferenceMap> drugReferenceMaps) {
 		this.drugReferenceMaps = drugReferenceMaps;
 	}
-	
+
 	/**
 	 * Add the given DrugReferenceMap object to this drug's list of drug reference mappings. If there is
 	 * already a corresponding DrugReferenceMap object for this concept, this one will not be added.
@@ -278,7 +278,7 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 			getDrugReferenceMaps().add(drugReferenceMap);
 		}
 	}
-	
+
 	/**
 	 * Gets the doseLimitUnits which represents the units of the existing maximumDailyDose and
 	 * minimumDailyDose
@@ -289,7 +289,7 @@ public class Drug extends BaseChangeableOpenmrsMetadata {
 	public Concept getDoseLimitUnits() {
 		return doseLimitUnits;
 	}
-	
+
 	/**
 	 * Sets the doseLimitUnits which represents the units of the existing maximumDailyDose and
 	 * minimumDailyDose

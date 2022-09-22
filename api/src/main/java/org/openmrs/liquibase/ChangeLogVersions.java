@@ -20,7 +20,7 @@ import java.util.List;
  * @since 2.4
  */
 public class ChangeLogVersions {
-	
+
 	/**
 	 * This definition of Liquibase snapshot versions needs to be kept in sync with the actual change
 	 * log files in openmrs-core/api/src/main/resources/liquibase/snapshots/core-data and
@@ -28,18 +28,18 @@ public class ChangeLogVersions {
 	 * files and this list get out of sync, org.openmrs.liquibase.ChangeLogVersionsTest fails.
 	 */
 	private static final List<String> SNAPSHOT_VERSIONS = Arrays.asList("1.9.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x");
-	
+
 	/**
 	 * This definition of Liquibase update versions needs to be kept in sync with the actual change log
 	 * files in openmrs-core/api/src/main/resources/liquibase/updates. If the actual change log files
 	 * and this list get out of sync, org.openmrs.liquibase.ChangeLogVersionsTest fails.
 	 */
 	private static final List<String> UPDATE_VERSIONS = Arrays.asList("1.9.x", "2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x", "2.6.x");
-	
+
 	public List<String> getSnapshotVersions() {
 		return SNAPSHOT_VERSIONS;
 	}
-	
+
 	public List<String> getUpdateVersions() {
 		return UPDATE_VERSIONS;
 	}

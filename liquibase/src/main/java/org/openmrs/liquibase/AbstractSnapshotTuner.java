@@ -35,28 +35,28 @@ import org.slf4j.LoggerFactory;
  * methods required by both subclasses.
  */
 public abstract class AbstractSnapshotTuner {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(AbstractSnapshotTuner.class);
-	
+
 	private static final String OPENMRS_LICENSE_HEADER = "<!--\n" + "\n"
-		+ "    This Source Code Form is subject to the terms of the Mozilla Public License,\n"
-		+ "    v. 2.0. If a copy of the MPL was not distributed with this file, You can\n"
-		+ "    obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under\n"
-		+ "    the terms of the Healthcare Disclaimer located at http://openmrs.org/license.\n" + "\n"
-		+ "    Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS\n"
-		+ "    graphic logo is a trademark of OpenMRS Inc.\n" + "\n" + "-->\n";
-	
+									+ "    This Source Code Form is subject to the terms of the Mozilla Public License,\n"
+									+ "    v. 2.0. If a copy of the MPL was not distributed with this file, You can\n"
+									+ "    obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under\n"
+									+ "    the terms of the Healthcare Disclaimer located at http://openmrs.org/license.\n" + "\n"
+									+ "    Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS\n"
+									+ "    graphic logo is a trademark of OpenMRS Inc.\n" + "\n" + "-->\n";
+
 	private static final String OPENMRS_LICENSE_SNIPPET = "the terms of the Healthcare Disclaimer located at http://openmrs.org/license";
-	
+
 	private final Map<String, String> namespaceUris;
-	
+
 	public AbstractSnapshotTuner() {
 		namespaceUris = new HashMap<>(1);
 		namespaceUris.put("dbchangelog", "http://www.liquibase.org/xml/ns/dbchangelog");
 	}
-	
+
 	public abstract Document updateChangeLog(Document document);
-	
+
 	public void addLicenseHeaderToFileIfNeeded(String path) throws IOException {
 		if (!isLicenseHeaderInFile(path)) {
 			log.info("Adding the OpenMRS license header to file '{}'....", path);
@@ -66,7 +66,7 @@ public abstract class AbstractSnapshotTuner {
 		}
 		log.info("The file '{}' already contains the OpenMRS license header.", path);
 	}
-	
+
 	public void createUpdatedChangeLogFile(String sourcePath, String targetPath) throws DocumentException, IOException {
 		deleteFile(targetPath);
 		log.info("Updating generated Liquibase file:  '{}'...", sourcePath);
@@ -75,23 +75,23 @@ public abstract class AbstractSnapshotTuner {
 		writeChangeLogFile(document, targetPath);
 		log.info("The updated file is available under:  '{}'", targetPath);
 	}
-	
+
 	public Map<String, String> getNamespaceUris() {
 		return namespaceUris;
 	}
-	
+
 	String addLicenseHeaderToFileContent(String path) throws FileNotFoundException {
 		StringBuilder buffer = new StringBuilder();
-		
+
 		try (Scanner scanner = new Scanner(new File(path))) {
 			// read first line of xml file
 			if (scanner.hasNextLine()) {
 				buffer.append(scanner.nextLine()).append("\n");
 			}
-			
+
 			// append license header
 			buffer.append(OPENMRS_LICENSE_HEADER).append("\n");
-			
+
 			// append the rest of the xml file
 			while (scanner.hasNextLine()) {
 				buffer.append(scanner.nextLine()).append("\n");
@@ -101,10 +101,10 @@ public abstract class AbstractSnapshotTuner {
 			log.error("file '{}' was not found", path, e);
 			throw e;
 		}
-		
+
 		return buffer.toString();
 	}
-	
+
 	void deleteFile(String path) {
 		File file = Paths.get(path).toFile();
 		if (file.exists() && file.isFile()) {
@@ -112,7 +112,7 @@ public abstract class AbstractSnapshotTuner {
 			file.delete();
 		}
 	}
-	
+
 	boolean isLicenseHeaderInFile(String path) throws FileNotFoundException {
 		try (Scanner scanner = new Scanner(new File(path))) {
 			while (scanner.hasNextLine()) {
@@ -127,13 +127,13 @@ public abstract class AbstractSnapshotTuner {
 		}
 		return false;
 	}
-	
+
 	Document readChangeLogFile(String path) throws DocumentException {
 		File file = Paths.get(path).toFile();
 		if (!file.exists()) {
 			log.error("The source file '{}' does not exist. Please generate both Liquibase changelog files and retry. "
-					+ "Please check if you are running this program from the 'openmrs-core/liquibase' folder.",
-				path);
+											+ "Please check if you are running this program from the 'openmrs-core/liquibase' folder.",
+											path);
 			System.exit(0);
 		}
 		SAXReader reader = new SAXReader();
@@ -147,7 +147,7 @@ public abstract class AbstractSnapshotTuner {
 		}
 		return document;
 	}
-	
+
 	Document readChangeLogResource(String resourceName) throws DocumentException, IOException {
 		Document document;
 		try (InputStream is = getResourceAsStream(resourceName)) {
@@ -162,7 +162,7 @@ public abstract class AbstractSnapshotTuner {
 		}
 		return document;
 	}
-	
+
 	static String readInputStream(InputStream is) throws IOException {
 		// this may over-allocate, but we're only holding it in memory temporarily
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(8192);
@@ -171,20 +171,20 @@ public abstract class AbstractSnapshotTuner {
 		while ((length = is.read(buffer)) != -1) {
 			outputStream.write(buffer, 0, length);
 		}
-		
+
 		return outputStream.toString(StandardCharsets.UTF_8.name());
 	}
-	
+
 	private InputStream getResourceAsStream(String resourceName) {
 		return getClass().getClassLoader().getResourceAsStream(resourceName);
 	}
-	
+
 	String readResource(String resourceName) throws IOException {
 		try (InputStream is = getResourceAsStream(resourceName)) {
 			return readInputStream(is);
 		}
 	}
-	
+
 	void writeChangeLogFile(Document document, String path) throws IOException {
 		XMLWriter xmlWriter = null;
 		try {
@@ -209,7 +209,7 @@ public abstract class AbstractSnapshotTuner {
 			}
 		}
 	}
-	
+
 	void writeFile(String content, String path) throws IOException {
 		File file = Paths.get(path).toFile();
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {

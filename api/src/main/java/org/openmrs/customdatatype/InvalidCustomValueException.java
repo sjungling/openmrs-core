@@ -17,16 +17,16 @@ import org.openmrs.api.APIException;
  * @since 1.9
  */
 public class InvalidCustomValueException extends APIException {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * @param message
 	 */
 	public InvalidCustomValueException(String message) {
 		super(message);
 	}
-	
+
 	/**
 	 * @param message
 	 * @param cause
@@ -34,5 +34,5 @@ public class InvalidCustomValueException extends APIException {
 	public InvalidCustomValueException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 }

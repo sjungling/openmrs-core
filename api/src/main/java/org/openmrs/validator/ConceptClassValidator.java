@@ -22,7 +22,7 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { ConceptClass.class }, order = 50)
+@Handler(supports = {ConceptClass.class}, order = 50)
 public class ConceptClassValidator implements Validator {
 
 	/**
@@ -34,7 +34,7 @@ public class ConceptClassValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return c.equals(ConceptClass.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -64,5 +64,5 @@ public class ConceptClassValidator implements Validator {
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "description", "retireReason");
 		}
 	}
-	
+
 }

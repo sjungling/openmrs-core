@@ -31,9 +31,9 @@ import liquibase.resource.ResourceAccessor;
  * This change set is run to encrypt the users.secret_answer column
  */
 public class EncryptSecretAnswersChangeSet implements CustomTaskChange {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(EncryptSecretAnswersChangeSet.class);
-	
+
 	/**
 	 * @see CustomTaskChange#execute(Database)
 	 */
@@ -42,17 +42,17 @@ public class EncryptSecretAnswersChangeSet implements CustomTaskChange {
 		JdbcConnection connection = (JdbcConnection) database.getConnection();
 		Statement stmt = null;
 		PreparedStatement pStmt = null;
-		
+
 		try {
 			stmt = connection.createStatement();
 			ResultSet rs = stmt
-			        .executeQuery("SELECT user_id, salt, secret_answer FROM users WHERE secret_answer IS NOT NULL");
+											.executeQuery("SELECT user_id, salt, secret_answer FROM users WHERE secret_answer IS NOT NULL");
 			pStmt = connection.prepareStatement("UPDATE users SET secret_answer = ? WHERE user_id = ?");
 			while (rs.next()) {
 				String answer = rs.getString("secret_answer");
 				String salt = rs.getString("salt");
 				String encryptedAnswer = Security.encodeString(answer.toLowerCase() + salt);
-				
+
 				pStmt.setString(1, encryptedAnswer);
 				pStmt.setInt(2, rs.getInt("user_id"));
 				pStmt.addBatch();
@@ -71,7 +71,7 @@ public class EncryptSecretAnswersChangeSet implements CustomTaskChange {
 					log.warn("Failed to close the statement object");
 				}
 			}
-			
+
 			if (pStmt != null) {
 				try {
 					pStmt.close();
@@ -82,7 +82,7 @@ public class EncryptSecretAnswersChangeSet implements CustomTaskChange {
 			}
 		}
 	}
-	
+
 	/**
 	 * @see liquibase.change.custom.CustomChange#getConfirmationMessage()
 	 */
@@ -90,21 +90,21 @@ public class EncryptSecretAnswersChangeSet implements CustomTaskChange {
 	public String getConfirmationMessage() {
 		return "Finished encrypting secret answers";
 	}
-	
+
 	/**
 	 * @see liquibase.change.custom.CustomChange#setUp()
 	 */
 	@Override
 	public void setUp() throws SetupException {
 	}
-	
+
 	/**
 	 * @see liquibase.change.custom.CustomChange#setFileOpener(liquibase.resource.ResourceAccessor)
 	 */
 	@Override
 	public void setFileOpener(ResourceAccessor resourceAccessor) {
 	}
-	
+
 	/**
 	 * @see liquibase.change.custom.CustomChange#validate(liquibase.database.Database)
 	 */

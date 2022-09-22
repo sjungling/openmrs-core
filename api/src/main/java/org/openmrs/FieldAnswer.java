@@ -19,27 +19,27 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @version 1.0
  */
 public class FieldAnswer extends BaseOpenmrsObject {
-	
+
 	public static final long serialVersionUID = 5656L;
-	
+
 	// Fields
 	
 	private Date dateCreated;
-	
+
 	private Concept concept;
-	
+
 	private User creator;
-	
+
 	private Field field;
-	
+
 	private boolean dirty;
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public FieldAnswer() {
 	}
-	
+
 	/**
 	 * @return boolean whether or not this fieldAnswer has been modified
 	 *
@@ -50,18 +50,18 @@ public class FieldAnswer extends BaseOpenmrsObject {
 	public boolean isDirty() {
 		return getDirty();
 	}
-	
+
 	/**
 	 * @return boolean whether or not this fieldAnswer has been modified
 	 */
 	public boolean getDirty() {
 		return dirty;
 	}
-	
+
 	public void setClean() {
 		dirty = false;
 	}
-	
+
 	// Property accessors
 	
 	/**
@@ -70,7 +70,7 @@ public class FieldAnswer extends BaseOpenmrsObject {
 	public Concept getConcept() {
 		return concept;
 	}
-	
+
 	/**
 	 * @param concept The concept to set.
 	 */
@@ -78,14 +78,14 @@ public class FieldAnswer extends BaseOpenmrsObject {
 		this.dirty = true;
 		this.concept = concept;
 	}
-	
+
 	/**
 	 * @return Returns the creator.
 	 */
 	public User getCreator() {
 		return creator;
 	}
-	
+
 	/**
 	 * @param creator The creator to set.
 	 */
@@ -93,14 +93,14 @@ public class FieldAnswer extends BaseOpenmrsObject {
 		this.dirty = true;
 		this.creator = creator;
 	}
-	
+
 	/**
 	 * @return Returns the dateCreated.
 	 */
 	public Date getDateCreated() {
 		return dateCreated;
 	}
-	
+
 	/**
 	 * @param dateCreated The dateCreated to set.
 	 */
@@ -108,14 +108,14 @@ public class FieldAnswer extends BaseOpenmrsObject {
 		this.dirty = true;
 		this.dateCreated = dateCreated;
 	}
-	
+
 	/**
 	 * @return Returns the field.
 	 */
 	public Field getField() {
 		return field;
 	}
-	
+
 	/**
 	 * @param field The field to set.
 	 */
@@ -123,7 +123,7 @@ public class FieldAnswer extends BaseOpenmrsObject {
 		this.dirty = true;
 		this.field = field;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
@@ -132,7 +132,7 @@ public class FieldAnswer extends BaseOpenmrsObject {
 	public Integer getId() {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -141,5 +141,5 @@ public class FieldAnswer extends BaseOpenmrsObject {
 	public void setId(Integer id) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 }

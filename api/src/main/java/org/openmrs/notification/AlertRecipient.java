@@ -21,35 +21,35 @@ import org.openmrs.User;
  * @see org.openmrs.notification.Alert
  */
 public class AlertRecipient extends BaseOpenmrsObject {
-	
+
 	private static final long serialVersionUID = -507111109155L;
-	
+
 	private Alert alert;
-	
+
 	private User recipient;
-	
+
 	private Boolean alertRead = false;
-	
+
 	private Date dateChanged;
-	
+
 	// necessary for hql queries
 	private transient Integer recipientId;
-	
+
 	/** Default empty constructor */
 	public AlertRecipient() {
 	}
-	
+
 	/** Initializes a recipient with the given alert */
 	public AlertRecipient(Alert a) {
 		this.alert = a;
 	}
-	
+
 	/** Initializes a recipient with the given alert and recipient/user */
 	public AlertRecipient(Alert a, User recipient) {
 		this.alert = a;
 		setRecipient(recipient);
 	}
-	
+
 	/**
 	 * Initializes a recipient with the given user
 	 * 
@@ -60,69 +60,69 @@ public class AlertRecipient extends BaseOpenmrsObject {
 		setRecipient(user);
 		this.alertRead = read;
 	}
-	
+
 	/**
 	 * @return Returns the alert.
 	 */
 	public Alert getAlert() {
 		return alert;
 	}
-	
+
 	/**
 	 * @param alert The alert to set.
 	 */
 	public void setAlert(Alert alert) {
 		this.alert = alert;
 	}
-	
+
 	/**
 	 * @return Returns the date this alert was changed
 	 */
 	public Date getDateChanged() {
 		return dateChanged;
 	}
-	
+
 	/**
 	 * @param dateChanged The date this alert was changed
 	 */
 	public void setDateChanged(Date dateChanged) {
 		this.dateChanged = dateChanged;
 	}
-	
+
 	// @override
 	@Override
 	public String toString() {
 		return "Alert: " + alert + ". Recipient: " + recipient;
 	}
-	
+
 	/**
 	 * @return Returns the read status
 	 */
 	public Boolean isAlertRead() {
 		return alertRead;
 	}
-	
+
 	/**
 	 * @see #getAlertRead()
 	 */
 	public Boolean getAlertRead() {
 		return isAlertRead();
 	}
-	
+
 	/**
 	 * @param alertRead The alertRead to set.
 	 */
 	public void setAlertRead(Boolean alertRead) {
 		this.alertRead = alertRead;
 	}
-	
+
 	/**
 	 * @return Returns the recipient/user.
 	 */
 	public User getRecipient() {
 		return recipient;
 	}
-	
+
 	/**
 	 * @param user The recipient/user to set.
 	 */
@@ -130,7 +130,7 @@ public class AlertRecipient extends BaseOpenmrsObject {
 		this.recipient = user;
 		setRecipientId(user.getUserId());
 	}
-	
+
 	/**
 	 * @return Returns the recipientId.
 	 */
@@ -138,14 +138,14 @@ public class AlertRecipient extends BaseOpenmrsObject {
 	private Integer getRecipientId() {
 		return recipientId;
 	}
-	
+
 	/**
 	 * @param recipientId The recipientId to set.
 	 */
 	private void setRecipientId(Integer recipientId) {
 		this.recipientId = recipientId;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
@@ -154,7 +154,7 @@ public class AlertRecipient extends BaseOpenmrsObject {
 	public Integer getId() {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -163,5 +163,5 @@ public class AlertRecipient extends BaseOpenmrsObject {
 	public void setId(Integer id) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 }

@@ -21,7 +21,7 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { Program.class }, order = 50)
+@Handler(supports = {Program.class}, order = 50)
 public class ProgramValidator implements Validator {
 
 	/**
@@ -33,7 +33,7 @@ public class ProgramValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return c.equals(Program.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -56,7 +56,7 @@ public class ProgramValidator implements Validator {
 		} else {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name");
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "concept", "error.concept");
-			
+
 			Program existingProgram = Context.getProgramWorkflowService().getProgramByName(p.getName());
 			if (existingProgram != null && !existingProgram.getUuid().equals(p.getUuid())) {
 				errors.rejectValue("name", "general.error.nameAlreadyInUse");

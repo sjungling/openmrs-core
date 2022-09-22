@@ -29,14 +29,14 @@ import org.openmrs.util.PrivilegeConstants;
  * </pre>
  */
 public interface AlertService extends OpenmrsService {
-	
+
 	/**
 	 * Used by Spring to set the specific/chosen database access implementation
 	 * 
 	 * @param dao The dao implementation to use
 	 */
 	public void setAlertDAO(AlertDAO dao);
-	
+
 	/**
 	 * Save the given <code>alert</code> in the database
 	 * 
@@ -49,7 +49,7 @@ public interface AlertService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.MANAGE_ALERTS)
 	public Alert saveAlert(Alert alert) throws APIException;
-	
+
 	/**
 	 * Get alert by internal identifier
 	 * 
@@ -58,7 +58,7 @@ public interface AlertService extends OpenmrsService {
 	 * @throws APIException
 	 */
 	public Alert getAlert(Integer alertId) throws APIException;
-	
+
 	/**
 	 * Completely delete the given alert from the database
 	 * 
@@ -67,7 +67,7 @@ public interface AlertService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.MANAGE_ALERTS)
 	public void purgeAlert(Alert alert) throws APIException;
-	
+
 	/**
 	 * Find all alerts for a user that have not expired
 	 * 
@@ -77,7 +77,7 @@ public interface AlertService extends OpenmrsService {
 	 * @throws APIException
 	 */
 	public List<Alert> getAllActiveAlerts(User user) throws APIException;
-	
+
 	/**
 	 * Find the alerts that are not read and have not expired for a user This will probably be the
 	 * most commonly called method If null is passed in for <code>user</code>, find alerts for the
@@ -89,7 +89,7 @@ public interface AlertService extends OpenmrsService {
 	 * @throws APIException
 	 */
 	public List<Alert> getAlertsByUser(User user) throws APIException;
-	
+
 	/**
 	 * Finds alerts for the given user with the given status
 	 * 
@@ -100,7 +100,7 @@ public interface AlertService extends OpenmrsService {
 	 * @throws APIException
 	 */
 	public List<Alert> getAlerts(User user, boolean includeRead, boolean includeExpired) throws APIException;
-	
+
 	/**
 	 * Get all unexpired alerts for all users
 	 * 
@@ -108,7 +108,7 @@ public interface AlertService extends OpenmrsService {
 	 * @throws APIException
 	 */
 	public List<Alert> getAllAlerts() throws APIException;
-	
+
 	/**
 	 * Get alerts for all users while obeying includeExpired
 	 * 
@@ -117,7 +117,7 @@ public interface AlertService extends OpenmrsService {
 	 * @throws APIException
 	 */
 	public List<Alert> getAllAlerts(boolean includeExpired) throws APIException;
-	
+
 	/**
 	 * Sends an alert to all superusers
 	 * 

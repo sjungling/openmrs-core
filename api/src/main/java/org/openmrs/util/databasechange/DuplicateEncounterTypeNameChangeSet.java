@@ -42,30 +42,30 @@ import liquibase.resource.ResourceAccessor;
  */
 
 public class DuplicateEncounterTypeNameChangeSet implements CustomTaskChange {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(DuplicateEncounterTypeNameChangeSet.class);
-	
+
 	@Override
 	public String getConfirmationMessage() {
 		return "Completed updating duplicate EncounterType names";
 	}
-	
+
 	@Override
 	public void setFileOpener(ResourceAccessor arg0) {
-		
+
 	}
-	
+
 	@Override
 	public void setUp() throws SetupException {
 		// No setup actions
 		
 	}
-	
+
 	@Override
 	public ValidationErrors validate(Database arg0) {
 		return null;
 	}
-	
+
 	/**
 	 * Method to perform validation and resolution of duplicate EncounterType names
 	 */
@@ -77,24 +77,24 @@ public class DuplicateEncounterTypeNameChangeSet implements CustomTaskChange {
 		PreparedStatement pStmt = null;
 		ResultSet rs = null;
 		Boolean initialAutoCommit = null;
-		
+
 		try {
 			initialAutoCommit = connection.getAutoCommit();
-			
+
 			// set auto commit mode to false for UPDATE action
 			connection.setAutoCommit(false);
-			
+
 			stmt = connection.createStatement();
 			rs = stmt
-			        .executeQuery("SELECT * FROM encounter_type INNER JOIN (SELECT name FROM encounter_type GROUP BY name HAVING count(name) > 1) dup ON encounter_type.name = dup.name");
-			
+											.executeQuery("SELECT * FROM encounter_type INNER JOIN (SELECT name FROM encounter_type GROUP BY name HAVING count(name) > 1) dup ON encounter_type.name = dup.name");
+
 			Integer id;
 			String name;
-			
+
 			while (rs.next()) {
 				id = rs.getInt("encounter_type_id");
 				name = rs.getString("name");
-				
+
 				if (duplicates.get(name) == null) {
 					HashSet<Integer> results = new HashSet<>();
 					results.add(id);
@@ -144,7 +144,7 @@ public class DuplicateEncounterTypeNameChangeSet implements CustomTaskChange {
 		}
 		catch (BatchUpdateException e) {
 			log.warn("Error generated while processsing batch insert", e);
-			
+
 			try {
 				log.debug("Rolling back batch", e);
 				connection.rollback();
@@ -152,7 +152,7 @@ public class DuplicateEncounterTypeNameChangeSet implements CustomTaskChange {
 			catch (Exception rbe) {
 				log.warn("Error generated while rolling back batch insert", e);
 			}
-			
+
 			// marks the changeset as a failed one
 			throw new CustomChangeException("Failed to update one or more duplicate EncounterType names", e);
 		}
@@ -177,7 +177,7 @@ public class DuplicateEncounterTypeNameChangeSet implements CustomTaskChange {
 					log.warn("Failed to close the resultset object");
 				}
 			}
-			
+
 			if (stmt != null) {
 				try {
 					stmt.close();
@@ -186,7 +186,7 @@ public class DuplicateEncounterTypeNameChangeSet implements CustomTaskChange {
 					log.warn("Failed to close the select statement used to identify duplicate EncounterType object names");
 				}
 			}
-			
+
 			if (pStmt != null) {
 				try {
 					pStmt.close();
@@ -196,7 +196,7 @@ public class DuplicateEncounterTypeNameChangeSet implements CustomTaskChange {
 				}
 			}
 		}
-		
+
 	}
-	
+
 }

@@ -34,9 +34,9 @@ import static org.mockito.Mockito.verify;
  * the classpath so that the liquibase-update-to-latest.xml can be found.
  */
 public class DatabaseUpdaterTest extends BaseContextSensitiveTest {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(DatabaseUpdaterTest.class);
-	
+
 	/**
 	 * @throws LockException
 	 * @see DatabaseUpdater#updatesRequired()
@@ -53,12 +53,12 @@ public class DatabaseUpdaterTest extends BaseContextSensitiveTest {
 		}
 		// does not run DatabaseUpdater.update() because hsqldb doesn't like single quotes in strings
 	}
-	
+
 	@Test
 	public void shouldRejectNullAsChangelog() throws DatabaseUpdateException, InputRequiredException {
 		assertThrows(IllegalArgumentException.class, () -> DatabaseUpdater.executeChangelog(null, (ChangeSetExecutorCallback) null));
 	}
-	
+
 	@Test
 	public void shouldRejectNullAsChangelogFilenames() {
 		try {
@@ -69,7 +69,7 @@ public class DatabaseUpdaterTest extends BaseContextSensitiveTest {
 			assertTrue(re.getCause() instanceof IllegalArgumentException);
 		}
 	}
-	
+
 	@Test
 	public void shouldRejectEmptyArrayAsChangelogFilenames() {
 		try {
@@ -80,22 +80,22 @@ public class DatabaseUpdaterTest extends BaseContextSensitiveTest {
 			assertTrue(re.getCause() instanceof IllegalArgumentException);
 		}
 	}
-	
+
 	@Test
 	public void shouldReturnInjectedLiquibaseProvider() throws Exception {
 		LiquibaseProvider liquibaseProvider = mock(LiquibaseProvider.class);
 		DatabaseUpdater.setLiquibaseProvider(liquibaseProvider);
-		DatabaseUpdater.getLiquibase( "filename" );
+		DatabaseUpdater.getLiquibase("filename");
 		verify(liquibaseProvider, times(1)).getLiquibase("filename");
 		DatabaseUpdater.unsetLiquibaseProvider();
 	}
-	
+
 	@Test
 	public void shouldExecuteLiquibaseFileRelativeToApplicationDataDirectory() throws Exception {
 		copyResourcesToApplicationDataDirectory();
 		DatabaseUpdater.executeChangelog("testLiquibase.xml", (ChangeSetExecutorCallback) null);
 	}
-	
+
 	private void copyResourcesToApplicationDataDirectory() throws Exception {
 		File appDataDir = OpenmrsUtil.getApplicationDataDirectoryAsFile();
 		String[] files = {"testLiquibase.xml", "sql/testSqlFile.sql"};

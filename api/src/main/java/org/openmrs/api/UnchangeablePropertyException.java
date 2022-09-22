@@ -16,19 +16,19 @@ package org.openmrs.api;
  * @since 2.1
  */
 public class UnchangeablePropertyException extends APIException {
-	
+
 	public UnchangeablePropertyException(String message) {
 		super(message);
 	}
-	
+
 	public UnchangeablePropertyException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	public UnchangeablePropertyException(String messageKey, Object[] parameters) {
 		super(messageKey, parameters);
 	}
-	
+
 	/**
 	 * @param clazz the class of the object on which it was changed
 	 * @param property the name of the unchangeable property

@@ -31,16 +31,16 @@ import org.openmrs.util.PrivilegeConstants;
  * @since 1.9
  */
 public interface VisitService extends OpenmrsService {
-	
+
 	/**
 	 * Gets all visit types.
 	 * 
 	 * @return a list of visit type objects.
 	 * <strong>Should</strong> get all visit types
 	 */
-	@Authorized( { PrivilegeConstants.GET_VISIT_TYPES })
+	@Authorized({PrivilegeConstants.GET_VISIT_TYPES})
 	List<VisitType> getAllVisitTypes();
-	
+
 	/**
 	 * Get all visit types based on includeRetired flag
 	 * 
@@ -49,9 +49,9 @@ public interface VisitService extends OpenmrsService {
 	 * @since 1.9
 	 * <strong>Should</strong> get all visit types based on include retired flag.
 	 */
-	@Authorized( { PrivilegeConstants.MANAGE_VISIT_TYPES })
+	@Authorized({PrivilegeConstants.MANAGE_VISIT_TYPES})
 	public List<VisitType> getAllVisitTypes(boolean includeRetired);
-	
+
 	/**
 	 * Gets a visit type by its visit type id.
 	 * 
@@ -59,9 +59,9 @@ public interface VisitService extends OpenmrsService {
 	 * @return the visit type object found with the given id, else null.
 	 * <strong>Should</strong> get correct visit type
 	 */
-	@Authorized( { PrivilegeConstants.GET_VISIT_TYPES })
+	@Authorized({PrivilegeConstants.GET_VISIT_TYPES})
 	VisitType getVisitType(Integer visitTypeId);
-	
+
 	/**
 	 * Gets a visit type by its UUID.
 	 * 
@@ -69,9 +69,9 @@ public interface VisitService extends OpenmrsService {
 	 * @return the visit type object found with the given uuid, else null.
 	 * <strong>Should</strong> get correct visit type
 	 */
-	@Authorized( { PrivilegeConstants.GET_VISIT_TYPES })
+	@Authorized({PrivilegeConstants.GET_VISIT_TYPES})
 	VisitType getVisitTypeByUuid(String uuid);
-	
+
 	/**
 	 * Gets all visit types whose names are similar to or contain the given search phrase.
 	 * 
@@ -79,9 +79,9 @@ public interface VisitService extends OpenmrsService {
 	 * @return a list of all visit types with names similar to or containing the given phrase
 	 * <strong>Should</strong> get correct visit types
 	 */
-	@Authorized( { PrivilegeConstants.GET_VISIT_TYPES })
+	@Authorized({PrivilegeConstants.GET_VISIT_TYPES})
 	List<VisitType> getVisitTypes(String fuzzySearchPhrase);
-	
+
 	/**
 	 * Creates or updates the given visit type in the database.
 	 * 
@@ -92,9 +92,9 @@ public interface VisitService extends OpenmrsService {
 	 * <strong>Should</strong> throw error when name is null
 	 * <strong>Should</strong> throw error when name is empty string
 	 */
-	@Authorized( { PrivilegeConstants.MANAGE_VISIT_TYPES })
+	@Authorized({PrivilegeConstants.MANAGE_VISIT_TYPES})
 	VisitType saveVisitType(VisitType visitType) throws APIException;
-	
+
 	/**
 	 * Retires a given visit type.
 	 * 
@@ -103,9 +103,9 @@ public interface VisitService extends OpenmrsService {
 	 * @return the visit type that has been retired.
 	 * <strong>Should</strong> retire given visit type
 	 */
-	@Authorized( { PrivilegeConstants.MANAGE_VISIT_TYPES })
+	@Authorized({PrivilegeConstants.MANAGE_VISIT_TYPES})
 	VisitType retireVisitType(VisitType visitType, String reason);
-	
+
 	/**
 	 * Unretires a visit type.
 	 * 
@@ -113,18 +113,18 @@ public interface VisitService extends OpenmrsService {
 	 * @return the unretired visit type
 	 * <strong>Should</strong> unretire given visit type
 	 */
-	@Authorized( { PrivilegeConstants.MANAGE_VISIT_TYPES })
+	@Authorized({PrivilegeConstants.MANAGE_VISIT_TYPES})
 	VisitType unretireVisitType(VisitType visitType);
-	
+
 	/**
 	 * Completely removes a visit type from the database. This is not reversible.
 	 * 
 	 * @param visitType the visit type to delete from the database.
 	 * <strong>Should</strong> delete given visit type
 	 */
-	@Authorized( { PrivilegeConstants.MANAGE_VISIT_TYPES })
+	@Authorized({PrivilegeConstants.MANAGE_VISIT_TYPES})
 	void purgeVisitType(VisitType visitType);
-	
+
 	/**
 	 * Gets all unvoided visits in the database.
 	 * 
@@ -134,7 +134,7 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.GET_VISITS)
 	public List<Visit> getAllVisits() throws APIException;
-	
+
 	/**
 	 * Gets a visit by its visit id.
 	 * 
@@ -144,7 +144,7 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.GET_VISITS)
 	public Visit getVisit(Integer visitId) throws APIException;
-	
+
 	/**
 	 * Gets a visit by its UUID.
 	 * 
@@ -155,7 +155,7 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.GET_VISITS)
 	public Visit getVisitByUuid(String uuid) throws APIException;
-	
+
 	/**
 	 * Creates or updates the given visit in the database.
 	 * 
@@ -172,9 +172,9 @@ public interface VisitService extends OpenmrsService {
 	 *         explicitly
 	 * <strong>Should</strong> should save new visit with encounters successfully
 	 */
-	@Authorized( { PrivilegeConstants.ADD_VISITS, PrivilegeConstants.EDIT_VISITS })
+	@Authorized({PrivilegeConstants.ADD_VISITS, PrivilegeConstants.EDIT_VISITS})
 	public Visit saveVisit(Visit visit) throws APIException;
-	
+
 	/**
 	 * Sets the stopDate of a given visit.
 	 * 
@@ -186,9 +186,9 @@ public interface VisitService extends OpenmrsService {
 	 * <strong>Should</strong> not fail if no validation errors are found
 	 * <strong>Should</strong> fail if validation errors are found
 	 */
-	@Authorized( { PrivilegeConstants.EDIT_VISITS })
+	@Authorized({PrivilegeConstants.EDIT_VISITS})
 	public Visit endVisit(Visit visit, Date stopDate) throws APIException;
-	
+
 	/**
 	 * Voids the given visit.
 	 * 
@@ -201,7 +201,7 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.DELETE_VISITS)
 	public Visit voidVisit(Visit visit, String reason) throws APIException;
-	
+
 	/**
 	 * Unvoids the given visit.
 	 * 
@@ -213,7 +213,7 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.DELETE_VISITS)
 	public Visit unvoidVisit(Visit visit) throws APIException;
-	
+
 	/**
 	 * Completely erases a visit from the database. This is not reversible.
 	 * 
@@ -224,7 +224,7 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.PURGE_VISITS)
 	public void purgeVisit(Visit visit) throws APIException;
-	
+
 	/**
 	 * Gets the visits matching the specified arguments
 	 * 
@@ -254,10 +254,10 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.GET_VISITS)
 	public List<Visit> getVisits(Collection<VisitType> visitTypes, Collection<Patient> patients,
-	        Collection<Location> locations, Collection<Concept> indications, Date minStartDatetime, Date maxStartDatetime,
-	        Date minEndDatetime, Date maxEndDatetime, Map<VisitAttributeType, Object> attributeValues,
-	        boolean includeInactive, boolean includeVoided) throws APIException;
-	
+									Collection<Location> locations, Collection<Concept> indications, Date minStartDatetime, Date maxStartDatetime,
+									Date minEndDatetime, Date maxEndDatetime, Map<VisitAttributeType, Object> attributeValues,
+									boolean includeInactive, boolean includeVoided) throws APIException;
+
 	/**
 	 * Gets all unvoided visits for the specified patient
 	 * 
@@ -268,7 +268,7 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.GET_VISITS)
 	public List<Visit> getVisitsByPatient(Patient patient) throws APIException;
-	
+
 	/**
 	 * Convenience method that delegates to getVisitsByPatient(patient, false, false)
 	 * 
@@ -278,7 +278,7 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.GET_VISITS)
 	public List<Visit> getActiveVisitsByPatient(Patient patient) throws APIException;
-	
+
 	/**
 	 * Gets all visits for the specified patient
 	 * 
@@ -293,15 +293,15 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.GET_VISITS)
 	public List<Visit> getVisitsByPatient(Patient patient, boolean includeInactive, boolean includeVoided)
-	        throws APIException;
-	
+									throws APIException;
+
 	/**
 	 * @return all {@link VisitAttributeType}s
 	 * <strong>Should</strong> return all visit attribute types including retired ones
 	 */
 	@Authorized(PrivilegeConstants.GET_VISIT_ATTRIBUTE_TYPES)
 	List<VisitAttributeType> getAllVisitAttributeTypes();
-	
+
 	/**
 	 * @param id
 	 * @return the {@link VisitAttributeType} with the given internal id
@@ -310,7 +310,7 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.GET_VISIT_ATTRIBUTE_TYPES)
 	VisitAttributeType getVisitAttributeType(Integer id);
-	
+
 	/**
 	 * @param uuid
 	 * @return the {@link VisitAttributeType} with the given uuid
@@ -319,7 +319,7 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.GET_VISIT_ATTRIBUTE_TYPES)
 	VisitAttributeType getVisitAttributeTypeByUuid(String uuid);
-	
+
 	/**
 	 * Creates or updates the given visit attribute type in the database
 	 * 
@@ -330,7 +330,7 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.MANAGE_VISIT_ATTRIBUTE_TYPES)
 	VisitAttributeType saveVisitAttributeType(VisitAttributeType visitAttributeType);
-	
+
 	/**
 	 * Retires the given visit attribute type in the database
 	 * 
@@ -340,7 +340,7 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.MANAGE_VISIT_ATTRIBUTE_TYPES)
 	VisitAttributeType retireVisitAttributeType(VisitAttributeType visitAttributeType, String reason);
-	
+
 	/**
 	 * Restores a visit attribute type that was previous retired in the database
 	 * 
@@ -350,7 +350,7 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.MANAGE_VISIT_ATTRIBUTE_TYPES)
 	VisitAttributeType unretireVisitAttributeType(VisitAttributeType visitAttributeType);
-	
+
 	/**
 	 * Completely removes a visit attribute type from the database
 	 * 
@@ -359,7 +359,7 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.PURGE_VISIT_ATTRIBUTE_TYPES)
 	void purgeVisitAttributeType(VisitAttributeType visitAttributeType);
-	
+
 	/**
 	 * @param uuid
 	 * @return the {@link VisitAttribute} with the given uuid
@@ -368,7 +368,7 @@ public interface VisitService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.GET_VISITS)
 	VisitAttribute getVisitAttributeByUuid(String uuid);
-	
+
 	/**
 	 * Stops all active visits started before or on the specified date which match any of the visit
 	 * types specified by the {@link OpenmrsConstants#GP_VISIT_TYPES_TO_AUTO_CLOSE} global property.

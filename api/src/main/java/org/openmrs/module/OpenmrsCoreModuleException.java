@@ -24,11 +24,11 @@ import org.openmrs.api.context.Context;
  * @see ModuleConstants#CORE_MODULES
  */
 public class OpenmrsCoreModuleException extends ModuleMustStartException {
-	
+
 	public static final long serialVersionUID = 1L;
-	
+
 	private Map<String, String> modules;
-	
+
 	/**
 	 * This constructor is used when a user tries to stop a core module.
 	 * 
@@ -37,17 +37,17 @@ public class OpenmrsCoreModuleException extends ModuleMustStartException {
 	public OpenmrsCoreModuleException(String moduleId) {
 		super("The " + moduleId + " module is set as 'core' by OpenMRS and so cannot be stopped or unloaded.");
 	}
-	
+
 	/**
 	 * @param modules map from module id to version that is core and didn't start
 	 */
 	public OpenmrsCoreModuleException(Map<String, String> modules) {
 		super(createMessage(modules));
-		
+
 		// set the moduleIds property for use by the StartupErrorFilter
 		this.modules = modules;
 	}
-	
+
 	/**
 	 * Helper method to turn the given modules map into a message string so that it can be passed to
 	 * a super constructor
@@ -57,17 +57,17 @@ public class OpenmrsCoreModuleException extends ModuleMustStartException {
 	 */
 	private static String createMessage(Map<String, String> modules) {
 		StringBuilder msg = new StringBuilder(
-		        "The following modules are marked as 'core' by OpenMRS but were unable to start: ");
+										"The following modules are marked as 'core' by OpenMRS but were unable to start: ");
 		for (Map.Entry<String, String> entry : modules.entrySet()) {
 			msg.append(entry.getKey());
 			msg.append(" v");
 			msg.append(entry.getValue());
 			msg.append(", ");
 		}
-		
+
 		return msg.toString();
 	}
-	
+
 	/**
 	 * The module ids that caused this exception
 	 * 

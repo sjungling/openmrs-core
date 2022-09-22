@@ -20,12 +20,12 @@ import org.openmrs.api.context.Context;
  * @see Order
  */
 public class OrderEditor extends OpenmrsPropertyEditor<Order> {
-	
+
 	@Override
 	protected Order getObjectById(Integer id) {
 		return Context.getOrderService().getOrder(id);
 	}
-	
+
 	@Override
 	protected Order getObjectByUuid(String uuid) {
 		return Context.getOrderService().getOrderByUuid(uuid);

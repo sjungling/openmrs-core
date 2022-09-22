@@ -44,7 +44,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 		STAT,
 		ON_SCHEDULED_DATE
 	}
-	
+
 	/**
 	 * @since 1.10
 	 */
@@ -54,87 +54,87 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 		DISCONTINUE,
 		RENEW
 	}
-	
+
 	/**
 	 * Valid values for the status of an order that is received from a filler
 	 * @since 2.2.0
 	 */
 	public enum FulfillerStatus {
-		RECEIVED, 
+		RECEIVED,
 		IN_PROGRESS,
 		EXCEPTION,
 		COMPLETED
 	}
-	
+
 	private Integer orderId;
-	
+
 	private Patient patient;
-	
+
 	private OrderType orderType;
-	
+
 	private Concept concept;
-	
+
 	private String instructions;
-	
+
 	private Date dateActivated;
-	
+
 	private Date autoExpireDate;
-	
+
 	private Encounter encounter;
-	
+
 	private Provider orderer;
-	
+
 	private Date dateStopped;
-	
+
 	private Concept orderReason;
-	
+
 	private String accessionNumber;
-	
+
 	private String orderReasonNonCoded;
-	
+
 	private Urgency urgency = Urgency.ROUTINE;
-	
+
 	private String orderNumber;
-	
+
 	private String commentToFulfiller;
-	
+
 	private CareSetting careSetting;
-	
+
 	private Date scheduledDate;
-	
+
 	private String formNamespaceAndPath;
-	
+
 	/**
 	 * Allows the orders if ordered as an orderGroup, to maintain a sequence of how members are
 	 * added in the group ex - for two orders of isoniazid and ampicillin, the sequence of 1 and 2
 	 * needed to be maintained
 	 */
 	private Double sortWeight;
-	
+
 	/**
 	 * Allows orders to be linked to a previous order - e.g., an order discontinue ampicillin linked
 	 * to the original ampicillin order (the D/C gets its own order number)
 	 */
 	private Order previousOrder;
-	
+
 	/**
 	 * Represents the action being taken on an order.
 	 * 
 	 * @see org.openmrs.Order.Action
 	 */
 	private Action action = Action.NEW;
-	
+
 	/**
 	 * {@link org.openmrs.OrderGroup}
 	 */
 	private OrderGroup orderGroup;
-	
+
 	/**
 	 * Represents the status of an order received from a fulfiller 
 	 * @see FulfillerStatus
 	 */
 	private FulfillerStatus fulfillerStatus;
-	
+
 	/**
 	 * Represents the comment that goes along with with fulfiller status
 	 */	
@@ -145,12 +145,12 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	/** default constructor */
 	public Order() {
 	}
-	
+
 	/** constructor with id */
 	public Order(Integer orderId) {
 		this.orderId = orderId;
 	}
-	
+
 	/**
 	 * Performs a shallow copy of this Order. Does NOT copy orderId.
 	 * 
@@ -160,7 +160,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public Order copy() {
 		return copyHelper(new Order());
 	}
-	
+
 	/**
 	 * The purpose of this method is to allow subclasses of Order to delegate a portion of their
 	 * copy() method back to the superclass, in case the base class implementation changes.
@@ -203,7 +203,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 		target.setFormNamespaceAndPath(getFormNamespaceAndPath());
 		return target;
 	}
-	
+
 	// Property accessors
 	
 	/**
@@ -212,28 +212,28 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public Date getAutoExpireDate() {
 		return autoExpireDate;
 	}
-	
+
 	/**
 	 * @param autoExpireDate The autoExpireDate to set.
 	 */
 	public void setAutoExpireDate(Date autoExpireDate) {
 		this.autoExpireDate = autoExpireDate;
 	}
-	
+
 	/**
 	 * @return Returns the concept.
 	 */
 	public Concept getConcept() {
 		return concept;
 	}
-	
+
 	/**
 	 * @param concept The concept to set.
 	 */
 	public void setConcept(Concept concept) {
 		this.concept = concept;
 	}
-	
+
 	/**
 	 * @return the scheduledDate
 	 * @since 1.10
@@ -241,7 +241,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public Date getScheduledDate() {
 		return scheduledDate;
 	}
-	
+
 	/**
 	 * @param scheduledDate the date to set
 	 * @since 1.10
@@ -249,7 +249,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public void setScheduledDate(Date scheduledDate) {
 		this.scheduledDate = scheduledDate;
 	}
-	
+
 	/**
 	 * @return Returns the dateStopped.
 	 * @since 1.10
@@ -257,119 +257,119 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public Date getDateStopped() {
 		return dateStopped;
 	}
-	
+
 	/**
 	 * @return Returns the orderReason.
 	 */
 	public Concept getOrderReason() {
 		return orderReason;
 	}
-	
+
 	/**
 	 * @param orderReason The orderReason to set.
 	 */
 	public void setOrderReason(Concept orderReason) {
 		this.orderReason = orderReason;
 	}
-	
+
 	/**
 	 * @return Returns the encounter.
 	 */
 	public Encounter getEncounter() {
 		return encounter;
 	}
-	
+
 	/**
 	 * @param encounter The encounter to set.
 	 */
 	public void setEncounter(Encounter encounter) {
 		this.encounter = encounter;
 	}
-	
+
 	/**
 	 * @return Returns the instructions.
 	 */
 	public String getInstructions() {
 		return instructions;
 	}
-	
+
 	/**
 	 * @param instructions The instructions to set.
 	 */
 	public void setInstructions(String instructions) {
 		this.instructions = instructions;
 	}
-	
+
 	/**
 	 * @return Returns the accessionNumber.
 	 */
 	public String getAccessionNumber() {
 		return accessionNumber;
 	}
-	
+
 	/**
 	 * @param accessionNumber The accessionNumber to set.
 	 */
 	public void setAccessionNumber(String accessionNumber) {
 		this.accessionNumber = accessionNumber;
 	}
-	
+
 	/**
 	 * @return Returns the orderer.
 	 */
 	public Provider getOrderer() {
 		return orderer;
 	}
-	
+
 	/**
 	 * @param orderer The orderer to set.
 	 */
 	public void setOrderer(Provider orderer) {
 		this.orderer = orderer;
 	}
-	
+
 	/**
 	 * @return Returns the orderId.
 	 */
 	public Integer getOrderId() {
 		return orderId;
 	}
-	
+
 	/**
 	 * @param orderId The orderId to set.
 	 */
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
-	
+
 	/**
 	 * @return Returns the dateActivated.
 	 */
 	public Date getDateActivated() {
 		return dateActivated;
 	}
-	
+
 	/**
 	 * @param dateActivated The dateActivated to set.
 	 */
 	public void setDateActivated(Date dateActivated) {
 		this.dateActivated = dateActivated;
 	}
-	
+
 	/**
 	 * @return Returns the orderReasonNonCoded.
 	 */
 	public String getOrderReasonNonCoded() {
 		return orderReasonNonCoded;
 	}
-	
+
 	/**
 	 * @param orderReasonNonCoded The orderReasonNonCoded to set.
 	 */
 	public void setOrderReasonNonCoded(String orderReasonNonCoded) {
 		this.orderReasonNonCoded = orderReasonNonCoded;
 	}
-	
+
 	/**
 	 * @return the commentToFulfiller
 	 * @since 1.10
@@ -377,7 +377,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public String getCommentToFulfiller() {
 		return commentToFulfiller;
 	}
-	
+
 	/**
 	 * @param commentToFulfiller The commentToFulfiller to set
 	 * @since 1.10
@@ -385,7 +385,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public void setCommentToFulfiller(String commentToFulfiller) {
 		this.commentToFulfiller = commentToFulfiller;
 	}
-	
+
 	/**
 	 * Convenience method to determine if the order is activated as of the current date
 	 * 
@@ -396,7 +396,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public boolean isActivated() {
 		return isActivated(new Date());
 	}
-	
+
 	/**
 	 * Convenience method to determine if the order is activated as of the specified date
 	 * 
@@ -417,7 +417,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 		}
 		return OpenmrsUtil.compare(dateActivated, checkDate) <= 0;
 	}
-	
+
 	/**
 	 * Convenience method to determine if the order was active as of the current date
 	 * 
@@ -427,7 +427,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public boolean isActive() {
 		return isActive(new Date());
 	}
-	
+
 	/**
 	 * Convenience method to determine if the order is active as of the specified date
 	 * 
@@ -451,7 +451,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 		Date checkDate = aCheckDate == null ? new Date() : aCheckDate;
 		return isActivated(checkDate) && !isDiscontinued(checkDate) && !isExpired(checkDate);
 	}
-	
+
 	/**
 	 * Convenience method to determine if order is started as of the current date
 	 * 
@@ -462,7 +462,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public boolean isStarted() {
 		return isStarted(new Date());
 	}
-	
+
 	/**
 	 * Convenience method to determine if the order is started as of the specified date, returns
 	 * true only if the order has been activated. In case of scheduled orders, the scheduledDate
@@ -489,7 +489,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 		Date checkDate = aCheckDate == null ? new Date() : aCheckDate;
 		return !checkDate.before(getEffectiveStartDate());
 	}
-	
+
 	/**
 	 * Convenience method to determine if the order is discontinued as of the specified date
 	 * 
@@ -520,7 +520,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 		}
 		return checkDate.after(dateStopped);
 	}
-	
+
 	/**
 	 * Convenience method to determine if the order is expired as of the specified date
 	 * 
@@ -530,7 +530,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public boolean isExpired() {
 		return isExpired(new Date());
 	}
-	
+
 	/**
 	 * Convenience method to determine if order was expired at a given time
 	 * 
@@ -564,7 +564,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 
 		return checkDate.after(autoExpireDate);
 	}
-	
+
 	/*
 	 * orderForm:jsp: <spring:bind path="order.discontinued" /> results in a call to
 	 * isDiscontinued() which doesn't give access to the discontinued property so renamed it to
@@ -574,20 +574,20 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public boolean isDiscontinuedRightNow() {
 		return isDiscontinued(new Date());
 	}
-	
+
 	public Patient getPatient() {
 		return patient;
 	}
-	
+
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
-	
+
 	@Override
 	public Integer getId() {
 		return getOrderId();
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -595,9 +595,9 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public String toString() {
 		String prefix = Action.DISCONTINUE == getAction() ? "DC " : "";
 		return prefix + "Order. orderId: " + orderId + " patient: " + patient + " concept: " + concept + " care setting: "
-		        + careSetting;
+										+ careSetting;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -606,7 +606,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public void setId(Integer id) {
 		setOrderId(id);
 	}
-	
+
 	/**
 	 * @return the urgency
 	 * @since 1.9.2
@@ -614,7 +614,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public Urgency getUrgency() {
 		return urgency;
 	}
-	
+
 	/**
 	 * @param urgency the urgency to set
 	 * @since 1.9.2
@@ -622,7 +622,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public void setUrgency(Urgency urgency) {
 		this.urgency = urgency;
 	}
-	
+
 	/**
 	 * @return the orderNumber
 	 * @since 1.10
@@ -630,7 +630,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public String getOrderNumber() {
 		return orderNumber;
 	}
-	
+
 	/**
 	 * Gets the previous related order.
 	 * 
@@ -640,7 +640,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public Order getPreviousOrder() {
 		return HibernateUtil.getRealObjectFromProxy(previousOrder);
 	}
-	
+
 	/**
 	 * Sets the previous order.
 	 * 
@@ -650,7 +650,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public void setPreviousOrder(Order previousOrder) {
 		this.previousOrder = previousOrder;
 	}
-	
+
 	/**
 	 * Gets the action
 	 * 
@@ -660,7 +660,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public Action getAction() {
 		return action;
 	}
-	
+
 	/**
 	 * Sets the ation
 	 * 
@@ -670,7 +670,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public void setAction(Action action) {
 		this.action = action;
 	}
-	
+
 	/**
 	 * Gets the careSetting
 	 * 
@@ -680,7 +680,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public CareSetting getCareSetting() {
 		return careSetting;
 	}
-	
+
 	/**
 	 * Sets the careSetting
 	 * 
@@ -690,7 +690,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public void setCareSetting(CareSetting careSetting) {
 		this.careSetting = careSetting;
 	}
-	
+
 	/**
 	 * Get the {@link org.openmrs.OrderType}
 	 * 
@@ -699,7 +699,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public OrderType getOrderType() {
 		return orderType;
 	}
-	
+
 	/**
 	 * Set the {@link org.openmrs.OrderType}
 	 * 
@@ -708,7 +708,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public void setOrderType(OrderType orderType) {
 		this.orderType = orderType;
 	}
-	
+
 	/**
 	 * Creates a discontinuation order for this order, sets the previousOrder and action fields,
 	 * note that the discontinuation order needs to be saved for the discontinuation to take effect
@@ -725,10 +725,10 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 		newOrder.setPreviousOrder(this);
 		newOrder.setPatient(getPatient());
 		newOrder.setOrderType(getOrderType());
-		
+
 		return newOrder;
 	}
-	
+
 	/**
 	 * Creates an order for revision from this order, sets the previousOrder and action field.
 	 * 
@@ -740,7 +740,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public Order cloneForRevision() {
 		return cloneForRevisionHelper(new Order());
 	}
-	
+
 	/**
 	 * The purpose of this method is to allow subclasses of Order to delegate a portion of their
 	 * cloneForRevision() method back to the superclass, in case the base class implementation
@@ -774,10 +774,10 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 		target.setFulfillerStatus(getFulfillerStatus());
 		target.setFulfillerComment(getFulfillerComment());
 		target.setFormNamespaceAndPath(getFormNamespaceAndPath());
-		
+
 		return target;
 	}
-	
+
 	/**
 	 * Checks whether this order's orderType matches or is a sub type of the specified one
 	 * 
@@ -790,7 +790,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public boolean isType(OrderType orderType) {
 		return OrderUtil.isType(orderType, this.orderType);
 	}
-	
+
 	/**
 	 * Checks whether orderable of this order is same as other order
 	 * 
@@ -808,7 +808,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 		}
 		return OpenmrsUtil.nullSafeEquals(this.getConcept(), otherOrder.getConcept());
 	}
-	
+
 	/**
 	 * A convenience method to return start of the schedule for order.
 	 * 
@@ -819,7 +819,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public Date getEffectiveStartDate() {
 		return this.urgency == Urgency.ON_SCHEDULED_DATE ? this.getScheduledDate() : this.getDateActivated();
 	}
-	
+
 	/**
 	 * A convenience method to return end of the schedule for order.
 	 * 
@@ -830,7 +830,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public Date getEffectiveStopDate() {
 		return this.getDateStopped() != null ? this.getDateStopped() : this.getAutoExpireDate();
 	}
-	
+
 	/**
 	 * @since 1.12 {@link org.openmrs.OrderGroup}
 	 * @returns the OrderGroup
@@ -838,7 +838,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public OrderGroup getOrderGroup() {
 		return orderGroup;
 	}
-	
+
 	/**
 	 * Sets the OrderGroup for that order. If the order is ordered independently, it does not set an
 	 * orderGroup for it. If the order is ordered as an orderGroup, then sets a link to the
@@ -850,7 +850,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public void setOrderGroup(OrderGroup orderGroup) {
 		this.orderGroup = orderGroup;
 	}
-	
+
 	/**
 	 * Gets the sortWeight for an order if it is ordered as an OrderGroup.
 	 * 
@@ -860,7 +860,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public Double getSortWeight() {
 		return sortWeight;
 	}
-	
+
 	/**
 	 * Sets the sortWeight for an order if it is ordered as an OrderGroup. <tt>sortWeight</tt> is
 	 * used internally by the API to manage the sequencing of orders when grouped. This value may be
@@ -874,7 +874,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public void setSortWeight(Double sortWeight) {
 		this.sortWeight = sortWeight;
 	}
-	
+
 	/**
 	 * Returns the current status that was received from a fulfiller for this order. It can either be RECEIVED, IN_PROGRESS,
 	 * EXCEPTION or COMPLETED.  
@@ -895,7 +895,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public void setFulfillerStatus(FulfillerStatus fulfillerStatus) {
 		this.fulfillerStatus = fulfillerStatus;
 	}
-	
+
 	/**
 	 * Returns the comment received from the fulfiller regarding this order.
 	 * 
@@ -905,7 +905,7 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	public String getFulfillerComment() {
 		return fulfillerComment;
 	}
-	
+
 	/**
 	 * Sets the comment received from the fulfiller for this order.
 	 * 
@@ -913,9 +913,9 @@ public class Order extends BaseCustomizableData<OrderAttribute> implements FormR
 	 * @since 2.2.0
 	 */
 	public void setFulfillerComment(String fulfillerComment) {
-		this.fulfillerComment = fulfillerComment;		
+		this.fulfillerComment = fulfillerComment;
 	}
-	
+
 	/**
 	 * @return Returns the formNamespaceAndPath.
 	 * @since 2.5.0

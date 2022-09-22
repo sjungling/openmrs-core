@@ -22,7 +22,7 @@ import org.openmrs.api.context.Context;
  * but it does not permit partial dates. 
  */
 public class DateOrDatetimeEditor extends PropertyEditorSupport {
-	
+
 	/**
 	 * @see java.beans.PropertyEditorSupport#setAsText(java.lang.String)
 	 * <strong>Should</strong> handle date
@@ -51,7 +51,7 @@ public class DateOrDatetimeEditor extends PropertyEditorSupport {
 			}
 		}
 	}
-	
+
 	/**
 	 * @see java.beans.PropertyEditorSupport#getAsText()
 	 * <strong>Should</strong> print date without time
@@ -69,5 +69,5 @@ public class DateOrDatetimeEditor extends PropertyEditorSupport {
 			return Context.getDateTimeFormat().format(date);
 		}
 	}
-	
+
 }

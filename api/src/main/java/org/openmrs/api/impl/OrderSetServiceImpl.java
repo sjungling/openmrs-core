@@ -26,9 +26,9 @@ import org.openmrs.customdatatype.CustomDatatypeUtil;
 import org.springframework.transaction.annotation.Transactional;
 
 public class OrderSetServiceImpl extends BaseOpenmrsService implements OrderSetService {
-	
+
 	protected OrderSetDAO dao;
-	
+
 	/**
 	 * @see org.openmrs.api.OrderSetService#setOrderSetDAO(org.openmrs.api.db.OrderSetDAO)
 	 */
@@ -36,13 +36,13 @@ public class OrderSetServiceImpl extends BaseOpenmrsService implements OrderSetS
 	public void setOrderSetDAO(OrderSetDAO dao) {
 		this.dao = dao;
 	}
-	
+
 	@Override
 	@Transactional(readOnly = false)
 	public OrderSet saveOrderSet(OrderSet orderSet) throws APIException {
 		return saveOrderSetInternal(orderSet);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.OrderSetService#retireOrderSet(OrderSet, String)
 	 */
@@ -57,7 +57,7 @@ public class OrderSetServiceImpl extends BaseOpenmrsService implements OrderSetS
 		}
 		return saveOrderSetInternal(orderSet);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.OrderSetService#unretireOrderSet(OrderSet)
 	 */
@@ -66,7 +66,7 @@ public class OrderSetServiceImpl extends BaseOpenmrsService implements OrderSetS
 	public OrderSet unretireOrderSet(OrderSet orderSet) throws APIException {
 		return saveOrderSetInternal(orderSet);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.OrderSetService#saveOrderSet(OrderSet)
 	 */
@@ -87,12 +87,12 @@ public class OrderSetServiceImpl extends BaseOpenmrsService implements OrderSetS
 				orderSetMember.setDateRetired(new Date());
 			}
 		}
-		
+
 		// Why do we have to do this?
 		CustomDatatypeUtil.saveAttributesIfNecessary(orderSet);
 		return dao.save(orderSet);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.OrderSetService#getOrderSets(boolean)
 	 */
@@ -101,7 +101,7 @@ public class OrderSetServiceImpl extends BaseOpenmrsService implements OrderSetS
 	public List<OrderSet> getOrderSets(boolean includeRetired) throws APIException {
 		return dao.getOrderSets(includeRetired);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.OrderSetService#getOrderSet(Integer)
 	 */
@@ -110,7 +110,7 @@ public class OrderSetServiceImpl extends BaseOpenmrsService implements OrderSetS
 	public OrderSet getOrderSet(Integer orderSetId) throws APIException {
 		return dao.getOrderSetById(orderSetId);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.OrderSetService#getOrderSetByUuid(String)
 	 */
@@ -172,7 +172,7 @@ public class OrderSetServiceImpl extends BaseOpenmrsService implements OrderSetS
 	@Override
 	@Transactional(readOnly = false)
 	public OrderSetAttributeType retireOrderSetAttributeType(OrderSetAttributeType orderSetAttributeType,
-			String reason) {
+									String reason) {
 		return dao.saveOrderSetAttributeType(orderSetAttributeType);
 	}
 

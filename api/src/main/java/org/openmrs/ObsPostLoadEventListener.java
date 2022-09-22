@@ -38,19 +38,19 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ObsPostLoadEventListener implements PostLoadEventListener {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ObsPostLoadEventListener.class);
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@PostConstruct
 	public void registerListener() {
 		EventListenerRegistry registry = ((SessionFactoryImpl) sessionFactory).getServiceRegistry().getService(
-		    EventListenerRegistry.class);
+										EventListenerRegistry.class);
 		registry.getEventListenerGroup(EventType.POST_LOAD).appendListener(this);
 	}
-	
+
 	@Override
 	public void onPostLoad(PostLoadEvent event) {
 		if (Obs.class.isAssignableFrom(event.getEntity().getClass())) {

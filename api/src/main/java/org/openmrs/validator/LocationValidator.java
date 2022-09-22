@@ -23,9 +23,9 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  **/
-@Handler(supports = { Location.class }, order = 50)
+@Handler(supports = {Location.class}, order = 50)
 public class LocationValidator extends BaseCustomizableValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -35,7 +35,7 @@ public class LocationValidator extends BaseCustomizableValidator implements Vali
 	public boolean supports(Class<?> c) {
 		return c.equals(Location.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -58,18 +58,18 @@ public class LocationValidator extends BaseCustomizableValidator implements Vali
 			errors.rejectValue("location", "error.general");
 		} else {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name");
-			
+
 			if (location.getRetired() && !StringUtils.hasLength(location.getRetireReason())) {
 				location.setRetired(false); // so that the jsp page displays
 				// properly again
 				errors.rejectValue("retireReason", "error.null");
 			}
-			
+
 			Location exist = Context.getLocationService().getLocation(location.getName());
 			if (exist != null && !exist.getRetired() && !OpenmrsUtil.nullSafeEquals(location.getUuid(), exist.getUuid())) {
 				errors.rejectValue("name", "location.duplicate.name");
 			}
-			
+
 			// Traverse all the way up (down?) to the root and check if it
 			// equals the root.
 			Location root = location;
@@ -81,12 +81,12 @@ public class LocationValidator extends BaseCustomizableValidator implements Vali
 				}
 			}
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "description", "address1", "address2",
-			    "cityVillage", "stateProvince", "country", "postalCode", "latitude", "longitude", "countyDistrict",
-			    "address3", "address4", "address5", "address6", "address7", "address8", "address9", "address10",
-			    "address11", "address12", "address13", "address14", "address15", "retireReason");
+											"cityVillage", "stateProvince", "country", "postalCode", "latitude", "longitude", "countyDistrict",
+											"address3", "address4", "address5", "address6", "address7", "address8", "address9", "address10",
+											"address11", "address12", "address13", "address14", "address15", "retireReason");
 			super.validateAttributes(location, errors, Context.getLocationService().getAllLocationAttributeTypes());
 		}
-		
+
 	}
-	
+
 }

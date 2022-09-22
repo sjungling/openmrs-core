@@ -21,7 +21,7 @@ import org.openmrs.BaseOpenmrsMetadata;
  * @since 1.10
  */
 public interface OpenmrsMetadataDAO<T extends BaseOpenmrsMetadata> extends OpenmrsObjectDAO<T> {
-	
+
 	/**
 	 * Return a list of metadata objects (optionally retired)
 	 * 
@@ -29,14 +29,14 @@ public interface OpenmrsMetadataDAO<T extends BaseOpenmrsMetadata> extends Openm
 	 * @return a list of all metadata objects of the given class
 	 */
 	List<T> getAll(boolean includeRetired);
-	
+
 	/**
 	 * Returns total number of persistents (optionally retired)
 	 * @param includeRetired
 	 * @return total number of persistens
 	 */
 	int getAllCount(boolean includeRetired);
-	
+
 	/**
 	 * Return a lists of metadata objects optionally retired, with paging
 	 * @param includeRetired
@@ -45,5 +45,5 @@ public interface OpenmrsMetadataDAO<T extends BaseOpenmrsMetadata> extends Openm
 	 * @return list of metadata object
 	 */
 	List<T> getAll(boolean includeRetired, Integer firstResult, Integer maxResults);
-	
+
 }

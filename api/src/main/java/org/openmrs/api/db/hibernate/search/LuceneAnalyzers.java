@@ -15,17 +15,17 @@ package org.openmrs.api.db.hibernate.search;
  * @see org.openmrs.BaseOpenmrsObject
  */
 public class LuceneAnalyzers {
-	
+
 	private LuceneAnalyzers() {
 	}
-	
+
 	public static final String START_ANALYZER = "startAnalyzer";
-	
+
 	public static final String ANYWHERE_ANALYZER = "anywhereAnalyzer";
-	
+
 	public static final String EXACT_ANALYZER = "exactAnalyzer";
-	
+
 	public static final String PHRASE_ANALYZER = "phraseAnalyzer";
-	
+
 	public static final String SOUNDEX_ANALYZER = "soundexAnalyzer";
 }

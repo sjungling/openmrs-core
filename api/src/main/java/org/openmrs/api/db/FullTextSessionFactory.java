@@ -22,12 +22,12 @@ import org.hibernate.search.Search;
  * @since 2.3.0
  */
 public interface FullTextSessionFactory {
-	
+
 	/**
 	 * Obtains a {@link FullTextSession} instance.
 	 *
 	 * @return {@link FullTextSession} object
 	 */
 	FullTextSession getFullTextSession();
-	
+
 }

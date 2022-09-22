@@ -27,9 +27,9 @@ import org.slf4j.LoggerFactory;
  * automatically, and will iterate through all filters that have been added through Modules.
  */
 public class ModuleFilter implements Filter {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ModuleFilter.class);
-	
+
 	/**
 	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
 	 */
@@ -37,7 +37,7 @@ public class ModuleFilter implements Filter {
 	public void init(FilterConfig filterConfig) throws ServletException {
 		log.debug("Initializating ModuleFilter");
 	}
-	
+
 	/**
 	 * @see javax.servlet.Filter#destroy()
 	 */
@@ -45,16 +45,16 @@ public class ModuleFilter implements Filter {
 	public void destroy() {
 		log.debug("Destroying the ModuleFilter");
 	}
-	
+
 	/**
 	 * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest,
 	 *      javax.servlet.ServletResponse, javax.servlet.FilterChain)
 	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
-	        ServletException {
+									ServletException {
 		ModuleFilterChain moduleChain = ModuleFilterChain.getInstance(WebModuleUtil.getFiltersForRequest(request), chain);
 		moduleChain.doFilter(request, response);
 	}
-	
+
 }

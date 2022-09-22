@@ -38,22 +38,22 @@ import org.openmrs.parameter.OrderSearchCriteria;
  * @see org.openmrs.api.OrderService
  */
 public interface OrderDAO {
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#saveOrder(org.openmrs.Order, org.openmrs.api.OrderContext)
 	 */
 	public Order saveOrder(Order order) throws DAOException;
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#purgeOrder(Order)
 	 */
 	public void deleteOrder(Order order) throws DAOException;
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrder(Integer)
 	 */
 	public Order getOrder(Integer orderId) throws DAOException;
-	
+
 	/**
 	 * This searches for orders given the parameters. Most arguments are optional (nullable). If
 	 * multiple arguments are given, the returned orders will match on all arguments. The orders are
@@ -67,49 +67,49 @@ public interface OrderDAO {
 	 * @return list of Orders matching the parameters
 	 */
 	public List<Order> getOrders(OrderType orderType, List<Patient> patients, List<Concept> concepts, List<User> orderers,
-	        List<Encounter> encounters);
-	
+									List<Encounter> encounters);
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrders(org.openmrs.Patient, org.openmrs.CareSetting,
 	 *      org.openmrs.OrderType, boolean)
 	 */
 	public List<Order> getOrders(Patient patient, CareSetting careSetting, List<OrderType> orderTypes,
-	        boolean includeVoided, boolean includeDiscontinuationOrders);
+									boolean includeVoided, boolean includeDiscontinuationOrders);
 
 	/**
 	 * @see org.openmrs.api.OrderService#getOrders(OrderSearchCriteria)
 	 */
 	public List<Order> getOrders(OrderSearchCriteria orderSearchCriteria);
-	
+
 	/**
 	 * @param uuid
 	 * @return order or null
 	 */
 	public Order getOrderByUuid(String uuid);
-	
+
 	/**
 	 * Delete Obs that references an order
 	 */
 	public void deleteObsThatReference(Order order);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrderByOrderNumber(java.lang.String)
 	 */
 	public Order getOrderByOrderNumber(String orderNumber);
-	
+
 	/**
 	 * Gets the next available order number seed
 	 * 
 	 * @return the order number seed
 	 */
 	public Long getNextOrderNumberSeedSequenceValue();
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getActiveOrders(org.openmrs.Patient, org.openmrs.OrderType,
 	 *      org.openmrs.CareSetting, java.util.Date)
 	 */
 	public List<Order> getActiveOrders(Patient patient, List<OrderType> orderTypes, CareSetting careSetting, Date asOfDate);
-	
+
 	/**
 	 * Get care setting by type
 	 * 
@@ -117,58 +117,58 @@ public interface OrderDAO {
 	 * @return the care setting type
 	 */
 	public CareSetting getCareSetting(Integer careSettingId);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getCareSettingByUuid(String)
 	 */
 	public CareSetting getCareSettingByUuid(String uuid);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getCareSettingByName(String)
 	 */
 	public CareSetting getCareSettingByName(String name);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getCareSettings(boolean)
 	 */
 	public List<CareSetting> getCareSettings(boolean includeRetired);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrderTypeByName(String)
 	 */
 	public OrderType getOrderTypeByName(String orderTypeName);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrderFrequency
 	 */
 	public OrderFrequency getOrderFrequency(Integer orderFrequencyId);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrderFrequencyByUuid
 	 */
 	public OrderFrequency getOrderFrequencyByUuid(String uuid);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrderFrequencies(boolean)
 	 */
 	List<OrderFrequency> getOrderFrequencies(boolean includeRetired);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrderFrequencies(String, java.util.Locale, boolean, boolean)
 	 */
 	public List<OrderFrequency> getOrderFrequencies(String searchPhrase, Locale locale, boolean exactLocale,
-	        boolean includeRetired);
-	
+									boolean includeRetired);
+
 	/**
 	 * @see org.openmrs.api.OrderService#saveOrderFrequency(org.openmrs.OrderFrequency)
 	 */
 	public OrderFrequency saveOrderFrequency(OrderFrequency orderFrequency);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#purgeOrderFrequency(org.openmrs.OrderFrequency)
 	 */
 	public void purgeOrderFrequency(OrderFrequency orderFrequency);
-	
+
 	/**
 	 * Checks if an order frequency is being referenced by any order
 	 * 
@@ -176,47 +176,47 @@ public interface OrderDAO {
 	 * @return true if in use, else false
 	 */
 	public boolean isOrderFrequencyInUse(OrderFrequency orderFrequency);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrderFrequencyByConcept
 	 */
 	public OrderFrequency getOrderFrequencyByConcept(Concept concept);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrderType
 	 */
 	public OrderType getOrderType(Integer orderTypeId);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrderTypeByUuid
 	 */
 	public OrderType getOrderTypeByUuid(String uuid);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrderTypes
 	 */
 	public List<OrderType> getOrderTypes(boolean includeRetired);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrderTypeByConceptClass(org.openmrs.ConceptClass)
 	 */
 	public OrderType getOrderTypeByConceptClass(ConceptClass conceptClass);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#saveOrderType(org.openmrs.OrderType)
 	 */
 	public OrderType saveOrderType(OrderType orderType);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#purgeOrderType(org.openmrs.OrderType)
 	 */
 	public void purgeOrderType(OrderType orderType);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getSubtypes(org.openmrs.OrderType, boolean)
 	 */
 	public List<OrderType> getOrderSubtypes(OrderType orderType, boolean includeRetired);
-	
+
 	/**
 	 * Check whether give order type is used by any order
 	 * 
@@ -224,17 +224,17 @@ public interface OrderDAO {
 	 * @return true if used else false
 	 */
 	public boolean isOrderTypeInUse(OrderType orderType);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getDiscontinuationOrder(Order)
 	 */
 	public Order getDiscontinuationOrder(Order order);
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getRevisionOrder(org.openmrs.Order)
 	 */
 	public Order getRevisionOrder(Order order) throws APIException;
-	
+
 	/**
 	 * Get the fresh order from the database
 	 *
@@ -252,12 +252,12 @@ public interface OrderDAO {
 	 * @throws DAOException
 	 */
 	public OrderGroup saveOrderGroup(OrderGroup orderGroup) throws DAOException;
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrderGroupByUuid(String)
 	 */
 	public OrderGroup getOrderGroupByUuid(String uuid) throws DAOException;
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrderGroup(Integer)
 	 */
@@ -272,7 +272,7 @@ public interface OrderDAO {
 	 * @see org.openmrs.api.OrderService#getOrderGroupsByEncounter(Encounter)
 	 */
 	public List<OrderGroup> getOrderGroupsByEncounter(Encounter encounter) throws DAOException;
-	
+
 	/**
 	 * @see  org.openmrs.api.OrderService#getOrderGroupAttributeByUuid(String)
 	 */
@@ -297,12 +297,12 @@ public interface OrderDAO {
 	 * @see org.openmrs.api.OrderService#saveOrderGroupAttributeType(OrderGroupAttributeType)
 	 */
 	public OrderGroupAttributeType  saveOrderGroupAttributeType(OrderGroupAttributeType orderGroupAttributeType)throws DAOException;
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#purgeOrderGroupAttributeType(OrderGroupAttributeType)
 	 */
 	public  void deleteOrderGroupAttributeType(OrderGroupAttributeType orderGroupAttributeType)throws DAOException;
-	
+
 	/**
 	 * @see org.openmrs.api.OrderService#getOrderGroupAttributeTypeByName(String)
 	 */

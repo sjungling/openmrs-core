@@ -20,9 +20,9 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DatabaseUpdaterDatabaseIT extends H2DatabaseIT {
-	
+
 	private static final String VERSION_2_1_X = "2.1.x";
-	
+
 	/*
 	 * This is the number of change sets defined by the Liquibase snapshot files 2.1.x and all Liquibase update
 	 * files with versions greater than 2.1.x.
@@ -38,21 +38,21 @@ public class DatabaseUpdaterDatabaseIT extends H2DatabaseIT {
 	public void setup() {
 		DatabaseUpdater.setLiquibaseProvider(this);
 	}
-	
+
 	@AfterEach
 	public void tearDown() {
 		DatabaseUpdater.unsetLiquibaseProvider();
 	}
-	
+
 	@Test
 	public void should() throws Exception {
 		ChangeLogVersionFinder changeLogVersionFinder = new ChangeLogVersionFinder();
 		Map<String, List<String>> snapshotCombinations = changeLogVersionFinder.getSnapshotCombinations();
 		updateDatabase(snapshotCombinations.get(VERSION_2_1_X));
-		
+
 		List<DatabaseUpdater.OpenMRSChangeSet> actual = DatabaseUpdater.getDatabaseChanges();
-		
+
 		assertEquals(CHANGE_SET_COUNT_FOR_GREATER_THAN_2_1_X, actual.size());
-		
+
 	}
 }

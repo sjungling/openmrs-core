@@ -16,22 +16,22 @@ package org.openmrs;
  * @since 1.5
  */
 public class LocationTag extends BaseChangeableOpenmrsMetadata {
-	
+
 	public static final long serialVersionUID = 7654L;
-	
+
 	private Integer locationTagId;
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public LocationTag() {
 	}
-	
+
 	/** constructor with id */
 	public LocationTag(Integer locationTagId) {
 		this.locationTagId = locationTagId;
 	}
-	
+
 	/**
 	 * Required values constructor. This is the minimum number of values that must be non-null in
 	 * order to have a successful save to the database
@@ -43,7 +43,7 @@ public class LocationTag extends BaseChangeableOpenmrsMetadata {
 		setName(name);
 		setDescription(description);
 	}
-	
+
 	// Property accessors
 	
 	/**
@@ -52,19 +52,19 @@ public class LocationTag extends BaseChangeableOpenmrsMetadata {
 	public Integer getLocationTagId() {
 		return locationTagId;
 	}
-	
+
 	/**
 	 * @param locationTagId The locationTagId to set.
 	 */
 	public void setLocationTagId(Integer locationTagId) {
 		this.locationTagId = locationTagId;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getName();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -72,13 +72,13 @@ public class LocationTag extends BaseChangeableOpenmrsMetadata {
 	public Integer getId() {
 		return getLocationTagId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
 	@Override
 	public void setId(Integer id) {
 		setLocationTagId(id);
-		
+
 	}
 }

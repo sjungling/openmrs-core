@@ -38,22 +38,22 @@ import org.openmrs.util.OpenmrsClassLoader;
  */
 @Disabled("https://issues.openmrs.org/browse/TRUNK-4212")
 public class SchedulerServiceTest extends BaseContextSensitiveTest {
-	
+
 	// so that we can guarantee tests running accurately instead of tests interfering with the next
 	public final Integer TASK_TEST_METHOD_LOCK = 1;
-	
+
 	// used to check for concurrent task execution. Only initialized by code protected by TASK_TEST_METHOD_LOCK.
 	public static CountDownLatch latch;
-	
+
 	public static AtomicBoolean awaitFailed = new AtomicBoolean(false);
-	
+
 	public static AtomicBoolean consecutiveInitResult = new AtomicBoolean(false);
-	
+
 	// time to wait for concurrent tasks to execute, should only wait this long if there's a test failure
 	public static final long CONCURRENT_TASK_WAIT_MS = 30000;
-	
+
 	private static final Logger log = LogManager.getLogger(SchedulerServiceTest.class);
-	
+
 	@BeforeEach
 	public void setUp() throws Exception {
 		// Temporary logger level changes to debug TRUNK-4212
@@ -63,17 +63,17 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 		((org.apache.logging.log4j.core.Logger) LogManager.getLogger("org.openmrs.scheduler")).setLevel(Level.DEBUG);
 		log.debug("SchedulerServiceTest setup() start");
 		Context.flushSession();
-		
+
 		Collection<TaskDefinition> tasks = Context.getSchedulerService().getRegisteredTasks();
 		for (TaskDefinition task : tasks) {
 			Context.getSchedulerService().shutdownTask(task);
 			Context.getSchedulerService().deleteTask(task.getId());
 		}
-		
+
 		Context.flushSession();
 		log.debug("SchedulerServiceTest setup() complete");
 	}
-	
+
 	@AfterEach
 	public void cleanUp() throws Exception {
 		// Temporary logger level changes to debug TRUNK-4212
@@ -82,7 +82,7 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 		((org.apache.logging.log4j.core.Logger) LogManager.getLogger("org.openmrs.api")).setLevel(Level.WARN);
 		((org.apache.logging.log4j.core.Logger) LogManager.getLogger("org.openmrs.scheduler")).setLevel(Level.WARN);
 	}
-	
+
 	@Test
 	public void shouldResolveValidTaskClass() throws Exception {
 		String className = "org.openmrs.scheduler.tasks.TestTask";
@@ -93,14 +93,14 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 		else
 			fail("Class " + className + " is not a valid Task");
 	}
-	
+
 	@Test
 	public void shouldNotResolveInvalidClass() {
-		
+
 		assertThrows(ClassNotFoundException.class,
-			() -> OpenmrsClassLoader.getInstance().loadClass("org.openmrs.scheduler.tasks.InvalidTask"));
+										() -> OpenmrsClassLoader.getInstance().loadClass("org.openmrs.scheduler.tasks.InvalidTask"));
 	}
-	
+
 	private TaskDefinition makeRepeatingTaskThatStartsImmediately(String taskClassName) {
 		TaskDefinition taskDef = new TaskDefinition();
 		taskDef.setTaskClass(taskClassName);
@@ -112,7 +112,7 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 		Context.getSchedulerService().saveTaskDefinition(taskDef);
 		return taskDef;
 	}
-	
+
 	/**
 	 * Demonstrates concurrent running for tasks
 	 */
@@ -120,10 +120,10 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 	public void shouldAllowTwoTasksToRunConcurrently() throws Exception {
 		TaskDefinition t1 = makeRepeatingTaskThatStartsImmediately(LatchExecuteTask.class.getName());
 		TaskDefinition t2 = makeRepeatingTaskThatStartsImmediately(LatchExecuteTask.class.getName());
-		
+
 		checkTasksRunConcurrently(t1, t2);
 	}
-	
+
 	/**
 	 * Demonstrates concurrent initializing for tasks
 	 */
@@ -131,23 +131,23 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 	public void shouldAllowTwoTasksInitMethodsToRunConcurrently() throws Exception {
 		TaskDefinition t3 = makeRepeatingTaskThatStartsImmediately(LatchInitializeTask.class.getName());
 		TaskDefinition t4 = makeRepeatingTaskThatStartsImmediately(LatchInitializeTask.class.getName());
-		
+
 		checkTasksRunConcurrently(t3, t4);
 	}
-	
+
 	private void checkTasksRunConcurrently(TaskDefinition t1, TaskDefinition t2) throws SchedulerException,
-	        InterruptedException {
-		
+									InterruptedException {
+
 		SchedulerService schedulerService = Context.getSchedulerService();
-		
+
 		// synchronized on a class level object in case a test runner is running test methods concurrently
 		synchronized (TASK_TEST_METHOD_LOCK) {
 			latch = new CountDownLatch(2);
 			awaitFailed.set(false);
-			
+
 			schedulerService.scheduleTask(t1);
 			schedulerService.scheduleTask(t2);
-			
+
 			// wait for the tasks to call countDown()
 			assertTrue(latch.await(CONCURRENT_TASK_WAIT_MS, TimeUnit.MILLISECONDS), "methods ran consecutively or not at all");
 			// the main await() didn't fail so both tasks ran and called countDown(), 
@@ -157,9 +157,9 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 		schedulerService.shutdownTask(t1);
 		schedulerService.shutdownTask(t2);
 	}
-	
+
 	public abstract static class LatchTask extends AbstractTask {
-		
+
 		protected void waitForLatch() {
 			try {
 				latch.countDown();
@@ -171,71 +171,73 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 					awaitFailed.set(true);
 				}
 			}
-			catch (InterruptedException ignored) {}
+			catch (InterruptedException ignored) {
+			}
 		}
 	}
-	
+
 	/**
 	 * task that waits in its initialize method until all other tasks on the same latch have called
 	 * initialize()
 	 */
 	public static class LatchInitializeTask extends LatchTask {
-		
+
 		@Override
 		public void initialize(TaskDefinition config) {
 			super.initialize(config);
 			waitForLatch();
 		}
-		
+
 		@Override
 		public void execute() {
 		}
 	}
-	
+
 	/**
 	 * task that waits in its execute method until all other tasks on the same latch have called
 	 * execute()
 	 */
 	public static class LatchExecuteTask extends LatchTask {
-		
+
 		@Override
 		public void initialize(TaskDefinition config) {
 			super.initialize(config);
 		}
-		
+
 		@Override
 		public void execute() {
 			waitForLatch();
 		}
 	}
-	
+
 	/**
 	 * task that checks for its execute method running at the same time as its initialize method
 	 */
 	public static class InitSequenceTestTask extends AbstractTask {
-		
+
 		@Override
 		public void initialize(TaskDefinition config) {
-			
+
 			super.initialize(config);
-			
+
 			// wait for any other thread to run the execute method
 			try {
 				Thread.sleep(700);
 			}
-			catch (InterruptedException ignored) {}
-			
+			catch (InterruptedException ignored) {
+			}
+
 			// set to false if execute() method was running concurrently and has cleared the latch
 			consecutiveInitResult.set(latch.getCount() != 0);
 		}
-		
+
 		@Override
 		public void execute() {
 			// clear the latch to signal the main thread
 			latch.countDown();
 		}
 	}
-	
+
 	/**
 	 * Demonstrates that initialization of a task is accomplished before its execution without
 	 * interleaving, which is a non-trivial behavior in the presence of a threaded initialization
@@ -244,14 +246,14 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 	@Test
 	public void shouldNotAllowTaskExecuteToRunBeforeInitializationIsComplete() throws Exception {
 		SchedulerService schedulerService = Context.getSchedulerService();
-		
+
 		TaskDefinition t5 = new TaskDefinition();
 		t5.setStartOnStartup(false);
 		t5.setStartTime(null); // immediate start
 		t5.setTaskClass(InitSequenceTestTask.class.getName());
 		t5.setName("name");
 		t5.setRepeatInterval(CONCURRENT_TASK_WAIT_MS * 4);
-		
+
 		synchronized (TASK_TEST_METHOD_LOCK) {
 			// wait for the task to complete
 			latch = new CountDownLatch(1);
@@ -262,19 +264,19 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 		}
 		schedulerService.shutdownTask(t5);
 	}
-	
+
 	@Test
 	public void saveTask_shouldSaveTaskToTheDatabase() throws Exception {
 		log.debug("saveTask_shouldSaveTaskToTheDatabase start");
 		SchedulerService service = Context.getSchedulerService();
-		
+
 		TaskDefinition def = new TaskDefinition();
 		final String TASK_NAME = "This is my test! 123459876";
 		def.setName(TASK_NAME);
 		def.setStartOnStartup(false);
 		def.setRepeatInterval(10000000L);
 		def.setTaskClass(LatchExecuteTask.class.getName());
-		
+
 		synchronized (TASK_TEST_METHOD_LOCK) {
 			Collection<TaskDefinition> tasks = service.getRegisteredTasks();
 			for (TaskDefinition task : tasks) {
@@ -288,41 +290,41 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 			}
 			assertEquals(size + 1, tasks.size());
 		}
-		
+
 		def = service.getTaskByName(TASK_NAME);
 		assertEquals(Context.getAuthenticatedUser().getUserId(), def.getCreator().getUserId());
 		log.debug("saveTask_shouldSaveTaskToTheDatabase end");
 	}
-	
+
 	/**
 	 * Sample task that does not extend AbstractTask
 	 */
 	public static class BareTask implements Task {
-		
+
 		@Override
 		public void execute() {
 			latch.countDown();
 		}
-		
+
 		@Override
 		public TaskDefinition getTaskDefinition() {
 			return null;
 		}
-		
+
 		@Override
 		public void initialize(TaskDefinition definition) {
 		}
-		
+
 		@Override
 		public boolean isExecuting() {
 			return false;
 		}
-		
+
 		@Override
 		public void shutdown() {
 		}
 	}
-	
+
 	/**
 	 * Task which does not return TaskDefinition in getTaskDefinition should run without throwing
 	 * exceptions.
@@ -332,7 +334,7 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 	@Test
 	public void shouldNotThrowExceptionWhenTaskDefinitionIsNull() throws Exception {
 		SchedulerService schedulerService = Context.getSchedulerService();
-		
+
 		TaskDefinition td = new TaskDefinition();
 		td.setName("Task");
 		td.setStartOnStartup(false);
@@ -340,7 +342,7 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 		td.setStartTime(null);
 		td.setName("name");
 		td.setRepeatInterval(5000L);
-		
+
 		synchronized (TASK_TEST_METHOD_LOCK) {
 			latch = new CountDownLatch(1);
 			schedulerService.saveTaskDefinition(td);
@@ -348,12 +350,12 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 			assertTrue(latch.await(CONCURRENT_TASK_WAIT_MS, TimeUnit.MILLISECONDS));
 		}
 	}
-	
+
 	/**
 	 * Just stores the execution time.
 	 */
 	public static class StoreExecutionTimeTask extends AbstractTask {
-		
+
 		@Override
 		public void execute() {
 			actualExecutionTime = System.currentTimeMillis();
@@ -361,9 +363,9 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 			latch.countDown();
 		}
 	}
-	
+
 	public static Long actualExecutionTime;
-	
+
 	/**
 	 * Check saved last execution time.
 	 */
@@ -372,7 +374,7 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 		log.debug("shouldSaveLastExecutionTime start");
 		final String NAME = "StoreExecutionTime Task";
 		SchedulerService service = Context.getSchedulerService();
-		
+
 		TaskDefinition td = new TaskDefinition();
 		td.setName(NAME);
 		td.setStartOnStartup(false);
@@ -383,13 +385,13 @@ public class SchedulerServiceTest extends BaseContextSensitiveTest {
 			latch = new CountDownLatch(1);
 			service.saveTaskDefinition(td);
 			service.scheduleTask(td);
-			
+
 			// wait for the task to execute
 			assertTrue(latch.await(CONCURRENT_TASK_WAIT_MS, TimeUnit.MILLISECONDS), "task didn't execute");
 		}
-		
+
 		log.debug("shouldSaveLastExecutionTime task done");
-		
+
 		// wait for the SchedulerService to update the execution time
 		for (int x = 0; x < 100; x++) {
 			// refetch the task

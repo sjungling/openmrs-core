@@ -20,9 +20,9 @@ import org.springframework.validation.Validator;
  * Common validator for all types of Attribute Types
  * @since 1.9
  */
-@Handler(supports = { Attribute.class }, order = 50)
+@Handler(supports = {Attribute.class}, order = 50)
 public class BaseAttributeValidator implements Validator {
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
@@ -30,7 +30,7 @@ public class BaseAttributeValidator implements Validator {
 	public boolean supports(Class<?> clazz) {
 		return Attribute.class.isAssignableFrom(clazz);
 	}
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
 	 */
@@ -45,7 +45,7 @@ public class BaseAttributeValidator implements Validator {
 		} else if (!CustomDatatypeUtil.validate(attribute)) {
 			errors.rejectValue("value", "error.invalid");
 		}
-		
+
 	}
-	
+
 }

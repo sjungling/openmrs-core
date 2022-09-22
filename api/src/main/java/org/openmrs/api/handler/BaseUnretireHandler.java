@@ -34,7 +34,7 @@ import org.openmrs.aop.RequiredDataAdvice;
  */
 @Handler(supports = Retireable.class)
 public class BaseUnretireHandler implements UnretireHandler<Retireable> {
-	
+
 	/**
 	 * Called around every unretire* method to set {@link Retireable} attributes to null.<br>
 	 * <br>
@@ -50,10 +50,10 @@ public class BaseUnretireHandler implements UnretireHandler<Retireable> {
 	 */
 	@Override
 	public void handle(Retireable retireableObject, User retiringUser, Date origParentRetiredDate, String unused) {
-		
+
 		// only act on retired objects
 		if (retireableObject.getRetired()
-		        && (origParentRetiredDate == null || origParentRetiredDate.equals(retireableObject.getDateRetired()))) {
+										&& (origParentRetiredDate == null || origParentRetiredDate.equals(retireableObject.getDateRetired()))) {
 			// only act on retired objects that match the same date retired as the parent
 			retireableObject.setRetired(false);
 			retireableObject.setRetiredBy(null);
@@ -61,5 +61,5 @@ public class BaseUnretireHandler implements UnretireHandler<Retireable> {
 			retireableObject.setRetireReason(null);
 		}
 	}
-	
+
 }

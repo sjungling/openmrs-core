@@ -27,12 +27,12 @@ import org.springframework.util.StringUtils;
  * @see Privilege
  */
 public class PrivilegeEditor extends PropertyEditorSupport {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(PrivilegeEditor.class);
-	
+
 	public PrivilegeEditor() {
 	}
-	
+
 	/**
 	 * <strong>Should</strong> set using name
 	 * <strong>Should</strong> set using uuid
@@ -61,7 +61,7 @@ public class PrivilegeEditor extends PropertyEditorSupport {
 			setValue(null);
 		}
 	}
-	
+
 	@Override
 	public String getAsText() {
 		Privilege p = (Privilege) getValue();
@@ -71,5 +71,5 @@ public class PrivilegeEditor extends PropertyEditorSupport {
 			return p.getPrivilege();
 		}
 	}
-	
+
 }

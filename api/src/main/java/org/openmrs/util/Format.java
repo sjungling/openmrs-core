@@ -20,19 +20,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Format {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(Format.class);
-	
+
 	public enum FORMAT_TYPE {
 		DATE,
 		TIME,
 		TIMESTAMP
 	}
-	
+
 	public static String formatPercentage(double pct) {
 		return NumberFormat.getPercentInstance().format(pct);
 	}
-	
+
 	public static String formatPercentage(Number pct) {
 		if (pct == null) {
 			return "";
@@ -40,23 +40,23 @@ public class Format {
 			return NumberFormat.getPercentInstance().format(pct.doubleValue());
 		}
 	}
-	
+
 	public static String format(double d) {
 		return "" + (d);
 	}
-	
+
 	public static String format(Double d) {
 		return d == null ? "" : format(d.doubleValue());
 	}
-	
+
 	public static String formatTextBoxDate(Date date) {
 		return format(date, Context.getLocale(), FORMAT_TYPE.DATE);
 	}
-	
+
 	public static String format(Date date) {
 		return format(date, Context.getLocale(), FORMAT_TYPE.DATE);
 	}
-	
+
 	public static String format(Date date, FORMAT_TYPE type) {
 		return format(date, Context.getLocale(), type);
 	}
@@ -85,9 +85,9 @@ public class Format {
 			return "";
 		}
 		log.debug("Formatting date: " + date + " with locale " + locale);
-		
+
 		DateFormat dateFormat;
-		
+
 		if (type == FORMAT_TYPE.TIMESTAMP) {
 			dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		} else if (type == FORMAT_TYPE.TIME) {
@@ -97,9 +97,9 @@ public class Format {
 		}
 		return dateFormat.format(date);
 	}
-	
+
 	public static String format(Throwable t) {
 		return t + "\n" + ExceptionUtils.getStackTrace(t);
 	}
-	
+
 }

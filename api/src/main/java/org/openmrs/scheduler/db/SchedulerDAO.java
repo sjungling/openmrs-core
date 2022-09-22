@@ -21,7 +21,7 @@ import org.openmrs.scheduler.TaskDefinition;
  * @version 1.0
  */
 public interface SchedulerDAO {
-	
+
 	/**
 	 * Creates a new task.
 	 * 
@@ -29,7 +29,7 @@ public interface SchedulerDAO {
 	 * @throws DAOException
 	 */
 	public void createTask(TaskDefinition taskDefinition) throws DAOException;
-	
+
 	/**
 	 * Get task by internal identifier
 	 * 
@@ -38,7 +38,7 @@ public interface SchedulerDAO {
 	 * @throws DAOException
 	 */
 	public TaskDefinition getTask(Integer taskId) throws DAOException;
-	
+
 	/**
 	 * @see org.openmrs.scheduler.SchedulerService#getTaskByUuid(java.lang.String)
 	 * 
@@ -52,7 +52,7 @@ public interface SchedulerDAO {
 	 * @throws DAOException
 	 */
 	public void updateTask(TaskDefinition task) throws DAOException;
-	
+
 	/**
 	 * Find all tasks in the database
 	 * 
@@ -60,7 +60,7 @@ public interface SchedulerDAO {
 	 * @throws DAOException
 	 */
 	public List<TaskDefinition> getTasks() throws DAOException;
-	
+
 	/**
 	 * Delete task from database.
 	 * 
@@ -68,7 +68,7 @@ public interface SchedulerDAO {
 	 * @throws DAOException
 	 */
 	public void deleteTask(TaskDefinition task) throws DAOException;
-	
+
 	/**
 	 * Delete task from database.
 	 * 
@@ -76,7 +76,7 @@ public interface SchedulerDAO {
 	 * @throws DAOException
 	 */
 	public void deleteTask(Integer taskId) throws DAOException;
-	
+
 	/**
 	 * Get schedule by internal identifier
 	 * 
@@ -85,7 +85,7 @@ public interface SchedulerDAO {
 	 * @throws DAOException
 	 */
 	public Schedule getSchedule(Integer scheduleId) throws DAOException;
-	
+
 	/**
 	 * Get task by public name.
 	 * 

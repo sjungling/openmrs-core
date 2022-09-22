@@ -21,15 +21,15 @@ import org.openmrs.api.context.Context;
  * @see Form
  */
 public class FormEditor extends OpenmrsPropertyEditor<Form> {
-	
+
 	public FormEditor() {
 	}
-	
+
 	@Override
 	protected Form getObjectById(Integer id) {
 		return Context.getFormService().getForm(id);
 	}
-	
+
 	@Override
 	protected Form getObjectByUuid(String uuid) {
 		return Context.getFormService().getFormByUuid(uuid);

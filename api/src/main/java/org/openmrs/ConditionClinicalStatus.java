@@ -26,13 +26,13 @@ public enum ConditionClinicalStatus {
 	 * condition.
 	 * */
 	ACTIVE,
-	
+
 	/**
 	 * There is where the patient is no longer experiencing the symptoms of the condition or there is no longer 
 	 * evidence of the condition.
 	 * */
 	INACTIVE,
-	
+
 	/**
 	 * This maps most closely to the "remission" status in FHIR, but we want to be more clear about
 	 * the common OpenMRS use case.
@@ -42,20 +42,20 @@ public enum ConditionClinicalStatus {
 	 * @deprecated as of 2.6.0
 	 * */
 	HISTORY_OF,
-	
+
 	/**
 	 * The Patient is experiencing a re-occurrence or repeating of a previously resolved condition, 
 	 * e.g. urinary tract infection, pancreatitis, cholangitis, conjunctivitis.
 	 */
 	RECURRENCE,
-	
+
 	/**
 	 * The Patient is experiencing a return of a condition, or signs and symptoms after a period of 
 	 * improvement or remission, e.g. relapse of cancer, multiple sclerosis, rheumatoid arthritis, 
 	 * systemic lupus erythematosus, bipolar disorder, [psychotic relapse of] schizophrenia, etc.
 	 */
 	RELAPSE,
-	
+
 	/**
 	 * The Patient is no longer experiencing the symptoms of the condition, but there is a risk 
 	 * of the symptoms returning.
@@ -67,5 +67,5 @@ public enum ConditionClinicalStatus {
 	 * negligible perceived risk of the symptoms returning.
 	 */
 	RESOLVED
-	
+
 }

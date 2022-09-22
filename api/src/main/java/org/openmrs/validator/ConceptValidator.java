@@ -36,12 +36,12 @@ import org.springframework.validation.Validator;
  * href="https://wiki.openmrs.org/x/-gkdAg">https://wiki.openmrs.org/x/-gkdAg</a>. Any changes made
  * to this source also need to be reflected on that page.
  */
-@Handler(supports = { Concept.class }, order = 50)
+@Handler(supports = {Concept.class}, order = 50)
 public class ConceptValidator extends BaseCustomizableValidator implements Validator {
-	
+
 	// Logger for this class
 	private static final Logger log = LoggerFactory.getLogger(ConceptValidator.class);
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 *
@@ -51,7 +51,7 @@ public class ConceptValidator extends BaseCustomizableValidator implements Valid
 	public boolean supports(Class<?> c) {
 		return Concept.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Checks that a given concept object is valid.
 	 *
@@ -90,11 +90,11 @@ public class ConceptValidator extends BaseCustomizableValidator implements Valid
 	 */
 	@Override
 	public void validate(Object obj, Errors errors) throws APIException, DuplicateConceptNameException {
-		
+
 		if (obj == null || !(obj instanceof Concept)) {
 			throw new IllegalArgumentException("The parameter obj should not be null and must be of type" + Concept.class);
 		}
-		
+
 		Concept conceptToValidate = (Concept) obj;
 		//no name to validate, but why is this the case?
 		if (conceptToValidate.getNames().isEmpty()) {
@@ -115,25 +115,25 @@ public class ConceptValidator extends BaseCustomizableValidator implements Valid
 			for (ConceptName nameInLocale : namesInLocale) {
 				if (StringUtils.isBlank(nameInLocale.getName())) {
 					log.debug("Name in locale '" + conceptNameLocale.toString()
-					        + "' cannot be an empty string or white space");
+													+ "' cannot be an empty string or white space");
 					errors.reject("Concept.name.empty");
 				}
 				if (nameInLocale.getLocalePreferred() != null) {
 					if (nameInLocale.getLocalePreferred() && !preferredNameForLocaleFound) {
 						if (nameInLocale.isIndexTerm()) {
 							log.warn("Preferred name in locale '" + conceptNameLocale.toString()
-							        + "' shouldn't be an index term");
+															+ "' shouldn't be an index term");
 							errors.reject("Concept.error.preferredName.is.indexTerm");
 						} else if (nameInLocale.isShort()) {
 							log.warn("Preferred name in locale '" + conceptNameLocale.toString()
-							        + "' shouldn't be a short name");
+															+ "' shouldn't be a short name");
 							errors.reject("Concept.error.preferredName.is.shortName");
 						} else if (nameInLocale.getVoided()) {
 							log.warn("Preferred name in locale '" + conceptNameLocale.toString()
-							        + "' shouldn't be a voided name");
+															+ "' shouldn't be a voided name");
 							errors.reject("Concept.error.preferredName.is.voided");
 						}
-						
+
 						preferredNameForLocaleFound = true;
 					}
 					//should have one preferred name per locale
@@ -142,7 +142,7 @@ public class ConceptValidator extends BaseCustomizableValidator implements Valid
 						errors.reject("Concept.error.multipleLocalePreferredNames");
 					}
 				}
-				
+
 				if (nameInLocale.isFullySpecifiedName()) {
 					if (!hasFullySpecifiedName) {
 						hasFullySpecifiedName = true;
@@ -155,11 +155,11 @@ public class ConceptValidator extends BaseCustomizableValidator implements Valid
 					}
 					if (nameInLocale.getVoided()) {
 						log.warn("Fully Specified name in locale '" + conceptNameLocale.toString()
-						        + "' shouldn't be a voided name");
+														+ "' shouldn't be a voided name");
 						errors.reject("Concept.error.fullySpecifiedName.is.voided");
 					}
 				}
-				
+
 				if (nameInLocale.isShort()) {
 					if (!shortNameForLocaleFound) {
 						shortNameForLocaleFound = true;
@@ -170,40 +170,40 @@ public class ConceptValidator extends BaseCustomizableValidator implements Valid
 						errors.reject("Concept.error.multipleShortNames");
 					}
 				}
-				
+
 				//find duplicate names for a non-retired concept
 				if (Context.getConceptService().isConceptNameDuplicate(nameInLocale)) {
 					throw new DuplicateConceptNameException("'" + nameInLocale.getName()
-					        + "' is a duplicate name in locale '" + conceptNameLocale.toString() + "'");
+													+ "' is a duplicate name in locale '" + conceptNameLocale.toString() + "'");
 				}
-				
+
 				//
 				if (errors.hasErrors()) {
 					log.debug("Concept name '" + nameInLocale.getName() + "' for locale '" + conceptNameLocale
-					        + "' is invalid");
+													+ "' is invalid");
 					//if validation fails for any conceptName in current locale, don't proceed
 					//This helps not to have multiple messages shown that are identical though they might be
 					//for different conceptNames
 					return;
 				}
-				
+
 				//No duplicate names allowed for the same locale and concept, keep the case the same
 				//except for short names
 				if (!nameInLocale.isShort() && !validNamesFoundInLocale.add(nameInLocale.getName().toLowerCase())) {
 					throw new DuplicateConceptNameException("'" + nameInLocale.getName()
-					        + "' is a duplicate name in locale '" + conceptNameLocale.toString() + "' for the same concept");
+													+ "' is a duplicate name in locale '" + conceptNameLocale.toString() + "' for the same concept");
 				}
-				
+
 				log.debug("Valid name found: {}", nameInLocale.getName());
 			}
 		}
-		
+
 		//Ensure that each concept has at least a fully specified name
 		if (!hasFullySpecifiedName) {
 			log.debug("Concept has no fully specified name");
 			errors.reject("Concept.error.no.FullySpecifiedName");
 		}
-		
+
 		if (CollectionUtils.isNotEmpty(conceptToValidate.getConceptMappings())) {
 			//validate all the concept maps
 			int index = 0;
@@ -214,30 +214,30 @@ public class ConceptValidator extends BaseCustomizableValidator implements Valid
 					try {
 						errors.pushNestedPath("conceptMappings[" + index + "].conceptReferenceTerm");
 						ValidationUtils.invokeValidator(new ConceptReferenceTermValidator(), map.getConceptReferenceTerm(),
-						    errors);
+														errors);
 					}
 					finally {
 						errors.popNestedPath();
 					}
-					
+
 				}
 
 				//don't proceed to the next maps since the current one already has errors
 				if (errors.hasErrors()) {
 					return;
 				}
-				
+
 				if (mappedTermIds == null) {
 					mappedTermIds = new HashSet<>();
 				}
-				
+
 				//if we already have a mapping to this term, reject it this map
 				if (map.getConceptReferenceTerm().getId() != null
-				        && !mappedTermIds.add(map.getConceptReferenceTerm().getId())) {
+												&& !mappedTermIds.add(map.getConceptReferenceTerm().getId())) {
 					errors.rejectValue("conceptMappings[" + index + "]", "ConceptReferenceTerm.term.alreadyMapped",
-					    "Cannot map a reference term multiple times to the same concept");
+													"Cannot map a reference term multiple times to the same concept");
 				}
-				
+
 				index++;
 			}
 		}

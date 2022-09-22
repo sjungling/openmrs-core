@@ -23,15 +23,15 @@ import org.openmrs.api.context.Context;
 import org.openmrs.test.jupiter.BaseContextSensitiveTest;
 
 public class BaseCustomizableMetadataTest extends BaseContextSensitiveTest {
-	
+
 	private static final String PROVIDERS_INITIAL_XML = "org/openmrs/api/include/ProviderServiceTest-initial.xml";
-	
+
 	private static final String PROVIDER_ATTRIBUTE_TYPES_XML = "org/openmrs/api/include/ProviderServiceTest-providerAttributes.xml";
-	
+
 	private static final String EXTRA_ATTRIBUTE_TYPES_XML = "org/openmrs/api/include/BaseCustomizableMetadataTest-attributesAndTypes.xml";
-	
+
 	private ProviderService service;
-	
+
 	@BeforeEach
 	public void before() {
 		service = Context.getProviderService();
@@ -39,7 +39,7 @@ public class BaseCustomizableMetadataTest extends BaseContextSensitiveTest {
 		executeDataSet(PROVIDER_ATTRIBUTE_TYPES_XML);
 		executeDataSet(EXTRA_ATTRIBUTE_TYPES_XML);
 	}
-	
+
 	/**
 	 * @see org.openmrs.BaseCustomizableMetadata#setAttribute(org.openmrs.attribute.Attribute)
 	 */
@@ -48,24 +48,24 @@ public class BaseCustomizableMetadataTest extends BaseContextSensitiveTest {
 	{
 		Provider provider = new Provider();
 		provider.setIdentifier("test");
-		
+
 		provider.setPerson(newPerson("name"));
-		
+
 		ProviderAttributeType place = service.getProviderAttributeType(3);
 		provider.setAttribute(buildProviderAttribute(place, "bangalore"));
 		provider.setAttribute(buildProviderAttribute(place, "chennai"));
-		
+
 		assertEquals(1, provider.getAttributes().size());
-		
+
 		service.saveProvider(provider);
 		assertNotNull(provider.getId());
-		
+
 		provider.setAttribute(buildProviderAttribute(place, "seattle"));
 		assertEquals(2, provider.getAttributes().size());
 		ProviderAttribute lastAttribute = (ProviderAttribute) provider.getAttributes().toArray()[0];
 		assertTrue(lastAttribute.getVoided());
 	}
-	
+
 	/**
 	 * @see org.openmrs.BaseCustomizableMetadata#setAttribute(org.openmrs.attribute.Attribute)
 	 */
@@ -73,24 +73,24 @@ public class BaseCustomizableMetadataTest extends BaseContextSensitiveTest {
 	public void setAttribute_shouldWorkForAttriubutesWithDatatypesWhoseValuesAreStoredInOtherTables() {
 		Provider provider = new Provider();
 		provider.setIdentifier("test");
-		
+
 		provider.setPerson(newPerson("name"));
-		
+
 		ProviderAttributeType cv = service.getProviderAttributeType(4);
 		provider.setAttribute(buildProviderAttribute(cv, "Worked lots of places..."));
-		
+
 		service.saveProvider(provider);
 		Context.flushSession();
 		assertNotNull(provider.getId());
 		assertEquals(1, provider.getAttributes().size());
-		
+
 		provider.setAttribute(buildProviderAttribute(cv, "Worked even more places..."));
 		service.saveProvider(provider);
 		assertEquals(2, provider.getAttributes().size());
 		ProviderAttribute lastAttribute = (ProviderAttribute) provider.getAttributes().toArray()[0];
 		assertTrue(lastAttribute.getVoided());
 	}
-	
+
 	private ProviderAttribute buildProviderAttribute(ProviderAttributeType providerAttributeType, Object value)
 	{
 		ProviderAttribute providerAttribute = new ProviderAttribute();
@@ -98,7 +98,7 @@ public class BaseCustomizableMetadataTest extends BaseContextSensitiveTest {
 		providerAttribute.setValue(value.toString());
 		return providerAttribute;
 	}
-	
+
 	private Person newPerson(String name) {
 		Person person = new Person();
 		Set<PersonName> personNames = new TreeSet<>();

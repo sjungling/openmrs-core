@@ -33,21 +33,21 @@ import org.openmrs.util.ExceptionUtil;
  * Hibernate specific database access methods for serialized objects
  */
 public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
-	
+
 	private static HibernateSerializedObjectDAO instance;
-	
+
 	//********* PROPERTIES **********
 	
 	private SessionFactory sessionFactory;
-	
+
 	private List<Class<? extends OpenmrsObject>> supportedTypes;
-	
+
 	/**
 	 * Private Constructor to support a singleton instance
 	 */
 	private HibernateSerializedObjectDAO() {
 	}
-	
+
 	/**
 	 * Singleton Factory method
 	 * 
@@ -59,7 +59,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#getSerializedObject(Integer)
 	 */
@@ -70,7 +70,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#getObject(Class, Integer)
 	 */
@@ -79,7 +79,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		SerializedObject serializedObject = getSerializedObject(id);
 		return convertSerializedObject(baseClass, serializedObject);
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#getSerializedObjectByUuid(String)
 	 */
@@ -93,7 +93,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#getObjectByUuid(Class, String)
 	 */
@@ -105,14 +105,14 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#getAllSerializedObjectsByName(Class, String, boolean)
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<SerializedObject> getAllSerializedObjectsByName(Class<?> type, String name, boolean exactMatchOnly)
-	        throws DAOException {
+									throws DAOException {
 		Criteria c = sessionFactory.getCurrentSession().createCriteria(SerializedObject.class);
 		c.add(Restrictions.or(Restrictions.eq("type", type.getName()), Restrictions.eq("subtype", type.getName())));
 		if (exactMatchOnly) {
@@ -122,13 +122,13 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		}
 		return (List<SerializedObject>) c.list();
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#getAllObjectsByName(Class, String, boolean)
 	 */
 	@Override
 	public <T extends OpenmrsMetadata> List<T> getAllObjectsByName(Class<T> type, String name, boolean exactMatchOnly)
-	        throws DAOException {
+									throws DAOException {
 		List<T> ret = new ArrayList<>();
 		List<SerializedObject> objects = getAllSerializedObjectsByName(type, name, exactMatchOnly);
 		for (SerializedObject serializedObject : objects) {
@@ -136,7 +136,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#getAllObjects(Class, boolean)
 	 */
@@ -150,7 +150,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		}
 		return (List<SerializedObject>) c.list();
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#getAllObjects(Class, boolean)
 	 */
@@ -163,7 +163,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#getAllObjects(Class)
 	 */
@@ -171,7 +171,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 	public <T extends OpenmrsObject> List<T> getAllObjects(Class<T> type) throws DAOException {
 		return getAllObjects(type, false);
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#saveObject(OpenmrsObject)
 	 */
@@ -179,34 +179,34 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 	public <T extends OpenmrsObject> T saveObject(T object) throws DAOException {
 		return saveObject(object, null);
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#saveObject(OpenmrsObject, OpenmrsSerializer)
 	 */
 	@Override
 	public <T extends OpenmrsObject> T saveObject(T object, OpenmrsSerializer serializer) throws DAOException {
-		
+
 		Class<? extends OpenmrsObject> baseType = getRegisteredTypeForObject(object);
 		if (baseType == null) {
 			throw new DAOException("SerializedObjectDAO does not support saving objects of type <" + object.getClass() + ">");
 		}
-		
+
 		SerializedObject serializedObject = getSerializedObject(object.getId());
 		if (serializedObject == null) {
 			serializedObject = new SerializedObject();
 		}
-		
+
 		if (serializer == null) {
 			serializer = getSerializer(serializedObject);
 		}
-		
+
 		if (object instanceof Auditable) {
 			Auditable auditableObj = (Auditable) object;
 			if (auditableObj.getCreator() == null) {
 				auditableObj.setCreator(Context.getAuthenticatedUser());
 			}
 			serializedObject.setCreator(auditableObj.getCreator());
-			
+
 			if (auditableObj.getDateCreated() == null) {
 				auditableObj.setDateCreated(new Date());
 			}
@@ -214,7 +214,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 			serializedObject.setChangedBy(auditableObj.getChangedBy());
 			serializedObject.setDateChanged(auditableObj.getDateChanged());
 		}
-		
+
 		String data;
 		try {
 			data = serializer.serialize(object);
@@ -222,13 +222,13 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		catch (SerializationException e) {
 			throw new DAOException("Unable to save object <" + object + "> because serialization failed.", e);
 		}
-		
+
 		serializedObject.setUuid(object.getUuid());
 		serializedObject.setType(baseType.getName());
 		serializedObject.setSubtype(object.getClass().getName());
 		serializedObject.setSerializationClass(serializer.getClass());
 		serializedObject.setSerializedData(data);
-		
+
 		if (object instanceof OpenmrsMetadata) {
 			OpenmrsMetadata metaObj = (OpenmrsMetadata) object;
 			serializedObject.setName(metaObj.getName());
@@ -238,7 +238,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 			serializedObject.setDateRetired(metaObj.getDateRetired());
 			serializedObject.setRetireReason(metaObj.getRetireReason());
 		}
-		
+
 		if (object instanceof OpenmrsData) {
 			OpenmrsData dataObj = (OpenmrsData) object;
 			serializedObject.setRetired(dataObj.getVoided());
@@ -246,13 +246,13 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 			serializedObject.setDateRetired(dataObj.getDateVoided());
 			serializedObject.setRetireReason(dataObj.getVoidReason());
 		}
-		
+
 		sessionFactory.getCurrentSession().saveOrUpdate(serializedObject);
-		
+
 		object.setId(serializedObject.getId());
 		return object;
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#purgeObject(Integer)
 	 */
@@ -261,7 +261,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		SerializedObject o = getSerializedObject(id);
 		sessionFactory.getCurrentSession().delete(o);
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#registerSupportedType(Class)
 	 */
@@ -271,7 +271,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 			supportedTypes.add(clazz);
 		}
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#unregisterSupportedType(Class)
 	 */
@@ -279,7 +279,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 	public void unregisterSupportedType(Class<? extends OpenmrsObject> clazz) throws DAOException {
 		getSupportedTypes().remove(clazz);
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#getRegisteredTypeForObject(OpenmrsObject)
 	 */
@@ -292,14 +292,14 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @see SerializedObjectDAO#convertSerializedObject(Class, SerializedObject)
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T extends OpenmrsObject> T convertSerializedObject(Class<T> clazz, SerializedObject serializedObject)
-	        throws DAOException {
+									throws DAOException {
 		if (serializedObject == null) {
 			return null;
 		}
@@ -321,7 +321,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		obj.setUuid(serializedObject.getUuid());
 		return obj;
 	}
-	
+
 	/**
 	 * Private method for retrieving the Serializer that should be used for the passed
 	 * SerializedObject, defaulting to the default system serializer if none is explicitly set on
@@ -333,7 +333,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		}
 		return Context.getSerializationService().getDefaultSerializer();
 	}
-	
+
 	//***** Property access *****
 	
 	/**
@@ -344,7 +344,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	/**
 	 * @return the supportedTypes
 	 */
@@ -355,7 +355,7 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		}
 		return supportedTypes;
 	}
-	
+
 	/**
 	 * @param supportedTypes the supportedTypes to set
 	 */
@@ -366,6 +366,6 @@ public class HibernateSerializedObjectDAO implements SerializedObjectDAO {
 		if (supportedTypes != null) {
 			this.supportedTypes.addAll(supportedTypes);
 		}
-		
+
 	}
 }

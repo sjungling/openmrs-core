@@ -33,12 +33,12 @@ import org.springframework.core.type.filter.TypeFilter;
  * (Look at the applicationContext-service.xml file to see this in action)
  */
 public class TestTypeFilter implements TypeFilter {
-	
+
 	/**
 	 * Any class with a super class in this list will not be loaded (scanned) by Spring
 	 */
 	private static List<String> superClassNamesToExclude = new ArrayList<>();
-	
+
 	static {
 		superClassNamesToExclude.add("org.openmrs.test.BaseContextSensitiveTest");
 		superClassNamesToExclude.add("org.openmrs.test.BaseModuleContextSensitiveTest");
@@ -48,7 +48,7 @@ public class TestTypeFilter implements TypeFilter {
 		superClassNamesToExclude.add("org.openmrs.BaseTest");
 		superClassNamesToExclude.add("junit.framework.TestCase");
 	}
-	
+
 	/**
 	 * @see org.springframework.core.type.filter.TypeFilter#match(org.springframework.core.type.classreading.MetadataReader,
 	 *      org.springframework.core.type.classreading.MetadataReaderFactory)
@@ -62,5 +62,5 @@ public class TestTypeFilter implements TypeFilter {
 
 		return false;
 	}
-	
+
 }

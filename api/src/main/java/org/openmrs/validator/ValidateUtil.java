@@ -48,7 +48,7 @@ public class ValidateUtil {
 	 * This is set in {@link Context#checkCoreDataset()} class
 	 */
 	private static Boolean disableValidation = false;
-	
+
 	/**
 	 * Test the given object against all validators that are registered as compatible with the
 	 * object class
@@ -64,11 +64,11 @@ public class ValidateUtil {
 		}
 
 		obj = HibernateUtil.getRealObjectFromProxy(obj);
-		
+
 		Errors errors = new BindException(obj, "");
-		
+
 		Context.getAdministrationService().validate(obj, errors);
-		
+
 		if (errors.hasErrors()) {
 			Set<String> uniqueErrorMessages = new LinkedHashSet<>();
 			for (Object objerr : errors.getAllErrors()) {
@@ -79,13 +79,13 @@ public class ValidateUtil {
 				}
 				uniqueErrorMessages.add(message);
 			}
-			
+
 			String exceptionMessage = "'" + obj + "' failed to validate with reason: ";
 			exceptionMessage += StringUtils.join(uniqueErrorMessages, ", ");
 			throw new ValidationException(exceptionMessage, errors);
 		}
 	}
-	
+
 	/**
 	 * Test the given object against all validators that are registered as compatible with the
 	 * object class
@@ -102,10 +102,10 @@ public class ValidateUtil {
 		}
 
 		obj = HibernateUtil.getRealObjectFromProxy(obj);
-		
+
 		Context.getAdministrationService().validate(obj, errors);
 	}
-	
+
 	/**
 	 * Test the field lengths are valid
 	 *
@@ -133,7 +133,7 @@ public class ValidateUtil {
 				return;
 			}
 			if (((String) value).length() > length) {
-				errors.rejectValue(field, "error.exceededMaxLengthOfField", new Object[] { length }, null);
+				errors.rejectValue(field, "error.exceededMaxLengthOfField", new Object[]{length}, null);
 			}
 		}
 	}

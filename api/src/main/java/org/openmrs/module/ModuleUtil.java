@@ -59,18 +59,18 @@ public class ModuleUtil {
 
 	private ModuleUtil() {
 	}
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ModuleUtil.class);
-	
+
 	/**
 	 * Start up the module system with the given properties.
 	 *
 	 * @param props Properties (OpenMRS runtime properties)
 	 */
 	public static void startup(Properties props) throws ModuleMustStartException, OpenmrsCoreModuleException {
-		
+
 		String moduleListString = props.getProperty(ModuleConstants.RUNTIMEPROPERTY_MODULE_LIST_TO_LOAD);
-		
+
 		if (moduleListString == null || moduleListString.length() == 0) {
 			// Attempt to get all of the modules from the modules folder
 			// and store them in the modules list
@@ -79,10 +79,10 @@ public class ModuleUtil {
 		} else {
 			// use the list of modules and load only those
 			log.debug("Starting all modules in this list: " + moduleListString);
-			
+
 			String[] moduleArray = moduleListString.split(" ");
 			List<File> modulesToLoad = new ArrayList<>();
-			
+
 			for (String modulePath : moduleArray) {
 				if (modulePath != null && modulePath.length() > 0) {
 					File file = new File(modulePath);
@@ -91,20 +91,20 @@ public class ModuleUtil {
 					} else {
 						// try to load the file from the classpath
 						InputStream stream = ModuleUtil.class.getClassLoader().getResourceAsStream(modulePath);
-						
+
 						// expand the classpath-found file to a temporary location
 						if (stream != null) {
 							try {
 								// get and make a temp directory if necessary
 								String tmpDir = System.getProperty("java.io.tmpdir");
 								File expandedFile = File.createTempFile(file.getName() + "-", ".omod", new File(tmpDir));
-								
+
 								// pull the name from the absolute path load attempt
 								FileOutputStream outStream = new FileOutputStream(expandedFile, false);
-								
+
 								// do the actual file copying
 								OpenmrsUtil.copyFile(stream, outStream);
-								
+
 								// add the freshly expanded file to the list of modules we're going to start up
 								modulesToLoad.add(expandedFile);
 								expandedFile.deleteOnExit();
@@ -114,21 +114,21 @@ public class ModuleUtil {
 							}
 						} else {
 							log
-							        .error("Unable to load module at path: "
-							                + modulePath
-							                + " because no file exists there and it is not found on the classpath. (absolute path tried: "
-							                + file.getAbsolutePath() + ")");
+															.error("Unable to load module at path: "
+																							+ modulePath
+																							+ " because no file exists there and it is not found on the classpath. (absolute path tried: "
+																							+ file.getAbsolutePath() + ")");
 						}
 					}
 				}
 			}
-			
+
 			ModuleFactory.loadModules(modulesToLoad);
 		}
-		
+
 		// start all of the modules we just loaded
 		ModuleFactory.startModules();
-		
+
 		// some debugging info
 		if (log.isDebugEnabled()) {
 			Collection<Module> modules = ModuleFactory.getStartedModules();
@@ -138,38 +138,38 @@ public class ModuleUtil {
 				log.debug("Found and loaded {} module(s)", modules.size());
 			}
 		}
-		
+
 		// make sure all openmrs required moduls are loaded and started
 		checkOpenmrsCoreModulesStarted();
-		
+
 		// make sure all mandatory modules are loaded and started
 		checkMandatoryModulesStarted();
 	}
-	
+
 	/**
 	 * Stops the module system by calling stopModule for all modules that are currently started
 	 */
 	public static void shutdown() {
 
 		List<Module> modules = new ArrayList<>(ModuleFactory.getStartedModules());
-		
+
 		for (Module mod : modules) {
 			log.debug("stopping module: {}", mod.getModuleId());
-			
+
 			if (mod.isStarted()) {
 				ModuleFactory.stopModule(mod, true, true);
 			}
 		}
-		
+
 		log.debug("done shutting down modules");
-		
+
 		// clean up the static variables just in case they weren't done before
 		ModuleFactory.extensionMap = null;
 		ModuleFactory.loadedModules = null;
 		ModuleFactory.moduleClassLoaders = null;
 		ModuleFactory.startedModules = null;
 	}
-	
+
 	/**
 	 * Add the <code>inputStream</code> as a file in the modules repository
 	 *
@@ -178,14 +178,14 @@ public class ModuleUtil {
 	 */
 	public static File insertModuleFile(InputStream inputStream, String filename) {
 		File folder = getModuleRepository();
-		
+
 		// check if module filename is already loaded
 		if (OpenmrsUtil.folderContains(folder, filename)) {
 			throw new ModuleException(filename + " is already associated with a loaded module.");
 		}
-		
+
 		File file = new File(folder.getAbsolutePath(), filename);
-		
+
 		FileOutputStream outputStream = null;
 		try {
 			outputStream = new FileOutputStream(file);
@@ -198,13 +198,15 @@ public class ModuleUtil {
 			try {
 				inputStream.close();
 			}
-			catch (Exception e) { /* pass */}
+			catch (Exception e) { /* pass */
+			}
 			try {
 				outputStream.close();
 			}
-			catch (Exception e) { /* pass */}
+			catch (Exception e) { /* pass */
+			}
 		}
-		
+
 		return file;
 	}
 
@@ -236,7 +238,7 @@ public class ModuleUtil {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * This method is an enhancement of {@link #compareVersion(String, String)} and adds support for
 	 * wildcard characters and upperbounds. <br>
@@ -302,7 +304,7 @@ public class ModuleUtil {
 					// then assign the same value for the lower and upper
 					String lowerBound = range;
 					String upperBound = range;
-					
+
 					int indexOfSeparator = range.indexOf(separator);
 					while (indexOfSeparator > 0) {
 						lowerBound = range.substring(0, indexOfSeparator);
@@ -312,27 +314,27 @@ public class ModuleUtil {
 						}
 						indexOfSeparator = range.indexOf(separator, indexOfSeparator + 1);
 					}
-					
+
 					// only preserve part of the string that match the following format:
 					// - xx.yy.*
 					// - xx.yy.zz*
 					lowerBound = StringUtils.remove(lowerBound, lowerBound.replaceAll("^\\s?\\d+[\\.\\d+\\*?|\\.\\*]+", ""));
 					upperBound = StringUtils.remove(upperBound, upperBound.replaceAll("^\\s?\\d+[\\.\\d+\\*?|\\.\\*]+", ""));
-					
+
 					// if the lower contains "*" then change it to zero
 					if (lowerBound.indexOf("*") > 0) {
 						lowerBound = lowerBound.replaceAll("\\*", "0");
 					}
-					
+
 					// if the upper contains "*" then change it to maxRevisionNumber
 					if (upperBound.indexOf("*") > 0) {
 						upperBound = upperBound.replaceAll("\\*", Integer.toString(Integer.MAX_VALUE));
 					}
-					
+
 					int lowerReturn = compareVersion(version, lowerBound);
-					
+
 					int upperReturn = compareVersion(version, upperBound);
-					
+
 					if (lowerReturn < 0 || upperReturn > 0) {
 						log.debug("Version " + version + " is not between " + lowerBound + " and " + upperBound);
 					} else {
@@ -351,10 +353,10 @@ public class ModuleUtil {
 			//no version checking if required version is not specified
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * This method is an enhancement of {@link #compareVersion(String, String)} and adds support for
 	 * wildcard characters and upperbounds. <br>
@@ -393,11 +395,11 @@ public class ModuleUtil {
 	public static void checkRequiredVersion(String version, String versionRange) throws ModuleException {
 		if (!matchRequiredVersions(version, versionRange)) {
 			String ms = Context.getMessageSourceService().getMessage("Module.requireVersion.outOfBounds",
-			    new String[] { versionRange, version }, Context.getLocale());
+											new String[]{versionRange, version}, Context.getLocale());
 			throw new ModuleException(ms);
 		}
 	}
-	
+
 	/**
 	 * Compares <code>version</code> to <code>value</code> version and value are strings like
 	 * 1.9.2.0 Returns <code>0</code> if either <code>version</code> or <code>value</code> is null.
@@ -417,25 +419,25 @@ public class ModuleUtil {
 			if (version == null || value == null) {
 				return 0;
 			}
-			
+
 			List<String> versions = new ArrayList<>();
 			List<String> values = new ArrayList<>();
 			String separator = "-";
-			
+
 			// strip off any qualifier e.g. "-SNAPSHOT"
 			int qualifierIndex = version.indexOf(separator);
 			if (qualifierIndex != -1) {
 				version = version.substring(0, qualifierIndex);
 			}
-			
+
 			qualifierIndex = value.indexOf(separator);
 			if (qualifierIndex != -1) {
 				value = value.substring(0, qualifierIndex);
 			}
-			
+
 			Collections.addAll(versions, version.split("\\."));
 			Collections.addAll(values, value.split("\\."));
-			
+
 			// match the sizes of the lists
 			while (versions.size() < values.size()) {
 				versions.add("0");
@@ -443,13 +445,13 @@ public class ModuleUtil {
 			while (values.size() < versions.size()) {
 				values.add("0");
 			}
-			
+
 			for (int x = 0; x < versions.size(); x++) {
 				String verNum = versions.get(x).trim();
 				String valNum = values.get(x).trim();
 				Long ver = NumberUtils.toLong(verNum, 0);
 				Long val = NumberUtils.toLong(valNum, 0);
-				
+
 				int ret = ver.compareTo(val);
 				if (ret != 0) {
 					return ret;
@@ -459,11 +461,11 @@ public class ModuleUtil {
 		catch (NumberFormatException e) {
 			log.error("Error while converting a version/value to an integer: " + version + "/" + value, e);
 		}
-		
+
 		// default return value if an error occurs or elements are equal
 		return 0;
 	}
-	
+
 	/**
 	 * Checks for qualifier version (i.e "-SNAPSHOT", "-ALPHA" etc. after maven version conventions)
 	 *
@@ -474,7 +476,7 @@ public class ModuleUtil {
 		Matcher matcher = Pattern.compile("(\\d+)\\.(\\d+)(\\.(\\d+))?(\\-([A-Za-z]+))").matcher(version);
 		return matcher.matches();
 	}
-	
+
 	/**
 	 * Gets the folder where modules are stored. ModuleExceptions are thrown on errors
 	 *
@@ -483,35 +485,35 @@ public class ModuleUtil {
 	 * <strong>Should</strong> return the correct file if the runtime property is an absolute path
 	 */
 	public static File getModuleRepository() {
-		
+
 		String folderName = Context.getRuntimeProperties().getProperty(ModuleConstants.REPOSITORY_FOLDER_RUNTIME_PROPERTY);
 		if (StringUtils.isBlank(folderName)) {
 			AdministrationService as = Context.getAdministrationService();
 			folderName = as.getGlobalProperty(ModuleConstants.REPOSITORY_FOLDER_PROPERTY,
-			    ModuleConstants.REPOSITORY_FOLDER_PROPERTY_DEFAULT);
+											ModuleConstants.REPOSITORY_FOLDER_PROPERTY_DEFAULT);
 		}
 		// try to load the repository folder straight away.
 		File folder = new File(folderName);
-		
+
 		// if the property wasn't a full path already, assume it was intended to be a folder in the
 		// application directory
 		if (!folder.exists()) {
 			folder = new File(OpenmrsUtil.getApplicationDataDirectory(), folderName);
 		}
-		
+
 		// now create the modules folder if it doesn't exist
 		if (!folder.exists()) {
 			log.warn("Module repository " + folder.getAbsolutePath() + " doesn't exist.  Creating directories now.");
 			folder.mkdirs();
 		}
-		
+
 		if (!folder.isDirectory()) {
 			throw new ModuleException("Module repository is not a directory at: " + folder.getAbsolutePath());
 		}
-		
+
 		return folder;
 	}
-	
+
 	/**
 	 * Utility method to convert a {@link File} object to a local URL.
 	 *
@@ -533,7 +535,7 @@ public class ModuleUtil {
 			throw new MalformedURLException("Cannot convert: " + file.getName() + " to url");
 		}
 	}
-	
+
 	/**
 	 * Expand the given <code>fileToExpand</code> jar to the <code>tmpModuleFile</code> directory
 	 *
@@ -560,7 +562,7 @@ public class ModuleUtil {
 			jarFile = new JarFile(fileToExpand);
 			Enumeration<JarEntry> jarEntries = jarFile.entries();
 			boolean foundName = (name == null);
-			
+
 			// loop over all of the elements looking for the match to 'name'
 			while (jarEntries.hasMoreElements()) {
 				JarEntry jarEntry = jarEntries.nextElement();
@@ -570,7 +572,7 @@ public class ModuleUtil {
 					if (!keepFullPath && name != null) {
 						entryName = entryName.replaceFirst(name, "");
 					}
-					
+
 					// if it has a slash, it's in a directory
 					int last = entryName.lastIndexOf('/');
 					if (last >= 0) {
@@ -592,7 +594,7 @@ public class ModuleUtil {
 			if (!foundName) {
 				log.debug("Unable to find: " + name + " in file " + fileToExpand.getAbsolutePath());
 			}
-			
+
 		}
 		catch (IOException e) {
 			log.warn("Unable to delete tmpModuleFile on error", e);
@@ -602,14 +604,16 @@ public class ModuleUtil {
 			try {
 				input.close();
 			}
-			catch (Exception e) { /* pass */}
+			catch (Exception e) { /* pass */
+			}
 			try {
 				jarFile.close();
 			}
-			catch (Exception e) { /* pass */}
+			catch (Exception e) { /* pass */
+			}
 		}
 	}
-	
+
 	/**
 	 * Expand the given file in the given stream to a location (fileDir/name) The <code>input</code>
 	 * InputStream is not closed in this method
@@ -623,7 +627,7 @@ public class ModuleUtil {
 	 */
 	private static File expand(InputStream input, String fileDir, String name) throws IOException {
 		log.debug("expanding: {}", name);
-		
+
 		File file = new File(fileDir, name);
 		FileOutputStream outStream = null;
 		try {
@@ -634,12 +638,13 @@ public class ModuleUtil {
 			try {
 				outStream.close();
 			}
-			catch (Exception e) { /* pass */}
+			catch (Exception e) { /* pass */
+			}
 		}
-		
+
 		return file;
 	}
-	
+
 	/**
 	 * Downloads the contents of a URL and copies them to a string (Borrowed from oreilly)
 	 *
@@ -655,18 +660,18 @@ public class ModuleUtil {
 			uc.setUseCaches(false);
 			uc.setRequestProperty("Cache-Control", "max-age=0,no-cache");
 			uc.setRequestProperty("Pragma", "no-cache");
-			
+
 			log.debug("Logging an attempt to connect to: " + url);
-			
+
 			in = openConnectionCheckRedirects(uc);
 		}
 		catch (IOException io) {
 			log.warn("io while reading: " + url, io);
 		}
-		
+
 		return in;
 	}
-	
+
 	/**
 	 * Convenience method to follow http to https redirects. Will follow a total of 5 redirects,
 	 * then fail out due to foolishness on the url's part.
@@ -703,7 +708,7 @@ public class ModuleUtil {
 					// Redirection should be allowed only for HTTP and HTTPS
 					// and should be limited to 5 redirects at most.
 					if (target == null || !("http".equals(target.getProtocol()) || "https".equals(target.getProtocol()))
-					        || redirects >= 5) {
+													|| redirects >= 5) {
 						throw new SecurityException("illegal URL redirect");
 					}
 					redir = true;
@@ -714,7 +719,7 @@ public class ModuleUtil {
 		} while (redir);
 		return in;
 	}
-	
+
 	/**
 	 * Downloads the contents of a URL and copies them to a string (Borrowed from oreilly)
 	 *
@@ -734,7 +739,7 @@ public class ModuleUtil {
 				// skip this module if updateURL is not defined
 				return "";
 			}
-			
+
 			out = new ByteArrayOutputStream();
 			OpenmrsUtil.copyFile(in, out);
 			output = out.toString(StandardCharsets.UTF_8.name());
@@ -746,16 +751,18 @@ public class ModuleUtil {
 			try {
 				in.close();
 			}
-			catch (Exception e) { /* pass */}
+			catch (Exception e) { /* pass */
+			}
 			try {
 				out.close();
 			}
-			catch (Exception e) { /* pass */}
+			catch (Exception e) { /* pass */
+			}
 		}
-		
+
 		return output;
 	}
-	
+
 	/**
 	 * Iterates over the modules and checks each update.rdf file for an update
 	 *
@@ -763,9 +770,9 @@ public class ModuleUtil {
 	 * @throws ModuleException
 	 */
 	public static Boolean checkForModuleUpdates() throws ModuleException {
-		
+
 		Boolean updateFound = false;
-		
+
 		for (Module mod : ModuleFactory.getLoadedModules()) {
 			String updateURL = mod.getUpdateURL();
 			if (StringUtils.isNotEmpty(updateURL)) {
@@ -777,19 +784,19 @@ public class ModuleUtil {
 						continue;
 					}
 					String content = getURL(url);
-					
+
 					// skip empty or invalid updates
 					if ("".equals(content)) {
 						continue;
 					}
-					
+
 					// process and parse the contents
 					UpdateFileParser parser = new UpdateFileParser(content);
 					parser.parse();
-					
+
 					log.debug("Update for mod: " + mod.getModuleId() + " compareVersion result: "
-					        + compareVersion(mod.getVersion(), parser.getCurrentVersion()));
-					
+													+ compareVersion(mod.getVersion(), parser.getCurrentVersion()));
+
 					// check the update.rdf version against the installed version
 					if (compareVersion(mod.getVersion(), parser.getCurrentVersion()) < 0) {
 						if (mod.getModuleId().equals(parser.getModuleId())) {
@@ -812,32 +819,32 @@ public class ModuleUtil {
 				}
 			}
 		}
-		
+
 		return updateFound;
 	}
-	
+
 	/**
 	 * @return true/false whether the 'allow upload' or 'allow web admin' property has been turned
 	 *         on
 	 */
 	public static Boolean allowAdmin() {
-		
+
 		Properties properties = Context.getRuntimeProperties();
 		String prop = properties.getProperty(ModuleConstants.RUNTIMEPROPERTY_ALLOW_UPLOAD, null);
 		if (prop == null) {
 			prop = properties.getProperty(ModuleConstants.RUNTIMEPROPERTY_ALLOW_ADMIN, "false");
 		}
-		
+
 		return "true".equals(prop);
 	}
-	
+
 	/**
 	 * @see ModuleUtil#refreshApplicationContext(AbstractRefreshableApplicationContext, boolean, Module)
 	 */
 	public static AbstractRefreshableApplicationContext refreshApplicationContext(AbstractRefreshableApplicationContext ctx) {
 		return refreshApplicationContext(ctx, false, null);
 	}
-	
+
 	/**
 	 * Refreshes the given application context "properly" in OpenMRS. Will first shut down the
 	 * Context and destroy the classloader, then will refresh and set everything back up again.
@@ -848,7 +855,7 @@ public class ModuleUtil {
 	 * @return AbstractRefreshableApplicationContext The newly refreshed application context.
 	 */
 	public static AbstractRefreshableApplicationContext refreshApplicationContext(AbstractRefreshableApplicationContext ctx,
-	        boolean isOpenmrsStartup, Module startedModule) {
+									boolean isOpenmrsStartup, Module startedModule) {
 		//notify all started modules that we are about to refresh the context
 		Set<Module> startedModules = new LinkedHashSet<>(ModuleFactory.getStartedModulesInOrder());
 		for (Module module : startedModules) {
@@ -862,11 +869,11 @@ public class ModuleUtil {
 				log.warn("Unable to call willRefreshContext() method in the module's activator", e);
 			}
 		}
-		
+
 		OpenmrsClassLoader.saveState();
 		SchedulerUtil.shutdown();
 		ServiceContext.destroyInstance();
-		
+
 		try {
 			ctx.stop();
 			ctx.close();
@@ -879,7 +886,7 @@ public class ModuleUtil {
 		OpenmrsClassLoader.destroyInstance();
 		ctx.setClassLoader(OpenmrsClassLoader.getInstance());
 		Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
-		
+
 		ServiceContext.getInstance().startRefreshingContext();
 		try {
 			ctx.refresh();
@@ -887,18 +894,18 @@ public class ModuleUtil {
 		finally {
 			ServiceContext.getInstance().doneRefreshingContext();
 		}
-		
+
 		ctx.setClassLoader(OpenmrsClassLoader.getInstance());
 		Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
-		
+
 		OpenmrsClassLoader.restoreState();
 		SchedulerUtil.startup(Context.getRuntimeProperties());
-		
+
 		OpenmrsClassLoader.setThreadsToNewClassLoader();
-		
+
 		// reload the advice points that were lost when refreshing Spring
 		log.debug("Reloading advice for all started modules: {}", startedModules.size());
-		
+
 		try {
 			//The call backs in this block may need lazy loading of objects
 			//which will fail because we use an OpenSessionInViewFilter whose opened session
@@ -909,11 +916,11 @@ public class ModuleUtil {
 				if (!module.isStarted()) {
 					continue;
 				}
-				
+
 				ModuleFactory.loadAdvice(module);
 				try {
 					ModuleFactory.passDaemonToken(module);
-					
+
 					if (module.getModuleActivator() != null) {
 						module.getModuleActivator().contextRefreshed();
 						try {
@@ -931,7 +938,7 @@ public class ModuleUtil {
 							ModuleFactory.stopModule(module, true, true);
 						}
 					}
-					
+
 				}
 				catch (Exception e) {
 					log.warn("Unable to invoke method on the module's activator ", e);
@@ -941,10 +948,10 @@ public class ModuleUtil {
 		finally {
 			Context.closeSessionWithCurrentUser();
 		}
-		
+
 		return ctx;
 	}
-	
+
 	/**
 	 * Looks at the &lt;moduleid&gt;.mandatory properties and at the currently started modules to make
 	 * sure that all mandatory modules have been started successfully.
@@ -953,18 +960,18 @@ public class ModuleUtil {
 	 * <strong>Should</strong> throw ModuleException if a mandatory module is not started
 	 */
 	protected static void checkMandatoryModulesStarted() throws ModuleException {
-		
+
 		List<String> mandatoryModuleIds = getMandatoryModules();
 		Set<String> startedModuleIds = ModuleFactory.getStartedModulesMap().keySet();
-		
+
 		mandatoryModuleIds.removeAll(startedModuleIds);
-		
+
 		// any module ids left in the list are not started
 		if (!mandatoryModuleIds.isEmpty()) {
 			throw new MandatoryModuleException(mandatoryModuleIds);
 		}
 	}
-	
+
 	/**
 	 * Looks at the list of modules in {@link ModuleConstants#CORE_MODULES} to make sure that all
 	 * modules that are core to OpenMRS are started and have at least a minimum version that OpenMRS
@@ -974,17 +981,17 @@ public class ModuleUtil {
 	 * <strong>Should</strong> throw ModuleException if a core module is not started
 	 */
 	protected static void checkOpenmrsCoreModulesStarted() throws OpenmrsCoreModuleException {
-		
+
 		// if there is a property telling us to ignore required modules, drop out early
 		if (ignoreCoreModules()) {
 			return;
 		}
-		
+
 		// make a copy of the constant so we can modify the list
 		Map<String, String> coreModules = new HashMap<>(ModuleConstants.CORE_MODULES);
-		
+
 		Collection<Module> startedModules = ModuleFactory.getStartedModulesMap().values();
-		
+
 		// loop through the current modules and test them
 		for (Module mod : startedModules) {
 			String moduleId = mod.getModuleId();
@@ -994,17 +1001,17 @@ public class ModuleUtil {
 					coreModules.remove(moduleId);
 				} else {
 					log.debug("Module: " + moduleId + " is a core module and is started, but its version: "
-					        + mod.getVersion() + " is not within the required version: " + coreReqVersion);
+													+ mod.getVersion() + " is not within the required version: " + coreReqVersion);
 				}
 			}
 		}
-		
+
 		// any module ids left in the list are not started
 		if (coreModules.size() > 0) {
 			throw new OpenmrsCoreModuleException(coreModules);
 		}
 	}
-	
+
 	/**
 	 * Uses the runtime properties to determine if the core modules should be enforced or not.
 	 *
@@ -1012,10 +1019,10 @@ public class ModuleUtil {
 	 */
 	public static boolean ignoreCoreModules() {
 		String ignoreCoreModules = Context.getRuntimeProperties().getProperty(ModuleConstants.IGNORE_CORE_MODULES_PROPERTY,
-		    "false");
+										"false");
 		return Boolean.parseBoolean(ignoreCoreModules);
 	}
-	
+
 	/**
 	 * Returns all modules that are marked as mandatory. Currently this means there is a
 	 * &lt;moduleid&gt;.mandatory=true global property.
@@ -1024,12 +1031,12 @@ public class ModuleUtil {
 	 * <strong>Should</strong> return mandatory module ids
 	 */
 	public static List<String> getMandatoryModules() {
-		
+
 		List<String> mandatoryModuleIds = new ArrayList<>();
-		
+
 		try {
 			List<GlobalProperty> props = Context.getAdministrationService().getGlobalPropertiesBySuffix(".mandatory");
-			
+
 			for (GlobalProperty prop : props) {
 				if ("true".equalsIgnoreCase(prop.getPropertyValue())) {
 					mandatoryModuleIds.add(prop.getProperty().replace(".mandatory", ""));
@@ -1039,10 +1046,10 @@ public class ModuleUtil {
 		catch (Exception e) {
 			log.warn("Unable to get the mandatory module list", e);
 		}
-		
+
 		return mandatoryModuleIds;
 	}
-	
+
 	/**
 	 * <pre>
 	 * Gets the module that should handle a path. The path you pass in should be a module id (in
@@ -1066,7 +1073,7 @@ public class ModuleUtil {
 		int ind = path.lastIndexOf('/');
 		if (ind <= 0) {
 			throw new IllegalArgumentException(
-			        "Input must be /moduleId/resource. Input needs a / after the first character: " + path);
+											"Input must be /moduleId/resource. Input needs a / after the first character: " + path);
 		}
 		String moduleId = path.startsWith("/") ? path.substring(1, ind) : path.substring(0, ind);
 		moduleId = moduleId.replace('/', '.');
@@ -1085,7 +1092,7 @@ public class ModuleUtil {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Takes a global path and returns the local path within the specified module. For example
 	 * calling this method with the path "/ui/springmvc/css/ui.css" and the ui.springmvc module, you
@@ -1102,7 +1109,7 @@ public class ModuleUtil {
 		}
 		return path.substring(module.getModuleIdAsPath().length());
 	}
-	
+
 	/**
 	 * This loops over all FILES in this jar to get the package names. If there is an empty
 	 * directory in this jar it is not returned as a providedPackage.
@@ -1111,18 +1118,18 @@ public class ModuleUtil {
 	 * @return list of strings of package names in this jar
 	 */
 	public static Collection<String> getPackagesFromFile(File file) {
-		
+
 		// End early if we're given a non jar file
 		if (!file.getName().endsWith(".jar")) {
 			return Collections.emptySet();
 		}
-		
+
 		Set<String> packagesProvided = new HashSet<>();
-		
+
 		JarFile jar = null;
 		try {
 			jar = new JarFile(file);
-			
+
 			Enumeration<JarEntry> jarEntries = jar.entries();
 			while (jarEntries.hasMoreElements()) {
 				JarEntry jarEntry = jarEntries.nextElement();
@@ -1131,25 +1138,25 @@ public class ModuleUtil {
 					continue;
 				}
 				String name = jarEntry.getName();
-				
+
 				// Skip over some folders in the jar/omod
 				if (name.startsWith("lib") || name.startsWith("META-INF") || name.startsWith("web/module")) {
 					continue;
 				}
-				
+
 				Integer indexOfLastSlash = name.lastIndexOf("/");
 				if (indexOfLastSlash <= 0) {
 					continue;
 				}
 				String packageName = name.substring(0, indexOfLastSlash);
-				
+
 				packageName = packageName.replaceAll("/", ".");
-				
+
 				if (packagesProvided.add(packageName) && log.isTraceEnabled()) {
 					log.trace("Adding module's jarentry with package: " + packageName);
 				}
 			}
-			
+
 			jar.close();
 		}
 		catch (IOException e) {
@@ -1165,10 +1172,10 @@ public class ModuleUtil {
 				}
 			}
 		}
-		
+
 		return packagesProvided;
 	}
-	
+
 	/**
 	 * Get a resource as from the module's api jar. Api jar should be in the omod's lib folder.
 	 * 
@@ -1185,7 +1192,7 @@ public class ModuleUtil {
 		String apiLocation = "lib/" + moduleId + "-api-" + version + ".jar";
 		return getResourceFromInnerJar(jarFile, apiLocation, resource);
 	}
-	
+
 	/**
 	 * Load resource from a jar inside a jar.
 	 * 
@@ -1217,7 +1224,7 @@ public class ModuleUtil {
 		}
 		catch (IOException e) {
 			log.error("Unable to get '" + resource + "' from '" + innerJarFileLocation + "' of '" + outerJarFile.getName()
-			        + "'", e);
+											+ "'", e);
 		}
 		finally {
 			IOUtils.closeQuietly(tempOut);
@@ -1240,7 +1247,7 @@ public class ModuleUtil {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Gets the root folder of a module's sources during development
 	 * 
@@ -1252,7 +1259,7 @@ public class ModuleUtil {
 		if (StringUtils.isNotBlank(directory)) {
 			return new File(directory);
 		}
-		
+
 		return null;
 	}
 }

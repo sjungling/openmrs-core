@@ -17,48 +17,48 @@ package org.openmrs.module;
  * @since 1.7
  */
 public abstract class BaseModuleActivator implements ModuleActivator {
-	
+
 	/**
 	 * @see org.openmrs.module.ModuleActivator#contextRefreshed()
 	 */
 	@Override
 	public void contextRefreshed() {
 	}
-	
+
 	/**
 	 * @see org.openmrs.module.ModuleActivator#started()
 	 */
 	@Override
 	public void started() {
 	}
-	
+
 	/**
 	 * @see org.openmrs.module.ModuleActivator#stopped()
 	 */
 	@Override
 	public void stopped() {
-		
+
 	}
-	
+
 	/**
 	 * @see org.openmrs.module.ModuleActivator#willRefreshContext()
 	 */
 	@Override
 	public void willRefreshContext() {
 	}
-	
+
 	/**
 	 * @see org.openmrs.module.ModuleActivator#willStart()
 	 */
 	@Override
 	public void willStart() {
 	}
-	
+
 	/**
 	 * @see org.openmrs.module.ModuleActivator#willStop()
 	 */
 	@Override
 	public void willStop() {
 	}
-	
+
 }

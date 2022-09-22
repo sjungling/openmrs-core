@@ -16,32 +16,32 @@ import java.util.Locale;
  * ConceptDescription is the localized description of a concept.
  */
 public class ConceptDescription extends BaseOpenmrsObject implements Auditable, java.io.Serializable {
-	
+
 	private static final long serialVersionUID = -7223075113369136584L;
-	
+
 	// Fields
 	private Integer conceptDescriptionId;
-	
+
 	private Concept concept;
-	
+
 	private String description;
-	
+
 	private Locale locale;
-	
+
 	private User creator;
-	
+
 	private Date dateCreated;
-	
+
 	private User changedBy;
-	
+
 	private Date dateChanged;
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public ConceptDescription() {
 	}
-	
+
 	/**
 	 * Constructor that takes in the primary key for this object
 	 * 
@@ -50,7 +50,7 @@ public class ConceptDescription extends BaseOpenmrsObject implements Auditable, 
 	public ConceptDescription(Integer conceptDescriptionId) {
 		this.conceptDescriptionId = conceptDescriptionId;
 	}
-	
+
 	/**
 	 * Constructor specifying the description and locale.
 	 * 
@@ -61,47 +61,47 @@ public class ConceptDescription extends BaseOpenmrsObject implements Auditable, 
 		setLocale(locale);
 		setDescription(description);
 	}
-	
+
 	/**
 	 * @return Returns the conceptDescriptionId.
 	 */
 	public Integer getConceptDescriptionId() {
 		return conceptDescriptionId;
 	}
-	
+
 	/**
 	 * @param conceptDescriptionId The conceptId to set.
 	 */
 	public void setConceptDescriptionId(Integer conceptDescriptionId) {
 		this.conceptDescriptionId = conceptDescriptionId;
 	}
-	
+
 	// Property accessors
 	
 	public Concept getConcept() {
 		return concept;
 	}
-	
+
 	public void setConcept(Concept concept) {
 		this.concept = concept;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public Locale getLocale() {
 		return locale;
 	}
-	
+
 	public void setLocale(Locale locale) {
 		this.locale = locale;
 	}
-	
+
 	/**
 	 * @return Returns the creator.
 	 */
@@ -109,7 +109,7 @@ public class ConceptDescription extends BaseOpenmrsObject implements Auditable, 
 	public User getCreator() {
 		return creator;
 	}
-	
+
 	/**
 	 * @param creator The creator to set.
 	 */
@@ -117,7 +117,7 @@ public class ConceptDescription extends BaseOpenmrsObject implements Auditable, 
 	public void setCreator(User creator) {
 		this.creator = creator;
 	}
-	
+
 	/**
 	 * @return Returns the dateCreated.
 	 */
@@ -125,7 +125,7 @@ public class ConceptDescription extends BaseOpenmrsObject implements Auditable, 
 	public Date getDateCreated() {
 		return dateCreated;
 	}
-	
+
 	/**
 	 * @param dateCreated The dateCreated to set.
 	 */
@@ -133,7 +133,7 @@ public class ConceptDescription extends BaseOpenmrsObject implements Auditable, 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	
+
 	/**
 	 * @return Returns the User who last changed the description.
 	 */
@@ -141,7 +141,7 @@ public class ConceptDescription extends BaseOpenmrsObject implements Auditable, 
 	public User getChangedBy() {
 		return changedBy;
 	}
-	
+
 	/**
 	 * @param changedBy The user who changed this description
 	 */
@@ -149,7 +149,7 @@ public class ConceptDescription extends BaseOpenmrsObject implements Auditable, 
 	public void setChangedBy(User changedBy) {
 		this.changedBy = changedBy;
 	}
-	
+
 	/**
 	 * @return Returns the date the description was last changed.
 	 */
@@ -157,7 +157,7 @@ public class ConceptDescription extends BaseOpenmrsObject implements Auditable, 
 	public Date getDateChanged() {
 		return dateChanged;
 	}
-	
+
 	/**
 	 * Sets the date when the description was changed.
 	 * 
@@ -167,7 +167,7 @@ public class ConceptDescription extends BaseOpenmrsObject implements Auditable, 
 	public void setDateChanged(Date dateChanged) {
 		this.dateChanged = dateChanged;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -175,7 +175,7 @@ public class ConceptDescription extends BaseOpenmrsObject implements Auditable, 
 	public String toString() {
 		return this.description;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
@@ -184,7 +184,7 @@ public class ConceptDescription extends BaseOpenmrsObject implements Auditable, 
 	public Integer getId() {
 		return getConceptDescriptionId();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -193,5 +193,5 @@ public class ConceptDescription extends BaseOpenmrsObject implements Auditable, 
 	public void setId(Integer id) {
 		setConceptDescriptionId(id);
 	}
-	
+
 }

@@ -22,14 +22,14 @@ import org.slf4j.LoggerFactory;
  * @since 2.5.1, 2.6.0
  */
 public class Slf4JLogger extends AbstractLogger {
-	
+
 	private final Logger logger;
-	
+
 	public Slf4JLogger(Class<?> clazz, LogMessageFilter filter) {
 		super(filter);
 		logger = LoggerFactory.getLogger(clazz);
 	}
-	
+
 	@Override
 	public void log(Level level, String message, Throwable e) {
 		// NB java.util.logging supports a couple of levels not replicable through SLF4J

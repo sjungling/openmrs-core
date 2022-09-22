@@ -23,7 +23,7 @@ import org.openmrs.serialization.SerializationException;
  * @since 1.5
  */
 public interface SerializationService extends OpenmrsService {
-	
+
 	/**
 	 * Returns the default serializer configured for the system. This enables a user to serialize
 	 * objects without needing to know the underlying serialization implementation class.
@@ -32,7 +32,7 @@ public interface SerializationService extends OpenmrsService {
 	 * <strong>Should</strong> return a serializer
 	 */
 	public OpenmrsSerializer getDefaultSerializer();
-	
+
 	/**
 	 * Returns the serializer that matches the passed class, or null if no such serializer exists.
 	 * 
@@ -41,7 +41,7 @@ public interface SerializationService extends OpenmrsService {
 	 * <strong>Should</strong> return a serializer of the given class
 	 */
 	public OpenmrsSerializer getSerializer(Class<? extends OpenmrsSerializer> serializationClass);
-	
+
 	/**
 	 * Serialize the passed object into an identifying string that can be retrieved later using the
 	 * passed {@link OpenmrsSerializer} class
@@ -53,7 +53,7 @@ public interface SerializationService extends OpenmrsService {
 	 * <strong>Should</strong> Serialize And Deserialize Hibernate Objects Correctly
 	 */
 	public String serialize(Object o, Class<? extends OpenmrsSerializer> clazz) throws SerializationException;
-	
+
 	/**
 	 * Deserialize the given string into a full object using the given {@link OpenmrsSerializer}
 	 * class
@@ -64,11 +64,11 @@ public interface SerializationService extends OpenmrsService {
 	 *            deserialization
 	 * @return hydrated object of the appropriate type
 	 */
-	@Logging(ignoredArgumentIndexes = { 0 })
-    @Authorized
+	@Logging(ignoredArgumentIndexes = {0})
+	@Authorized
 	public <T> T deserialize(String serializedObject, Class<? extends T> objectClass,
-	        Class<? extends OpenmrsSerializer> serializerClass) throws SerializationException;
-	
+									Class<? extends OpenmrsSerializer> serializerClass) throws SerializationException;
+
 	/**
 	 * Gets the list of OpenmrsSerializers that have been registered with this service. <br>
 	 * <br>

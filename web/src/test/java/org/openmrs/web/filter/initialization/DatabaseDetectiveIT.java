@@ -18,15 +18,15 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class DatabaseDetectiveIT extends H2DatabaseIT {
-	
+
 	private static final String LIQUIBASE_SCHEMA_ONLY_1_9_X = "org/openmrs/liquibase/snapshots/schema-only/liquibase-schema-only-1.9.x.xml";
 
 	private static final String LIQUIBASE_CHANGE_LOG_TABLES = "org/openmrs/liquibase/liquibase-changelog-tables.xml";
 
 	private DatabaseDetective databaseDetective;
-	
+
 	private Properties properties;
-	
+
 	@BeforeEach
 	public void setup() {
 		databaseDetective = new DatabaseDetective();
@@ -36,22 +36,22 @@ public class DatabaseDetectiveIT extends H2DatabaseIT {
 		properties.put("connection.username", super.USER_NAME);
 		properties.put("connection.password", super.PASSWORD);
 	}
-	
+
 	@Test
 	public void shouldRecogniseDatabaseWithoutAnyTables() throws Exception {
-		assertTrue( databaseDetective.isDatabaseEmpty( properties ) );
+		assertTrue(databaseDetective.isDatabaseEmpty(properties));
 	}
-	
+
 	@Test
 	public void shouldIgnoreLiquibaseChangeLogTables() throws Exception {
-		updateDatabase( LIQUIBASE_CHANGE_LOG_TABLES );
+		updateDatabase(LIQUIBASE_CHANGE_LOG_TABLES);
 		DatabaseDetective databaseDetective = new DatabaseDetective();
-		assertTrue( databaseDetective.isDatabaseEmpty( properties ) );
+		assertTrue(databaseDetective.isDatabaseEmpty(properties));
 	}
 
 	@Test
 	public void shouldRecogniseDatabaseContainsOpenmrsTables() throws Exception {
-		updateDatabase( LIQUIBASE_SCHEMA_ONLY_1_9_X );
-		assertFalse( databaseDetective.isDatabaseEmpty( properties ) );
+		updateDatabase(LIQUIBASE_SCHEMA_ONLY_1_9_X);
+		assertFalse(databaseDetective.isDatabaseEmpty(properties));
 	}
 }

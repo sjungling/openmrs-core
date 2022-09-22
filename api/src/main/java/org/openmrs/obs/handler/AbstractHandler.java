@@ -31,11 +31,11 @@ import org.slf4j.LoggerFactory;
  * @since 1.5
  */
 public class AbstractHandler {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(AbstractHandler.class);
-	
+
 	protected NumberFormat nf;
-	
+
 	/**
 	 * Constructor initializes formats for alternative file names to protect from unintentionally
 	 * overwriting existing files.
@@ -45,7 +45,7 @@ public class AbstractHandler {
 		nf.setMaximumFractionDigits(0);
 		nf.setMinimumIntegerDigits(2);
 	}
-	
+
 	/**
 	 * Returns a {@link File} for the given obs complex data to be written to. The output file
 	 * location is determined off of the {@link OpenmrsConstants#GLOBAL_PROPERTY_COMPLEX_OBS_DIR}
@@ -60,18 +60,18 @@ public class AbstractHandler {
 		String extension = "." + StringUtils.defaultIfEmpty(FilenameUtils.getExtension(title), "dat");
 		String uuid = obs.getUuid();
 		String filename;
-		
+
 		if (StringUtils.isNotBlank(titleWithoutExtension)) {
 			filename = titleWithoutExtension + "_" + uuid + extension;
 		} else {
 			filename = uuid + extension;
 		}
-		
+
 		File dir = OpenmrsUtil.getDirectoryInApplicationDataDirectory(
-		    Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_COMPLEX_OBS_DIR));
+										Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_COMPLEX_OBS_DIR));
 		return new File(dir, filename);
 	}
-	
+
 	/**
 	 * Get the extension for a given filename if it exists, else return the filename. If there is no
 	 * filename in the input string, "raw" is returned. 
@@ -88,18 +88,18 @@ public class AbstractHandler {
 	@Deprecated
 	public String getExtension(String filename) {
 		String result = FilenameUtils.getExtension(filename);
-		
+
 		if (StringUtils.isEmpty(result)) {
 			result = FilenameUtils.getBaseName(filename);
-			
+
 			if (StringUtils.isEmpty(result)) {
 				result = "raw";
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * @see org.openmrs.obs.ComplexObsHandler#getObs(Obs, String)
 	 */
@@ -117,10 +117,10 @@ public class AbstractHandler {
 		String mimeType = OpenmrsUtil.getFileMimeType(file);
 		complexData.setMimeType(mimeType);
 		obs.setComplexData(complexData);
-		
+
 		return obs;
 	}
-	
+
 	/**
 	 * @see org.openmrs.obs.ComplexObsHandler#purgeComplexData(org.openmrs.Obs)
 	 */
@@ -132,12 +132,12 @@ public class AbstractHandler {
 			obs.setComplexData(null);
 			return true;
 		}
-		
+
 		log.warn(
-		    "Could not delete complex data object for obsId=" + obs.getObsId() + " located at " + file.getAbsolutePath());
+										"Could not delete complex data object for obsId=" + obs.getObsId() + " located at " + file.getAbsolutePath());
 		return false;
 	}
-	
+
 	/**
 	 * Convenience method to create and return a file for the stored ComplexData.data Object
 	 * 
@@ -148,22 +148,22 @@ public class AbstractHandler {
 		String[] names = obs.getValueComplex().split("\\|");
 		String filename = names.length < 2 ? names[0] : names[names.length - 1];
 		File dir = OpenmrsUtil.getDirectoryInApplicationDataDirectory(
-		    Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_COMPLEX_OBS_DIR));
+										Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_COMPLEX_OBS_DIR));
 		return new File(dir, filename);
 	}
-	
+
 	/**
 	 * @see org.openmrs.obs.ComplexObsHandler#getSupportedViews()
 	 */
 	public String[] getSupportedViews() {
 		return new String[0];
 	}
-	
+
 	/**
 	 * @see org.openmrs.obs.ComplexObsHandler#supportsView(java.lang.String)
 	 */
 	public boolean supportsView(String view) {
 		return Arrays.asList(getSupportedViews()).contains(view);
 	}
-	
+
 }

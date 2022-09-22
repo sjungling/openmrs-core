@@ -32,39 +32,39 @@ import org.openmrs.api.impl.AdministrationServiceImpl;
  * Unit tests for {@link AdministrationService}.
  */
 public class AdministrationServiceUnitTest {
-	
+
 	private AdministrationDAO adminDAO;
-	
+
 	private EventListeners eventListeners;
-	
+
 	private AdministrationService adminService;
-	
+
 	@BeforeEach
 	public void setUp() {
-		
+
 		adminService = new AdministrationServiceImpl();
 		adminDAO = mock(AdministrationDAO.class);
 		adminService.setAdministrationDAO(adminDAO);
 		eventListeners = mock(EventListeners.class);
 		((AdministrationServiceImpl) adminService).setEventListeners(eventListeners);
 	}
-	
+
 	@Test
 	public void executeSQL_shouldReturnNullGivenNull() {
-		
+
 		adminService.executeSQL(null, true);
-		
+
 		verify(adminDAO, never()).executeSQL(anyString(), anyBoolean());
 	}
-	
+
 	@Test
 	public void executeSQL_shouldReturnNullGivenEmptyString() {
-		
+
 		adminService.executeSQL(" ", true);
-		
+
 		verify(adminDAO, never()).executeSQL(anyString(), anyBoolean());
 	}
-	
+
 	@Test
 	public void getGlobalPropertyValue_shouldFailIfDefaultValueIsNull() {
 
@@ -95,7 +95,7 @@ public class AdministrationServiceUnitTest {
 		adminService.addGlobalPropertyListener(listener);
 		assertThat(listeners.size(), is(1));
 		assertThat(listeners, contains(listener));
-		
+
 		adminService.removeGlobalPropertyListener(listener);
 
 		assertThat(listeners.size(), is(0));

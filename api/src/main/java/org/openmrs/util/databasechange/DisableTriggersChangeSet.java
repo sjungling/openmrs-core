@@ -28,16 +28,16 @@ import liquibase.resource.ResourceAccessor;
  * changeset alters table and disable triggers for all tables.
  */
 public class DisableTriggersChangeSet implements CustomTaskChange {
-	
+
 	@Override
 	public void execute(Database database) throws CustomChangeException {
 		JdbcConnection connection = (JdbcConnection) database.getConnection();
 		DatabaseMetaData metadata;
 		try {
 			metadata = connection.getMetaData();
-			String[] types = { "TABLE" };
+			String[] types = {"TABLE"};
 			ResultSet rs = metadata.getTables(null, null, "%", types);
-			
+
 			while (rs.next()) {
 				String tableName = rs.getString(3);
 				connection.prepareStatement("ALTER TABLE " + tableName + " DISABLE TRIGGER ALL").execute();
@@ -47,20 +47,20 @@ public class DisableTriggersChangeSet implements CustomTaskChange {
 			throw new CustomChangeException("Error disabling trigger: " + ex);
 		}
 	}
-	
+
 	@Override
 	public String getConfirmationMessage() {
 		return "Finished disabling triggers for all tables";
 	}
-	
+
 	@Override
 	public void setUp() throws SetupException {
 	}
-	
+
 	@Override
 	public void setFileOpener(ResourceAccessor resourceAccessor) {
 	}
-	
+
 	@Override
 	public ValidationErrors validate(Database database) {
 		return new ValidationErrors();

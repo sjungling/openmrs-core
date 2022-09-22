@@ -13,7 +13,7 @@ package org.openmrs.serialization;
  * Implementations of this interface provide serialization implementations for OpenMRS.
  */
 public interface OpenmrsSerializer {
-	
+
 	/**
 	 * Turn the current object into an identifying string that can be retrieved later
 	 * 
@@ -21,7 +21,7 @@ public interface OpenmrsSerializer {
 	 * @return String representing this object
 	 */
 	public String serialize(Object o) throws SerializationException;
-	
+
 	/**
 	 * Deserialize the given string into a full object
 	 * 

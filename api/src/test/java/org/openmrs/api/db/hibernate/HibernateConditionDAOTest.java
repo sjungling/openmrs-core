@@ -31,25 +31,25 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class HibernateConditionDAOTest extends BaseContextSensitiveTest {
-	
+
 	private static final String CONDITIONS_XML = "org/openmrs/api/db/hibernate/include/HibernateConditionDAOTestDataSet.xml";
-	
-	
+
+
 	@Autowired
 	ConditionDAO dao;
-	
-	
+
+
 	@BeforeEach
 	public void setUp() {
 		executeDataSet(CONDITIONS_XML);
-		
+
 		updateSearchIndex();
 	}
-	
+
 	@Test
 	public void shouldSaveCondition() {
 		CodedOrFreeText codedOrFreeText = new CodedOrFreeText(new Concept(4),
-			new ConceptName(5089), "non coded");
+										new ConceptName(5089), "non coded");
 		ConditionClinicalStatus clinicalStatus = ConditionClinicalStatus.ACTIVE;
 		ConditionVerificationStatus verificationStatus = ConditionVerificationStatus.CONFIRMED;
 		Patient patient = new Patient(2);
@@ -68,9 +68,9 @@ public class HibernateConditionDAOTest extends BaseContextSensitiveTest {
 		condition.setOnsetDate(onsetDate);
 		condition.setEndDate(endDate);
 		condition.setPatient(patient);
-		
+
 		dao.saveCondition(condition);
-		
+
 		Condition savedCondition = dao.getCondition(conditionId);
 
 		assertEquals(additionalDetail, savedCondition.getAdditionalDetail());
@@ -82,13 +82,13 @@ public class HibernateConditionDAOTest extends BaseContextSensitiveTest {
 		assertEquals(previousVersion, savedCondition.getPreviousVersion());
 		assertEquals(patient, savedCondition.getPatient());
 	}
-	
+
 	@Test
 	public void shouldGetConditionByUuid() {
 		String uuid = "2cc6880e-2c46-15e4-9038-a6c5e4d22fb7";
 		ConditionClinicalStatus expectedClinicalStatus = ConditionClinicalStatus.INACTIVE;
 		ConditionVerificationStatus expectedVerificationStatus = ConditionVerificationStatus.PROVISIONAL;
-		
+
 		Condition condition = dao.getConditionByUuid(uuid);
 		assertEquals(condition.getClinicalStatus(), expectedClinicalStatus);
 		assertEquals(condition.getVerificationStatus(), expectedVerificationStatus);
@@ -96,37 +96,37 @@ public class HibernateConditionDAOTest extends BaseContextSensitiveTest {
 		assertEquals("2017-01-15 00:00:00.0", condition.getEndDate().toString());
 		assertEquals(1, (int) condition.getCreator().getId());
 	}
-	
+
 	@Test
 	public void shouldGetCondition() {
 		int id = 1;
 		ConditionClinicalStatus expectedClinicalStatus = ConditionClinicalStatus.INACTIVE;
 		ConditionVerificationStatus expectedVerificationStatus = ConditionVerificationStatus.PROVISIONAL;
-		
+
 		Condition condition = dao.getCondition(id);
-		
+
 		assertEquals(expectedClinicalStatus, condition.getClinicalStatus());
 		assertEquals(expectedVerificationStatus, condition.getVerificationStatus());
 		assertEquals(1, (int) condition.getId());
 		assertEquals("2017-01-15 00:00:00.0", condition.getEndDate().toString());
 		assertEquals(1, (int) condition.getCreator().getId());
 	}
-	
+
 	@Test
 	public void shouldGetAllConditions() {
 		Patient patient = new Patient(2);
 		List<Condition> conditions = dao.getAllConditions(patient);
-		
+
 		assertEquals(3, conditions.size());
 	}
-	
+
 	@Test
 	public void shouldGetActiveConditions() {
 		Patient patient = new Patient(2);
 		List<Condition> active = dao.getActiveConditions(patient);
 		assertEquals(1, active.size());
 	}
-	
+
 	@Test
 	public void shouldDeleteCondition() {
 		String uuid = "2cc6880e-2c46-15e4-9038-a6c5e4d22fb7";

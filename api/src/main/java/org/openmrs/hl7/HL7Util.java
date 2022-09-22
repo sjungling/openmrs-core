@@ -31,19 +31,19 @@ import ca.uhn.hl7v2.HL7Exception;
  * @version 1.0
  */
 public class HL7Util {
-	
+
 	private HL7Util() {
 	}
-	
+
 	private static final Logger log = LoggerFactory.getLogger(HL7Util.class);
-	
+
 	// Date and time format parsers
 	private static final String TIMESTAMP_FORMAT = "yyyyMMddHHmmss.SSSZ";
-	
+
 	private static final String TIME_FORMAT = "HHmmss.SSSZ";
-	
+
 	public static final String LOCAL_TIMEZONE_OFFSET = new SimpleDateFormat("Z").format(new Date());
-	
+
 	/**
 	 * Converts an HL7 timestamp into a java.util.Date object. HL7 timestamps can be created with
 	 * varying levels of precision &mdash; e.g., just the year or just the year and month, etc.
@@ -75,12 +75,12 @@ public class HL7Util {
 	 * <strong>Should</strong> not flub dst with 20091225123000
 	 */
 	public static Date parseHL7Timestamp(String s) throws HL7Exception {
-		
+
 		// HL7 dates must at least contain year and cannot exceed 24 bytes
 		if (s == null || s.length() < 4 || s.length() > 24) {
 			throw new HL7Exception("Invalid date '" + s + "'");
 		}
-		
+
 		StringBuilder dateString = new StringBuilder();
 		dateString.append(s.substring(0, 4)); // year
 		if (s.length() >= 6) {
@@ -93,7 +93,7 @@ public class HL7Util {
 		} else {
 			dateString.append("01");
 		}
-		
+
 		// Parse timezone (optional in HL7 format)
 		String timeZoneOffset;
 		try {
@@ -141,9 +141,9 @@ public class HL7Util {
 		} else {
 			dateString.append("0");
 		}
-		
+
 		dateString.append(timeZoneOffset);
-		
+
 		Date date;
 		try {
 			date = new SimpleDateFormat(TIMESTAMP_FORMAT).parse(dateString.toString());
@@ -153,7 +153,7 @@ public class HL7Util {
 		}
 		return date;
 	}
-	
+
 	/**
 	 * Gets the timezone string for this given fullString. If fullString contains a + or - sign, the
 	 * strings after those are considered to be the timezone. <br>
@@ -184,17 +184,17 @@ public class HL7Util {
 			if (timeZoneOffset.length() != 5) {
 				log.error("Invalid timestamp because its too short: " + timeZoneOffset);
 			}
-			
+
 		} else {
 			//set default timezone offset from the current day
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(givenDate);
 			timeZoneOffset = new SimpleDateFormat("Z").format(cal.getTime());
 		}
-		
+
 		return timeZoneOffset;
 	}
-	
+
 	/**
 	 * Convenience method for parsing HL7 dates (treated just like a timestamp with only year,
 	 * month, and day specified)
@@ -205,7 +205,7 @@ public class HL7Util {
 	public static Date parseHL7Date(String s) throws HL7Exception {
 		return parseHL7Timestamp(s);
 	}
-	
+
 	/**
 	 * Converts an HL7 time into a java.util.Date object. Since the java.util.Date object cannot
 	 * store just the time, the date will remain at the epoch (e.g., January 1, 1970). Time more
@@ -224,16 +224,16 @@ public class HL7Util {
 	 * <strong>Should</strong> handle 061538-0300
 	 */
 	public static Date parseHL7Time(String s) throws HL7Exception {
-		
+
 		String timeZoneOffset = getTimeZoneOffset(s, new Date());
 		s = s.replace(timeZoneOffset, ""); // remove the timezone from the string
 		
 		StringBuilder timeString = new StringBuilder();
-		
+
 		if (s.length() < 2 || s.length() > 16) {
 			throw new HL7Exception("Invalid time format '" + s + "'");
 		}
-		
+
 		timeString.append(s.substring(0, 2)); // hour
 		if (s.length() >= 4) {
 			timeString.append(s.substring(2, 4)); // minute
@@ -266,10 +266,10 @@ public class HL7Util {
 		} else {
 			timeString.append("0");
 		}
-		
+
 		// Parse timezone (optional in HL7 format)
 		timeString.append(timeZoneOffset);
-		
+
 		Date date;
 		try {
 			date = new SimpleDateFormat(TIME_FORMAT).parse(timeString.toString());
@@ -279,7 +279,7 @@ public class HL7Util {
 		}
 		return date;
 	}
-	
+
 	/**
 	 * Gets the destination directory for hl7 archives.
 	 *
@@ -287,17 +287,17 @@ public class HL7Util {
 	 */
 	public static File getHl7ArchivesDirectory() throws APIException {
 		String archiveDir = Context.getAdministrationService().getGlobalProperty(
-		    OpenmrsConstants.GLOBAL_PROPERTY_HL7_ARCHIVE_DIRECTORY);
-		
+										OpenmrsConstants.GLOBAL_PROPERTY_HL7_ARCHIVE_DIRECTORY);
+
 		if (StringUtils.isBlank(archiveDir)) {
 			log.warn("Invalid value for global property '" + OpenmrsConstants.GLOBAL_PROPERTY_HL7_ARCHIVE_DIRECTORY
-			        + "', trying to set a default one");
+											+ "', trying to set a default one");
 			archiveDir = HL7Constants.HL7_ARCHIVE_DIRECTORY_NAME;
-			
+
 			log.debug("Using '" + archiveDir
-			        + "' in the application data directory as the root directory for hl7_in_archives");
+											+ "' in the application data directory as the root directory for hl7_in_archives");
 		}
-		
+
 		return OpenmrsUtil.getDirectoryInApplicationDataDirectory(archiveDir);
 	}
 }

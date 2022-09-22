@@ -38,7 +38,7 @@ public interface ConditionDAO {
 	 * @return the condition associated with the UUID.
 	 */
 	Condition getConditionByUuid(String uuid);
-	
+
 	/**
 	 * Gets all active conditions related to the specified patient.
 	 *
@@ -64,7 +64,7 @@ public interface ConditionDAO {
 	 * @return the saved condition.
 	 */
 	Condition saveCondition(Condition condition);
-	
+
 	/**
 	 * Removes a condition from the database
 	 * 

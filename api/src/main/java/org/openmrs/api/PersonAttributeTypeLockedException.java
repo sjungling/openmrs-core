@@ -16,16 +16,16 @@ package org.openmrs.api;
  * @see PersonService#checkIfPersonAttributeTypesAreLocked() 
  */
 public class PersonAttributeTypeLockedException extends APIException {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Generic constructor that gives a normal reason why the user is not being allowed to manipulate of a person attribute type.
 	 */
 	public PersonAttributeTypeLockedException() {
 		this("PersonAtttributeType.locked");
 	}
-	
+
 	/**
 	 * Convenience constructor to give the user a message other than normal default one
 	 * 
@@ -34,7 +34,7 @@ public class PersonAttributeTypeLockedException extends APIException {
 	public PersonAttributeTypeLockedException(String message) {
 		super(message);
 	}
-	
+
 	/**
 	 * Convenience constructor to give the user a message other than normal one and to chain
 	 * this exception with a parent exception.
@@ -45,7 +45,7 @@ public class PersonAttributeTypeLockedException extends APIException {
 	public PersonAttributeTypeLockedException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	/**
 	 * Convenience constructor used to only set the parent exception to chain with.
 	 * This does not set the error message for the user as to why an exception is being thrown. 

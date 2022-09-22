@@ -25,13 +25,13 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
  * {@link VisitService} layer
  */
 public class VisitDAOTest extends BaseContextSensitiveTest {
-	
+
 	protected static final String VISITS_WITH_DATES_XML = "org/openmrs/api/include/VisitServiceTest-otherVisits.xml";
-	
+
 	protected static final String VISITS_INCLUDE_VISITS_TO_AUTO_CLOSE_XML = "org/openmrs/api/include/VisitServiceTest-includeVisitsAndTypeToAutoClose.xml";
-	
+
 	private VisitDAO dao = null;
-	
+
 	/**
 	 * Run this before each unit test in this class.
 	 * 
@@ -39,12 +39,12 @@ public class VisitDAOTest extends BaseContextSensitiveTest {
 	 */
 	@BeforeEach
 	public void runBeforeEachTest() {
-		
+
 		if (dao == null)
 			// fetch the dao from the spring application context
 			dao = (VisitDAO) applicationContext.getBean("visitDAO");
 	}
-	
+
 	/**
 	 * @see VisitDAO#getVisits(java.util.Collection, java.util.Collection, java.util.Collection, java.util.Collection, java.util.Date, java.util.Date, java.util.Date, java.util.Date, boolean, boolean)
 	 */
@@ -53,7 +53,7 @@ public class VisitDAOTest extends BaseContextSensitiveTest {
 		executeDataSet(VISITS_WITH_DATES_XML);
 		assertEquals(13, dao.getVisits(null, null, null, null, null, null, null, null, null, true, false).size());
 	}
-	
+
 	/**
 	 * @see VisitDAO#getVisits(java.util.Collection, java.util.Collection, java.util.Collection, java.util.Collection, java.util.Date, java.util.Date, java.util.Date, java.util.Date, boolean, boolean)
 	 */
@@ -62,9 +62,9 @@ public class VisitDAOTest extends BaseContextSensitiveTest {
 		executeDataSet(VISITS_WITH_DATES_XML);
 		assertEquals(6, dao.getVisits(null, null, null, null, null, null, null, null, null, false, false).size());
 	}
-	
+
 	/**
-	 * @see VisitDAO#getNextVisit(Visit,Collection<VisitType>,Date)
+	 * @see VisitDAO#getNextVisit(Visit, Collection<VisitType>, Date)
 	 */
 	@Test
 	public void getNextVisit_shouldReturnTheNextUnvoidedActiveVisitMatchingTheSpecifiedTypesAndStartDate() {

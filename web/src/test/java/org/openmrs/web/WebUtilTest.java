@@ -32,7 +32,7 @@ public class WebUtilTest {
 		WebConstants.WEBAPP_NAME = null;
 		assertEquals("", WebUtil.getContextPath());
 	}
-	
+
 	/**
 	 * @see org.openmrs.web.WebUtil#getContextPath()
 	 */
@@ -41,7 +41,7 @@ public class WebUtilTest {
 		WebConstants.WEBAPP_NAME = "";
 		assertEquals("", WebUtil.getContextPath());
 	}
-	
+
 	/**
 	 * @see org.openmrs.web.WebUtil#getContextPath()
 	 */
@@ -50,7 +50,7 @@ public class WebUtilTest {
 		WebConstants.WEBAPP_NAME = "Value";
 		assertEquals("/Value", WebUtil.getContextPath());
 	}
-	
+
 	/**
 	 * @see WebUtil#normalizeLocale(String)
 	 */
@@ -58,7 +58,7 @@ public class WebUtilTest {
 	public void normalizeLocale_shouldIgnoreLeadingSpaces() {
 		assertEquals(Locale.ITALIAN, WebUtil.normalizeLocale(" it"));
 	}
-	
+
 	/**
 	 * @see WebUtil#normalizeLocale(String)
 	 */
@@ -66,7 +66,7 @@ public class WebUtilTest {
 	public void normalizeLocale_shouldAcceptLanguageOnlyLocales() {
 		assertEquals(Locale.FRENCH, WebUtil.normalizeLocale("fr"));
 	}
-	
+
 	/**
 	 * @see WebUtil#normalizeLocale(String)
 	 */
@@ -75,7 +75,7 @@ public class WebUtilTest {
 		assertNull(WebUtil.normalizeLocale("ptrg"));
 		assertNull(WebUtil.normalizeLocale("usaa"));
 	}
-	
+
 	/**
 	 * @see WebUtil#normalizeLocale(String)
 	 */
@@ -83,7 +83,7 @@ public class WebUtilTest {
 	public void normalizeLocale_shouldNotFailWithEmptyStrings() {
 		assertNull(WebUtil.normalizeLocale(""));
 	}
-	
+
 	/**
 	 * @see WebUtil#normalizeLocale(String)
 	 */
@@ -135,7 +135,7 @@ public class WebUtilTest {
 	public void sanitizeLocales_shouldSkipOverInvalidLocales() {
 		assertEquals("fr_RW, it, en", WebUtil.sanitizeLocales("és, qqqq, fr_RW, it, enñ"));
 	}
-	
+
 	/**
 	 * @see WebUtil#sanitizeLocales(String)
 	 */
@@ -143,7 +143,7 @@ public class WebUtilTest {
 	public void sanitizeLocales_shouldNotFailWithEmptyString() {
 		assertNull(null, WebUtil.sanitizeLocales(""));
 	}
-	
+
 	/**
 	 * Utility method to check if a list contains a BaseOpenmrsObject using the id
 	 * @param list

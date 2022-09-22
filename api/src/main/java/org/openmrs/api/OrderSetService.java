@@ -25,7 +25,7 @@ import org.openmrs.util.PrivilegeConstants;
  * @since 1.12
  */
 public interface OrderSetService extends OpenmrsService {
-	
+
 	/**
 	 * Setter for the OrderSet data access object. The dao is used for saving and getting orders
 	 * to/from the database
@@ -33,7 +33,7 @@ public interface OrderSetService extends OpenmrsService {
 	 * @param dao The data access object to use
 	 */
 	void setOrderSetDAO(OrderSetDAO dao);
-	
+
 	/**
 	 * Save or update the given <code>orderSet</code> in the database. If the OrderSet is retired
 	 * it will set retired by and retired date.
@@ -43,9 +43,9 @@ public interface OrderSetService extends OpenmrsService {
 	 * @return the OrderSet that was saved
 	 * @throws APIException
 	 */
-	@Authorized( { PrivilegeConstants.MANAGE_ORDER_SETS })
+	@Authorized({PrivilegeConstants.MANAGE_ORDER_SETS})
 	OrderSet saveOrderSet(OrderSet orderSet) throws APIException;
-	
+
 	/**
 	 * Gets all OrderSets that match the specified parameters excluding discontinuation orderSets.
 	 *
@@ -55,7 +55,7 @@ public interface OrderSetService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.GET_ORDER_SETS)
 	List<OrderSet> getOrderSets(boolean includeRetired) throws APIException;
-	
+
 	/**
 	 * Gets a specific OrderSet with the matched orderSet Id.
 	 *
@@ -65,7 +65,7 @@ public interface OrderSetService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.GET_ORDER_SETS)
 	OrderSet getOrderSet(Integer orderSetId) throws APIException;
-	
+
 	/**
 	 * Gets a specific OrderSet with the matched orderSet uuid.
 	 *
@@ -75,7 +75,7 @@ public interface OrderSetService extends OpenmrsService {
 	 */
 	@Authorized(PrivilegeConstants.GET_ORDER_SETS)
 	OrderSet getOrderSetByUuid(String orderSetUuid) throws APIException;
-	
+
 	/**
 	 * Retires and OrderSet, with matched OrderSet
 	 * 
@@ -84,9 +84,9 @@ public interface OrderSetService extends OpenmrsService {
 	 * @return an orderSet
 	 * @throws APIException
 	 */
-	@Authorized( { PrivilegeConstants.MANAGE_ORDER_SETS })
+	@Authorized({PrivilegeConstants.MANAGE_ORDER_SETS})
 	OrderSet retireOrderSet(OrderSet orderSet, String retireReason) throws APIException;
-	
+
 	/**
 	 * UnRetires and OrderSet, with matched OrderSet
 	 * 
@@ -94,9 +94,9 @@ public interface OrderSetService extends OpenmrsService {
 	 * @return an orderSet
 	 * @throws APIException
 	 */
-	@Authorized( { PrivilegeConstants.MANAGE_ORDER_SETS })
+	@Authorized({PrivilegeConstants.MANAGE_ORDER_SETS})
 	OrderSet unretireOrderSet(OrderSet orderSet) throws APIException;
-	
+
 
 	/**
 	 * Get OrderSetMember by uuid

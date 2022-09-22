@@ -29,7 +29,7 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
  * Contains methods to test behavior of OpenmrsService methods
  */
 public class OpenmrsServiceTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * Tests that if two service methods are called (one from inside the other) the first one will
 	 * be rolled back if an exception is thrown inside the second one. <pre>
@@ -42,7 +42,7 @@ public class OpenmrsServiceTest extends BaseContextSensitiveTest {
 	@Test
 	@Disabled
 	public void shouldCheckThatAMethodIsNotRolledBackInCaseOfAnErrorInAnotherInvokedInsideIt()
-	        throws SerializationException {
+									throws SerializationException {
 		//TODO FIx why this test fails when run with other tests
 		PatientService patientService = Context.getPatientService();
 		EncounterService encounterService = Context.getEncounterService();
@@ -50,19 +50,19 @@ public class OpenmrsServiceTest extends BaseContextSensitiveTest {
 		Patient prefPatient = patientService.getPatient(6);
 		Patient notPrefPatient = patientService.getPatient(7);
 		Collection<Program> programs = programService.getAllPrograms(false);
-		
+
 		int originalPrefEncounterCount = encounterService.getEncountersByPatient(prefPatient).size();
 		int originalNotPrefEncounterCount = encounterService.getEncountersByPatient(notPrefPatient).size();
 		assertTrue(originalNotPrefEncounterCount > 0);
-		
+
 		Cohort notPreferredCohort = new Cohort(notPrefPatient.getPatientId().toString());
 		List<PatientProgram> notPrefPrograms = programService.getPatientPrograms(notPreferredCohort, programs);
 		assertTrue(notPrefPrograms.size() > 0);
-		
+
 		//Set the program to null so that the patient program is rejected on validation with
 		//an APIException, since it is a RuntimeException, all transactions should be rolled back
 		notPrefPrograms.get(0).setProgram(null);
-		
+
 		boolean failed = false;
 		try {
 			patientService.mergePatients(prefPatient, notPrefPatient);
@@ -71,7 +71,7 @@ public class OpenmrsServiceTest extends BaseContextSensitiveTest {
 			failed = true;//should have failed to force a rollback
 		}
 		assertTrue(failed);
-		
+
 		//Since the encounters are moved first, that logic should have been rolled back
 		assertEquals(originalPrefEncounterCount, encounterService.getEncountersByPatient(prefPatient).size());
 	}

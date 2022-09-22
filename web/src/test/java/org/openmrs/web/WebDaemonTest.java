@@ -17,7 +17,7 @@ import org.openmrs.util.DatabaseUpdateException;
 import org.openmrs.util.InputRequiredException;
 
 public class WebDaemonTest {
-	
+
 	@Test
 	public void startOpenmrs_shouldThrowExceptionGivenNull() throws DatabaseUpdateException, InputRequiredException {
 		assertThrows(ModuleException.class, () -> WebDaemon.startOpenmrs(null));

@@ -16,16 +16,16 @@ package org.openmrs.util;
  * @since 1.5
  */
 public class DatabaseUpdateException extends Exception {
-	
+
 	public static final long serialVersionUID = 23413L;
-	
+
 	/**
 	 * Generic constructor
 	 */
 	public DatabaseUpdateException() {
 		super();
 	}
-	
+
 	/**
 	 * Generic exception class constructor
 	 * 
@@ -35,7 +35,7 @@ public class DatabaseUpdateException extends Exception {
 	public DatabaseUpdateException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	/**
 	 * Generic exception class constructor
 	 * 
@@ -44,7 +44,7 @@ public class DatabaseUpdateException extends Exception {
 	public DatabaseUpdateException(String message) {
 		super(message);
 	}
-	
+
 	/**
 	 * Generic exception class constructor
 	 * 
@@ -53,5 +53,5 @@ public class DatabaseUpdateException extends Exception {
 	public DatabaseUpdateException(Throwable cause) {
 		super(cause);
 	}
-	
+
 }

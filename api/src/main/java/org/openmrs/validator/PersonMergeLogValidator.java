@@ -20,7 +20,7 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { PersonMergeLog.class }, order = 50)
+@Handler(supports = {PersonMergeLog.class}, order = 50)
 public class PersonMergeLogValidator implements Validator {
 
 	/**
@@ -32,7 +32,7 @@ public class PersonMergeLogValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return PersonMergeLog.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -47,9 +47,9 @@ public class PersonMergeLogValidator implements Validator {
 	 */
 	@Override
 	public void validate(Object obj, Errors errors) {
-		
+
 		PersonMergeLog personMergeLog = (PersonMergeLog) obj;
-		
+
 		if (personMergeLog == null) {
 			errors.rejectValue("persnMergeLog", "error.general");
 		} else {
@@ -59,5 +59,5 @@ public class PersonMergeLogValidator implements Validator {
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "voidReason");
 		}
 	}
-	
+
 }

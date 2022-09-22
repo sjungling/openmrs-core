@@ -22,12 +22,12 @@ import org.openmrs.util.LocaleUtility;
  */
 @DefaultKey("l10n")
 public class LocalizationTool extends ResourceTool {
-	
+
 	/**
 	 * The default message resource bundle to use, this is english
 	 */
 	private static ResourceBundle defaultResourceBundle = null;
-	
+
 	/**
 	 * Its need to override base class method to be able to change its locale property outside the
 	 * class hierarchy
@@ -38,7 +38,7 @@ public class LocalizationTool extends ResourceTool {
 	public void setLocale(Locale locale) {
 		super.setLocale(locale);
 	}
-	
+
 	/**
 	 * @return the defaultResourceBundle
 	 */
@@ -48,7 +48,7 @@ public class LocalizationTool extends ResourceTool {
 		}
 		return defaultResourceBundle;
 	}
-	
+
 	/**
 	 * To be able to load resource bundles outside the class path we need to override this method
 	 *
@@ -66,10 +66,10 @@ public class LocalizationTool extends ResourceTool {
 		if (rb == null) {
 			rb = getDefaultResourceBundle();
 		}
-		
+
 		return rb;
 	}
-	
+
 	/**
 	 * @see org.apache.velocity.tools.generic.ResourceTool#get(java.lang.Object, java.lang.String[],
 	 *      java.lang.Object)
@@ -81,7 +81,7 @@ public class LocalizationTool extends ResourceTool {
 		if (msg == null || StringUtils.isBlank(msg.toString())) {
 			msg = super.get(code, resourceNamePrefixes, Locale.ENGLISH.toString());
 		}
-		
+
 		return msg;
 	}
 }

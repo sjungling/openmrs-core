@@ -15,9 +15,9 @@ package org.openmrs.api;
  * @see FormService
  */
 public class InvalidFileTypeException extends APIException {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Default empty constructor. If at all possible, don't use this one, but use the
 	 * {@link #InvalidFileTypeException(String)} constructor to specify a helpful
@@ -26,7 +26,7 @@ public class InvalidFileTypeException extends APIException {
 	public InvalidFileTypeException() {
 		super();
 	}
-	
+
 	/**
 	 * General constructor to give a helpful message that relates to why this error occured
 	 * 
@@ -35,7 +35,7 @@ public class InvalidFileTypeException extends APIException {
 	public InvalidFileTypeException(String message) {
 		super(message);
 	}
-	
+
 	/**
 	 * General constructor to give the end user a helpful message and to also propagate the parent
 	 * error exception message.

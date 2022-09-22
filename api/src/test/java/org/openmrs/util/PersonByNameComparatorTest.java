@@ -20,9 +20,9 @@ import org.openmrs.PersonName;
  * This test class (should) contain tests for all of the {@link PersonByNameComparator} methods.
  */
 public class PersonByNameComparatorTest {
-	
+
 	/**
-	 * @see PersonByNameComparator#comparePersonsByName(Person,Person)
+	 * @see PersonByNameComparator#comparePersonsByName(Person, Person)
 	 */
 	@Test
 	public void comparePersonsByName_shouldReturnNegativeIfPersonNameForPerson1ComesBeforeThatOfPerson2() {
@@ -33,9 +33,9 @@ public class PersonByNameComparatorTest {
 		int actualValue = PersonByNameComparator.comparePersonsByName(person1, person2);
 		assertTrue(actualValue < 0, "Expected a negative value but it was: " + actualValue);
 	}
-	
+
 	/**
-	 * @see PersonByNameComparator#comparePersonsByName(Person,Person)
+	 * @see PersonByNameComparator#comparePersonsByName(Person, Person)
 	 */
 	@Test
 	public void comparePersonsByName_shouldReturnPositiveIfPersonNameForPerson1ComesAfterThatOfPerson2() {
@@ -46,9 +46,9 @@ public class PersonByNameComparatorTest {
 		int actualValue = PersonByNameComparator.comparePersonsByName(person1, person2);
 		assertTrue(actualValue > 0, "Expected a positive value but it was: " + actualValue);
 	}
-	
+
 	/**
-	 * @see PersonByNameComparator#comparePersonsByName(Person,Person)
+	 * @see PersonByNameComparator#comparePersonsByName(Person, Person)
 	 */
 	@Test
 	public void comparePersonsByName_shouldReturnZeroIfTheGivenNameMiddleNameAndFamilyNameMatch() {
@@ -59,7 +59,7 @@ public class PersonByNameComparatorTest {
 		int actualValue = PersonByNameComparator.comparePersonsByName(person1, person2);
 		assertEquals(0, actualValue);
 	}
-	
+
 	@Test
 	public void comparePersonsByName_shouldNotBeCaseSensitive() {
 		Person person1 = new Person();

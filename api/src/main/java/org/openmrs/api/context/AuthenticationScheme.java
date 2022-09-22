@@ -15,7 +15,7 @@ package org.openmrs.api.context;
  * @since 2.3.0
  */
 public interface AuthenticationScheme {
-	
+
 	public Authenticated authenticate(Credentials credentials) throws ContextAuthenticationException;
-	
+
 }

@@ -22,9 +22,9 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { FieldType.class }, order = 50)
+@Handler(supports = {FieldType.class}, order = 50)
 public class FieldTypeValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -34,7 +34,7 @@ public class FieldTypeValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return c.equals(FieldType.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -62,5 +62,5 @@ public class FieldTypeValidator implements Validator {
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name");
 		}
 	}
-	
+
 }

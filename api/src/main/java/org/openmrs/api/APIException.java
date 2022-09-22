@@ -17,16 +17,16 @@ import org.openmrs.api.context.Context;
  * exception is the {@link #APIException(String, Throwable)} or the {@link #APIException(String)}
  */
 public class APIException extends RuntimeException {
-	
+
 	public static final long serialVersionUID = 12121212L;
-	
+
 	/**
 	 * Default empty constructor. If at all possible, don't use this one, but use the
 	 * {@link #APIException(String)} constructor to specify a helpful message to the end user
 	 */
 	public APIException() {
 	}
-	
+
 	/**
 	 * General constructor to give the end user a helpful message that relates to why this error
 	 * occurred.
@@ -36,7 +36,7 @@ public class APIException extends RuntimeException {
 	public APIException(String message) {
 		super(message);
 	}
-	
+
 	/**
 	 * General constructor to give the end user a helpful message and to also propagate the parent
 	 * error exception message.
@@ -47,7 +47,7 @@ public class APIException extends RuntimeException {
 	public APIException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	/**
 	 * Constructor used to simply chain a parent exception cause to an APIException. Preference
 	 * should be given to the {@link #APIException(String, Throwable)} constructor if at all
@@ -58,7 +58,7 @@ public class APIException extends RuntimeException {
 	public APIException(Throwable cause) {
 		super(cause);
 	}
-	
+
 	/**
 	 * Constructor to give the end user a helpful message that relates to why this error occurred.
 	 * 
@@ -68,7 +68,7 @@ public class APIException extends RuntimeException {
 	public APIException(String messageKey, Object[] parameters) {
 		super(Context.getMessageSourceService().getMessage(messageKey, parameters, Context.getLocale()));
 	}
-	
+
 	/**
 	 * Constructor to give the end user a helpful message and to also propagate the parent
 	 * error exception message..

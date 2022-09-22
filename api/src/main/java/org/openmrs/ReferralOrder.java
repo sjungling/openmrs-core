@@ -17,14 +17,14 @@ package org.openmrs;
 public class ReferralOrder extends ServiceOrder {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Default Constructor
 	 */
 	public ReferralOrder() {
-		
+
 	}
-	
+
 	/**
 	 * @see org.openmrs.ServiceOrder#copy()
 	 */
@@ -34,7 +34,7 @@ public class ReferralOrder extends ServiceOrder {
 		super.copyHelper(newOrder);
 		return newOrder;
 	}
-	
+
 	/**
 	 * Creates a discontinuation order for this.
 	 * 
@@ -47,7 +47,7 @@ public class ReferralOrder extends ServiceOrder {
 		super.cloneForDiscontinuingHelper(newOrder);
 		return newOrder;
 	}
-	
+
 	/**
 	 * Creates a ReferralOrder for revision from this order, sets the previousOrder, action field and
 	 * other test order fields.

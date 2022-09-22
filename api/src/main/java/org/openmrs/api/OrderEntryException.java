@@ -17,17 +17,17 @@ package org.openmrs.api;
  * @since 2.1
  */
 public class OrderEntryException extends APIException {
-	
+
 	public OrderEntryException(String message) {
 		super(message);
 	}
-	
+
 	public OrderEntryException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	public OrderEntryException(String messageKey, Object[] parameters) {
 		super(messageKey, parameters);
 	}
-	
+
 }

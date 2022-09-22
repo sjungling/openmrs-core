@@ -23,7 +23,7 @@ import org.openmrs.CohortMembership;
  * @see org.openmrs.api.context.Context
  */
 public interface CohortDAO {
-	
+
 	/**
 	 * Finds the cohort with the given primary key
 	 * 
@@ -32,7 +32,7 @@ public interface CohortDAO {
 	 * @throws DAOException
 	 */
 	Cohort getCohort(Integer id) throws DAOException;
-	
+
 	/**
 	 * Finds a cohort by name
 	 * 
@@ -40,7 +40,7 @@ public interface CohortDAO {
 	 * @return The Cohort with the given name, or null if none exists
 	 */
 	Cohort getCohort(String name);
-	
+
 	/**
 	 * Gets all cohorts in the database
 	 * 
@@ -68,7 +68,7 @@ public interface CohortDAO {
 	 * @return the saved Cohort
 	 */
 	Cohort saveCohort(Cohort cohort) throws DAOException;
-	
+
 	/**
 	 * Finds all Cohorts with matching names
 	 * 
@@ -76,7 +76,7 @@ public interface CohortDAO {
 	 * @return List&lt;Cohort&gt; object of matching Cohorts
 	 */
 	List<Cohort> getCohorts(String nameFragment) throws DAOException;
-	
+
 	/**
 	 * Removes a cohort from the database
 	 * 
@@ -84,20 +84,20 @@ public interface CohortDAO {
 	 * @return the deleted Cohort
 	 */
 	Cohort deleteCohort(Cohort cohort) throws DAOException;
-	
+
 	/**
 	 * @param uuid
 	 * @return cohort or null
 	 */
 	Cohort getCohortByUuid(String uuid);
-	
+
 	/**
 	 * @param uuid
 	 * @return cohort membership or null
 	 * @since 2.1.0
 	 */
 	CohortMembership getCohortMembershipByUuid(String uuid);
-	
+
 	/**
 	 * @param patientId
 	 * @param activeOnDate optional
@@ -106,7 +106,7 @@ public interface CohortDAO {
 	 * @since 2.1.0
 	 */
 	List<CohortMembership> getCohortMemberships(Integer patientId, Date activeOnDate, boolean includeVoided);
-	
+
 	/**
 	 * @param cohortMembership
 	 * @return the cohortMembership (now persisted or updated)

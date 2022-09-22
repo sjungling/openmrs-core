@@ -22,34 +22,34 @@ import org.junit.jupiter.api.Test;
 import org.openmrs.util.ClassLoaderFileOpener;
 
 public class ClassLoaderFileOpenerTest {
-	
+
 	@Test
 	public void shouldGetSingleResourceAsStream() throws IOException {
 		ClassLoader classLoader = mock(ClassLoader.class);
 
 		when(classLoader.getResource(any()))
-			.thenReturn(getClass().getClassLoader().getResource("TestingApplicationContext.xml"));
+										.thenReturn(getClass().getClassLoader().getResource("TestingApplicationContext.xml"));
 
 		ClassLoaderFileOpener classLoaderFileOpener = new ClassLoaderFileOpener(classLoader);
 		InputStreamList inputStreamSet = classLoaderFileOpener.openStreams(null, "some path");
-		
+
 		assertEquals(1, inputStreamSet.size());
 	}
-	
+
 	@Test
 	public void shouldGetNoResourceAsStream() throws IOException {
 		ClassLoader classLoader = mock(ClassLoader.class);
-		
+
 		ClassLoaderFileOpener classLoaderFileOpener = new ClassLoaderFileOpener(classLoader);
 		InputStreamList inputStreamSet = classLoaderFileOpener.openStreams(null, "");
-		
+
 		assertEquals(0, inputStreamSet.size());
 	}
-	
+
 	@Test
 	public void shouldIndicateThatListIsNotSupported() throws IOException {
 		ClassLoader classLoader = mock(ClassLoader.class);
-		
+
 		ClassLoaderFileOpener classLoaderFileOpener = new ClassLoaderFileOpener(classLoader);
 		assertThrows(UnsupportedOperationException.class, () -> classLoaderFileOpener.list("", "", false, false, false));
 	}

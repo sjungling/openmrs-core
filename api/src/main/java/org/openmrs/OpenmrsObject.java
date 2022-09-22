@@ -15,25 +15,25 @@ package org.openmrs;
  * @since 1.5
  */
 public interface OpenmrsObject {
-	
+
 	/**
 	 * @return id - The unique Identifier for the object
 	 */
 	public Integer getId();
-	
+
 	/**
 	 * @param id - The unique Identifier for the object
 	 */
 	public void setId(Integer id);
-	
+
 	/**
 	 * @return the universally unique id for this object
 	 */
 	public String getUuid();
-	
+
 	/**
 	 * @param uuid a universally unique id for this object
 	 */
 	public void setUuid(String uuid);
-	
+
 }

@@ -34,10 +34,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * Unit tests for the HibernateMedicationDispenseDAO
  */
 public class HibernateMedicationDispenseDAOTest extends BaseContextSensitiveTest {
-	
+
 	@Autowired
 	MedicationDispenseDAO medicationDispenseDAO;
-	
+
 	@Autowired
 	AdministrationDAO administrationDAO;
 
@@ -76,7 +76,7 @@ public class HibernateMedicationDispenseDAOTest extends BaseContextSensitiveTest
 		List<MedicationDispense> l = medicationDispenseDAO.getMedicationDispenseByCriteria(b.build());
 		assertThat(l.size(), is(1));
 		testMedicationDispense1(l.get(0));
-		
+
 		b.setPatient(new Patient(7));
 		l = medicationDispenseDAO.getMedicationDispenseByCriteria(b.build());
 		assertThat(l.size(), is(2));
@@ -100,7 +100,7 @@ public class HibernateMedicationDispenseDAOTest extends BaseContextSensitiveTest
 		b.setEncounter(new Encounter(3));
 		l = medicationDispenseDAO.getMedicationDispenseByCriteria(b.build());
 		assertThat(l.size(), is(1));
-		
+
 		b.setEncounter(null);
 		l = medicationDispenseDAO.getMedicationDispenseByCriteria(b.build());
 		assertThat(l.size(), is(3));
@@ -176,7 +176,7 @@ public class HibernateMedicationDispenseDAOTest extends BaseContextSensitiveTest
 		existing = medicationDispenseDAO.getMedicationDispense(1);
 		assertNull(existing);
 	}
-	
+
 	public static void testMedicationDispense1(MedicationDispense existing) {
 		assertThat(existing.getUuid(), is("b75c5c9e-b66c-11ec-8065-0242ac110002"));
 		assertThat(existing.getPatient().getPatientId(), is(2));

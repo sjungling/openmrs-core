@@ -34,9 +34,9 @@ public class CustomDatatypeUtil {
 
 	private CustomDatatypeUtil() {
 	}
-	
+
 	private static final Logger log = LoggerFactory.getLogger(CustomDatatypeUtil.class);
-	
+
 	/**
 	 * @param descriptor
 	 * @return a configured datatype appropriate for descriptor
@@ -44,7 +44,7 @@ public class CustomDatatypeUtil {
 	public static CustomDatatype<?> getDatatype(CustomValueDescriptor descriptor) {
 		return getDatatype(descriptor.getDatatypeClassname(), descriptor.getDatatypeConfig());
 	}
-	
+
 	/**
 	 * @param datatypeClassname
 	 * @param datatypeConfig
@@ -61,10 +61,10 @@ public class CustomDatatypeUtil {
 		}
 		catch (Exception ex) {
 			throw new CustomDatatypeException("Error loading " + datatypeClassname + " and configuring it with "
-			        + datatypeConfig, ex);
+											+ datatypeConfig, ex);
 		}
 	}
-	
+
 	/**
 	 * @param descriptor
 	 * @return a configured datatype appropriate for descriptor
@@ -77,16 +77,16 @@ public class CustomDatatypeUtil {
 			return getDatatype(OpenmrsConstants.DEFAULT_CUSTOM_DATATYPE, null);
 		}
 	}
-	
+
 	/**
 	 * @param descriptor
 	 * @return a configured datatype handler appropriate for descriptor
 	 */
 	public static CustomDatatypeHandler getHandler(CustomValueDescriptor descriptor) {
 		return getHandler(getDatatypeOrDefault(descriptor), descriptor.getPreferredHandlerClassname(), descriptor
-		        .getHandlerConfig());
+										.getHandlerConfig());
 	}
-	
+
 	/**
 	 * @param dt the datatype that this handler should be for
 	 * @param preferredHandlerClassname
@@ -94,11 +94,11 @@ public class CustomDatatypeUtil {
 	 * @return a configured datatype handler with the given classname and configuration
 	 */
 	public static CustomDatatypeHandler getHandler(CustomDatatype<?> dt, String preferredHandlerClassname,
-	        String handlerConfig) {
+									String handlerConfig) {
 		if (preferredHandlerClassname != null) {
 			try {
 				Class<? extends CustomDatatypeHandler> clazz = (Class<? extends CustomDatatypeHandler>) Context
-				        .loadClass(preferredHandlerClassname);
+												.loadClass(preferredHandlerClassname);
 				CustomDatatypeHandler handler = clazz.newInstance();
 				if (handlerConfig != null) {
 					handler.setHandlerConfiguration(handlerConfig);
@@ -107,14 +107,14 @@ public class CustomDatatypeUtil {
 			}
 			catch (Exception ex) {
 				log.warn("Failed to instantiate and configure preferred handler with class " + preferredHandlerClassname
-				        + " and config " + handlerConfig, ex);
+												+ " and config " + handlerConfig, ex);
 			}
 		}
-		
+
 		// if we couldn't get the preferred handler (or none was specified) we get the default one by datatype
 		return Context.getDatatypeService().getHandler(dt, handlerConfig);
 	}
-	
+
 	/**
 	 * Converts a simple String-based configuration to a serialized form.
 	 * Utility method for property-style configuration implementations.
@@ -133,7 +133,7 @@ public class CustomDatatypeUtil {
 			throw new APIException(ex);
 		}
 	}
-	
+
 	/**
 	 * Deserializes a simple String-based configuration from the serialized form used by
 	 * {@link #serializeSimpleConfiguration(Map)}
@@ -155,7 +155,7 @@ public class CustomDatatypeUtil {
 			throw new APIException(ex);
 		}
 	}
-	
+
 	/**
 	 * Uses the appropriate datatypes to convert all values in the input map to their valueReference equivalents.
 	 * This is a convenience method for calling XyzService.getXyz(..., attributeValues, ...).
@@ -175,14 +175,14 @@ public class CustomDatatypeUtil {
 					valueReference = customDatatype.getReferenceStringForValue(e.getValue());
 				}
 				catch (UnsupportedOperationException ex) {
-					throw new APIException("CustomDatatype.error.cannot.search", new Object[] { customDatatype.getClass() });
+					throw new APIException("CustomDatatype.error.cannot.search", new Object[]{customDatatype.getClass()});
 				}
 				serializedAttributeValues.put(vat, valueReference);
 			}
 		}
 		return serializedAttributeValues;
 	}
-	
+
 	/**
 	 * @return fully-qualified classnames of all registered datatypes
 	 */
@@ -193,7 +193,7 @@ public class CustomDatatypeUtil {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * @return full-qualified classnames of all registered handlers
 	 */
@@ -204,7 +204,7 @@ public class CustomDatatypeUtil {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * @param handler
 	 * @param datatype
@@ -212,10 +212,10 @@ public class CustomDatatypeUtil {
 	 */
 	public static boolean isCompatibleHandler(CustomDatatypeHandler handler, CustomDatatype<?> datatype) {
 		List<Class<? extends CustomDatatypeHandler>> handlerClasses = Context.getDatatypeService().getHandlerClasses(
-		    (Class<? extends CustomDatatype<?>>) datatype.getClass());
+										(Class<? extends CustomDatatype<?>>) datatype.getClass());
 		return handlerClasses.contains(handler.getClass());
 	}
-	
+
 	/**
 	 * To be called by service save methods for customizable implementations.
 	 * Iterates over all attributes and calls save on the {@link ConceptDatatype} for any dirty ones.
@@ -228,7 +228,7 @@ public class CustomDatatypeUtil {
 			saveIfDirty(attr);
 		}
 	}
-	
+
 	/**
 	 * Calls the save method on value's {@link ConceptDatatype} if necessary
 	 *
@@ -239,7 +239,7 @@ public class CustomDatatypeUtil {
 			CustomDatatype datatype = CustomDatatypeUtil.getDatatype(value.getDescriptor());
 			if (value.getValue() == null) {
 				throw new InvalidCustomValueException(value.getClass() + " with type=" + value.getDescriptor()
-				        + " cannot be null");
+												+ " cannot be null");
 			}
 			String existingValueReference = null;
 			try {
@@ -251,9 +251,9 @@ public class CustomDatatypeUtil {
 			String newValueReference = datatype.save(value.getValue(), existingValueReference);
 			value.setValueReferenceInternal(newValueReference);
 		}
-		
+
 	}
-	
+
 	/**
 	 * Validates a {@link SingleCustomValue}
 	 *

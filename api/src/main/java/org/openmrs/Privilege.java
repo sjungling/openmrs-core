@@ -15,29 +15,29 @@ package org.openmrs;
  * @version 1.0
  */
 public class Privilege extends BaseChangeableOpenmrsMetadata {
-	
+
 	public static final long serialVersionUID = 312L;
-	
+
 	// Fields
 	
 	private String privilege;
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public Privilege() {
 	}
-	
+
 	/** constructor with id */
 	public Privilege(String privilege) {
 		this.privilege = privilege;
 	}
-	
+
 	public Privilege(String privilege, String description) {
 		this.privilege = privilege;
 		setDescription(description);
 	}
-	
+
 	// Property accessors
 	
 	/**
@@ -46,19 +46,19 @@ public class Privilege extends BaseChangeableOpenmrsMetadata {
 	public String getPrivilege() {
 		return privilege;
 	}
-	
+
 	/**
 	 * @param privilege The privilege to set.
 	 */
 	public void setPrivilege(String privilege) {
 		this.privilege = privilege;
 	}
-	
+
 	@Override
 	public String getName() {
 		return this.getPrivilege();
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -66,7 +66,7 @@ public class Privilege extends BaseChangeableOpenmrsMetadata {
 	public String toString() {
 		return this.privilege;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
@@ -74,9 +74,9 @@ public class Privilege extends BaseChangeableOpenmrsMetadata {
 	@Override
 	public Integer getId() {
 		throw new UnsupportedOperationException();
-		
+
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -84,6 +84,6 @@ public class Privilege extends BaseChangeableOpenmrsMetadata {
 	@Override
 	public void setId(Integer id) {
 		throw new UnsupportedOperationException();
-		
+
 	}
 }

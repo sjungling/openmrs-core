@@ -54,24 +54,24 @@ import org.slf4j.LoggerFactory;
  * 2004-2006 Dmitry Olshansky
  */
 public class ModuleClassLoader extends URLClassLoader {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ModuleClassLoader.class);
-	
+
 	private final Module module;
-	
+
 	private Module[] requiredModules;
-	
+
 	private Module[] awareOfModules;
-	
+
 	private Map<URI, File> libraryCache;
-	
+
 	private boolean probeParentLoaderLast = true;
-	
+
 	private Set<String> providedPackages = new LinkedHashSet<>();
-	
+
 	private boolean disposed = false;
-	
-	
+
+
 	/**
 	 * @param module Module
 	 * @param urls resources "managed" by this class loader
@@ -81,22 +81,22 @@ public class ModuleClassLoader extends URLClassLoader {
 	 *      java.net.URLStreamHandlerFactory)
 	 */
 	protected ModuleClassLoader(final Module module, final List<URL> urls, final ClassLoader parent,
-	    final URLStreamHandlerFactory factory) {
+									final URLStreamHandlerFactory factory) {
 		super(urls.toArray(new URL[urls.size()]), parent, factory);
-		
+
 		if (parent instanceof OpenmrsClassLoader) {
 			throw new IllegalArgumentException("Parent must not be OpenmrsClassLoader nor null");
 		} else if (parent instanceof ModuleClassLoader) {
 			throw new IllegalArgumentException("Parent must not be ModuleClassLoader");
 		}
-		
+
 		log.debug("URLs length: {}", urls.size());
 		this.module = module;
 		requiredModules = collectRequiredModuleImports(module);
 		awareOfModules = collectAwareOfModuleImports(module);
 		libraryCache = new WeakHashMap<>();
 	}
-	
+
 	/**
 	 * @param module the <code>Module</code> to load
 	 * @param urls <code>List&lt;URL&gt;</code> of the resources "managed" by this class loader
@@ -105,7 +105,7 @@ public class ModuleClassLoader extends URLClassLoader {
 	 */
 	protected ModuleClassLoader(final Module module, final List<URL> urls, final ClassLoader parent) {
 		this(module, urls, parent, null);
-		
+
 		File devDir = ModuleUtil.getDevelopmentDirectory(module.getModuleId());
 		if (devDir != null) {
 			File[] fileList = devDir.listFiles();
@@ -118,7 +118,7 @@ public class ModuleClassLoader extends URLClassLoader {
 				}
 				File dir = Paths.get(devDir.getAbsolutePath(), file.getName(), "target", "classes").toFile();
 				if (dir.exists()) {
-					Collection<File> files = FileUtils.listFiles(dir, new String[] { "class" }, true);
+					Collection<File> files = FileUtils.listFiles(dir, new String[]{"class"}, true);
 					addClassFilePackages(files, dir.getAbsolutePath().length() + 1);
 				}
 			}
@@ -128,7 +128,7 @@ public class ModuleClassLoader extends URLClassLoader {
 			}
 		}
 	}
-	
+
 	private void addClassFilePackages(Collection<File> files, int dirLength) {
 		for (File file : files) {
 			String name = file.getAbsolutePath().substring(dirLength);
@@ -137,11 +137,11 @@ public class ModuleClassLoader extends URLClassLoader {
 				String packageName = name.substring(0, indexOfLastSlash);
 				packageName = packageName.replace(File.separator, ".");
 				providedPackages.add(packageName);
-				
+
 			}
 		}
 	}
-	
+
 	/**
 	 * @param module the <code>Module</code> to load
 	 * @param urls <code>List&lt;URL&gt;</code> of thee resources "managed" by this class loader
@@ -150,7 +150,7 @@ public class ModuleClassLoader extends URLClassLoader {
 	protected ModuleClassLoader(final Module module, final List<URL> urls) {
 		this(module, urls, null);
 	}
-	
+
 	/**
 	 * Creates class instance configured to load classes and resources for given module.
 	 *
@@ -160,18 +160,18 @@ public class ModuleClassLoader extends URLClassLoader {
 	public ModuleClassLoader(final Module module, final ClassLoader parent) {
 		this(module, getUrls(module), parent);
 	}
-	
+
 	/**
 	 * @return returns this classloader's module
 	 */
 	public Module getModule() {
 		return module;
 	}
-	
+
 	public boolean isDisposed() {
 		return disposed;
 	}
-	
+
 	/**
 	 * Get the base class url of the given <code>cls</code>. Used for checking against system class
 	 * loads vs classloader loads
@@ -181,18 +181,18 @@ public class ModuleClassLoader extends URLClassLoader {
 	 */
 	private static URL getClassBaseUrl(final Class<?> cls) {
 		ProtectionDomain pd = cls.getProtectionDomain();
-		
+
 		if (pd != null) {
 			CodeSource cs = pd.getCodeSource();
 			if (cs != null) {
 				return cs.getLocation();
 			}
-			
+
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * Get all urls for all files in the given <code>module</code>
 	 *
@@ -201,7 +201,7 @@ public class ModuleClassLoader extends URLClassLoader {
 	 */
 	private static List<URL> getUrls(final Module module) {
 		List<URL> result = new LinkedList<>();
-		
+
 		//if in dev mode, add development folder to the classpath
 		List<String> devFolderNames = new ArrayList<>();
 		File devDir = ModuleUtil.getDevelopmentDirectory(module.getModuleId());
@@ -225,13 +225,13 @@ public class ModuleClassLoader extends URLClassLoader {
 		catch (MalformedURLException ex) {
 			log.error("Failed to add development folder to the classpath", ex);
 		}
-		
+
 		File tmpModuleDir = getLibCacheFolderForModule(module);
-		
+
 		//add module jar to classpath only if we are not in dev mode
 		if (devDir == null) {
 			File tmpModuleJar = new File(tmpModuleDir, module.getModuleId() + ".jar");
-			
+
 			if (!tmpModuleJar.exists()) {
 				try {
 					tmpModuleJar.createNewFile();
@@ -240,7 +240,7 @@ public class ModuleClassLoader extends URLClassLoader {
 					log.warn("Unable to create tmpModuleFile", io);
 				}
 			}
-			
+
 			// copy the module jar into that temporary folder
 			FileInputStream in = null;
 			FileOutputStream out = null;
@@ -256,13 +256,15 @@ public class ModuleClassLoader extends URLClassLoader {
 				try {
 					in.close();
 				}
-				catch (Exception e) { /* pass */}
+				catch (Exception e) { /* pass */
+				}
 				try {
 					out.close();
 				}
-				catch (Exception e) { /* pass */}
+				catch (Exception e) { /* pass */
+				}
 			}
-			
+
 			// add the module jar as a url in the classpath of the classloader
 			URL moduleFileURL;
 			try {
@@ -273,14 +275,14 @@ public class ModuleClassLoader extends URLClassLoader {
 				log.warn("Unable to add files from module to URL list: " + module.getModuleId(), e);
 			}
 		}
-		
+
 		// add each defined jar in the /lib folder, add as a url in the classpath of the classloader
 		try {
 			log.debug("Expanding /lib folder in module");
-			
+
 			ModuleUtil.expandJar(module.getFile(), tmpModuleDir, "lib", true);
 			File libdir = new File(tmpModuleDir, "lib");
-			
+
 			if (libdir != null && libdir.exists()) {
 				Map<String, String> startedRelatedModules = new HashMap<>();
 				for (Module requiredModule : collectRequiredModuleImports(module)) {
@@ -289,11 +291,11 @@ public class ModuleClassLoader extends URLClassLoader {
 				for (Module awareOfModule : collectAwareOfModuleImports(module)) {
 					startedRelatedModules.put(awareOfModule.getModuleId(), awareOfModule.getVersion());
 				}
-				
+
 				// recursively get files
-				Collection<File> files = FileUtils.listFiles(libdir, new String[] { "jar" }, true);
+				Collection<File> files = FileUtils.listFiles(libdir, new String[]{"jar"}, true);
 				for (File file : files) {
-					
+
 					//if in dev mode, do not put the module source jar files in the class path
 					if (devDir != null) {
 						boolean jarForDevFolder = false;
@@ -305,17 +307,17 @@ public class ModuleClassLoader extends URLClassLoader {
 								break;
 							}
 						}
-						
+
 						if (jarForDevFolder) {
 							continue;
 						}
 					}
-					
+
 					URL fileUrl = ModuleUtil.file2url(file);
-					
+
 					boolean include = shouldResourceBeIncluded(module, fileUrl, OpenmrsConstants.OPENMRS_VERSION_SHORT,
-					    startedRelatedModules);
-					
+													startedRelatedModules);
+
 					if (include) {
 						log.debug("Including file in classpath: {}", fileUrl);
 						result.add(fileUrl);
@@ -331,12 +333,12 @@ public class ModuleClassLoader extends URLClassLoader {
 		catch (IOException io) {
 			log.warn("Error while expanding lib folder", io);
 		}
-		
+
 		// add each xml document to the url list
 		
 		return result;
 	}
-	
+
 	/**
 	 * Determines whether or not the given resource should be available on the classpath based on
 	 * OpenMRS version and/or modules' version. It uses the conditionalResources section specified
@@ -357,29 +359,29 @@ public class ModuleClassLoader extends URLClassLoader {
 	 *         not match
 	 */
 	static boolean shouldResourceBeIncluded(Module module, URL fileUrl, String openmrsVersion,
-	        Map<String, String> startedRelatedModules) {
+									Map<String, String> startedRelatedModules) {
 		//all resources are included by default
 		boolean include = true;
-		
+
 		for (ModuleConditionalResource conditionalResource : module.getConditionalResources()) {
 			if (fileUrl.getPath().matches(".*" + conditionalResource.getPath() + "$")) {
 				//if a resource matches a path of contidionalResource then it must meet all conditions
 				include = false;
-				
+
 				//openmrsPlatformVersion is optional
 				if (StringUtils.isNotBlank(conditionalResource.getOpenmrsPlatformVersion())) {
 					include = ModuleUtil.matchRequiredVersions(openmrsVersion,
-					    conditionalResource.getOpenmrsPlatformVersion());
-					
+													conditionalResource.getOpenmrsPlatformVersion());
+
 					if (!include) {
 						return false;
 					}
 				}
-				
+
 				//modules are optional
 				if (conditionalResource.getModules() != null) {
 					for (ModuleConditionalResource.ModuleAndVersion conditionalModuleResource : conditionalResource
-					        .getModules()) {
+								.getModules()) {
 						if ("!".equals(conditionalModuleResource.getVersion())) {
 							include = !ModuleFactory.isModuleStarted(conditionalModuleResource.getModuleId());
 							if (!include) {
@@ -389,22 +391,22 @@ public class ModuleClassLoader extends URLClassLoader {
 							String moduleVersion = startedRelatedModules.get(conditionalModuleResource.getModuleId());
 							if (moduleVersion != null) {
 								include = ModuleUtil.matchRequiredVersions(moduleVersion,
-								    conditionalModuleResource.getVersion());
-								
+																conditionalModuleResource.getVersion());
+
 								if (!include) {
 									return false;
 								}
 							}
 						}
 					}
-					
+
 				}
 			}
 		}
-		
+
 		return include;
 	}
-	
+
 	/**
 	 * Get the library cache folder for the given module. Each module has a different cache folder
 	 * to ease cleanup when unloading a module while openmrs is running
@@ -414,7 +416,7 @@ public class ModuleClassLoader extends URLClassLoader {
 	 */
 	public static File getLibCacheFolderForModule(Module module) {
 		File tmpModuleDir = new File(OpenmrsClassLoader.getLibCacheFolder(), module.getModuleId());
-		
+
 		// each module gets its own folder named /moduleId/
 		if (!tmpModuleDir.exists()) {
 			tmpModuleDir.mkdir();
@@ -422,7 +424,7 @@ public class ModuleClassLoader extends URLClassLoader {
 		}
 		return tmpModuleDir;
 	}
-	
+
 	/**
 	 * Get all urls for the given <code>module</code> that are not already in the
 	 * <code>existingUrls</code>
@@ -442,7 +444,7 @@ public class ModuleClassLoader extends URLClassLoader {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Get and cache the imports for this module. The imports should just be the modules that set as
 	 * "required" by this module
@@ -451,21 +453,21 @@ public class ModuleClassLoader extends URLClassLoader {
 		// collect imported modules (exclude duplicates)
 		//<module ID, Module>
 		Map<String, Module> publicImportsMap = new WeakHashMap<>();
-		
+
 		for (String moduleId : ModuleConstants.CORE_MODULES.keySet()) {
 			Module coreModule = ModuleFactory.getModuleById(moduleId);
-			
+
 			if (coreModule == null && !ModuleUtil.ignoreCoreModules()) {
 				log.error("Unable to find an openmrs core loaded module with id: " + moduleId);
 				throw new APIException("Module.error.shouldNotBeHere", (Object[]) null);
 			}
-			
+
 			// if this is already the classloader for one of the core modules, don't put it on the import list
 			if (coreModule != null && !moduleId.equals(module.getModuleId())) {
 				publicImportsMap.put(moduleId, coreModule);
 			}
 		}
-		
+
 		for (String requiredPackage : module.getRequiredModules()) {
 			Module requiredModule = ModuleFactory.getModuleByPackage(requiredPackage);
 			if (ModuleFactory.isModuleStarted(requiredModule)) {
@@ -473,9 +475,9 @@ public class ModuleClassLoader extends URLClassLoader {
 			}
 		}
 		return publicImportsMap.values().toArray(new Module[publicImportsMap.size()]);
-		
+
 	}
-	
+
 	/**
 	 * Get and cache the imports for this module. The imports should just be the modules that set as
 	 * "aware of" by this module
@@ -484,7 +486,7 @@ public class ModuleClassLoader extends URLClassLoader {
 		// collect imported modules (exclude duplicates)
 		//<module ID, Module>
 		Map<String, Module> publicImportsMap = new WeakHashMap<>();
-		
+
 		for (String awareOfPackage : module.getAwareOfModules()) {
 			Module awareOfModule = ModuleFactory.getModuleByPackage(awareOfPackage);
 			if (ModuleFactory.isModuleStarted(awareOfModule)) {
@@ -492,9 +494,9 @@ public class ModuleClassLoader extends URLClassLoader {
 			}
 		}
 		return publicImportsMap.values().toArray(new Module[publicImportsMap.size()]);
-		
+
 	}
-	
+
 	/**
 	 * @see org.openmrs.module.ModuleClassLoader#modulesSetChanged()
 	 */
@@ -503,7 +505,7 @@ public class ModuleClassLoader extends URLClassLoader {
 		for (URL u : newUrls) {
 			addURL(u);
 		}
-		
+
 		if (log.isDebugEnabled()) {
 			StringBuilder buf = new StringBuilder();
 			buf.append("New code URL's populated for module ").append(getModule()).append(":\r\n");
@@ -518,7 +520,7 @@ public class ModuleClassLoader extends URLClassLoader {
 		awareOfModules = collectAwareOfModuleImports(getModule());
 		libraryCache.entrySet().removeIf(uriFileEntry -> uriFileEntry.getValue() == null);
 	}
-	
+
 	/**
 	 * @see org.openmrs.module.ModuleFactory#stopModule(Module, boolean)
 	 */
@@ -527,13 +529,13 @@ public class ModuleClassLoader extends URLClassLoader {
 		for (File file : libraryCache.values()) {
 			file.delete();
 		}
-		
+
 		libraryCache.clear();
 		requiredModules = null;
 		awareOfModules = null;
 		disposed = true;
 	}
-	
+
 	/**
 	 * Allow the probe parent loader last variable to be set. Usually this is set to true to allow
 	 * modules to override and create their own classes
@@ -543,7 +545,7 @@ public class ModuleClassLoader extends URLClassLoader {
 	public void setProbeParentLoaderLast(final boolean value) {
 		probeParentLoaderLast = value;
 	}
-	
+
 	/**
 	 * @see java.lang.ClassLoader#loadClass(java.lang.String, boolean)
 	 */
@@ -559,7 +561,7 @@ public class ModuleClassLoader extends URLClassLoader {
 				catch (ClassNotFoundException cnfe) {
 					// Continue trying...
 				}
-				
+
 				if (result == null && getParent() != null) {
 					result = getParent().loadClass(name);
 				}
@@ -572,20 +574,20 @@ public class ModuleClassLoader extends URLClassLoader {
 				catch (ClassNotFoundException cnfe) {
 					// Continue trying...
 				}
-				
+
 				if (result == null) {
 					result = loadClass(name, resolve, this, null);
 				}
 			}
 		}
-		
+
 		if (resolve) {
 			resolveClass(result);
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * Custom loadClass implementation to allow for loading from a given ModuleClassLoader and skip
 	 * the modules that have been tried already
@@ -598,11 +600,11 @@ public class ModuleClassLoader extends URLClassLoader {
 	 * @throws ClassNotFoundException if no class found
 	 */
 	protected synchronized Class<?> loadClass(final String name, final boolean resolve, final ModuleClassLoader requestor,
-	        Set<String> seenModules) throws ClassNotFoundException {
-		
+									Set<String> seenModules) throws ClassNotFoundException {
+
 		if (log.isTraceEnabled()) {
 			log.trace("Loading " + name + " " + getModule() + ", seenModules: " + seenModules + ", requestor: " + requestor
-			        + ", resolve? " + resolve);
+											+ ", resolve? " + resolve);
 			StringBuilder output = new StringBuilder();
 			for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
 				if (element.getClassName().contains("openmrs")) {
@@ -613,25 +615,25 @@ public class ModuleClassLoader extends URLClassLoader {
 			}
 			log.trace("Stacktrace: " + output.toString());
 		}
-		
+
 		// Check if we already tried this class loader
 		if ((seenModules != null) && seenModules.contains(getModule().getModuleId())) {
 			throw new ClassNotFoundException("Can't load class " + name + " from module " + getModule().getModuleId()
-			        + ". It has been tried before.");
+											+ ". It has been tried before.");
 		}
-		
+
 		// Make sure the module is started
 		if ((this != requestor) && !ModuleFactory.isModuleStarted(getModule())) {
 			String msg = "Can't load class " + name + ", because module " + getModule().getModuleId()
-			        + " is not yet started.";
+											+ " is not yet started.";
 			log.warn(msg);
-			
+
 			throw new ClassNotFoundException(msg);
 		}
-		
+
 		// Check if the class has already been loaded by this class loader
 		Class<?> result = findLoadedClass(name);
-		
+
 		// Try loading the class with this class loader 
 		if (result == null) {
 			try {
@@ -641,24 +643,24 @@ public class ModuleClassLoader extends URLClassLoader {
 				// Continue trying...
 			}
 		}
-		
+
 		// We were able to "find" a class
 		if (result != null) {
 			checkClassVisibility(result, requestor);
-			
+
 			return result;
 		}
-		
+
 		// Look through this module's imports to see if the class
 		// can be loaded from them.
 		
 		if (seenModules == null) {
 			seenModules = new HashSet<>();
 		}
-		
+
 		// Add this module to the list of modules we've tried already
 		seenModules.add(getModule().getModuleId());
-		
+
 		List<Module> importedModules = new ArrayList<>();
 		if (requiredModules != null) {
 			Collections.addAll(importedModules, requiredModules);
@@ -666,19 +668,19 @@ public class ModuleClassLoader extends URLClassLoader {
 		if (awareOfModules != null) {
 			Collections.addAll(importedModules, awareOfModules);
 		}
-		
+
 		for (Module importedModule : importedModules) {
 			if (seenModules.contains(importedModule.getModuleId())) {
 				continue;
 			}
-			
+
 			ModuleClassLoader moduleClassLoader = ModuleFactory.getModuleClassLoader(importedModule);
-			
+
 			// Module class loader may be null if module has not been started yet
 			if (moduleClassLoader != null) {
 				try {
 					result = moduleClassLoader.loadClass(name, resolve, requestor, seenModules);
-					
+
 					return result;
 				}
 				catch (ClassNotFoundException e) {
@@ -686,10 +688,10 @@ public class ModuleClassLoader extends URLClassLoader {
 				}
 			}
 		}
-		
+
 		throw new ClassNotFoundException(name);
 	}
-	
+
 	/**
 	 * Checking the given class's visibility in this module
 	 *
@@ -698,30 +700,30 @@ public class ModuleClassLoader extends URLClassLoader {
 	 * @throws ClassNotFoundException
 	 */
 	protected void checkClassVisibility(final Class<?> cls, final ModuleClassLoader requestor)
-	        throws ClassNotFoundException {
-		
+									throws ClassNotFoundException {
+
 		if (this == requestor) {
 			return;
 		}
-		
+
 		URL lib = getClassBaseUrl(cls);
-		
+
 		if (lib == null) {
 			// cls is a system class
 			return;
 		}
-		
+
 		ClassLoader loader = cls.getClassLoader();
-		
+
 		if (!(loader instanceof ModuleClassLoader)) {
 			return;
 		}
-		
+
 		if (loader != this) {
 			((ModuleClassLoader) loader).checkClassVisibility(cls, requestor);
 		}
 	}
-	
+
 	/**
 	 * @see java.lang.ClassLoader#findLibrary(java.lang.String)
 	 */
@@ -730,21 +732,21 @@ public class ModuleClassLoader extends URLClassLoader {
 		if ((name == null) || "".equals(name.trim())) {
 			return null;
 		}
-		
+
 		if (log.isTraceEnabled()) {
 			log.trace("findLibrary(String): name=" + name + ", this=" + this);
 		}
 		String libname = System.mapLibraryName(name);
 		String result = null;
-		
+
 		if (log.isTraceEnabled()) {
 			log.trace(
-			    "findLibrary(String): name=" + name + ", libname=" + libname + ", result=" + result + ", this=" + this);
+											"findLibrary(String): name=" + name + ", libname=" + libname + ", result=" + result + ", this=" + this);
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * Saves the given library in the openmrs cache. This prevents locking of jars/files by servlet
 	 * container
@@ -755,7 +757,7 @@ public class ModuleClassLoader extends URLClassLoader {
 	 */
 	protected File cacheLibrary(final URL libUrl, final String libname) {
 		File cacheFolder = OpenmrsClassLoader.getLibCacheFolder();
-		
+
 		URI libUri;
 		try {
 			libUri = libUrl.toURI();
@@ -763,28 +765,28 @@ public class ModuleClassLoader extends URLClassLoader {
 		catch (URISyntaxException e) {
 			throw new IllegalArgumentException(libUrl.getPath() + " is not a valid URI", e);
 		}
-		
+
 		if (libraryCache.containsKey(libUri)) {
 			return libraryCache.get(libUri);
 		}
-		
+
 		File result;
 		try {
 			if (cacheFolder == null) {
 				throw new IOException("can't initialize libraries cache folder");
 			}
-			
+
 			// create the directory to hold the jar's files
 			File libCacheModuleFolder = new File(cacheFolder, getModule().getModuleId());
-			
+
 			// error while creating the file
 			if (!libCacheModuleFolder.exists() && !libCacheModuleFolder.mkdirs()) {
 				throw new IOException("can't create cache folder " + libCacheModuleFolder);
 			}
-			
+
 			// directory within the specific folder within the cache
 			result = new File(libCacheModuleFolder, libname);
-			
+
 			// copy the file over to the cache
 			InputStream in = OpenmrsUtil.getResourceInputStream(libUrl);
 			try {
@@ -797,35 +799,38 @@ public class ModuleClassLoader extends URLClassLoader {
 					try {
 						out.close();
 					}
-					catch (Exception e) { /* pass */}
+					catch (Exception e) { /* pass */
+					}
 					try {
 						fileOut.close();
 					}
-					catch (Exception e) {}
+					catch (Exception e) {
+					}
 				}
 			}
 			finally {
 				try {
 					in.close();
 				}
-				catch (Exception e) { /* pass */}
+				catch (Exception e) { /* pass */
+				}
 			}
-			
+
 			// save a link to the cached file
 			libraryCache.put(libUri, result);
-			
+
 			log.debug("library {} successfully cached from URL {} and saved to local file {}", libname, libUrl, result);
-			
+
 		}
 		catch (IOException ioe) {
 			log.error("can't cache library " + libname + " from URL " + libUrl, ioe);
 			libraryCache.put(libUri, null);
 			result = null;
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * If a resource is found within a jar, that jar URL is converted to a temporary file and a URL
 	 * to that is returned
@@ -835,10 +840,10 @@ public class ModuleClassLoader extends URLClassLoader {
 	@Override
 	public URL findResource(final String name) {
 		URL result = findResource(name, this, null);
-		
+
 		return expandIfNecessary(result);
 	}
-	
+
 	/**
 	 * @see java.lang.ClassLoader#findResources(java.lang.String)
 	 */
@@ -846,15 +851,15 @@ public class ModuleClassLoader extends URLClassLoader {
 	public Enumeration<URL> findResources(final String name) throws IOException {
 		List<URL> result = new LinkedList<>();
 		findResources(result, name, this, null);
-		
+
 		// expand all of the "jar" urls
 		for (URL url : result) {
 			url = expandIfNecessary(url);
 		}
-		
+
 		return Collections.enumeration(result);
 	}
-	
+
 	/**
 	 * Find a resource (image, file, etc) in the module structure
 	 *
@@ -874,11 +879,11 @@ public class ModuleClassLoader extends URLClassLoader {
 				log.trace("url: " + url);
 			}
 		}
-		
+
 		if ((seenModules != null) && seenModules.contains(getModule().getModuleId())) {
 			return null;
 		}
-		
+
 		URL result = super.findResource(name);
 		// found resource in this module class path
 		if (result != null) {
@@ -888,52 +893,52 @@ public class ModuleClassLoader extends URLClassLoader {
 			log.debug("Resource is not visible");
 			return null;
 		}
-		
+
 		if (seenModules == null) {
 			seenModules = new HashSet<>();
 		}
-		
+
 		seenModules.add(getModule().getModuleId());
-		
+
 		if (requiredModules != null) {
 			for (Module publicImport : requiredModules) {
 				if (seenModules.contains(publicImport.getModuleId())) {
 					continue;
 				}
 				ModuleClassLoader mcl = ModuleFactory.getModuleClassLoader(publicImport);
-				
+
 				if (mcl != null) {
 					result = mcl.findResource(name, requestor, seenModules);
 				}
-				
+
 				if (result != null) {
 					// found resource in required module
 					return result;
 				}
 			}
 		}
-		
+
 		//look through the aware of modules.
 		for (Module publicImport : awareOfModules) {
 			if (seenModules.contains(publicImport.getModuleId())) {
 				continue;
 			}
-			
+
 			ModuleClassLoader mcl = ModuleFactory.getModuleClassLoader(publicImport);
-			
+
 			if (mcl != null) {
 				result = mcl.findResource(name, requestor, seenModules);
 			}
-			
+
 			if (result != null) {
 				// found resource in aware of module
 				return result;
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * Find all occurrences of a resource (image, file, etc) in the module structure
 	 *
@@ -946,17 +951,17 @@ public class ModuleClassLoader extends URLClassLoader {
 	 * @see #findResource(String, ModuleClassLoader, Set)
 	 */
 	protected void findResources(final List<URL> result, final String name, final ModuleClassLoader requestor,
-	        Set<String> seenModules) throws IOException {
+									Set<String> seenModules) throws IOException {
 		if ((seenModules != null) && seenModules.contains(getModule().getModuleId())) {
 			return;
 		}
-		for (Enumeration<URL> enm = super.findResources(name); enm.hasMoreElements();) {
+		for (Enumeration<URL> enm = super.findResources(name); enm.hasMoreElements(); ) {
 			URL url = enm.nextElement();
 			if (isResourceVisible(name, url, requestor)) {
 				result.add(url);
 			}
 		}
-		
+
 		if (seenModules == null) {
 			seenModules = new HashSet<>();
 		}
@@ -966,29 +971,29 @@ public class ModuleClassLoader extends URLClassLoader {
 				if (seenModules.contains(publicImport.getModuleId())) {
 					continue;
 				}
-				
+
 				ModuleClassLoader mcl = ModuleFactory.getModuleClassLoader(publicImport);
-				
+
 				if (mcl != null) {
 					mcl.findResources(result, name, requestor, seenModules);
 				}
 			}
 		}
-		
+
 		//look through the aware of modules.
 		for (Module publicImport : awareOfModules) {
 			if (seenModules.contains(publicImport.getModuleId())) {
 				continue;
 			}
-			
+
 			ModuleClassLoader mcl = ModuleFactory.getModuleClassLoader(publicImport);
-			
+
 			if (mcl != null) {
 				mcl.findResources(result, name, requestor, seenModules);
 			}
 		}
 	}
-	
+
 	/**
 	 * Check if the given resource (image, file, etc) is visible by this classloader
 	 *
@@ -1009,10 +1014,10 @@ public class ModuleClassLoader extends URLClassLoader {
 			log.error("can't get resource library URL", mue);
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Expands the URL into the temporary folder if the URL points to a resource inside of a jar
 	 * file
@@ -1024,12 +1029,12 @@ public class ModuleClassLoader extends URLClassLoader {
 		if (result == null || !"jar".equals(result.getProtocol())) {
 			return result;
 		}
-		
+
 		File tmpFolder = getLibCacheFolderForModule(module);
-		
+
 		return OpenmrsClassLoader.expandURL(result, tmpFolder);
 	}
-	
+
 	/**
 	 * Contains all class packages provided by the module, including those contained in jars.
 	 * <p>
@@ -1044,7 +1049,7 @@ public class ModuleClassLoader extends URLClassLoader {
 	public Set<String> getProvidedPackages() {
 		return providedPackages;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -1052,5 +1057,5 @@ public class ModuleClassLoader extends URLClassLoader {
 	public String toString() {
 		return "{ModuleClassLoader: uid=" + System.identityHashCode(this) + "; " + module + "}";
 	}
-	
+
 }

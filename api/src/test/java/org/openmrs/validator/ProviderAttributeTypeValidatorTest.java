@@ -22,7 +22,7 @@ import org.springframework.validation.Errors;
  * Tests methods on the {@link ProviderAttributeTypeValidator} class.
  */
 public class ProviderAttributeTypeValidatorTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see ProviderAttributeTypeValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -33,32 +33,32 @@ public class ProviderAttributeTypeValidatorTest extends BaseContextSensitiveTest
 		type.setDatatypeClassname("org.openmrs.customdatatype.datatype.FreeTextDatatype");
 		type.setDescription("description");
 		type.setRetireReason("retireReason");
-		
+
 		Errors errors = new BindException(type, "type");
 		new ProviderAttributeTypeValidator().validate(type, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see ProviderAttributeTypeValidator#validate(Object,Errors)
+	 * @see ProviderAttributeTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() {
 		ProviderAttributeType type = new ProviderAttributeType();
 		type
-		        .setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		type
-		        .setDatatypeClassname("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setDatatypeClassname("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		type.setDescription(new String(new char[655555]));
 		type
-		        .setPreferredHandlerClassname("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setPreferredHandlerClassname("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		type
-		        .setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
-		
+										.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+
 		Errors errors = new BindException(type, "type");
 		new ProviderAttributeTypeValidator().validate(type, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("name"));
 		assertTrue(errors.hasFieldErrors("datatypeClassname"));
 		assertTrue(errors.hasFieldErrors("description"));

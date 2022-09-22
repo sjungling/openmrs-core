@@ -21,12 +21,12 @@ import org.openmrs.api.context.Context;
  * @see Patient
  */
 public class PatientEditor extends OpenmrsPropertyEditor<Patient> {
-	
+
 	@Override
 	protected Patient getObjectById(Integer id) {
 		return Context.getPatientService().getPatient(id);
 	}
-	
+
 	@Override
 	protected Patient getObjectByUuid(String uuid) {
 		return Context.getPatientService().getPatientByUuid(uuid);

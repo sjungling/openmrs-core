@@ -26,12 +26,12 @@ import org.springframework.util.StringUtils;
  * @since 1.10.0
  */
 public class ProviderEditor extends PropertyEditorSupport {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ProviderEditor.class);
-	
+
 	public ProviderEditor() {
 	}
-	
+
 	/**
 	 * <strong>Should</strong> set using id
 	 * <strong>Should</strong> set using uuid
@@ -55,7 +55,7 @@ public class ProviderEditor extends PropertyEditorSupport {
 			setValue(null);
 		}
 	}
-	
+
 	@Override
 	public String getAsText() {
 		Provider p = (Provider) getValue();
@@ -65,5 +65,5 @@ public class ProviderEditor extends PropertyEditorSupport {
 			return p.getProviderId().toString();
 		}
 	}
-	
+
 }

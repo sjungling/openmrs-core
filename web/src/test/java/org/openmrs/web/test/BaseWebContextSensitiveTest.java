@@ -26,7 +26,7 @@ import org.springframework.test.context.ContextConfiguration;
  * 
  * @see https://issues.openmrs.org/browse/TRUNK-381?focusedCommentId=254292&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-254292
  */
-@ContextConfiguration(locations = { "classpath*:AltAuthSchemeTestingApplicationContext.xml" })
+@ContextConfiguration(locations = {"classpath*:AltAuthSchemeTestingApplicationContext.xml"})
 public abstract class BaseWebContextSensitiveTest extends BaseContextSensitiveTest {
 
 }

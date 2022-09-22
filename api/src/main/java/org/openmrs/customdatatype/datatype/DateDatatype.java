@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
 public class DateDatatype extends SerializingCustomDatatype<Date> {
 
 	static final String DATE_FORMAT = "yyyy-MM-dd";
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#doGetTextSummary(java.lang.Object)
 	 */
@@ -35,7 +35,7 @@ public class DateDatatype extends SerializingCustomDatatype<Date> {
 	public CustomDatatype.Summary doGetTextSummary(Date typedValue) {
 		return new CustomDatatype.Summary(Context.getDateFormat().format(typedValue), true);
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#deserialize(java.lang.String)
 	 * <strong>Should</strong> reconstruct a date serialized by this handler
@@ -52,7 +52,7 @@ public class DateDatatype extends SerializingCustomDatatype<Date> {
 			throw new InvalidCustomValueException("Invalid date: " + serializedValue);
 		}
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#serialize(java.lang.Object)
 	 * <strong>Should</strong> convert a date into a ymd string representation
@@ -61,5 +61,5 @@ public class DateDatatype extends SerializingCustomDatatype<Date> {
 	public String serialize(Date typedValue) {
 		return new SimpleDateFormat(DATE_FORMAT).format(typedValue);
 	}
-	
+
 }

@@ -21,19 +21,19 @@ package org.openmrs.api;
  * @since 2.1
  */
 public class InvalidOperationOnObjectException extends APIException {
-	
+
 	public InvalidOperationOnObjectException(String message) {
 		super(message);
 	}
-	
+
 	public InvalidOperationOnObjectException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	public InvalidOperationOnObjectException(String messageKey, Object[] parameters) {
 		super(messageKey, parameters);
 	}
-	
+
 	/**
 	 * @param clazz the type of the object on which the operation was attempted
 	 */

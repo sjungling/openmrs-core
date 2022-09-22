@@ -44,29 +44,29 @@ import liquibase.resource.ResourceAccessor;
  */
 
 public class DuplicateLocationAttributeTypeNameChangeSet implements CustomTaskChange {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(DuplicateLocationAttributeTypeNameChangeSet.class);
-	
+
 	@Override
 	public String getConfirmationMessage() {
 		return "Completed updating duplicate LocationAttributeType names";
 	}
-	
+
 	@Override
 	public void setFileOpener(ResourceAccessor arg0) {
-		
+
 	}
-	
+
 	@Override
 	public void setUp() throws SetupException {
 		// No setup actions
 	}
-	
+
 	@Override
 	public ValidationErrors validate(Database arg0) {
 		return null;
 	}
-	
+
 	/**
 	 * Method to perform validation and resolution of duplicate LocationAttributeType names
 	 */
@@ -84,11 +84,11 @@ public class DuplicateLocationAttributeTypeNameChangeSet implements CustomTaskCh
 			connection.setAutoCommit(false);
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery("SELECT * FROM location_attribute_type "
-			        + "INNER JOIN (SELECT name FROM location_attribute_type GROUP BY name HAVING count(name) > 1) "
-			        + "dup ON location_attribute_type.name = dup.name");
+											+ "INNER JOIN (SELECT name FROM location_attribute_type GROUP BY name HAVING count(name) > 1) "
+											+ "dup ON location_attribute_type.name = dup.name");
 			Integer id;
 			String name;
-			
+
 			while (rs.next()) {
 				id = rs.getInt("location_attribute_type_id");
 				name = rs.getString("name");
@@ -124,8 +124,8 @@ public class DuplicateLocationAttributeTypeNameChangeSet implements CustomTaskCh
 						}
 					} while (duplicateName);
 					pStmt = connection
-							.prepareStatement(
-									"update location_attribute_type set name = ?, changed_by = ?, date_changed = ? where location_attribute_type_id = ?");
+													.prepareStatement(
+																					"update location_attribute_type set name = ?, changed_by = ?, date_changed = ? where location_attribute_type_id = ?");
 					if (!duplicateResult.isEmpty()) {
 						pStmt.setString(1, newName);
 					}
@@ -167,7 +167,7 @@ public class DuplicateLocationAttributeTypeNameChangeSet implements CustomTaskCh
 			catch (DatabaseException e) {
 				log.warn("Failed to reset auto commit back to true", e);
 			}
-			
+
 			if (rs != null) {
 				try {
 					rs.close();
@@ -176,24 +176,24 @@ public class DuplicateLocationAttributeTypeNameChangeSet implements CustomTaskCh
 					log.warn("Failed to close the resultset object");
 				}
 			}
-			
+
 			if (stmt != null) {
 				try {
 					stmt.close();
 				}
 				catch (SQLException e) {
 					log
-					        .warn("Failed to close the select statement used to identify duplicate LocationAttributeType object names");
+													.warn("Failed to close the select statement used to identify duplicate LocationAttributeType object names");
 				}
 			}
-			
+
 			if (pStmt != null) {
 				try {
 					pStmt.close();
 				}
 				catch (SQLException e) {
 					log
-					        .warn("Failed to close the prepared statement used to update duplicate LocationAttributeType object names");
+													.warn("Failed to close the prepared statement used to update duplicate LocationAttributeType object names");
 				}
 			}
 		}

@@ -28,21 +28,21 @@ import org.springframework.util.StringUtils;
  * program
  */
 public class WorkflowCollectionEditor extends PropertyEditorSupport {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(WorkflowCollectionEditor.class);
-	
+
 	public WorkflowCollectionEditor() {
 	}
-	
+
 	private Program program = null;
-	
+
 	/**
 	 * @param program
 	 */
 	public WorkflowCollectionEditor(Program program) {
 		this.program = program;
 	}
-	
+
 	/**
 	 * Takes a "program_id:list" where program_id is the id of the program that this collection is
 	 * for (or not present, if it's a new program) and list is a space-separated list of concept
@@ -66,12 +66,13 @@ public class WorkflowCollectionEditor extends PropertyEditorSupport {
 					program = pws.getProgram(Integer.valueOf(progIdStr));
 				}
 			}
-			catch (Exception ex) {}
-			
+			catch (Exception ex) {
+			}
+
 			String[] conceptIds = text.split(" ");
 			Set<ProgramWorkflow> oldSet = program == null ? new HashSet<>() : program.getAllWorkflows();
 			Set<Integer> newConceptIds = new HashSet<>();
-			
+
 			for (String id : conceptIds) {
 				if (id.trim().length() == 0) {
 					continue;
@@ -79,7 +80,7 @@ public class WorkflowCollectionEditor extends PropertyEditorSupport {
 				log.debug("trying " + id);
 				newConceptIds.add(Integer.valueOf(id.trim()));
 			}
-			
+
 			// go through oldSet and see what we need to keep and what we need to unvoid
 			Set<Integer> alreadyDone = new HashSet<>();
 			for (ProgramWorkflow pw : oldSet) {
@@ -90,7 +91,7 @@ public class WorkflowCollectionEditor extends PropertyEditorSupport {
 				}
 				alreadyDone.add(pw.getConcept().getConceptId());
 			}
-			
+
 			// now add any new ones
 			newConceptIds.removeAll(alreadyDone);
 			for (Integer conceptId : newConceptIds) {
@@ -99,13 +100,13 @@ public class WorkflowCollectionEditor extends PropertyEditorSupport {
 				pw.setConcept(cs.getConcept(conceptId));
 				oldSet.add(pw);
 			}
-			
+
 			setValue(oldSet);
 		} else {
 			setValue(null);
 		}
 	}
-	
+
 	/**
 	 * Convert this program's workflows into "id: wkflowid wkflowid wkflowid"
 	 * 
@@ -136,5 +137,5 @@ public class WorkflowCollectionEditor extends PropertyEditorSupport {
 			return ret.toString().trim();
 		}
 	}
-	
+
 }

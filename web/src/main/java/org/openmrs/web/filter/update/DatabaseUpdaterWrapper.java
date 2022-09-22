@@ -14,10 +14,10 @@ import org.openmrs.liquibase.LiquibaseProvider;
 import org.openmrs.util.DatabaseUpdater;
 
 public class DatabaseUpdaterWrapper {
-	public List<DatabaseUpdater.OpenMRSChangeSet> getUnrunDatabaseChanges( LiquibaseProvider liquibaseProvider) throws Exception {
-		return DatabaseUpdater.getUnrunDatabaseChanges( liquibaseProvider );
+	public List<DatabaseUpdater.OpenMRSChangeSet> getUnrunDatabaseChanges(LiquibaseProvider liquibaseProvider) throws Exception {
+		return DatabaseUpdater.getUnrunDatabaseChanges(liquibaseProvider);
 	}
-	
+
 	public boolean isLocked() {
 		return DatabaseUpdater.isLocked();
 	}

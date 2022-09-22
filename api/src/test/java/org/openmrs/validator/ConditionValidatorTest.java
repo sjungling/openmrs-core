@@ -35,7 +35,7 @@ public class ConditionValidatorTest {
 
 	private static final String NULL_ERROR_MESSAGE = "The object parameter should not be null";
 	private static final String INCOMPATIBLE_ERROR_MESSAGE = "The object parameter should be of type " + Condition.class;
-	
+
 	private ConditionValidator validator;
 
 	private Condition condition;
@@ -43,26 +43,26 @@ public class ConditionValidatorTest {
 	private Errors errors;
 
 	@BeforeEach
-	public void setUp(){
+	public void setUp() {
 		validator = new ConditionValidator();
 		condition = new Condition();
 		errors = new BindException(condition, "condition");
 	}
 
 	@Test
-	public void shouldFailIfGivenNull(){
+	public void shouldFailIfGivenNull() {
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> validator.validate(null, errors));
 		assertThat(exception.getMessage(), is(NULL_ERROR_MESSAGE));
 	}
 
 	@Test
-	public void shouldFailIfGivenInstanceOfClassOtherThanCondition(){
+	public void shouldFailIfGivenInstanceOfClassOtherThanCondition() {
 		IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> validator.validate(new Cohort(), errors));
 		assertThat(exception.getMessage(), is(INCOMPATIBLE_ERROR_MESSAGE));
 	}
-	
+
 	@Test
-	public void shouldFailIfGivenConditionWithNullConditionProperties(){
+	public void shouldFailIfGivenConditionWithNullConditionProperties() {
 		Condition condition = new Condition();
 		validator.validate(condition, errors);
 		assertTrue(errors.hasFieldErrors("condition"));
@@ -70,7 +70,7 @@ public class ConditionValidatorTest {
 	}
 
 	@Test
-	public void shouldPassIfConditionClassIsPassedWithRequiredConditionProperties(){
+	public void shouldPassIfConditionClassIsPassedWithRequiredConditionProperties() {
 		Condition condition = new Condition();
 		condition.setCondition(new CodedOrFreeText(new Concept(), new ConceptName("name", new Locale("en")), "nonCoded"));
 		condition.setClinicalStatus(ConditionClinicalStatus.ACTIVE);

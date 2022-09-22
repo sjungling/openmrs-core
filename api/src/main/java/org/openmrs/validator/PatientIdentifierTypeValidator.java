@@ -22,9 +22,9 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { PatientIdentifierType.class }, order = 50)
+@Handler(supports = {PatientIdentifierType.class}, order = 50)
 public class PatientIdentifierTypeValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -34,7 +34,7 @@ public class PatientIdentifierTypeValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return c.equals(PatientIdentifierType.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -58,11 +58,11 @@ public class PatientIdentifierTypeValidator implements Validator {
 		} else {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name");
 			ValidateUtil.validateFieldLengths(errors, identifierType.getClass(), "name", "format", "formatDescription",
-			    "validator", "retireReason");
+											"validator", "retireReason");
 			PatientIdentifierType exist = Context.getPatientService().getPatientIdentifierTypeByName(
-			    identifierType.getName());
+											identifierType.getName());
 			if (exist != null && !exist.getRetired()
-			        && !OpenmrsUtil.nullSafeEquals(identifierType.getUuid(), exist.getUuid())) {
+											&& !OpenmrsUtil.nullSafeEquals(identifierType.getUuid(), exist.getUuid())) {
 				errors.rejectValue("name", "identifierType.duplicate.name");
 			}
 		}

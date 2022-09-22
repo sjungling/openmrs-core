@@ -29,7 +29,7 @@ import org.openmrs.api.context.Context;
  */
 @Handler(supports = Person.class)
 public class PersonVoidHandler implements VoidHandler<Person> {
-	
+
 	/**
 	 * Sets all personVoid* attributes to the given parameters.
 	 *
@@ -46,7 +46,7 @@ public class PersonVoidHandler implements VoidHandler<Person> {
 	 */
 	@Override
 	public void handle(Person person, User voidingUser, Date voidedDate, String voidReason) {
-		
+
 		// skip over all work if the object is already voided
 		if (!person.getPersonVoided()) {
 			if (person.getPersonId() != null) {
@@ -56,10 +56,10 @@ public class PersonVoidHandler implements VoidHandler<Person> {
 					us.retireUser(user, voidReason);
 				}
 			}
-			
+
 			person.setPersonVoided(true);
 			person.setPersonVoidReason(voidReason);
-			
+
 			if (person.getPersonVoidedBy() == null) {
 				person.setPersonVoidedBy(voidingUser);
 			}
@@ -68,5 +68,5 @@ public class PersonVoidHandler implements VoidHandler<Person> {
 			}
 		}
 	}
-	
+
 }

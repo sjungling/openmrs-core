@@ -24,9 +24,9 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
  * Tests the {@link ConceptNameSaveHandler} class.
  */
 public class ConceptNameSaveHandlerTest extends BaseContextSensitiveTest {
-	
+
 	/**
-	 * @see ConceptNameSaveHandler#handle(ConceptName,User,Date,String)
+	 * @see ConceptNameSaveHandler#handle(ConceptName, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotFailIfTagsIsNull() {
@@ -35,9 +35,9 @@ public class ConceptNameSaveHandlerTest extends BaseContextSensitiveTest {
 		name.setTags(null);
 		handler.handle(name, null, null, null);
 	}
-	
+
 	/**
-	 * @see ConceptNameSaveHandler#handle(ConceptName,User,Date,String)
+	 * @see ConceptNameSaveHandler#handle(ConceptName, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldReplaceTagsWithoutIdsWithDatabaseFetchedTag() {
@@ -54,9 +54,9 @@ public class ConceptNameSaveHandlerTest extends BaseContextSensitiveTest {
 			}
 		}
 	}
-	
+
 	/**
-	 * @see ConceptNameSaveHandler#handle(ConceptName,User,Date,String)
+	 * @see ConceptNameSaveHandler#handle(ConceptName, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotReplaceTagsWithoutIdsThatAreNotInTheDatabase() {
@@ -67,9 +67,9 @@ public class ConceptNameSaveHandlerTest extends BaseContextSensitiveTest {
 		ConceptNameTag newTag = name.getTags().iterator().next();
 		assertNull(newTag.getConceptNameTagId());
 	}
-	
+
 	/**
-	 * @see ConceptNameSaveHandler#handle(ConceptName,User,Date,String)
+	 * @see ConceptNameSaveHandler#handle(ConceptName, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotReplaceTagsThatHaveIds() {

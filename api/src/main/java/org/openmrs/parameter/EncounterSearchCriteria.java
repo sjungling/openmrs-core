@@ -28,27 +28,27 @@ import org.openmrs.VisitType;
  * @see EncounterSearchCriteriaBuilder
  */
 public class EncounterSearchCriteria {
-	
+
 	private Patient patient;
-	
+
 	private Location location;
-	
+
 	private Date fromDate;
-	
+
 	private Date toDate;
-	
+
 	private Date dateChanged;
-	
+
 	private Collection<Form> enteredViaForms;
-	
+
 	private Collection<EncounterType> encounterTypes;
-	
+
 	private Collection<Provider> providers;
-	
+
 	private Collection<VisitType> visitTypes;
-	
+
 	private Collection<Visit> visits;
-	
+
 	private boolean includeVoided;
 
 	/**
@@ -66,9 +66,9 @@ public class EncounterSearchCriteria {
 	 * @param includeVoided whether to include the voided encounters or not
 	 */
 	public EncounterSearchCriteria(Patient patient, Location location, Date fromDate, Date toDate, Date dateChanged,
-								   Collection<Form> enteredViaForms, Collection<EncounterType> encounterTypes,
-								   Collection<Provider> providers, Collection<VisitType> visitTypes,
-								   Collection<Visit> visits, boolean includeVoided) {
+									Collection<Form> enteredViaForms, Collection<EncounterType> encounterTypes,
+									Collection<Provider> providers, Collection<VisitType> visitTypes,
+									Collection<Visit> visits, boolean includeVoided) {
 		this.patient = patient;
 		this.location = location;
 		this.fromDate = fromDate;
@@ -88,14 +88,14 @@ public class EncounterSearchCriteria {
 	public Patient getPatient() {
 		return patient;
 	}
-	
+
 	/**
 	 * @return the location this encounter took place
 	 */
 	public Location getLocation() {
 		return location;
 	}
-	
+
 	/**
 	 * @return the minimum date (inclusive) this encounter took place
 	 */

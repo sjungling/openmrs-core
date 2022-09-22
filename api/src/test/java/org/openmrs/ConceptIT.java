@@ -20,7 +20,7 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
  * Contains integration tests of the Concept class.
  */
 public class ConceptIT extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see Concept#getName(java.util.Locale, boolean)
 	 */
@@ -29,10 +29,10 @@ public class ConceptIT extends BaseContextSensitiveTest {
 		Concept concept = new Concept();
 		ConceptName frenchConceptName = new ConceptName("frenchName", Locale.FRENCH);
 		ConceptName englishConceptName = new ConceptName("enqlishName", Locale.ENGLISH);
-		
+
 		concept.addName(englishConceptName);
 		concept.addName(frenchConceptName);
-		
+
 		assertEquals(frenchConceptName, concept.getName(Locale.FRENCH));
 	}
 }

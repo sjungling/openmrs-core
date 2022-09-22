@@ -21,7 +21,7 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
 import org.openmrs.util.databasechange.Database1_9_7UpgradeIT;
 
 public class UpgradeUtilTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @throws IOException
 	 * @see org.openmrs.util.UpgradeUtil#getConceptIdForUnits(String)
@@ -29,13 +29,13 @@ public class UpgradeUtilTest extends BaseContextSensitiveTest {
 	@Test
 	public void getConceptIdForUnits_shouldReturnConcept_idForDrug_order_quantity_units() throws IOException {
 		Database1_9_7UpgradeIT.createOrderEntryUpgradeFileWithTestData("mg=5401" + "\n" + "drug_order_quantity_units=5403"
-		        + "\n" + "ounces=5402");
-		
+										+ "\n" + "ounces=5402");
+
 		Integer conceptId = UpgradeUtil.getConceptIdForUnits("drug_order_quantity_units");
-		
+
 		assertThat(conceptId, Is.is(5403));
 	}
-	
+
 	/**
 	 * @throws IOException
 	 * @see org.openmrs.util.UpgradeUtil#getConceptIdForUnits(String)

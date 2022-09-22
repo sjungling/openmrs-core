@@ -30,7 +30,7 @@ import org.openmrs.aop.RequiredDataAdvice;
  * @since 1.5
  */
 public interface VoidHandler<V extends Voidable> extends RequiredDataHandler<V> {
-	
+
 	/**
 	 * Implementing classes should set all void attributes to the given parameters.
 	 * 

@@ -18,7 +18,7 @@ import org.openmrs.api.context.Context;
  * org.openmrs.api.APIException: Service not found: interface org.openmrs.messagesource.MessageSourceService
  */
 public class DefaultMessageSourceServiceImplTest {
-	
+
 	@Test
 	public void getMessageSourceService_shouldNotThrowServiceNotFoundException() {
 		Context.getMessageSourceService();

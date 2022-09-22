@@ -21,15 +21,15 @@ import org.openmrs.api.context.Context;
  * @see PatientIdentifierType
  */
 public class PatientIdentifierTypeEditor extends OpenmrsPropertyEditor<PatientIdentifierType> {
-	
+
 	public PatientIdentifierTypeEditor() {
 	}
-	
+
 	@Override
 	protected PatientIdentifierType getObjectById(Integer id) {
 		return Context.getPatientService().getPatientIdentifierType(id);
 	}
-	
+
 	@Override
 	protected PatientIdentifierType getObjectByUuid(String uuid) {
 		return Context.getPatientService().getPatientIdentifierTypeByUuid(uuid);

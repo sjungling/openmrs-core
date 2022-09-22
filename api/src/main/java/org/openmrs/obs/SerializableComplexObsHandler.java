@@ -23,7 +23,7 @@ import org.openmrs.FormField;
  * @since 1.10
  */
 public interface SerializableComplexObsHandler extends ComplexObsHandler {
-	
+
 	/**
 	 * Gets the form fields that should be added to the forms using complex concepts that are
 	 * associated to this handler
@@ -31,7 +31,7 @@ public interface SerializableComplexObsHandler extends ComplexObsHandler {
 	 * @return Set of form fields
 	 */
 	public Set<FormField> getFormFields();
-	
+
 	/**
 	 * Transforms the incoming data from one format to another. For example, this can be useful if
 	 * the data is to be sent as an hl7 message which doesn't support xml
@@ -40,5 +40,5 @@ public interface SerializableComplexObsHandler extends ComplexObsHandler {
 	 * @return the serialized form data
 	 */
 	public String serializeFormData(String data);
-	
+
 }

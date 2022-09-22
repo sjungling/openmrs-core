@@ -23,18 +23,18 @@ import org.openmrs.util.InputRequiredException;
  * @since 1.9
  */
 public class WebDaemon extends Daemon {
-	
+
 	/**
 	 * Start openmrs in a new thread that is authenticated as the daemon user.
 	 * 
 	 * @param servletContext the servlet context.
 	 */
 	public static void startOpenmrs(final ServletContext servletContext) throws DatabaseUpdateException,
-	        InputRequiredException {
-		
+									InputRequiredException {
+
 		// create a new thread and start openmrs in it.
 		DaemonThread startOpenmrsThread = new DaemonThread() {
-			
+
 			@Override
 			public void run() {
 				isDaemonThread.set(true);
@@ -49,9 +49,9 @@ public class WebDaemon extends Daemon {
 				}
 			}
 		};
-		
+
 		startOpenmrsThread.start();
-		
+
 		// wait for the "startOpenmrs" thread to finish
 		try {
 			startOpenmrsThread.join();
@@ -59,10 +59,10 @@ public class WebDaemon extends Daemon {
 		catch (InterruptedException e) {
 			// ignore
 		}
-		
+
 		if (startOpenmrsThread.getExceptionThrown() != null) {
 			throw new ModuleException("Unable to start OpenMRS. Error thrown was: "
-			        + startOpenmrsThread.getExceptionThrown().getMessage(), startOpenmrsThread.getExceptionThrown());
+											+ startOpenmrsThread.getExceptionThrown().getMessage(), startOpenmrsThread.getExceptionThrown());
 		}
 	}
 }

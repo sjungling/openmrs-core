@@ -22,10 +22,10 @@ package org.openmrs.logic.op;
  * @see LessThanEquals
  */
 public class GreaterThan implements ComparisonOperator {
-	
+
 	@Override
 	public String toString() {
 		return "GREATER THAN";
 	}
-	
+
 }

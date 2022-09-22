@@ -42,7 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
  * </pre>
  */
 public interface ProgramWorkflowService extends OpenmrsService {
-	
+
 	/**
 	 * Setter for the ProgramWorkflow DataAccessObject (DAO). The DAO is used for saving and
 	 * retrieving from the database
@@ -50,7 +50,7 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * @param dao - The DAO for this service
 	 */
 	public void setProgramWorkflowDAO(ProgramWorkflowDAO dao);
-	
+
 	// **************************
 	// PROGRAM
 	// **************************
@@ -67,9 +67,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> save states associated with program
 	 * <strong>Should</strong> update detached program
 	 */
-	@Authorized( { PrivilegeConstants.MANAGE_PROGRAMS })
+	@Authorized({PrivilegeConstants.MANAGE_PROGRAMS})
 	public Program saveProgram(Program program) throws APIException;
-	
+
 	/**
 	 * Returns a program given that programs primary key <code>programId</code> A null value is
 	 * returned if no program exists with this programId.
@@ -80,9 +80,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> return program matching the given programId
 	 * <strong>Should</strong> return null when programId does not exist
 	 */
-	@Authorized( { PrivilegeConstants.GET_PROGRAMS })
+	@Authorized({PrivilegeConstants.GET_PROGRAMS})
 	public Program getProgram(Integer programId) throws APIException;
-	
+
 	/**
 	 * Returns a program given the program's exact <code>name</code> A null value is returned if
 	 * there is no program with this name
@@ -96,9 +96,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> return null when program does not exist with given name
 	 * <strong>Should</strong> fail when two programs found with same name
 	 */
-	@Authorized( { PrivilegeConstants.GET_PROGRAMS })
+	@Authorized({PrivilegeConstants.GET_PROGRAMS})
 	public Program getProgramByName(String name) throws APIException;
-	
+
 	/**
 	 * Returns all programs, includes retired programs. This method delegates to the
 	 * #getAllPrograms(boolean) method
@@ -106,9 +106,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * @return List&lt;Program&gt; of all existing programs, including retired programs
 	 * @throws APIException
 	 */
-	@Authorized( { PrivilegeConstants.GET_PROGRAMS })
+	@Authorized({PrivilegeConstants.GET_PROGRAMS})
 	public List<Program> getAllPrograms() throws APIException;
-	
+
 	/**
 	 * Returns all programs
 	 * 
@@ -118,9 +118,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> return all programs including retired when includeRetired equals true
 	 * <strong>Should</strong> return all programs excluding retired when includeRetired equals false
 	 */
-	@Authorized( { PrivilegeConstants.GET_PROGRAMS })
+	@Authorized({PrivilegeConstants.GET_PROGRAMS})
 	public List<Program> getAllPrograms(boolean includeRetired) throws APIException;
-	
+
 	/**
 	 * Returns programs that match the given string. A null list will never be returned. An empty
 	 * list will be returned if there are no programs matching this <code>nameFragment</code>
@@ -139,9 +139,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> return programs ordered by name
 	 * <strong>Should</strong> return empty list when nameFragment does not match any
 	 */
-	@Authorized( { PrivilegeConstants.GET_PROGRAMS })
+	@Authorized({PrivilegeConstants.GET_PROGRAMS})
 	public List<Program> getPrograms(String nameFragment) throws APIException;
-	
+
 	/**
 	 * Completely remove a program from the database (not reversible) This method delegates to
 	 * #purgeProgram(program, boolean) method
@@ -150,9 +150,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * @throws APIException
 	 * <strong>Should</strong> delete program successfully
 	 */
-	@Authorized( { PrivilegeConstants.MANAGE_PROGRAMS })
+	@Authorized({PrivilegeConstants.MANAGE_PROGRAMS})
 	public void purgeProgram(Program program) throws APIException;
-	
+
 	/**
 	 * Completely remove a program from the database (not reversible)
 	 * 
@@ -163,9 +163,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> throw APIException when given cascade equals true
 	 * <strong>Should</strong> purge program with patients enrolled
 	 */
-	@Authorized( { PrivilegeConstants.MANAGE_PROGRAMS })
+	@Authorized({PrivilegeConstants.MANAGE_PROGRAMS})
 	public void purgeProgram(Program program, boolean cascade) throws APIException;
-	
+
 	/**
 	 * Retires the given program
 	 * 
@@ -177,9 +177,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> retire workflows associated with given program
 	 * <strong>Should</strong> retire states associated with given program
 	 */
-	@Authorized( { PrivilegeConstants.MANAGE_PROGRAMS })
+	@Authorized({PrivilegeConstants.MANAGE_PROGRAMS})
 	public Program retireProgram(Program program, String reason) throws APIException;
-	
+
 	/**
 	 * Unretires the given program
 	 * 
@@ -190,9 +190,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> unretire workflows associated with given program
 	 * <strong>Should</strong> unretire states associated with given program
 	 */
-	@Authorized( { PrivilegeConstants.MANAGE_PROGRAMS })
+	@Authorized({PrivilegeConstants.MANAGE_PROGRAMS})
 	public Program unretireProgram(Program program) throws APIException;
-	
+
 	// **************************
 	// PATIENT PROGRAM 
 	// **************************
@@ -209,7 +209,7 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> throw error when multiple programs with same uuid are found
 	 */
 	public Program getProgramByUuid(String uuid);
-	
+
 	/**
 	 * Get a program state by its uuid. There should be only one of these in the database. If
 	 * multiple are found, an error is thrown.
@@ -222,7 +222,7 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> throw error when multiple program states with same uuid are found
 	 */
 	public PatientState getPatientStateByUuid(String uuid);
-	
+
 	/**
 	 * Save patientProgram to database (create if new or update if changed)
 	 * 
@@ -233,9 +233,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> save patient program successfully
 	 * <strong>Should</strong> return patient program with assigned patient program id
 	 */
-	@Authorized( { PrivilegeConstants.ADD_PATIENT_PROGRAMS, PrivilegeConstants.EDIT_PATIENT_PROGRAMS })
+	@Authorized({PrivilegeConstants.ADD_PATIENT_PROGRAMS, PrivilegeConstants.EDIT_PATIENT_PROGRAMS})
 	public PatientProgram savePatientProgram(PatientProgram patientProgram) throws APIException;
-	
+
 	/**
 	 * Returns a PatientProgram given that PatientPrograms primary key <code>patientProgramId</code>
 	 * A null value is returned if no PatientProgram exists with this patientProgramId.
@@ -248,9 +248,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> get patient program with given identifier
 	 * <strong>Should</strong> return null if program does not exist
 	 */
-	@Authorized( { PrivilegeConstants.GET_PATIENT_PROGRAMS })
+	@Authorized({PrivilegeConstants.GET_PATIENT_PROGRAMS})
 	public PatientProgram getPatientProgram(Integer patientProgramId) throws APIException;
-	
+
 	/**
 	 * Returns PatientPrograms that match the input parameters. If an input parameter is set to
 	 * null, the parameter will not be used. Calling this method will all null parameters will
@@ -282,11 +282,11 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> return all patient programs when all parameters are null
 	 * <strong>Should</strong> return empty list when matches not found
 	 */
-	@Authorized( { PrivilegeConstants.GET_PATIENT_PROGRAMS })
+	@Authorized({PrivilegeConstants.GET_PATIENT_PROGRAMS})
 	public List<PatientProgram> getPatientPrograms(Patient patient, Program program, Date minEnrollmentDate,
-	        Date maxEnrollmentDate, Date minCompletionDate, Date maxCompletionDate, boolean includeVoided)
-	        throws APIException;
-	
+									Date maxEnrollmentDate, Date minCompletionDate, Date maxCompletionDate, boolean includeVoided)
+									throws APIException;
+
 	/**
 	 * Completely remove a patientProgram from the database (not reversible) This method delegates
 	 * to #purgePatientProgram(patientProgram, boolean) method
@@ -295,9 +295,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * @throws APIException
 	 * <strong>Should</strong> delete patient program from database without cascade
 	 */
-	@Authorized( { PrivilegeConstants.PURGE_PATIENT_PROGRAMS })
+	@Authorized({PrivilegeConstants.PURGE_PATIENT_PROGRAMS})
 	public void purgePatientProgram(PatientProgram patientProgram) throws APIException;
-	
+
 	/**
 	 * Completely remove a patientProgram from the database (not reversible)
 	 * 
@@ -308,9 +308,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> cascade delete patient program states when cascade equals true
 	 * <strong>Should</strong> not cascade delete patient program states when cascade equals false
 	 */
-	@Authorized( { PrivilegeConstants.PURGE_PATIENT_PROGRAMS })
+	@Authorized({PrivilegeConstants.PURGE_PATIENT_PROGRAMS})
 	public void purgePatientProgram(PatientProgram patientProgram, boolean cascade) throws APIException;
-	
+
 	/**
 	 * Voids the given patientProgram
 	 * 
@@ -321,9 +321,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> void patient program when reason is valid
 	 * <strong>Should</strong> fail when reason is empty
 	 */
-	@Authorized( { PrivilegeConstants.DELETE_PATIENT_PROGRAMS })
+	@Authorized({PrivilegeConstants.DELETE_PATIENT_PROGRAMS})
 	public PatientProgram voidPatientProgram(PatientProgram patientProgram, String reason) throws APIException;
-	
+
 	/**
 	 * Unvoids the given patientProgram
 	 * 
@@ -332,9 +332,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * @throws APIException
 	 * <strong>Should</strong> void patient program when reason is valid
 	 */
-	@Authorized( { PrivilegeConstants.DELETE_PATIENT_PROGRAMS })
+	@Authorized({PrivilegeConstants.DELETE_PATIENT_PROGRAMS})
 	public PatientProgram unvoidPatientProgram(PatientProgram patientProgram) throws APIException;
-	
+
 	/**
 	 * Get all possible outcome concepts for a program. Will return all concept answers
 	 * {@link org.openmrs.Concept#getAnswers()} if they exist, then all concept set members
@@ -343,9 +343,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * @param programId
 	 * @return outcome concepts or empty List if none exist
 	 */
-	@Authorized( { PrivilegeConstants.GET_PROGRAMS })
+	@Authorized({PrivilegeConstants.GET_PROGRAMS})
 	public List<Concept> getPossibleOutcomes(Integer programId);
-	
+
 	// **************************
 	// CONCEPT STATE CONVERSION
 	// **************************
@@ -358,7 +358,7 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * @since 2.2.0
 	 */
 	public ProgramWorkflow getWorkflow(Integer workflowId);
-	
+
 	/**
 	 * Get ProgramWorkflow by its UUID
 	 * 
@@ -368,7 +368,7 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> return null if no object found with given uuid
 	 */
 	public ProgramWorkflow getWorkflowByUuid(String uuid);
-	
+
 	/**
 	 * Save ConceptStateConversion to database (create if new or update if changed)
 	 * 
@@ -377,10 +377,10 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * @throws APIException
 	 * <strong>Should</strong> save state conversion
 	 */
-	@Authorized( { PrivilegeConstants.ADD_PATIENT_PROGRAMS, PrivilegeConstants.EDIT_PATIENT_PROGRAMS })
+	@Authorized({PrivilegeConstants.ADD_PATIENT_PROGRAMS, PrivilegeConstants.EDIT_PATIENT_PROGRAMS})
 	public ConceptStateConversion saveConceptStateConversion(ConceptStateConversion conceptStateConversion)
-	        throws APIException;
-	
+									throws APIException;
+
 	/**
 	 * Returns a conceptStateConversion given that conceptStateConversions primary key
 	 * <code>conceptStateConversionId</code> A null value is returned if no conceptStateConversion
@@ -393,9 +393,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * @throws APIException
 	 * <strong>Should</strong> return concept state conversion for given identifier
 	 */
-	@Authorized( { PrivilegeConstants.GET_PROGRAMS })
+	@Authorized({PrivilegeConstants.GET_PROGRAMS})
 	public ConceptStateConversion getConceptStateConversion(Integer conceptStateConversionId) throws APIException;
-	
+
 	/**
 	 * Returns all conceptStateConversions
 	 * 
@@ -403,9 +403,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * @throws APIException
 	 * <strong>Should</strong> return all concept state conversions
 	 */
-	@Authorized( { PrivilegeConstants.GET_PROGRAMS })
+	@Authorized({PrivilegeConstants.GET_PROGRAMS})
 	public List<ConceptStateConversion> getAllConceptStateConversions() throws APIException;
-	
+
 	/**
 	 * Completely remove a conceptStateConversion from the database (not reversible) This method
 	 * delegates to #purgeConceptStateConversion(conceptStateConversion, boolean) method
@@ -413,9 +413,9 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * @param conceptStateConversion the ConceptStateConversion to clean out of the database.
 	 * @throws APIException
 	 */
-	@Authorized( { PrivilegeConstants.MANAGE_PROGRAMS })
+	@Authorized({PrivilegeConstants.MANAGE_PROGRAMS})
 	public void purgeConceptStateConversion(ConceptStateConversion conceptStateConversion) throws APIException;
-	
+
 	/**
 	 * Completely remove a conceptStateConversion from the database (not reversible)
 	 * 
@@ -425,10 +425,10 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> cascade delete given concept state conversion when given cascade is true
 	 * <strong>Should</strong> not cascade delete given concept state conversion when given cascade is false
 	 */
-	@Authorized( { PrivilegeConstants.MANAGE_PROGRAMS })
+	@Authorized({PrivilegeConstants.MANAGE_PROGRAMS})
 	public void purgeConceptStateConversion(ConceptStateConversion conceptStateConversion, boolean cascade)
-	        throws APIException;
-		
+									throws APIException;
+
 	/**
 	 * Retrieves the ConceptStateConversion that matches the passed <code>ProgramWorkflow</code> and
 	 * <code>Concept</code>
@@ -441,7 +441,7 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> return concept state conversion for given workflow and trigger
 	 */
 	public ConceptStateConversion getConceptStateConversion(ProgramWorkflow workflow, Concept trigger) throws APIException;
-	
+
 	/**
 	 * Get {@code ProgramWorkflowState} by internal identifier.
 	 * 
@@ -450,7 +450,7 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * @since 2.2.0
 	 */
 	public ProgramWorkflowState getState(Integer stateId);
-	
+
 	/**
 	 * Get a state by its uuid. There should be only one of these in the database. If multiple are
 	 * found, an error is thrown.
@@ -463,7 +463,7 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> throw an error when multiple states with same uuid are found
 	 */
 	public ProgramWorkflowState getStateByUuid(String uuid);
-					
+
 	/**
 	 * Get a patient program by its uuid. There should be only one of these in the database. If
 	 * multiple are found, an error is thrown.
@@ -476,7 +476,7 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> throw an error when multiple patient programs with same uuid are found
 	 */
 	public PatientProgram getPatientProgramByUuid(String uuid);
-	
+
 	/**
 	 * 
 	 * @param cohort
@@ -492,36 +492,36 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 * <strong>Should</strong> not fail when given cohort is empty
 	 * <strong>Should</strong> not fail when given program is empty
 	 */
-	@Authorized( { PrivilegeConstants.GET_PATIENT_PROGRAMS })
+	@Authorized({PrivilegeConstants.GET_PATIENT_PROGRAMS})
 	public List<PatientProgram> getPatientPrograms(Cohort cohort, Collection<Program> programs);
-		
+
 	/**
 	 * Returns a list of Programs that are using a particular concept.
 	 * 
 	 * @param concept - The Concept being used.
 	 * @return - A List of Programs
 	 */
-	@Authorized( { PrivilegeConstants.GET_PATIENT_PROGRAMS })
+	@Authorized({PrivilegeConstants.GET_PATIENT_PROGRAMS})
 	public List<Program> getProgramsByConcept(Concept concept);
-	
+
 	/**
 	 * Returns a list of ProgramWorkflows that are using a particular concept.
 	 * 
 	 * @param concept - The Concept being used.
 	 * @return - A List of ProgramWorkflows
 	 */
-	@Authorized( { PrivilegeConstants.GET_PATIENT_PROGRAMS })
+	@Authorized({PrivilegeConstants.GET_PATIENT_PROGRAMS})
 	public List<ProgramWorkflow> getProgramWorkflowsByConcept(Concept concept);
-	
+
 	/**
 	 * Returns a list of ProgramWorkflowStates that are using a particular concept.
 	 * 
 	 * @param concept - The Concept being used.
 	 * @return - A List of ProgramWorkflowStates
 	 */
-	@Authorized( { PrivilegeConstants.GET_PATIENT_PROGRAMS })
+	@Authorized({PrivilegeConstants.GET_PATIENT_PROGRAMS})
 	public List<ProgramWorkflowState> getProgramWorkflowStatesByConcept(Concept concept);
-	
+
 	/**
 	 * Get a concept state conversion by its uuid. There should be only one of these in the
 	 * database. If multiple are found, an error is thrown.
@@ -535,31 +535,31 @@ public interface ProgramWorkflowService extends OpenmrsService {
 	 */
 	public ConceptStateConversion getConceptStateConversionByUuid(String uuid);
 
-        @Transactional(readOnly = true)
-        @Authorized({"Get Patient Program Attribute Types"})
-        public List<ProgramAttributeType> getAllProgramAttributeTypes();
+	@Transactional(readOnly = true)
+	@Authorized({"Get Patient Program Attribute Types"})
+	public List<ProgramAttributeType> getAllProgramAttributeTypes();
 
-        @Transactional(readOnly = true)
-        @Authorized({"Get Patient Program Attribute Types"})
-        public ProgramAttributeType getProgramAttributeType(Integer var1);
+	@Transactional(readOnly = true)
+	@Authorized({"Get Patient Program Attribute Types"})
+	public ProgramAttributeType getProgramAttributeType(Integer var1);
 
-        @Transactional(readOnly = true)
-        @Authorized({"Get Patient Program Attribute Types"})
-        public ProgramAttributeType getProgramAttributeTypeByUuid(String var1);
+	@Transactional(readOnly = true)
+	@Authorized({"Get Patient Program Attribute Types"})
+	public ProgramAttributeType getProgramAttributeTypeByUuid(String var1);
 
-        @Authorized({"Manage Patient Program Attribute Types"})
-        public ProgramAttributeType saveProgramAttributeType(ProgramAttributeType var1);
+	@Authorized({"Manage Patient Program Attribute Types"})
+	public ProgramAttributeType saveProgramAttributeType(ProgramAttributeType var1);
 
-        @Authorized({"Purge Patient Program Attribute Types"})
-        public void purgeProgramAttributeType(ProgramAttributeType var1);
+	@Authorized({"Purge Patient Program Attribute Types"})
+	public void purgeProgramAttributeType(ProgramAttributeType var1);
 
-        @Transactional(readOnly = true)
-        @Authorized({"Get Patient Programs"})
-        public PatientProgramAttribute getPatientProgramAttributeByUuid(String var1);
+	@Transactional(readOnly = true)
+	@Authorized({"Get Patient Programs"})
+	public PatientProgramAttribute getPatientProgramAttributeByUuid(String var1);
 
-        public Map<Object, Object> getPatientProgramAttributeByAttributeName(List<Integer> patients, String attributeName);
+	public Map<Object, Object> getPatientProgramAttributeByAttributeName(List<Integer> patients, String attributeName);
 
-        @Transactional(readOnly = true)
-        @Authorized({"Get Patient Programs"})
-        public List<PatientProgram> getPatientProgramByAttributeNameAndValue(String attributeName, String attributeValue);       
+	@Transactional(readOnly = true)
+	@Authorized({"Get Patient Programs"})
+	public List<PatientProgram> getPatientProgramByAttributeNameAndValue(String attributeName, String attributeValue);
 }

@@ -58,17 +58,17 @@ public class DiagnosisServiceImplTest extends BaseContextSensitiveTest {
 	private ConditionService conditionService;
 
 	@BeforeEach
-	public void setUp (){
-		if(diagnosisService == null){
+	public void setUp() {
+		if (diagnosisService == null) {
 			diagnosisService = Context.getDiagnosisService();
 		}
-		if(patientService == null){
+		if (patientService == null) {
 			patientService = Context.getPatientService();
 		}
-		if(conditionService == null){
+		if (conditionService == null) {
 			conditionService = Context.getConditionService();
 		}
-		if(encounterService == null){
+		if (encounterService == null) {
 			encounterService = Context.getEncounterService();
 		}
 		if (visitService == null) {
@@ -82,7 +82,7 @@ public class DiagnosisServiceImplTest extends BaseContextSensitiveTest {
 	 * @see DiagnosisService#save(Diagnosis) 
 	 */
 	@Test
-	public void saveDiagnosis_shouldSaveNewDiagnosis(){
+	public void saveDiagnosis_shouldSaveNewDiagnosis() {
 		String uuid = "a303bbfb-w5w4-25d1-9f11-4f33f99d456r";
 		Condition condition = conditionService.getConditionByUuid("2cc6880e-2c46-15e4-9038-a6c5e4d22fb7");
 		Encounter encounter = encounterService.getEncounterByUuid("y403fafb-e5e4-42d0-9d11-4f52e89d123r");
@@ -94,15 +94,15 @@ public class DiagnosisServiceImplTest extends BaseContextSensitiveTest {
 		diagnosis.setCertainty(ConditionVerificationStatus.CONFIRMED);
 		diagnosis.setPatient(patient);
 		diagnosis.setRank(2);
-		
+
 		final String NAMESPACE = "namespace";
 		final String FORMFIELD_PATH = "formFieldPath";
 		diagnosis.setFormField(NAMESPACE, FORMFIELD_PATH);
-		
+
 		diagnosisService.save(diagnosis);
-		
+
 		Diagnosis savedDiagnosis = diagnosisService.getDiagnosisByUuid(uuid);
-		
+
 		assertEquals(uuid, savedDiagnosis.getUuid());
 		assertEquals(condition, savedDiagnosis.getCondition());
 		assertEquals(encounter, savedDiagnosis.getEncounter());
@@ -117,7 +117,7 @@ public class DiagnosisServiceImplTest extends BaseContextSensitiveTest {
 	 */
 	@Test
 	public void getDiagnosisByUuid_shouldFindDiagnosisGivenValidUuid() {
-		String uuid="68802cce-6880-17e4-6880-a68804d22fb7";
+		String uuid = "68802cce-6880-17e4-6880-a68804d22fb7";
 		Diagnosis diagnosis = diagnosisService.getDiagnosisByUuid(uuid);
 		assertEquals(uuid, diagnosis.getUuid());
 	}
@@ -138,7 +138,7 @@ public class DiagnosisServiceImplTest extends BaseContextSensitiveTest {
 	 * @see DiagnosisService#getPrimaryDiagnoses(Encounter) 
 	 */
 	@Test
-	public void getPrimaryDiagnoses_shouldGetPrimaryDiagnoses(){
+	public void getPrimaryDiagnoses_shouldGetPrimaryDiagnoses() {
 		Encounter encounter = encounterService.getEncounterByUuid("y403fafb-e5e4-42d0-9d11-4f52e89d123r");
 		List<Diagnosis> diagnoses = diagnosisService.getPrimaryDiagnoses(encounter);
 		assertEquals(1, diagnoses.size());
@@ -151,7 +151,7 @@ public class DiagnosisServiceImplTest extends BaseContextSensitiveTest {
 	 * @see DiagnosisService#getDiagnoses(Patient, Date) 
 	 */
 	@Test
-	public void getDiagnoses_shouldGetDiagnosesOfPatientWithDate(){
+	public void getDiagnoses_shouldGetDiagnosesOfPatientWithDate() {
 		Calendar calendar = new GregorianCalendar(2015, 12, 1, 0, 0, 0);
 		Patient patient = patientService.getPatient(2);
 		List<Diagnosis> diagnoses = diagnosisService.getDiagnoses(patient, calendar.getTime());
@@ -164,7 +164,7 @@ public class DiagnosisServiceImplTest extends BaseContextSensitiveTest {
 	 * @see DiagnosisService#getDiagnoses(Patient, Date)
 	 */
 	@Test
-	public void getDiagnoses_shouldGetDiagnosesOfPatientWithDifferentDate(){
+	public void getDiagnoses_shouldGetDiagnosesOfPatientWithDifferentDate() {
 		Calendar calendar = new GregorianCalendar(2016, 12, 1, 0, 0, 0);
 		Patient patient = patientService.getPatient(2);
 		List<Diagnosis> diagnoses = diagnosisService.getDiagnoses(patient, calendar.getTime());
@@ -176,7 +176,7 @@ public class DiagnosisServiceImplTest extends BaseContextSensitiveTest {
 	 * @see DiagnosisService#getDiagnoses(Patient, Date)
 	 */
 	@Test
-	public void getDiagnoses_shouldGetDiagnosesOfPatientWithoutDate(){
+	public void getDiagnoses_shouldGetDiagnosesOfPatientWithoutDate() {
 		Patient patient = patientService.getPatient(2);
 		List<Diagnosis> diagnoses = diagnosisService.getDiagnoses(patient, null);
 		assertEquals(3, diagnoses.size());
@@ -189,10 +189,10 @@ public class DiagnosisServiceImplTest extends BaseContextSensitiveTest {
 	 * @see DiagnosisService#getUniqueDiagnoses(Patient, Date) 
 	 */
 	@Test
-	public void getUniqueDiagnoses_shouldGetUniqueDiagnosesOfPatient(){
+	public void getUniqueDiagnoses_shouldGetUniqueDiagnosesOfPatient() {
 		Patient patient = patientService.getPatient(2);
 		List<Diagnosis> diagnoses = diagnosisService.getUniqueDiagnoses(patient, new Date(0));
-		
+
 		assertEquals("68802cce-6880-17e4-6880-a68804d22fb7", diagnoses.get(0).getUuid());
 		assertEquals(ConditionVerificationStatus.CONFIRMED, diagnoses.get(0).getCertainty());
 		assertEquals(new Integer(1), diagnoses.get(0).getDiagnosisId());
@@ -289,7 +289,7 @@ public class DiagnosisServiceImplTest extends BaseContextSensitiveTest {
 	 * @see DiagnosisService#voidDiagnosis(Diagnosis, String)
 	 */
 	@Test
-	public void voidDiagnosis_shouldVoidDiagnosisSuccessfully(){
+	public void voidDiagnosis_shouldVoidDiagnosisSuccessfully() {
 		String voidReason = "void reason";
 		String uuid = "688804ce-6880-8804-6880-a68804d88047";
 		Diagnosis nonVoidedDiagnosis = diagnosisService.getDiagnosisByUuid(uuid);
@@ -309,17 +309,17 @@ public class DiagnosisServiceImplTest extends BaseContextSensitiveTest {
 	 * @see DiagnosisService#unvoidDiagnosis(Diagnosis)
 	 */
 	@Test
-	public void unvoidDiagnosis_shouldUnvoidDiagnosisSuccessfully(){
+	public void unvoidDiagnosis_shouldUnvoidDiagnosisSuccessfully() {
 		String uuid = "77009cce-8804-17e4-8804-a68804d22fb7";
 		Diagnosis voidedDiagnosis = diagnosisService.getDiagnosisByUuid(uuid);
 		assertTrue(voidedDiagnosis.getVoided());
 		assertNotNull(voidedDiagnosis.getVoidReason());
 		assertNotNull(voidedDiagnosis.getDateVoided());
 		assertNotNull(voidedDiagnosis.getVoidedBy());
-		
+
 		diagnosisService.unvoidDiagnosis(voidedDiagnosis);
-		
-		Diagnosis unVoidedDiagnosis= diagnosisService.getDiagnosisByUuid(uuid);
+
+		Diagnosis unVoidedDiagnosis = diagnosisService.getDiagnosisByUuid(uuid);
 		assertEquals(ConditionVerificationStatus.PROVISIONAL, unVoidedDiagnosis.getCertainty());
 		assertEquals(uuid, unVoidedDiagnosis.getUuid());
 		assertFalse(unVoidedDiagnosis.getVoided());
@@ -495,7 +495,7 @@ public class DiagnosisServiceImplTest extends BaseContextSensitiveTest {
 		final String NAMESPACE = "namespace";
 		final String FORMFIELD_PATH = "formFieldPath";
 		final DiagnosisAttributeType DIAGNOSIS_ATTRIBUTE_TYPE = Context.getDiagnosisService()
-				.getDiagnosisAttributeTypeByUuid("949daf5b-a83e-4b65-b914-502a553243d3");
+										.getDiagnosisAttributeTypeByUuid("949daf5b-a83e-4b65-b914-502a553243d3");
 		DiagnosisAttribute diagnosisAttribute = new DiagnosisAttribute();
 		diagnosisAttribute.setAttributeType(DIAGNOSIS_ATTRIBUTE_TYPE);
 		diagnosisAttribute.setCreator(Context.getUserService().getUser(1));
@@ -534,7 +534,7 @@ public class DiagnosisServiceImplTest extends BaseContextSensitiveTest {
 	@Test
 	public void saveDiagnosis_shouldEditTheExistingDiagnosisRemovingTheAssociatedAttributesWhenRequired() {
 		final DiagnosisAttribute DIAGNOSIS_ATTRIBUTE = Context.getDiagnosisService()
-				.getDiagnosisAttributeByUuid("31f7c3cd-699b-4ed3-af10-563e024cae76");
+										.getDiagnosisAttributeByUuid("31f7c3cd-699b-4ed3-af10-563e024cae76");
 		Diagnosis diagnosis = diagnosisService.getDiagnosis(1);
 		assertThat(diagnosis.getAttributes(), hasItem(DIAGNOSIS_ATTRIBUTE));
 		diagnosis.getAttributes().remove(DIAGNOSIS_ATTRIBUTE);

@@ -57,19 +57,19 @@ import org.xml.sax.InputSource;
  * Note that the parser does not validate the {@code config.xml} file against the document type definition's (DTD).
  */
 public class ModuleFileParser {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ModuleFileParser.class);
 
 	private static final String MODULE_CONFIG_XML_FILENAME = "config.xml";
 
 	private static final String OPENMRS_MODULE_FILE_EXTENSION = ".omod";
-	
+
 	/**
 	 * List out all of the possible version numbers for config files that openmrs has DTDs for.
 	 * These are usually stored at http://resources.openmrs.org/doctype/config-x.x.dt
 	 */
 	private static List<String> validConfigVersions = new ArrayList<>();
-	
+
 	static {
 		validConfigVersions.add("1.0");
 		validConfigVersions.add("1.1");
@@ -79,7 +79,7 @@ public class ModuleFileParser {
 		validConfigVersions.add("1.5");
 		validConfigVersions.add("1.6");
 	}
-	
+
 	// TODO - remove this field once ModuleFileParser(File), ModuleFileParser(InputStream) are removed.
 	// There is no need to keep the file as state since moduleFileParser.parse(File) does not need it.
 	// this is also why all private methods that need access to the file for parsing or error message get it as a parameter
@@ -96,7 +96,7 @@ public class ModuleFileParser {
 	public ModuleFileParser(MessageSourceService messageSourceService) {
 		this.messageSourceService = Objects.requireNonNull(messageSourceService, "messageSourceService must not be null");
 	}
-	
+
 	/**
 	 * Constructor
 	 *
@@ -120,7 +120,7 @@ public class ModuleFileParser {
 	private void validateFileHasModuleFileExtension(File moduleFile) {
 		if (!moduleFile.getName().endsWith(OPENMRS_MODULE_FILE_EXTENSION)) {
 			throw new ModuleException(messageSourceService.getMessage("Module.error.invalidFileExtension"),
-				moduleFile.getName());
+											moduleFile.getName());
 		}
 	}
 
@@ -173,7 +173,8 @@ public class ModuleFileParser {
 			try {
 				inputStream.close();
 			}
-			catch (Exception e) { /* pass */}
+			catch (Exception e) { /* pass */
+			}
 		}
 	}
 
@@ -222,7 +223,7 @@ public class ModuleFileParser {
 		}
 		catch (IOException e) {
 			throw new ModuleException(messageSourceService.getMessage("Module.error.cannotGetJarFile"),
-				moduleFile.getName(), e);
+											moduleFile.getName(), e);
 		}
 		return config;
 	}
@@ -231,7 +232,7 @@ public class ModuleFileParser {
 		ZipEntry config = jarfile.getEntry(MODULE_CONFIG_XML_FILENAME);
 		if (config == null) {
 			throw new ModuleException(messageSourceService.getMessage("Module.error.noConfigFile"),
-				moduleFile.getName());
+											moduleFile.getName());
 		}
 		return config;
 	}
@@ -243,7 +244,7 @@ public class ModuleFileParser {
 		}
 		catch (IOException e) {
 			throw new ModuleException(messageSourceService.getMessage(
-				"Module.error.cannotGetConfigFileStream"), moduleFile.getName(), e);
+											"Module.error.cannotGetConfigFileStream"), moduleFile.getName(), e);
 		}
 		return config;
 	}
@@ -273,7 +274,7 @@ public class ModuleFileParser {
 
 			log.error("{} content: {}", MODULE_CONFIG_XML_FILENAME, output);
 			throw new ModuleException(messageSourceService.getMessage("Module.error.cannotParseConfigFile"),
-				moduleFile.getName(), e);
+											moduleFile.getName(), e);
 		}
 		return config;
 	}
@@ -294,11 +295,11 @@ public class ModuleFileParser {
 		Element configRoot = config.getDocumentElement();
 
 		String configVersion = ensureValidModuleConfigVersion(configRoot, moduleFile);
-		
+
 		String name = ensureNonEmptyName(configRoot, moduleFile);
 		String moduleId = ensureNonEmptyId(configRoot, name);
 		String packageName = ensureNonEmptyPackage(configRoot, name);
-		
+
 		String author = getElementTrimmed(configRoot, "author");
 		String desc = getElementTrimmed(configRoot, "description");
 		String version = getElementTrimmed(configRoot, "version");
@@ -337,8 +338,8 @@ public class ModuleFileParser {
 	private void validateModuleConfigVersion(String version, File moduleFile) {
 		if (!validConfigVersions.contains(version)) {
 			throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.invalidConfigVersion",
-				new Object[] { version, String.join(", ", validConfigVersions) }, Context.getLocale()),
-				moduleFile.getName());
+																			new Object[]{version, String.join(", ", validConfigVersions)}, Context.getLocale()),
+											moduleFile.getName());
 		}
 	}
 
@@ -363,7 +364,7 @@ public class ModuleFileParser {
 	private Map<String, String> extractRequiredModules(Element configRoot) {
 		return extractModulesWithVersionAttribute(configRoot, "require_module", "require_modules");
 	}
-	
+
 	/**
 	 * load in list of modules we are aware of.
 	 *
@@ -373,24 +374,24 @@ public class ModuleFileParser {
 	private Map<String, String> extractAwareOfModules(Element configRoot) {
 		return extractModulesWithVersionAttribute(configRoot, "aware_of_module", "aware_of_modules");
 	}
-	
+
 	private Map<String, String> extractStartBeforeModules(Element configRoot) {
 		return extractModulesWithVersionAttribute(configRoot, "module", "start_before_modules");
 	}
 
 	private Map<String, String> extractModulesWithVersionAttribute(Element configRoot, String elementName,
-		String elementParentName) {
-		
+									String elementParentName) {
+
 		NodeList parents = configRoot.getElementsByTagName(elementParentName);
-		
+
 		Map<String, String> result = new HashMap<>();
 		if (parents.getLength() == 0) {
 			return result;
 		}
-		
+
 		Element firstParent = (Element) parents.item(0);
 		NodeList children = firstParent.getElementsByTagName(elementName);
-		
+
 		int i = 0;
 		while (i < children.getLength()) {
 			Element child = (Element) children.item(i);
@@ -485,29 +486,29 @@ public class ModuleFileParser {
 		}
 		return result;
 	}
-	
+
 	private List<GlobalProperty> extractGlobalProperties(Element configRoot) {
-		
+
 		List<GlobalProperty> result = new ArrayList<>();
-		
+
 		NodeList propNodes = configRoot.getElementsByTagName("globalProperty");
 		if (propNodes.getLength() == 0) {
 			return result;
 		}
-		
+
 		log.debug("# global properties: {}", propNodes.getLength());
 		int i = 0;
 		while (i < propNodes.getLength()) {
 			Element gpElement = (Element) propNodes.item(i);
 			GlobalProperty globalProperty = extractGlobalProperty(gpElement);
-			
+
 			if (globalProperty != null) {
 				result.add(globalProperty);
 			}
-			
+
 			i++;
 		}
-		
+
 		return result;
 	}
 
@@ -517,13 +518,13 @@ public class ModuleFileParser {
 		String description = removeTabsAndTrim(getElementTrimmed(element, "description"));
 		String datatypeClassname = getElementTrimmed(element, "datatypeClassname");
 		String datatypeConfig = getElementTrimmed(element, "datatypeConfig");
-		
+
 		log.debug("property: {}, defaultValue: {}", property, defaultValue);
 		log.debug("description: {}, datatypeClassname: {}", description, datatypeClassname);
 		log.debug("datatypeConfig: {}", datatypeConfig);
 
 		return createGlobalProperty(property, defaultValue, description, datatypeClassname,
-			datatypeConfig);
+										datatypeConfig);
 	}
 
 	private String removeTabsAndTrim(String string) {
@@ -531,7 +532,7 @@ public class ModuleFileParser {
 	}
 
 	private GlobalProperty createGlobalProperty(String property, String defaultValue, String description,
-		String datatypeClassname, String datatypeConfig) {
+									String datatypeClassname, String datatypeConfig) {
 
 		GlobalProperty globalProperty = null;
 		if (property.isEmpty()) {
@@ -541,7 +542,7 @@ public class ModuleFileParser {
 
 		if (!datatypeClassname.isEmpty()) {
 			globalProperty = createGlobalPropertyWithDatatype(property, defaultValue, description, datatypeClassname,
-				datatypeConfig);
+											datatypeConfig);
 		} else {
 			globalProperty = new GlobalProperty(property, defaultValue, description);
 		}
@@ -549,20 +550,20 @@ public class ModuleFileParser {
 	}
 
 	private GlobalProperty createGlobalPropertyWithDatatype(String property, String defaultValue, String description,
-		String datatypeClassname, String datatypeConfig) {
+									String datatypeClassname, String datatypeConfig) {
 		GlobalProperty globalProperty = null;
 		try {
 			Class<CustomDatatype<?>> datatypeClazz = (Class<CustomDatatype<?>>) Class.forName(datatypeClassname)
-				.asSubclass(CustomDatatype.class);
+											.asSubclass(CustomDatatype.class);
 			globalProperty = new GlobalProperty(property, defaultValue, description, datatypeClazz, datatypeConfig);
 		}
 		catch (ClassCastException ex) {
 			log.error("The class specified by 'datatypeClassname' (" + datatypeClassname
-				+ ") must be a subtype of 'org.openmrs.customdatatype.CustomDatatype<?>'.", ex);
+											+ ") must be a subtype of 'org.openmrs.customdatatype.CustomDatatype<?>'.", ex);
 		}
 		catch (ClassNotFoundException ex) {
 			log.error("The class specified by 'datatypeClassname' (" + datatypeClassname
-				+ ") could not be found.", ex);
+											+ ") could not be found.", ex);
 		}
 		return globalProperty;
 	}
@@ -589,12 +590,12 @@ public class ModuleFileParser {
 		}
 		return result;
 	}
-	
+
 	private String getTrimmedElementOrFail(Element rootNode, String elementName, String errorMessageKey, String moduleName) {
 		String element = getElementTrimmed(rootNode, elementName);
 		if (element == null || element.length() == 0) {
 			throw new ModuleException(messageSourceService.getMessage(errorMessageKey),
-				moduleName);
+											moduleName);
 		}
 		return element;
 	}
@@ -656,7 +657,7 @@ public class ModuleFileParser {
 
 			if (!"conditionalResource".equals(conditionalResourceNode.getNodeName())) {
 				throw new IllegalArgumentException("Found the " + conditionalResourceNode.getNodeName()
-					+ " node under conditionalResources. Only conditionalResource is allowed.");
+												+ " node under conditionalResources. Only conditionalResource is allowed.");
 			}
 
 			NodeList resourceElements = conditionalResourceNode.getChildNodes();

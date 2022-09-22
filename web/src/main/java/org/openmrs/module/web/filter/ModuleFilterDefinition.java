@@ -40,20 +40,20 @@ import org.w3c.dom.NodeList;
  * </pre>
  */
 public class ModuleFilterDefinition implements Serializable {
-	
+
 	public static final long serialVersionUID = 1;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ModuleFilterDefinition.class);
-	
+
 	// Properties
 	private Module module;
-	
+
 	private String filterName;
-	
+
 	private String filterClass;
-	
+
 	private Map<String, String> initParameters = new HashMap<>();
-	
+
 	/**
 	 * Default constructor, requires a Module
 	 * 
@@ -62,63 +62,63 @@ public class ModuleFilterDefinition implements Serializable {
 	public ModuleFilterDefinition(Module module) {
 		this.module = module;
 	}
-	
+
 	/**
 	 * @return - The {@link Module} that registered this FilterDefinition
 	 */
 	public Module getModule() {
 		return module;
 	}
-	
+
 	/**
 	 * @param module the {@link Module} to set
 	 */
 	public void setModule(Module module) {
 		this.module = module;
 	}
-	
+
 	/**
 	 * @return - the name of the Filter
 	 */
 	public String getFilterName() {
 		return filterName;
 	}
-	
+
 	/**
 	 * @param filterName the name of the filter
 	 */
 	public void setFilterName(String filterName) {
 		this.filterName = filterName;
 	}
-	
+
 	/**
 	 * @return - the class name of the filter
 	 */
 	public String getFilterClass() {
 		return filterClass;
 	}
-	
+
 	/**
 	 * @param filterClass the class name of the filter
 	 */
 	public void setFilterClass(String filterClass) {
 		this.filterClass = filterClass;
 	}
-	
+
 	/**
 	 * @return - A map of parameters to use to initialize the filter
 	 */
 	public Map<String, String> getInitParameters() {
 		return initParameters;
 	}
-	
+
 	/**
 	 * #param - A map of parameters to use to initialize the filter
 	 */
 	public void setInitParameters(Map<String, String> initParameters) {
 		this.initParameters = initParameters;
 	}
-	
+
 	/**
 	 * Adds a Parameter that should be passed in to initialize this Filter
 	 * 
@@ -128,7 +128,7 @@ public class ModuleFilterDefinition implements Serializable {
 	public void addInitParameter(String parameterName, String parameterValue) {
 		this.initParameters.put(parameterName, parameterValue);
 	}
-	
+
 	// Static methods
 	
 	/**
@@ -154,7 +154,7 @@ public class ModuleFilterDefinition implements Serializable {
 	 */
 	public static List<ModuleFilterDefinition> retrieveFilterDefinitions(Module module)  {
 		List<ModuleFilterDefinition> filters = new ArrayList<>();
-		
+
 		try {
 			Element rootNode = module.getConfig().getDocumentElement();
 			NodeList filterNodes = rootNode.getElementsByTagName("filter");
@@ -195,7 +195,7 @@ public class ModuleFilterDefinition implements Serializable {
 		catch (Exception e) {
 			throw new ModuleException("Unable to parse filters in module configuration.", e);
 		}
-		
+
 		log.debug("Retrieved {} filters for {}: {}", filters.size(), module, filters);
 		return filters;
 	}

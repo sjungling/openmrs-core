@@ -16,9 +16,9 @@ package org.openmrs.api;
  * @since 2.1
  */
 public class EditedOrderDoesNotMatchPreviousException extends OrderEntryException {
-	
+
 	public static final long serialVersionUID = 22121218L;
-	
+
 	public EditedOrderDoesNotMatchPreviousException(String message) {
 		super(message, (Object[]) null);
 	}

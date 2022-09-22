@@ -22,7 +22,7 @@ import org.springframework.validation.Validator;
  *
  * @since 1.10
  */
-@Handler(supports = { ConceptNameTag.class }, order = 50)
+@Handler(supports = {ConceptNameTag.class}, order = 50)
 public class ConceptNameTagValidator implements Validator {
 
 	/**
@@ -34,7 +34,7 @@ public class ConceptNameTagValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return ConceptNameTag.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 *
@@ -55,11 +55,11 @@ public class ConceptNameTagValidator implements Validator {
 			throw new IllegalArgumentException("The parameter obj should not be null");
 		} else {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tag", "error.name");
-			
+
 			if (cnt.getTag() != null) {
 				ConceptNameTag currentTag = Context.getConceptService().getConceptNameTagByName(cnt.getTag());
 				if (currentTag != null && !OpenmrsUtil.nullSafeEqualsIgnoreCase(cnt.getUuid(), currentTag.getUuid())
-				        && OpenmrsUtil.nullSafeEqualsIgnoreCase(currentTag.getTag(), cnt.getTag())) {
+												&& OpenmrsUtil.nullSafeEqualsIgnoreCase(currentTag.getTag(), cnt.getTag())) {
 					errors.rejectValue("tag", "Concept.name.tag.duplicate");
 				}
 			}

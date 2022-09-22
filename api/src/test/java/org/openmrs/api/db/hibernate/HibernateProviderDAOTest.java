@@ -26,13 +26,13 @@ import org.openmrs.api.context.Context;
 import org.openmrs.test.jupiter.BaseContextSensitiveTest;
 
 public class HibernateProviderDAOTest extends BaseContextSensitiveTest {
-	
+
 	private static final String PROVIDERS_INITIAL_XML = "org/openmrs/api/include/ProviderServiceTest-initial.xml";
-	
+
 	private HibernatePersonDAO personDao = null;
-	
+
 	private ProviderService service;
-	
+
 	/**
 	 * Run this before each unit test in this class.
 	 * 
@@ -41,15 +41,15 @@ public class HibernateProviderDAOTest extends BaseContextSensitiveTest {
 	@BeforeEach
 	public void runBeforeEachTest() {
 		service = Context.getProviderService();
-		
+
 		if (personDao == null)
 			personDao = (HibernatePersonDAO) applicationContext.getBean("personDAO");
-		
+
 		executeDataSet(PROVIDERS_INITIAL_XML);
 	}
-	
+
 	/**
-	 * @see HibernateProviderDAO#getProvidersByPerson(Person,boolean)
+	 * @see HibernateProviderDAO#getProvidersByPerson(Person, boolean)
 	 */
 	@Test
 	public void getProvidersByPerson_shouldNotReturnRetiredProvidersIfIncludeRetiredFalse() {
@@ -57,20 +57,20 @@ public class HibernateProviderDAOTest extends BaseContextSensitiveTest {
 		assertEquals(1, providers.size());
 		assertFalse(providers.iterator().next().getRetired());
 	}
-	
+
 	/**
-	 * @see HibernateProviderDAO#getProvidersByPerson(Person,boolean)
+	 * @see HibernateProviderDAO#getProvidersByPerson(Person, boolean)
 	 */
 	@Test
 	public void getProvidersByPerson_shouldListRetiredProvidersAtTheEnd() {
 		List<Provider> providers = new ArrayList<>();
 		providers = (List<Provider>) service.getProvidersByPerson(personDao.getPerson(2), true);
-		
+
 		assertTrue(providers.get(1).getRetired());
 	}
-	
+
 	/**
-	 * @see HibernateProviderDAO#getProvidersByPerson(Person,boolean)
+	 * @see HibernateProviderDAO#getProvidersByPerson(Person, boolean)
 	 */
 	@Test
 	public void getProvidersByPerson_shouldReturnAllProvidersIfIncludeRetiredTrue() {

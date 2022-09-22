@@ -26,15 +26,15 @@ import ca.uhn.hl7v2.HL7Exception;
  */
 @Transactional
 public class HL7InQueueProcessor /* implements Runnable */{
-	
+
 	private static final Logger log = LoggerFactory.getLogger(HL7InQueueProcessor.class);
-	
+
 	private static Boolean isRunning = false; // allow only one running
 
 	private static final Object lock = new Object();
-	
+
 	private static Integer count = 0;
-	
+
 	// processor per JVM
 	
 	/**
@@ -43,21 +43,21 @@ public class HL7InQueueProcessor /* implements Runnable */{
 	 */
 	public HL7InQueueProcessor() {
 	}
-	
+
 	public static void setCount(Integer count) {
 		HL7InQueueProcessor.count = count;
 	}
-	
+
 	/**
 	 * Process a single queue entry from the inbound HL7 queue
 	 *
 	 * @param hl7InQueue queue entry to be processed
 	 */
 	public void processHL7InQueue(HL7InQueue hl7InQueue) {
-		
+
 		log.debug("Processing HL7 inbound queue (id={} ,key={})", hl7InQueue.getHL7InQueueId(),
-		    hl7InQueue.getHL7SourceKey());
-		
+										hl7InQueue.getHL7SourceKey());
+
 		try {
 			Context.getHL7Service().processHL7InQueue(hl7InQueue);
 		}
@@ -75,9 +75,9 @@ public class HL7InQueueProcessor /* implements Runnable */{
 				log.error("Exception while performing garbagecollect in hl7 inbound processor", e);
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * Transform the next pending HL7 inbound queue entry. If there are no pending items in the
 	 * queue, this method simply returns quietly.
@@ -94,7 +94,7 @@ public class HL7InQueueProcessor /* implements Runnable */{
 		}
 		return entryProcessed;
 	}
-	
+
 	/**
 	 * Starts up a thread to process all existing HL7InQueue entries
 	 */
@@ -117,5 +117,5 @@ public class HL7InQueueProcessor /* implements Runnable */{
 			isRunning = false;
 		}
 	}
-	
+
 }

@@ -40,7 +40,7 @@ public class GlobalLocaleListTest {
 
 		assertThat(globalLocaleList.getAllowedLocales(), contains(Locale.ROOT));
 	}
-	
+
 	@Test
 	public void globalPropertyChanged_shouldSetAllowedLocalesIfGlobalPropertyContainsTwoLocales() {
 

@@ -26,12 +26,12 @@ import org.openmrs.api.db.DAOException;
  * @see ConditionDAO
  */
 public class HibernateConditionDAO implements ConditionDAO {
-	
+
 	/**
 	 * Hibernate session factory
 	 */
 	private SessionFactory sessionFactory;
-	
+
 	/**
 	 * Set session factory
 	 *
@@ -40,7 +40,7 @@ public class HibernateConditionDAO implements ConditionDAO {
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	/**
 	 * Gets the condition with the specified id.
 	 *
@@ -51,7 +51,7 @@ public class HibernateConditionDAO implements ConditionDAO {
 	public Condition getCondition(Integer conditionId) {
 		return sessionFactory.getCurrentSession().get(Condition.class, conditionId);
 	}
-	
+
 	/**
 	 * Gets the condition by its UUID.
 	 *
@@ -61,7 +61,7 @@ public class HibernateConditionDAO implements ConditionDAO {
 	@Override
 	public Condition getConditionByUuid(String uuid) {
 		return sessionFactory.getCurrentSession().createQuery("from Condition c where c.uuid = :uuid", Condition.class)
-				.setParameter("uuid", uuid).uniqueResult();
+										.setParameter("uuid", uuid).uniqueResult();
 	}
 
 	/**
@@ -70,12 +70,12 @@ public class HibernateConditionDAO implements ConditionDAO {
 	@Override
 	public List<Condition> getConditionsByEncounter(Encounter encounter) throws APIException {
 		Query<Condition> query = sessionFactory.getCurrentSession().createQuery(
-			"from Condition c where c.encounter.encounterId = :encounterId and c.voided = false order "
-				+ "by c.dateCreated desc", Condition.class);
+										"from Condition c where c.encounter.encounterId = :encounterId and c.voided = false order "
+																		+ "by c.dateCreated desc", Condition.class);
 		query.setParameter("encounterId", encounter.getId());
 		return query.list();
 	}
-	
+
 	/**
 	 * Gets all active conditions related to the specified patient.
 	 *
@@ -85,8 +85,8 @@ public class HibernateConditionDAO implements ConditionDAO {
 	@Override
 	public List<Condition> getActiveConditions(Patient patient) {
 		Query<Condition> query = sessionFactory.getCurrentSession().createQuery(
-				"from Condition c where c.patient.patientId = :patientId and c.clinicalStatus = 'ACTIVE' and c.voided = false order "
-						+ "by c.dateCreated desc", Condition.class);
+										"from Condition c where c.patient.patientId = :patientId and c.clinicalStatus = 'ACTIVE' and c.voided = false order "
+																		+ "by c.dateCreated desc", Condition.class);
 		query.setParameter("patientId", patient.getId());
 		return query.list();
 	}
@@ -97,12 +97,12 @@ public class HibernateConditionDAO implements ConditionDAO {
 	@Override
 	public List<Condition> getAllConditions(Patient patient) {
 		Query<Condition> query = sessionFactory.getCurrentSession().createQuery(
-				"from Condition con where con.patient.patientId = :patientId " +
-						"order by con.dateCreated desc", Condition.class);
+										"from Condition con where con.patient.patientId = :patientId " +
+																		"order by con.dateCreated desc", Condition.class);
 		query.setParameter("patientId", patient.getId());
 		return query.list();
 	}
-	
+
 	/**
 	 * Removes a condition from the database
 	 * 

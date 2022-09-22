@@ -51,7 +51,7 @@ public class PersonEditor extends PropertyEditorSupport {
 			setValue(null);
 		}
 	}
-	
+
 	/**
 	 * @see java.beans.PropertyEditorSupport#getAsText()
 	 */
@@ -64,5 +64,5 @@ public class PersonEditor extends PropertyEditorSupport {
 			return (t.getPersonId() == null) ? "" : t.getPersonId().toString();
 		}
 	}
-	
+
 }

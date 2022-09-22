@@ -25,17 +25,17 @@ import org.openmrs.web.test.BaseWebContextSensitiveTest;
  */
 public class AltAuthSchemeContextTest extends BaseWebContextSensitiveTest {
 
-  /**
-   * @see Context#authenticate(Credentials)
-   */
-  @Test
-  public void authenticate_shouldAuthenticateUserWithAlternateScheme() {
-    // replay
-    Authenticated authenticated = Context.authenticate(new TestUsernameCredentials("admin"));
+	/**
+	* @see Context#authenticate(Credentials)
+	*/
+	@Test
+	public void authenticate_shouldAuthenticateUserWithAlternateScheme() {
+		// replay
+		Authenticated authenticated = Context.authenticate(new TestUsernameCredentials("admin"));
 
-    // verif
-    assertEquals("test-scheme", authenticated.getAuthenticationScheme());
-    assertEquals(Context.getAuthenticatedUser().getUuid(), authenticated.getUser().getUuid());
-    assertEquals("admin", Context.getAuthenticatedUser().getUsername());
-  }
+		// verif
+		assertEquals("test-scheme", authenticated.getAuthenticationScheme());
+		assertEquals(Context.getAuthenticatedUser().getUuid(), authenticated.getUser().getUuid());
+		assertEquals("admin", Context.getAuthenticatedUser().getUsername());
+	}
 }

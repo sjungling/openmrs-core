@@ -13,30 +13,30 @@ import org.openmrs.attribute.Attribute;
 import org.openmrs.attribute.BaseAttribute;
 
 public class ConceptAttribute extends BaseAttribute<ConceptAttributeType, Concept> implements Attribute<ConceptAttributeType, Concept> {
-	
+
 	private Integer conceptAttributeId;
-	
+
 	public Concept getConcept() {
 		return getOwner();
 	}
-	
+
 	public void setConcept(Concept concept) {
 		setOwner(concept);
 	}
-	
+
 	public Integer getConceptAttributeId() {
 		return this.conceptAttributeId;
 	}
-	
+
 	public void setConceptAttributeId(Integer conceptAttributeId) {
 		this.conceptAttributeId = conceptAttributeId;
 	}
-	
+
 	@Override
 	public Integer getId() {
 		return getConceptAttributeId();
 	}
-	
+
 	@Override
 	public void setId(Integer id) {
 		setConceptAttributeId(id);

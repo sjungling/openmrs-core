@@ -34,33 +34,33 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	private static final long serialVersionUID = 1L;
 
 	private Integer formResourceId;
-	
+
 	private Form form;
-	
+
 	private String name;
-	
+
 	private String valueReference;
-	
+
 	private String datatypeClassname;
-	
+
 	private String datatypeConfig;
-	
+
 	private String preferredHandlerClassname;
-	
+
 	private String handlerConfig;
-	
+
 	private transient boolean dirty = false;
-	
+
 	private transient Object typedValue;
-	
+
 	private User changedBy;
-	
+
 	private Date dateChanged;
-	
+
 	public FormResource() {
 		// generic constructor
 	}
-	
+
 	/**
 	 * Create a copy of a provided FormResource, ignoring the uuid and id of the original
 	 *
@@ -75,7 +75,7 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 		this.preferredHandlerClassname = old.getPreferredHandlerClassname();
 		this.handlerConfig = old.getHandlerConfig();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -83,7 +83,7 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	public Integer getId() {
 		return getFormResourceId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -91,7 +91,7 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	public void setId(Integer id) {
 		setFormResourceId(id);
 	}
-	
+
 	/**
 	 * gets the form
 	 *
@@ -100,7 +100,7 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	public Form getForm() {
 		return form;
 	}
-	
+
 	/**
 	 * sets the form
 	 *
@@ -109,7 +109,7 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	public void setForm(Form form) {
 		this.form = form;
 	}
-	
+
 	/**
 	 * gets the form resource id
 	 *
@@ -118,7 +118,7 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	public Integer getFormResourceId() {
 		return formResourceId;
 	}
-	
+
 	/**
 	 * sets the form resource id
 	 *
@@ -127,7 +127,7 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	public void setFormResourceId(Integer formResourceId) {
 		this.formResourceId = formResourceId;
 	}
-	
+
 	/**
 	 * gets the name of the resource
 	 *
@@ -136,7 +136,7 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * sets the name of the resource
 	 *
@@ -145,7 +145,7 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.CustomValueDescriptor#getDatatypeClassname()
 	 */
@@ -153,14 +153,14 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	public String getDatatypeClassname() {
 		return datatypeClassname;
 	}
-	
+
 	/**
 	 * @param datatypeClassname the datatypeClassname to set
 	 */
 	public void setDatatypeClassname(String datatypeClassname) {
 		this.datatypeClassname = datatypeClassname;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.CustomValueDescriptor#getDatatypeConfig()
 	 */
@@ -168,14 +168,14 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	public String getDatatypeConfig() {
 		return datatypeConfig;
 	}
-	
+
 	/**
 	 * @param datatypeConfig the datatypeConfig to set
 	 */
 	public void setDatatypeConfig(String datatypeConfig) {
 		this.datatypeConfig = datatypeConfig;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.CustomValueDescriptor#getPreferredHandlerClassname()
 	 */
@@ -183,14 +183,14 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	public String getPreferredHandlerClassname() {
 		return preferredHandlerClassname;
 	}
-	
+
 	/**
 	 * @param preferredHandlerClassname the preferredHandlerClassname to set
 	 */
 	public void setPreferredHandlerClassname(String preferredHandlerClassname) {
 		this.preferredHandlerClassname = preferredHandlerClassname;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.CustomValueDescriptor#getHandlerConfig()
 	 */
@@ -198,14 +198,14 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	public String getHandlerConfig() {
 		return handlerConfig;
 	}
-	
+
 	/**
 	 * @param handlerConfig the handlerConfig to set
 	 */
 	public void setHandlerConfig(String handlerConfig) {
 		this.handlerConfig = handlerConfig;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SingleCustomValue#getDescriptor()
 	 */
@@ -213,7 +213,7 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	public FormResource getDescriptor() {
 		return this;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SingleCustomValue#getValueReference()
 	 */
@@ -225,18 +225,18 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 			return valueReference;
 		}
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SingleCustomValue#getValue()
 	 */
 	@Override
-	public Object getValue(){
+	public Object getValue() {
 		if (typedValue == null) {
 			typedValue = CustomDatatypeUtil.getDatatype(this).fromReferenceString(getValueReference());
 		}
 		return typedValue;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SingleCustomValue#setValue(java.lang.Object)
 	 */
@@ -245,7 +245,7 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 		this.typedValue = typedValue;
 		dirty = true;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SingleCustomValue#setValueReferenceInternal(java.lang.String)
 	 */
@@ -253,7 +253,7 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	public void setValueReferenceInternal(String valueToPersist)  {
 		this.valueReference = valueToPersist;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SingleCustomValue#isDirty()
 	 *
@@ -265,32 +265,32 @@ public class FormResource extends BaseOpenmrsObject implements CustomValueDescri
 	public boolean isDirty() {
 		return getDirty();
 	}
-	
+
 	public boolean getDirty() {
 		return dirty;
 	}
-	
+
 	/**
 	 * @return Returns the changedBy.
 	 */
 	public User getChangedBy() {
 		return changedBy;
 	}
-	
+
 	/**
 	 * @param changedBy The user that changed this object
 	 */
 	public void setChangedBy(User changedBy) {
 		this.changedBy = changedBy;
 	}
-	
+
 	/**
 	 * @return Returns the date this object was changed
 	 */
 	public Date getDateChanged() {
 		return dateChanged;
 	}
-	
+
 	/**
 	 * @param dateChanged The date this object was changed
 	 */

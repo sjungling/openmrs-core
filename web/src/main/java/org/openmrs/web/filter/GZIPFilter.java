@@ -30,20 +30,20 @@ import org.springframework.web.filter.OncePerRequestFilter;
  * may freely use the code both commercially and non-commercially.
  */
 public class GZIPFilter extends OncePerRequestFilter {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(GZIPFilter.class);
-	
+
 	private Boolean cachedGZipEnabledFlag = null;
-	
+
 	private String cachedGZipCompressedRequestForPathAccepted = null;
-	
+
 	/**
 	 * @see org.springframework.web.filter.OncePerRequestFilter#doFilterInternal(javax.servlet.http.HttpServletRequest,
 	 *      javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)
 	 */
 	@Override
 	public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-	        throws IOException, ServletException {
+									throws IOException, ServletException {
 		try {
 			request = performGZIPRequest(request);
 		}
@@ -53,18 +53,18 @@ public class GZIPFilter extends OncePerRequestFilter {
 		}
 		if (isGZIPSupported(request) && isGZIPEnabled()) {
 			log.debug("GZIP supported and enabled, compressing response");
-			
+
 			GZIPResponseWrapper wrappedResponse = new GZIPResponseWrapper(response);
-			
+
 			chain.doFilter(request, wrappedResponse);
 			wrappedResponse.finishResponse();
-			
+
 			return;
 		}
-		
+
 		chain.doFilter(request, response);
 	}
-	
+
 	/**
 	 * Supports GZIP requests
 	 * @param req request
@@ -76,9 +76,9 @@ public class GZIPFilter extends OncePerRequestFilter {
 			if (!isCompressedRequestForPathAccepted(req.getRequestURI())) {
 				throw new APIException("Unsupported Media Type");
 			}
-			
+
 			log.debug("GZIP request supported");
-			
+
 			try {
 				GZIPRequestWrapper wrapperRequest = new GZIPRequestWrapper(req);
 				log.debug("GZIP request wrapped successfully");
@@ -91,9 +91,9 @@ public class GZIPFilter extends OncePerRequestFilter {
 		} else {
 			return req;
 		}
-		
+
 	}
-	
+
 	/**
 	 * Convenience method to test for GZIP capabilities
 	 *
@@ -103,18 +103,18 @@ public class GZIPFilter extends OncePerRequestFilter {
 	private boolean isGZIPSupported(HttpServletRequest req) {
 		String browserEncodings = req.getHeader("accept-encoding");
 		boolean supported = ((browserEncodings != null) && (browserEncodings.contains("gzip")));
-		
+
 		String userAgent = req.getHeader("user-agent");
-		
+
 		if ((userAgent != null) && userAgent.startsWith("httpunit")) {
 			log.debug("httpunit detected, disabling filter...");
-			
+
 			return false;
 		} else {
 			return supported;
 		}
 	}
-	
+
 	/**
 	 * Returns global property gzip.enabled as boolean
 	 */
@@ -122,10 +122,10 @@ public class GZIPFilter extends OncePerRequestFilter {
 		if (cachedGZipEnabledFlag != null) {
 			return cachedGZipEnabledFlag;
 		}
-		
+
 		try {
 			String gzipEnabled = Context.getAdministrationService().getGlobalProperty(
-			    OpenmrsConstants.GLOBAL_PROPERTY_GZIP_ENABLED, "");
+											OpenmrsConstants.GLOBAL_PROPERTY_GZIP_ENABLED, "");
 
 			cachedGZipEnabledFlag = Boolean.valueOf(gzipEnabled);
 			return cachedGZipEnabledFlag;
@@ -138,7 +138,7 @@ public class GZIPFilter extends OncePerRequestFilter {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Returns true if path matches pattern in gzip.acceptCompressedRequestsForPaths property
 	 */
@@ -146,20 +146,20 @@ public class GZIPFilter extends OncePerRequestFilter {
 		try {
 			if (cachedGZipCompressedRequestForPathAccepted == null) {
 				cachedGZipCompressedRequestForPathAccepted = Context.getAdministrationService().getGlobalProperty(
-				    OpenmrsConstants.GLOBAL_PROPERTY_GZIP_ACCEPT_COMPRESSED_REQUESTS_FOR_PATHS, "");
+												OpenmrsConstants.GLOBAL_PROPERTY_GZIP_ACCEPT_COMPRESSED_REQUESTS_FOR_PATHS, "");
 			}
-			
+
 			for (String acceptPath : cachedGZipCompressedRequestForPathAccepted.split(",")) {
 				if (path.matches(acceptPath)) {
 					return true;
 				}
 			}
-			
+
 			return false;
 		}
 		catch (Exception e) {
 			log.warn("Unable to process the global property: "
-			        + OpenmrsConstants.GLOBAL_PROPERTY_GZIP_ACCEPT_COMPRESSED_REQUESTS_FOR_PATHS, e);
+											+ OpenmrsConstants.GLOBAL_PROPERTY_GZIP_ACCEPT_COMPRESSED_REQUESTS_FOR_PATHS, e);
 			return false;
 		}
 	}

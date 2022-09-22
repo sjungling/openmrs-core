@@ -18,9 +18,9 @@ import org.openmrs.attribute.BaseAttributeType;
  * @since 2.4.0
  */
 public class OrderGroupAttributeType extends BaseAttributeType<OrderGroup> implements AttributeType<OrderGroup> {
-	
+
 	private Integer orderGroupAttributeTypeId;
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */

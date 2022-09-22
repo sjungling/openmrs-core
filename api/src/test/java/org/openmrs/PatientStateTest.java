@@ -20,21 +20,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class PatientStateTest {
-	
+
 	private Date leftRange;
-	
+
 	private Date inRange;
-	
+
 	private Date rightRange;
-	
+
 	private Date rightOutOfRange;
-	
+
 	private Date leftOutOfRange;
-	
+
 	private String uuid2;
-	
+
 	private String uuid1;
-	
+
 	@BeforeEach
 	public void before() {
 		inRange = new Date();
@@ -43,7 +43,7 @@ public class PatientStateTest {
 		rightOutOfRange = new Date(rightRange.getTime() + 10000);
 		leftOutOfRange = new Date(leftRange.getTime() - 10000);
 	}
-	
+
 	/**
 	 * @see PatientState#getActive(Date)
 	 */
@@ -54,14 +54,14 @@ public class PatientStateTest {
 		patientState.setStartDate(leftRange);
 		patientState.setEndDate(rightRange);
 		patientState.setVoided(true);
-		
+
 		//when
 		boolean active = patientState.getActive(inRange);
-		
+
 		//then
 		assertFalse(active);
 	}
-	
+
 	/**
 	 * @see PatientState#getActive(Date)
 	 */
@@ -72,14 +72,14 @@ public class PatientStateTest {
 		patientState.setStartDate(leftRange);
 		patientState.setEndDate(rightRange);
 		patientState.setVoided(true);
-		
+
 		//when
 		boolean active = patientState.getActive(rightOutOfRange);
-		
+
 		//then
 		assertFalse(active);
 	}
-	
+
 	/**
 	 * @see PatientState#getActive(Date)
 	 */
@@ -90,14 +90,14 @@ public class PatientStateTest {
 		patientState.setStartDate(leftRange);
 		patientState.setEndDate(rightRange);
 		patientState.setVoided(false);
-		
+
 		//when
 		boolean active = patientState.getActive(inRange);
-		
+
 		//then
 		assertTrue(active);
 	}
-	
+
 	/**
 	 * @see PatientState#getActive(Date)
 	 */
@@ -108,14 +108,14 @@ public class PatientStateTest {
 		patientState.setStartDate(null);
 		patientState.setEndDate(rightRange);
 		patientState.setVoided(false);
-		
+
 		//when
 		boolean active = patientState.getActive(inRange);
-		
+
 		//then
 		assertTrue(active);
 	}
-	
+
 	/**
 	 * @see PatientState#getActive(Date)
 	 */
@@ -126,14 +126,14 @@ public class PatientStateTest {
 		patientState.setStartDate(leftRange);
 		patientState.setEndDate(null);
 		patientState.setVoided(false);
-		
+
 		//when
 		boolean active = patientState.getActive(inRange);
-		
+
 		//then
 		assertTrue(active);
 	}
-	
+
 	/**
 	 * @see PatientState#getActive(Date)
 	 */
@@ -144,14 +144,14 @@ public class PatientStateTest {
 		patientState.setStartDate(null);
 		patientState.setEndDate(null);
 		patientState.setVoided(false);
-		
+
 		//when
 		boolean active = patientState.getActive(inRange);
-		
+
 		//then
 		assertTrue(active);
 	}
-	
+
 	/**
 	 * @see PatientState#getActive(Date)
 	 */
@@ -162,14 +162,14 @@ public class PatientStateTest {
 		patientState.setStartDate(leftRange);
 		patientState.setEndDate(leftRange);
 		patientState.setVoided(false);
-		
+
 		//when
 		boolean active = patientState.getActive(null);
-		
+
 		//then
 		assertFalse(active);
 	}
-	
+
 	/**
 	 * @see PatientState#getActive(Date)
 	 */
@@ -180,14 +180,14 @@ public class PatientStateTest {
 		patientState.setStartDate(leftRange);
 		patientState.setEndDate(rightRange);
 		patientState.setVoided(false);
-		
+
 		//when
 		boolean active = patientState.getActive(leftOutOfRange);
-		
+
 		//then
 		assertFalse(active);
 	}
-	
+
 	/**
 	 * @see PatientState#getActive(Date)
 	 */
@@ -198,14 +198,14 @@ public class PatientStateTest {
 		patientState.setStartDate(leftRange);
 		patientState.setEndDate(rightRange);
 		patientState.setVoided(false);
-		
+
 		//when
 		boolean active = patientState.getActive(rightOutOfRange);
-		
+
 		//then
 		assertFalse(active);
 	}
-	
+
 	/**
 	 * @see PatientState#compareTo(PatientState)
 	 */
@@ -216,19 +216,19 @@ public class PatientStateTest {
 		patientState.setStartDate(leftRange);
 		patientState.setEndDate(null);
 		patientState.setVoided(false);
-		
+
 		PatientState patientState2 = new PatientState();
 		patientState2.setStartDate(leftRange);
 		patientState2.setEndDate(rightRange);
 		patientState2.setVoided(false);
-		
+
 		//when
 		int result = patientState.compareTo(patientState2);
-		
+
 		//then
 		assertTrue(result > 0);
 	}
-	
+
 	/**
 	 * @see PatientState#compareTo(PatientState)
 	 */
@@ -239,40 +239,40 @@ public class PatientStateTest {
 		patientState.setStartDate(null);
 		patientState.setEndDate(rightRange);
 		patientState.setVoided(false);
-		
+
 		PatientState patientState2 = new PatientState();
 		patientState2.setStartDate(leftRange);
 		patientState2.setEndDate(rightRange);
 		patientState2.setVoided(false);
-		
+
 		//when
 		int result = patientState.compareTo(patientState2);
-		
+
 		//then
 		assertTrue(result < 0);
 	}
-	
+
 	/**
 	 * @see PatientState#compareTo(PatientState)
 	 */
 	@Test
 	public void compareTo_shouldPassIfTwoStatesHaveTheSameStartDateEndDateAndUuid() {
-		
+
 		PatientState patientState = new PatientState();
 		patientState.setStartDate(leftRange);
 		patientState.setEndDate(rightRange);
 		patientState.setUuid(uuid1);
 		patientState.setVoided(false);
-		
+
 		PatientState patientState2 = new PatientState();
 		patientState2.setStartDate(leftRange);
 		patientState2.setEndDate(rightRange);
 		patientState2.setUuid(uuid1);
 		patientState2.setVoided(false);
-		
+
 		assertEquals(0, patientState.compareTo(patientState2));
 	}
-	
+
 	/**
 	 * @see PatientState#compareTo(PatientState)
 	 */
@@ -280,21 +280,21 @@ public class PatientStateTest {
 	public void compareTo_shouldReturnPositiveOrNegativeIfTwoStatesHaveTheSameStartDatesEndDatesAndUuids() {
 		uuid1 = "some uuid 1";
 		uuid2 = "some uuid 2";
-		
+
 		PatientState patientState = new PatientState();
 		patientState.setStartDate(leftRange);
 		patientState.setEndDate(rightRange);
 		patientState.setUuid(uuid1);
 		patientState.setVoided(false);
-		
+
 		PatientState patientState2 = new PatientState();
 		patientState2.setStartDate(leftRange);
 		patientState2.setEndDate(rightRange);
 		patientState2.setUuid(uuid2);
 		patientState2.setVoided(false);
-		
+
 		int result = (patientState.compareTo(patientState2));
-		
+
 		assertTrue(result <= -1 || result >= 1);
 	}
 }

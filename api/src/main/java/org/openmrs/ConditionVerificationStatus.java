@@ -19,7 +19,7 @@ package org.openmrs;
  * @since 2.2
  */
 public enum ConditionVerificationStatus {
-	
+
 	/**
 	 * This is a tentative diagnosis - still a candidate that is under consideration. This was called "Presumed" in the 
 	 * original EMRAPI module implementation.

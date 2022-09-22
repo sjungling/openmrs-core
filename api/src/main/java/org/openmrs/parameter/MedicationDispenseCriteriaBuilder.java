@@ -21,33 +21,33 @@ import org.openmrs.Patient;
  * @see MedicationDispenseCriteria
  */
 public class MedicationDispenseCriteriaBuilder {
-	
+
 	private final MedicationDispenseCriteria criteria;
-	
+
 	public MedicationDispenseCriteriaBuilder() {
 		criteria = new MedicationDispenseCriteria();
 	}
-	
+
 	public MedicationDispenseCriteriaBuilder setPatient(Patient patient) {
 		criteria.setPatient(patient);
 		return this;
 	}
-	
+
 	public MedicationDispenseCriteriaBuilder setEncounter(Encounter encounter) {
 		criteria.setEncounter(encounter);
 		return this;
 	}
-	
+
 	public MedicationDispenseCriteriaBuilder setDrugOrder(DrugOrder drugOrder) {
 		criteria.setDrugOrder(drugOrder);
 		return this;
 	}
-	
+
 	public MedicationDispenseCriteriaBuilder setIncludeVoided(boolean includeVoided) {
 		criteria.setIncludeVoided(includeVoided);
 		return this;
 	}
-	
+
 	public MedicationDispenseCriteria build() {
 		return criteria;
 	}

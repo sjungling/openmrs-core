@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.openmrs.test.jupiter.BaseContextSensitiveTest;
 
 public class RoleEditorTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see RoleEditor#setAsText(String)
 	 */
@@ -25,7 +25,7 @@ public class RoleEditorTest extends BaseContextSensitiveTest {
 		editor.setAsText("Provider");
 		assertNotNull(editor.getValue());
 	}
-	
+
 	/**
 	 * @see RoleEditor#setAsText(String)
 	 */

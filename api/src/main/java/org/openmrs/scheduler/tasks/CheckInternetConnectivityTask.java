@@ -26,18 +26,18 @@ import org.slf4j.LoggerFactory;
  * Simple implementation to check if we have a connection to the internet.
  */
 public class CheckInternetConnectivityTask extends AbstractTask {
-	
+
 	/**
 	 * Logger
 	 */
 	private static final Logger log = LoggerFactory.getLogger(CheckInternetConnectivityTask.class);
-	
+
 	/**
 	 * @see org.openmrs.scheduler.tasks.AbstractTask#execute()
 	 */
 	@Override
 	public void execute() {
-		
+
 		// TODO url should be provided as a property to taskconfig
 		String url = "http://www.google.com:80/index.html";
 		try {
@@ -47,7 +47,7 @@ public class CheckInternetConnectivityTask extends AbstractTask {
 		catch (IOException ioe) {
 			try {
 				String text = "At " + new Date() + " there was an error reported connecting to the internet address " + url
-				        + ": " + ioe;
+												+ ": " + ioe;
 				// TODO role should be provided as a property to taskconfig
 				Role role = Context.getUserService().getRole("System Developer");
 				Collection<User> users = Context.getUserService().getUsersByRole(role);

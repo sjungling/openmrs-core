@@ -37,7 +37,7 @@ import org.openmrs.aop.RequiredDataAdvice;
  */
 @Handler(supports = Voidable.class)
 public class BaseVoidHandler implements VoidHandler<Voidable> {
-	
+
 	/**
 	 * Sets all void attributes to the given parameters.
 	 * 
@@ -54,13 +54,13 @@ public class BaseVoidHandler implements VoidHandler<Voidable> {
 	 */
 	@Override
 	public void handle(Voidable voidableObject, User voidingUser, Date voidedDate, String voidReason) {
-		
+
 		// skip over all work if the object is already voided
 		if (!voidableObject.getVoided() || voidableObject.getVoidedBy() == null) {
-			
+
 			voidableObject.setVoided(true);
 			voidableObject.setVoidReason(voidReason);
-			
+
 			if (voidableObject.getVoidedBy() == null) {
 				voidableObject.setVoidedBy(voidingUser);
 			}
@@ -69,5 +69,5 @@ public class BaseVoidHandler implements VoidHandler<Voidable> {
 			}
 		}
 	}
-	
+
 }

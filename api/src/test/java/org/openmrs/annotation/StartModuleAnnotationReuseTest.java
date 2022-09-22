@@ -17,8 +17,8 @@ import org.openmrs.test.StartModule;
 
 @StartModule("org/openmrs/module/include/test1-1.0-SNAPSHOT.omod")
 public class StartModuleAnnotationReuseTest extends BaseContextSensitiveTest {
-  @Test
-  public void shouldPass() {
-    assertTrue(true);
-  }
+	@Test
+	public void shouldPass() {
+		assertTrue(true);
+	}
 }

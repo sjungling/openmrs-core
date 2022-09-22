@@ -22,9 +22,9 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { PersonAttributeType.class }, order = 50)
+@Handler(supports = {PersonAttributeType.class}, order = 50)
 public class PersonAttributeTypeValidator implements Validator {
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
@@ -32,7 +32,7 @@ public class PersonAttributeTypeValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return PersonAttributeType.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
 	 *      org.springframework.validation.Errors)

@@ -39,18 +39,19 @@ import org.springframework.validation.Errors;
  * Tests methods on the {@link OrderValidator} class.
  */
 public class OrderValidatorTest extends BaseContextSensitiveTest {
-	
-	private class SomeDrugOrder extends DrugOrder {}
-	
+
+	private class SomeDrugOrder extends DrugOrder {
+	}
+
 	private OrderService orderService;
-	
+
 	protected static final String ORDER_SET = "org/openmrs/api/include/OrderSetServiceTest-general.xml";
-	
+
 	@BeforeEach
 	public void setup() {
 		orderService = Context.getOrderService();
 	}
-	
+
 	/**
 	 * @see OrderValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -58,13 +59,13 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 	public void validate_shouldFailValidationIfOrderIsNull() {
 		Errors errors = new BindException(new Order(), "order");
 		new OrderValidator().validate(null, errors);
-		
+
 		assertTrue(errors.hasErrors());
 		assertEquals("error.general", errors.getAllErrors().get(0).getCode());
 	}
-	
+
 	/**
-	 * @see OrderValidator#validate(Object,Errors)
+	 * @see OrderValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfOrderAndEncounterHaveDifferentPatients() {
@@ -75,10 +76,10 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		order.setOrderer(Context.getProviderService().getProvider(1));
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("encounter"));
 	}
-	
+
 	/**
 	 * @see OrderValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -96,12 +97,12 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		order.setOrderer(Context.getProviderService().getProvider(1));
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("dateActivated"));
 	}
-	
+
 	/**
-	 * @see OrderValidator#validate(Object,Errors)
+	 * @see OrderValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfVoidedIsNull() {
@@ -110,73 +111,73 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		order.setConcept(Context.getConceptService().getConcept(88));
 		order.setPatient(Context.getPatientService().getPatient(2));
 		order.setOrderer(Context.getProviderService().getProvider(1));
-		
+
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
-		
+
 		assertFalse(errors.hasFieldErrors("discontinued"));
 		assertTrue(errors.hasFieldErrors("voided"));
 		assertFalse(errors.hasFieldErrors("concept"));
 		assertFalse(errors.hasFieldErrors("patient"));
 		assertFalse(errors.hasFieldErrors("orderer"));
 	}
-	
+
 	/**
-	 * @see OrderValidator#validate(Object,Errors)
+	 * @see OrderValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfConceptIsNull() {
 		Order order = new Order();
 		order.setPatient(Context.getPatientService().getPatient(2));
 		order.setOrderer(Context.getProviderService().getProvider(1));
-		
+
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
-		
+
 		assertFalse(errors.hasFieldErrors("discontinued"));
 		assertTrue(errors.hasFieldErrors("concept"));
 		assertFalse(errors.hasFieldErrors("patient"));
 		assertFalse(errors.hasFieldErrors("orderer"));
 	}
-	
+
 	/**
-	 * @see OrderValidator#validate(Object,Errors)
+	 * @see OrderValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfPatientIsNull() {
 		Order order = new Order();
 		order.setConcept(Context.getConceptService().getConcept(88));
 		order.setOrderer(Context.getProviderService().getProvider(1));
-		
+
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
-		
+
 		assertFalse(errors.hasFieldErrors("discontinued"));
 		assertFalse(errors.hasFieldErrors("concept"));
 		assertTrue(errors.hasFieldErrors("patient"));
 		assertFalse(errors.hasFieldErrors("orderer"));
 	}
-	
+
 	/**
-	 * @see OrderValidator#validate(Object,Errors)
+	 * @see OrderValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfOrdererIsNull() {
 		Order order = new Order();
 		order.setConcept(Context.getConceptService().getConcept(88));
 		order.setPatient(Context.getPatientService().getPatient(2));
-		
+
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
-		
+
 		assertFalse(errors.hasFieldErrors("discontinued"));
 		assertFalse(errors.hasFieldErrors("concept"));
 		assertTrue(errors.hasFieldErrors("orderer"));
 		assertFalse(errors.hasFieldErrors("patient"));
 	}
-	
+
 	/**
-	 * @see OrderValidator#validate(Object,Errors)
+	 * @see OrderValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfEncounterIsNull() {
@@ -184,15 +185,15 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		order.setConcept(Context.getConceptService().getConcept(88));
 		order.setPatient(Context.getPatientService().getPatient(2));
 		order.setEncounter(null);
-		
+
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("encounter"));
 	}
-	
+
 	/**
-	 * @see OrderValidator#validate(Object,Errors)
+	 * @see OrderValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfUrgencyIsNull() {
@@ -200,15 +201,15 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		order.setConcept(Context.getConceptService().getConcept(88));
 		order.setPatient(Context.getPatientService().getPatient(2));
 		order.setUrgency(null);
-		
+
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("urgency"));
 	}
-	
+
 	/**
-	 * @see OrderValidator#validate(Object,Errors)
+	 * @see OrderValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfActionIsNull() {
@@ -216,16 +217,16 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		order.setConcept(Context.getConceptService().getConcept(88));
 		order.setPatient(Context.getPatientService().getPatient(2));
 		order.setAction(null);
-		
+
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("action"));
 	}
-	
+
 	/**
 	 * @throws Exception
-	 * @see OrderValidator#validate(Object,Errors)
+	 * @see OrderValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfDateActivatedAfterDateStopped() throws Exception {
@@ -237,16 +238,16 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) - 1);
 		order.setDateActivated(new Date());
 		OrderUtilTest.setDateStopped(order, cal.getTime());
-		
+
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("dateActivated"));
 		assertTrue(errors.hasFieldErrors("dateStopped"));
 	}
-	
+
 	/**
-	 * @see OrderValidator#validate(Object,Errors)
+	 * @see OrderValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfDateActivatedAfterAutoExpireDate() {
@@ -258,14 +259,14 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) - 1);
 		order.setDateActivated(new Date());
 		order.setAutoExpireDate(cal.getTime());
-		
+
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("dateActivated"));
 		assertTrue(errors.hasFieldErrors("autoExpireDate"));
 	}
-	
+
 	/**
 	 * @see OrderValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -275,20 +276,20 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		order.setConcept(Context.getConceptService().getConcept(88));
 		order.setPatient(Context.getPatientService().getPatient(2));
 		order.setOrderer(Context.getProviderService().getProvider(1));
-		
+
 		order.setUrgency(Order.Urgency.ON_SCHEDULED_DATE);
 		order.setScheduledDate(null);
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
 		assertTrue(errors.hasFieldErrors("scheduledDate"));
-		
+
 		order.setScheduledDate(new Date());
 		order.setUrgency(Order.Urgency.STAT);
 		errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
 		assertFalse(errors.hasFieldErrors("scheduledDate"));
 	}
-	
+
 	/**
 	 * @see OrderValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -298,20 +299,20 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		order.setConcept(Context.getConceptService().getConcept(88));
 		order.setPatient(Context.getPatientService().getPatient(2));
 		order.setOrderer(Context.getProviderService().getProvider(1));
-		
+
 		order.setScheduledDate(new Date());
 		order.setUrgency(Order.Urgency.ROUTINE);
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
 		assertTrue(errors.hasFieldErrors("urgency"));
-		
+
 		order.setScheduledDate(new Date());
 		order.setUrgency(Order.Urgency.ON_SCHEDULED_DATE);
 		errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
 		assertFalse(errors.hasFieldErrors("urgency"));
 	}
-	
+
 	/**
 	 * @see OrderValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -322,14 +323,14 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		order.setPatient(Context.getPatientService().getPatient(2));
 		order.setOrderer(Context.getProviderService().getProvider(1));
 		order.setOrderType(Context.getOrderService().getOrderTypeByName("Test order"));
-		
+
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
 		assertTrue(errors.hasFieldErrors("orderType"));
 		assertTrue(Arrays.asList(errors.getFieldError("orderType").getCodes()).contains(
-		    "Order.error.orderTypeClassMismatchesOrderClass"));
+										"Order.error.orderTypeClassMismatchesOrderClass"));
 	}
-	
+
 	/**
 	 * @see OrderValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -340,14 +341,14 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		order.setPatient(Context.getPatientService().getPatient(2));
 		order.setOrderer(Context.getProviderService().getProvider(1));
 		order.setOrderType(Context.getOrderService().getOrderTypeByName("Drug order"));
-		
+
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
 		assertFalse(errors.hasFieldErrors("orderType"));
 	}
-	
+
 	/**
-	 * @see OrderValidator#validate(Object,Errors)
+	 * @see OrderValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfAllFieldsAreCorrect() {
@@ -367,13 +368,13 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		order.setUrgency(Order.Urgency.ROUTINE);
 		order.setAction(Order.Action.NEW);
 		order.setOrderType(Context.getOrderService().getOrderTypeByName("Drug order"));
-		
+
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see OrderValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -390,16 +391,16 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.HOUR_OF_DAY, 1);
 		order.setDateActivated(cal.getTime());
-		
+
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("dateActivated"));
 		assertEquals("Order.error.dateActivatedInFuture", errors.getFieldError("dateActivated").getCode());
 	}
-	
+
 	/**
-	 * @see OrderValidator#validate(Object,Errors)
+	 * @see OrderValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() {
@@ -434,21 +435,21 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 	public void saveOrder_shouldNotSaveOrderIfInvalidOrderGroupEncounter() {
 		executeDataSet(ORDER_SET);
 		OrderGroup orderGroup = new OrderGroup();
-		
+
 		orderGroup.setEncounter(Context.getEncounterService().getEncounter(5));
-		
+
 		Order order = new OrderBuilder().withAction(Order.Action.NEW).withPatient(7).withConcept(1000).withCareSetting(1)
-		        .withOrderer(1).withEncounter(3).withDateActivated(new Date()).withOrderType(17).withUrgency(
-		            Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).withOrderGroup(orderGroup).build();
+										.withOrderer(1).withEncounter(3).withDateActivated(new Date()).withOrderType(17).withUrgency(
+										Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).withOrderGroup(orderGroup).build();
 
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
-		
+
 		assertTrue(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see OrderValidator#validate(Object,Errors)
+	 * @see OrderValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() {
@@ -467,15 +468,15 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		order.setEncounter(encounter);
 		order.setUrgency(Order.Urgency.ROUTINE);
 		order.setAction(Order.Action.NEW);
-		
+
 		order
-		        .setOrderReasonNonCoded("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setOrderReasonNonCoded("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		order
-		        .setAccessionNumber("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setAccessionNumber("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		order
-		        .setCommentToFulfiller("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setCommentToFulfiller("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		order
-		        .setVoidReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setVoidReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
@@ -485,24 +486,24 @@ public class OrderValidatorTest extends BaseContextSensitiveTest {
 		assertTrue(errors.hasFieldErrors("commentToFulfiller"));
 		assertTrue(errors.hasFieldErrors("voidReason"));
 	}
-	
+
 	@Test
 	public void saveOrder_shouldNotSaveOrderIfInvalidOrderGroupPatient() {
 		executeDataSet(ORDER_SET);
 		OrderGroup orderGroup = new OrderGroup();
-		
+
 		orderGroup.setEncounter(Context.getEncounterService().getEncounter(5));
 		orderGroup.setPatient(Context.getPatientService().getPatient(2));
-		
+
 		Order order = new OrderBuilder().withAction(Order.Action.NEW).withPatient(7).withConcept(1000).withCareSetting(1)
-		        .withOrderer(1).withEncounter(3).withDateActivated(new Date()).withOrderType(17).withUrgency(
-		            Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).withOrderGroup(orderGroup).build();
+										.withOrderer(1).withEncounter(3).withDateActivated(new Date()).withOrderType(17).withUrgency(
+										Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).withOrderGroup(orderGroup).build();
 
 		Errors errors = new BindException(order, "order");
 		new OrderValidator().validate(order, errors);
 
 		assertTrue(errors.hasFieldErrors("patient"));
 		assertEquals("Order.error.orderPatientAndOrderGroupPatientMismatch", errors.getFieldError("patient")
-		        .getCode());
+										.getCode());
 	}
 }

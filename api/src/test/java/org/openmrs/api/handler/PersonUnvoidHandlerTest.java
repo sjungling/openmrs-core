@@ -23,9 +23,9 @@ import org.openmrs.User;
  * Tests the {@link PersonUnvoidHandler} class.
  */
 public class PersonUnvoidHandlerTest {
-	
+
 	/**
-	 * @see PersonUnvoidHandler#handle(Person,User,Date,String)
+	 * @see PersonUnvoidHandler#handle(Person, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldUnsetThePersonVoidedBit() {
@@ -35,9 +35,9 @@ public class PersonUnvoidHandlerTest {
 		handler.handle(person, null, null, null);
 		assertFalse(person.getPersonVoided());
 	}
-	
+
 	/**
-	 * @see PersonUnvoidHandler#handle(Person,User,Date,String)
+	 * @see PersonUnvoidHandler#handle(Person, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldUnsetThePersonVoider() {
@@ -48,9 +48,9 @@ public class PersonUnvoidHandlerTest {
 		handler.handle(person, null, null, null);
 		assertNull(person.getPersonVoidedBy());
 	}
-	
+
 	/**
-	 * @see PersonUnvoidHandler#handle(Person,User,Date,String)
+	 * @see PersonUnvoidHandler#handle(Person, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldUnsetThePersonDateVoided() {
@@ -61,9 +61,9 @@ public class PersonUnvoidHandlerTest {
 		handler.handle(person, null, null, null);
 		assertNull(person.getPersonDateVoided());
 	}
-	
+
 	/**
-	 * @see PersonUnvoidHandler#handle(Person,User,Date,String)
+	 * @see PersonUnvoidHandler#handle(Person, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldUnsetThePersonVoidReason() {
@@ -74,9 +74,9 @@ public class PersonUnvoidHandlerTest {
 		handler.handle(person, null, null, null);
 		assertNull(person.getPersonVoidReason());
 	}
-	
+
 	/**
-	 * @see PersonUnvoidHandler#handle(Person,User,Date,String)
+	 * @see PersonUnvoidHandler#handle(Person, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldOnlyActOnAlreadyVoidedObjects() {
@@ -86,9 +86,9 @@ public class PersonUnvoidHandlerTest {
 		handler.handle(person, null, null, "SOME REASON");
 		assertNull(person.getPersonVoidReason());
 	}
-	
+
 	/**
-	 * @see PersonUnvoidHandler#handle(Person,User,Date,String)
+	 * @see PersonUnvoidHandler#handle(Person, User, Date, String)
 	 */
 	@Test
 	public void handle_shouldNotActOnObjectsWithADifferentPersonDateVoided() {
@@ -98,7 +98,7 @@ public class PersonUnvoidHandlerTest {
 		Person person = new Person();
 		person.setPersonVoided(true);
 		person.setPersonDateVoided(d);
-		
+
 		handler.handle(person, null, new Date(), "SOME REASON");
 		assertTrue(person.getPersonVoided());
 	}

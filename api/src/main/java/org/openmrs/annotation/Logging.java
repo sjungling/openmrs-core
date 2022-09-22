@@ -36,12 +36,12 @@ import java.lang.annotation.Target;
  * 
  * @see org.openmrs.aop.LoggingAdvice
  */
-@Target( { ElementType.METHOD, ElementType.TYPE })
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
 public @interface Logging {
-	
+
 	/**
 	 * If set to true, suppress any automatic OpenMRS logging of this method (E.g. you will no
 	 * longer see "In method XyzService.saveXyz...".) Defaults to false.
@@ -50,7 +50,7 @@ public @interface Logging {
 	 * @since 1.8
 	 */
 	public boolean ignore() default false;
-	
+
 	/**
 	 * If set to true, the annotated method will not print out the contents of the arguments every
 	 * time this method is accessed and logged. Defaults to false
@@ -58,7 +58,7 @@ public @interface Logging {
 	 * @return boolean true/false to ignore the argument content when logging
 	 */
 	public boolean ignoreAllArgumentValues() default false;
-	
+
 	/**
 	 * This list should set the argument indexes that should not be printed. This is useful if one
 	 * of the arguments/parameters is more sensitive than others. Note: This parameter does not need
@@ -68,5 +68,5 @@ public @interface Logging {
 	 * @return list of argument indexes to ignore. (first argument is 0, second is 1, etc)
 	 */
 	public int[] ignoredArgumentIndexes() default {};
-	
+
 }

@@ -27,9 +27,9 @@ import java.util.List;
  * @see MedicationDispenseDAO
  */
 public class HibernateMedicationDispenseDAO implements MedicationDispenseDAO {
-	
+
 	private SessionFactory sessionFactory;
-	
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
@@ -42,9 +42,9 @@ public class HibernateMedicationDispenseDAO implements MedicationDispenseDAO {
 	@Override
 	public MedicationDispense getMedicationDispenseByUuid(String uuid) {
 		return sessionFactory.getCurrentSession()
-			.createQuery("select md from MedicationDispense md where md.uuid = :uuid", MedicationDispense.class)
-			.setParameter("uuid", uuid)
-			.uniqueResult();
+										.createQuery("select md from MedicationDispense md where md.uuid = :uuid", MedicationDispense.class)
+										.setParameter("uuid", uuid)
+										.uniqueResult();
 	}
 
 	@Override

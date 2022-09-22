@@ -17,24 +17,24 @@ package org.openmrs;
  * @since 1.10
  */
 public class OrderFrequency extends BaseChangeableOpenmrsMetadata {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer orderFrequencyId;
-	
+
 	private Double frequencyPerDay;
-	
+
 	private String uuid;
-	
+
 	private Concept concept;
-	
+
 	/**
 	 * Get the orderFrequencyId
 	 */
 	public Integer getOrderFrequencyId() {
 		return orderFrequencyId;
 	}
-	
+
 	/**
 	 * Sets the orderFrequencyId
 	 * 
@@ -43,18 +43,18 @@ public class OrderFrequency extends BaseChangeableOpenmrsMetadata {
 	public void setOrderFrequencyId(Integer orderFrequencyId) {
 		this.orderFrequencyId = orderFrequencyId;
 	}
-	
+
 	/**
 	 * Get the frequencyPerDay
 	 */
 	public Double getFrequencyPerDay() {
 		return frequencyPerDay;
 	}
-	
+
 	public void setFrequencyPerDay(Double frequencyPerDay) {
 		this.frequencyPerDay = frequencyPerDay;
 	}
-	
+
 	/**
 	 * Get the uuid
 	 */
@@ -62,12 +62,12 @@ public class OrderFrequency extends BaseChangeableOpenmrsMetadata {
 	public String getUuid() {
 		return uuid;
 	}
-	
+
 	@Override
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -75,7 +75,7 @@ public class OrderFrequency extends BaseChangeableOpenmrsMetadata {
 	public Integer getId() {
 		return getOrderFrequencyId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -83,21 +83,21 @@ public class OrderFrequency extends BaseChangeableOpenmrsMetadata {
 	public void setId(Integer id) {
 		setOrderFrequencyId(id);
 	}
-	
+
 	/**
 	 * Get the concept for the drugFrequency
 	 */
 	public Concept getConcept() {
 		return concept;
 	}
-	
+
 	/**
 	 * Sets the concept for the drugFrequency
 	 */
 	public void setConcept(Concept concept) {
 		this.concept = concept;
 	}
-	
+
 	/**
 	 * @see BaseOpenmrsMetadata#getDescription()
 	 */
@@ -108,7 +108,7 @@ public class OrderFrequency extends BaseChangeableOpenmrsMetadata {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @see org.openmrs.BaseOpenmrsMetadata#getName()
 	 */
@@ -119,7 +119,7 @@ public class OrderFrequency extends BaseChangeableOpenmrsMetadata {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getName();

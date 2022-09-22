@@ -45,35 +45,35 @@ import java.util.Set;
 @Entity
 @Table(name = "encounter_diagnosis")
 public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implements FormRecordable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "diagnosis_id")
 	private Integer diagnosisId;
-	
+
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "encounter_id")
 	private Encounter encounter;
-	
+
 	@Embedded
-	@AttributeOverrides({ @AttributeOverride(name = "nonCoded", column = @Column(name = "diagnosis_non_coded")) })
-	@AssociationOverrides({ @AssociationOverride(name = "coded", joinColumns = @JoinColumn(name = "diagnosis_coded")),
-	        @AssociationOverride(name = "specificName", joinColumns = @JoinColumn(name = "diagnosis_coded_name")) })
+	@AttributeOverrides({@AttributeOverride(name = "nonCoded", column = @Column(name = "diagnosis_non_coded"))})
+	@AssociationOverrides({@AssociationOverride(name = "coded", joinColumns = @JoinColumn(name = "diagnosis_coded")),
+									@AssociationOverride(name = "specificName", joinColumns = @JoinColumn(name = "diagnosis_coded_name"))})
 	private CodedOrFreeText diagnosis;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "condition_id")
 	private Condition condition;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(length = 50)
 	private ConditionVerificationStatus certainty;
-	
-	@Column(name="dx_rank", nullable = false)
+
+	@Column(name = "dx_rank", nullable = false)
 	private Integer rank;
-	
+
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "patient_id")
 	private Patient patient;
@@ -84,7 +84,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	@BatchSize(size = 100)
 	private Set<DiagnosisAttribute> attributes = new LinkedHashSet<>();
 
-	@Column(name="form_namespace_and_path")
+	@Column(name = "form_namespace_and_path")
 	private String formNamespaceAndPath;
 
 	/**
@@ -92,7 +92,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	 */
 	public Diagnosis() {
 	}
-	
+
 	/**
 	 * @param encounter the encounter for this diagnosis
 	 * @param diagnosis the diagnosis to set
@@ -100,7 +100,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	 * @param rank the rank of the diagnosis
 	 */
 	public Diagnosis(Encounter encounter, CodedOrFreeText diagnosis, ConditionVerificationStatus certainty, Integer rank,
-			Patient patient) {
+									Patient patient) {
 		this.encounter = encounter;
 		this.diagnosis = diagnosis;
 		this.certainty = certainty;
@@ -135,7 +135,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	public Integer getId() {
 		return getDiagnosisId();
 	}
-	
+
 	/**
 	 * Sets diagnosis identifier
 	 * 
@@ -145,7 +145,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	public void setId(Integer diagnosisId) {
 		this.setDiagnosisId(diagnosisId);
 	}
-	
+
 	/**
 	 * Gets the diagnosis id.
 	 *
@@ -154,7 +154,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	public Integer getDiagnosisId() {
 		return diagnosisId;
 	}
-	
+
 	/**
 	 * Sets diagnosis id
 	 *
@@ -163,7 +163,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	public void setDiagnosisId(Integer diagnosisId) {
 		this.diagnosisId = diagnosisId;
 	}
-	
+
 	/**
 	 * Gets the encounter associated with this diagnosis.
 	 * 
@@ -172,7 +172,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	public Encounter getEncounter() {
 		return encounter;
 	}
-	
+
 	/**
 	 * Sets the encounter associated with this diagnosis.
 	 * 
@@ -181,7 +181,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	public void setEncounter(Encounter encounter) {
 		this.encounter = encounter;
 	}
-	
+
 	/**
 	 * Gets the diagnosis.
 	 * 
@@ -190,7 +190,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	public CodedOrFreeText getDiagnosis() {
 		return diagnosis;
 	}
-	
+
 	/**
 	 * Sets the diagnosis.
 	 * 
@@ -199,7 +199,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	public void setDiagnosis(CodedOrFreeText diagnosis) {
 		this.diagnosis = diagnosis;
 	}
-	
+
 	/**
 	 * Gets the diagnosis certainty.
 	 * 
@@ -208,7 +208,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	public ConditionVerificationStatus getCertainty() {
 		return certainty;
 	}
-	
+
 	/**
 	 * Sets the diagnosis certainty
 	 * 
@@ -217,7 +217,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	public void setCertainty(ConditionVerificationStatus certainty) {
 		this.certainty = certainty;
 	}
-	
+
 	/**
 	 * Gets the diagnosis rank.
 	 * 
@@ -226,7 +226,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	public Integer getRank() {
 		return rank;
 	}
-	
+
 	/**
 	 * Sets diagnosis rank
 	 * 
@@ -235,7 +235,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	public void setRank(Integer rank) {
 		this.rank = rank;
 	}
-	
+
 	/**
 	 * Gets the diagnosis condition.
 	 * 
@@ -244,7 +244,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	public Condition getCondition() {
 		return condition;
 	}
-	
+
 	/**
 	 * Sets diagnosis condition
 	 * 
@@ -253,7 +253,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	public void setCondition(Condition condition) {
 		this.condition = condition;
 	}
-	
+
 	/**
 	 * Gets the patient associated with the diagnosis
 	 *
@@ -262,7 +262,7 @@ public class Diagnosis extends BaseCustomizableData<DiagnosisAttribute> implemen
 	public Patient getPatient() {
 		return patient;
 	}
-	
+
 	/**
 	 * Sets patient with this diagnosis
 	 *

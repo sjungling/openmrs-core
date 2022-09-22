@@ -31,7 +31,7 @@ public interface ConditionService extends OpenmrsService {
 	 * @throws APIException   
 	 * @return the condition
 	 */
-	@Authorized({ PrivilegeConstants.GET_CONDITIONS })
+	@Authorized({PrivilegeConstants.GET_CONDITIONS})
 	Condition getConditionByUuid(String uuid) throws APIException;
 
 	/**
@@ -41,18 +41,18 @@ public interface ConditionService extends OpenmrsService {
 	 * @throws APIException   
 	 * @return a list of the patient's active conditions
 	 */
-	@Authorized({ PrivilegeConstants.GET_CONDITIONS })
+	@Authorized({PrivilegeConstants.GET_CONDITIONS})
 	List<Condition> getActiveConditions(Patient patient) throws APIException;
 
-    /**
-	 * Gets all conditions i.e both active and inactive conditions, associated with a patient
-	 *
-	 * @param patient - the patient to retrieve conditions for
-	 * @throws APIException   
-	 * @return a list of the patient's conditions
-	 * @since 2.2.1
-	 */
-	@Authorized({ PrivilegeConstants.GET_CONDITIONS })
+	/**
+		* Gets all conditions i.e both active and inactive conditions, associated with a patient
+		*
+		* @param patient - the patient to retrieve conditions for
+		* @throws APIException   
+		* @return a list of the patient's conditions
+		* @since 2.2.1
+		*/
+	@Authorized({PrivilegeConstants.GET_CONDITIONS})
 	List<Condition> getAllConditions(Patient patient) throws APIException;
 
 	/**
@@ -64,7 +64,7 @@ public interface ConditionService extends OpenmrsService {
 	 * @since 2.4.0, 2.3.1
 	 */
 	List<Condition> getConditionsByEncounter(Encounter encounter) throws APIException;
-	
+
 	/**
 	 * Gets a condition by id
 	 *
@@ -72,7 +72,7 @@ public interface ConditionService extends OpenmrsService {
 	 * @return the Condition with the given id, or null if none exists
 	 * @throws APIException
 	 */
-	@Authorized({ PrivilegeConstants.GET_CONDITIONS })
+	@Authorized({PrivilegeConstants.GET_CONDITIONS})
 	Condition getCondition(Integer conditionId) throws APIException;
 
 	/**
@@ -81,7 +81,7 @@ public interface ConditionService extends OpenmrsService {
 	 * @param condition - the condition to be saved
 	 * @throws APIException
 	 */
-	@Authorized({ PrivilegeConstants.EDIT_CONDITIONS })
+	@Authorized({PrivilegeConstants.EDIT_CONDITIONS})
 	Condition saveCondition(Condition condition) throws APIException;
 
 	/**
@@ -91,7 +91,7 @@ public interface ConditionService extends OpenmrsService {
 	 * @param voidReason the reason for voiding the condition
 	 * @throws APIException if an error occurs while voiding the condition
 	 */
-	@Authorized({ PrivilegeConstants.EDIT_CONDITIONS })
+	@Authorized({PrivilegeConstants.EDIT_CONDITIONS})
 	Condition voidCondition(Condition condition, String voidReason) throws APIException;
 
 	/**

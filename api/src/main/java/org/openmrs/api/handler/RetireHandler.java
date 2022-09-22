@@ -30,7 +30,7 @@ import org.openmrs.aop.RequiredDataAdvice;
  * @since 1.5
  */
 public interface RetireHandler<R extends Retireable> extends RequiredDataHandler<R> {
-	
+
 	/**
 	 * Implementing methods should set "retired" to true, the retired reason, and the
 	 * retiredBy/dateRetired (if those are non-null).
@@ -40,5 +40,5 @@ public interface RetireHandler<R extends Retireable> extends RequiredDataHandler
 	 */
 	@Override
 	public void handle(R retireableObject, User retiringUser, Date retireDate, String retireReason);
-	
+
 }

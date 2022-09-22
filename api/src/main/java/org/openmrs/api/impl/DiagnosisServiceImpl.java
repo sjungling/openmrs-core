@@ -30,7 +30,7 @@ import java.util.HashSet;
 
 @Transactional
 public class DiagnosisServiceImpl extends BaseOpenmrsService implements DiagnosisService {
-	
+
 	private DiagnosisDAO diagnosisDAO;
 
 	/**

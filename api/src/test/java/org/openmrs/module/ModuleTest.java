@@ -55,7 +55,7 @@ public class ModuleTest {
 	 * @see Module#setStartupErrorMessage(String, Throwable)
 	 */
 	@Test
-	public void setStartupErrorMessage_shouldsetStartupErrorMessageWhenExceptionMessageIsNull () {
+	public void setStartupErrorMessage_shouldsetStartupErrorMessageWhenExceptionMessageIsNull() {
 		ModuleException modException = new ModuleException("error");
 
 		assertFalse(testModule.hasStartupError());
@@ -66,7 +66,7 @@ public class ModuleTest {
 	}
 
 	/*
- 	 * @see Module#setStartupErrorMessage(String, Throwable)
+	* @see Module#setStartupErrorMessage(String, Throwable)
 	 */
 	@Test
 	public void setStartupErrorMessage_shouldAppendTheThrowablesMessageToExceptionMessage() {
@@ -120,9 +120,9 @@ public class ModuleTest {
 	 * @see Module#getRequiredModuleVersion(String)
 	 */
 	@Test
-	public void getRequiredModuleVersion_shouldReturnNullIfNoRequiredModuleByGivenNameExists () {
+	public void getRequiredModuleVersion_shouldReturnNullIfNoRequiredModuleByGivenNameExists() {
 		IdentityHashMap<String, String> requiredModules = new IdentityHashMap<>();
-		
+
 		requiredModules.put("mod1", "1.0");
 		testModule.setRequiredModulesMap(requiredModules);
 
@@ -134,10 +134,10 @@ public class ModuleTest {
 	 * @see Module#addRequiredModule(String, String)
 	 */
 	@Test
-	public void addRequiredModule_shouldAddModuleToRequiredModulesMap () {
+	public void addRequiredModule_shouldAddModuleToRequiredModulesMap() {
 		testModule.setRequiredModulesMap(new IdentityHashMap<>());
 		testModule.addRequiredModule("mod1", "1.0");
-		
+
 		assertEquals("1.0", testModule.getRequiredModuleVersion("mod1"));
 	}
 

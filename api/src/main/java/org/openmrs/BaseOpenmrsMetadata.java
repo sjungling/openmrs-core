@@ -30,43 +30,43 @@ import org.hibernate.search.annotations.Field;
  */
 @MappedSuperclass
 public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements OpenmrsMetadata {
-	
+
 	//***** Properties *****
 	@Column(name = "name", nullable = false, length = 255)
 	@Field
 	private String name;
-	
+
 	@Column(name = "description", length = 255)
 	private String description;
-	
+
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "creator")
 	private User creator;
-	
+
 	@Column(name = "date_created", nullable = false)
 	private Date dateCreated;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "changed_by")
 	private User changedBy;
-	
+
 	@Column(name = "date_changed")
 	private Date dateChanged;
-	
+
 	@Column(name = "retired", nullable = false)
 	@Field
 	private Boolean retired = Boolean.FALSE;
-	
+
 	@Column(name = "date_retired")
 	private Date dateRetired;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "retired_by")
 	private User retiredBy;
-	
+
 	@Column(name = "retire_reason", length = 255)
 	private String retireReason;
-	
+
 	//***** Constructors *****
 	
 	/**
@@ -74,7 +74,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	 */
 	public BaseOpenmrsMetadata() {
 	}
-	
+
 	//***** Property Access *****
 	
 	/**
@@ -84,7 +84,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * @param name the name to set
 	 */
@@ -92,7 +92,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	/**
 	 * @return the description
 	 */
@@ -100,7 +100,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public String getDescription() {
 		return description;
 	}
-	
+
 	/**
 	 * @param description the description to set
 	 */
@@ -108,7 +108,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsMetadata#getCreator()
 	 */
@@ -116,7 +116,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public User getCreator() {
 		return creator;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsMetadata#setCreator(org.openmrs.User)
 	 */
@@ -124,7 +124,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public void setCreator(User creator) {
 		this.creator = creator;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsMetadata#getDateCreated()
 	 */
@@ -132,7 +132,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public Date getDateCreated() {
 		return dateCreated;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsMetadata#setDateCreated(java.util.Date)
 	 */
@@ -140,7 +140,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsMetadata#getChangedBy()
 	 * @deprecated as of version 2.2
@@ -150,7 +150,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public User getChangedBy() {
 		return changedBy;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsMetadata#setChangedBy(User)
 	 * @deprecated as of version 2.2
@@ -160,7 +160,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public void setChangedBy(User changedBy) {
 		this.changedBy = changedBy;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsMetadata#getDateChanged()
 	 * @deprecated as of version 2.2
@@ -170,7 +170,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public Date getDateChanged() {
 		return dateChanged;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsMetadata#setDateChanged(Date)
 	 * @deprecated as of version 2.2
@@ -180,7 +180,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public void setDateChanged(Date dateChanged) {
 		this.dateChanged = dateChanged;
 	}
-	
+
 	/**
 	 * @deprecated as of 2.0, use {@link #getRetired()}
 	 * @see org.openmrs.Retireable#isRetired()
@@ -191,7 +191,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public Boolean isRetired() {
 		return getRetired();
 	}
-	
+
 	/**
 	 * This method delegates to {@link #isRetired()}. This is only needed for jstl syntax like
 	 * ${fieldType.retired} because the return type is a Boolean object instead of a boolean
@@ -203,7 +203,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public Boolean getRetired() {
 		return retired;
 	}
-	
+
 	/**
 	 * @see org.openmrs.Retireable#setRetired(java.lang.Boolean)
 	 */
@@ -211,7 +211,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public void setRetired(Boolean retired) {
 		this.retired = retired;
 	}
-	
+
 	/**
 	 * @see org.openmrs.Retireable#getDateRetired()
 	 */
@@ -219,7 +219,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public Date getDateRetired() {
 		return dateRetired;
 	}
-	
+
 	/**
 	 * @see org.openmrs.Retireable#setDateRetired(java.util.Date)
 	 */
@@ -227,7 +227,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public void setDateRetired(Date dateRetired) {
 		this.dateRetired = dateRetired;
 	}
-	
+
 	/**
 	 * @see org.openmrs.Retireable#getRetiredBy()
 	 */
@@ -235,7 +235,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public User getRetiredBy() {
 		return retiredBy;
 	}
-	
+
 	/**
 	 * @see org.openmrs.Retireable#setRetiredBy(org.openmrs.User)
 	 */
@@ -243,7 +243,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public void setRetiredBy(User retiredBy) {
 		this.retiredBy = retiredBy;
 	}
-	
+
 	/**
 	 * @see org.openmrs.Retireable#getRetireReason()
 	 */
@@ -251,7 +251,7 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public String getRetireReason() {
 		return retireReason;
 	}
-	
+
 	/**
 	 * @see org.openmrs.Retireable#setRetireReason(java.lang.String)
 	 */
@@ -259,5 +259,5 @@ public abstract class BaseOpenmrsMetadata extends BaseOpenmrsObject implements O
 	public void setRetireReason(String retireReason) {
 		this.retireReason = retireReason;
 	}
-	
+
 }

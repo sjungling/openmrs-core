@@ -18,22 +18,22 @@ import java.util.Date;
  * @since 2.2
  */
 public interface Creatable extends OpenmrsObject {
-	
+
 	/**
 	 * @return User - the user who created the object
 	 */
 	User getCreator();
-	
+
 	/**
 	 * @param creator - the user who created the object
 	 */
 	void setCreator(User creator);
-	
+
 	/**
 	 * @return Date - the date the object was created
 	 */
 	Date getDateCreated();
-	
+
 	/**
 	 * @param dateCreated - the date the object was created
 	 */

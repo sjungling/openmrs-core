@@ -23,7 +23,7 @@ import org.openmrs.OpenmrsObject;
  * @since 1.9.4
  */
 public class OpenmrsMatchers {
-	
+
 	/**
 	 * Matches by id.
 	 * 
@@ -32,15 +32,15 @@ public class OpenmrsMatchers {
 	 */
 	public static Matcher<OpenmrsObject> hasId(final Integer id) {
 		return new FeatureMatcher<OpenmrsObject, Integer>(
-		                                                  is(id), "id", "id") {
-			
+										is(id), "id", "id") {
+
 			@Override
 			protected Integer featureValueOf(final OpenmrsObject actual) {
 				return actual.getId();
 			}
 		};
 	}
-	
+
 	/**
 	 * Matches by uuid.
 	 * 
@@ -49,15 +49,15 @@ public class OpenmrsMatchers {
 	 */
 	public static Matcher<OpenmrsObject> hasUuid(final String uuid) {
 		return new FeatureMatcher<OpenmrsObject, String>(
-		                                                 is(uuid), "uuid", "uuid") {
-			
+										is(uuid), "uuid", "uuid") {
+
 			@Override
 			protected String featureValueOf(final OpenmrsObject actual) {
 				return actual.getUuid();
 			}
 		};
 	}
-	
+
 	/**
 	 * Matches by concept.
 	 * 
@@ -66,8 +66,8 @@ public class OpenmrsMatchers {
 	 */
 	public static Matcher<ConceptSearchResult> hasConcept(final Matcher<Concept> concept) {
 		return new FeatureMatcher<ConceptSearchResult, Concept>(
-		                                                        concept, "concept", "concept") {
-			
+										concept, "concept", "concept") {
+
 			@Override
 			protected Concept featureValueOf(ConceptSearchResult actual) {
 				return actual.getConcept();

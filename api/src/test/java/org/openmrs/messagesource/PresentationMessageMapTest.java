@@ -23,38 +23,38 @@ import org.junit.jupiter.api.Test;
  * Tests {@link PresentationMessageMap}.
  */
 public class PresentationMessageMapTest {
-	
+
 	private static final PresentationMessage MESSAGE_EN = new PresentationMessage("uuid.not.unique", Locale.ENGLISH,
-	        "the uuid must be unique", "a uuid needs to be unique");
-	
+									"the uuid must be unique", "a uuid needs to be unique");
+
 	private static final PresentationMessage MESSAGE_DE = new PresentationMessage("patient.name.required", Locale.GERMAN,
-	        "der patientenname ist verpflichtend", "der patientenname ist ein verpflichtendes feld");
-	
+									"der patientenname ist verpflichtend", "der patientenname ist ein verpflichtendes feld");
+
 	private static final String EXPECTED_MESSAGE_KEY = "right_locale";
-	
+
 	private PresentationMessageMap presentationMessages;
-	
+
 	@BeforeEach
 	public void setUp() {
 		presentationMessages = new PresentationMessageMap(Locale.ENGLISH);
 	}
-	
+
 	/**
 	 * PresentationMessageMap should not add PresentationMessages which are not from the same locale
 	 * set for the PresentationMessageMap.
 	 * 
-	 * @see PresentationMessageMap#put(String,PresentationMessage)
+	 * @see PresentationMessageMap#put(String, PresentationMessage)
 	 */
 	@Test
 	public void put_shouldShouldIgnoreNonMatchingLocaleMessages() {
-		
+
 		presentationMessages.put(EXPECTED_MESSAGE_KEY, MESSAGE_EN);
 		presentationMessages.put("wrong_locale", MESSAGE_DE);
-		
+
 		assertEquals(1, presentationMessages.size());
 		assertTrue(presentationMessages.containsKey(EXPECTED_MESSAGE_KEY));
 	}
-	
+
 	/**
 	 * PresentationMessageMap should only add PresentationMessages which are from the same locale,
 	 * even when adding from a batch.
@@ -66,11 +66,11 @@ public class PresentationMessageMapTest {
 		Map<String, PresentationMessage> messageMap = new HashMap<>();
 		messageMap.put(EXPECTED_MESSAGE_KEY, MESSAGE_EN);
 		messageMap.put("wrong_locale", MESSAGE_DE);
-		
+
 		presentationMessages.putAll(messageMap);
-		
+
 		assertEquals(1, presentationMessages.size());
 		assertTrue(presentationMessages.containsKey(EXPECTED_MESSAGE_KEY));
 	}
-	
+
 }

@@ -32,13 +32,13 @@ import java.util.Comparator;
  * @since 1.5
  */
 public final class NaturalStrings {
-	
+
 	/**
 	 * This is a utility class (static methods only), don't instantiate.
 	 */
 	private NaturalStrings() {
 	}
-	
+
 	/**
 	 * Returns a comparator that compares contained numbers based on their numeric values and
 	 * compares other parts using the current locale's order rules.
@@ -57,7 +57,7 @@ public final class NaturalStrings {
 		Collator collator = Collator.getInstance();
 		return getNaturalComparator(collator);
 	}
-	
+
 	/**
 	 * Returns a comparator that compares contained numbers based on their numeric values and
 	 * compares other parts using the given collator.
@@ -78,7 +78,7 @@ public final class NaturalStrings {
 		}
 		return (o1, o2) -> compareNatural(collator, o1, o2);
 	}
-	
+
 	/**
 	 * Returns a comparator that compares contained numbers based on their numeric values and
 	 * compares other parts based on each character's Unicode value.
@@ -95,7 +95,7 @@ public final class NaturalStrings {
 	public static Comparator<String> getNaturalComparatorAscii() {
 		return NaturalStrings::compareNaturalAscii;
 	}
-	
+
 	/**
 	 * Returns a comparator that compares contained numbers based on their numeric values and
 	 * compares other parts based on each character's Unicode value while ignore upper/lower case
@@ -112,7 +112,7 @@ public final class NaturalStrings {
 	public static Comparator<String> getNaturalComparatorIgnoreCaseAscii() {
 		return NaturalStrings::compareNaturalIgnoreCaseAscii;
 	}
-	
+
 	/**
 	 * <p>
 	 * Compares two strings using the current locale's rules and comparing contained numbers based
@@ -137,7 +137,7 @@ public final class NaturalStrings {
 	public static int compareNatural(String s, String t) {
 		return compareNatural(s, t, false, Collator.getInstance());
 	}
-	
+
 	/**
 	 * <p>
 	 * Compares two strings using the given collator and comparing contained numbers based on their
@@ -153,7 +153,7 @@ public final class NaturalStrings {
 	public static int compareNatural(Collator collator, String s, String t) {
 		return compareNatural(s, t, true, collator);
 	}
-	
+
 	/**
 	 * <p>
 	 * Compares two strings using each character's Unicode value for non-digit characters and the
@@ -170,7 +170,7 @@ public final class NaturalStrings {
 	public static int compareNaturalAscii(String s, String t) {
 		return compareNatural(s, t, true, null);
 	}
-	
+
 	/**
 	 * <p>
 	 * Compares two strings using each character's Unicode value - ignoring upper/lower case - for
@@ -187,7 +187,7 @@ public final class NaturalStrings {
 	public static int compareNaturalIgnoreCaseAscii(String s, String t) {
 		return compareNatural(s, t, false, null);
 	}
-	
+
 	/**
 	 * @param s first string
 	 * @param t second string
@@ -202,10 +202,10 @@ public final class NaturalStrings {
 	private static int compareNatural(String s, String t, boolean caseSensitive, Collator collator) {
 		int sIndex = 0;
 		int tIndex = 0;
-		
+
 		int sLength = s.length();
 		int tLength = t.length();
-		
+
 		while (true) {
 			// both character indices are after a subword (or at zero)
 			
@@ -219,14 +219,14 @@ public final class NaturalStrings {
 			if (tIndex == tLength) {
 				return 1;
 			}
-			
+
 			// Compare sub word
 			char sChar = s.charAt(sIndex);
 			char tChar = t.charAt(tIndex);
-			
+
 			boolean sCharIsDigit = Character.isDigit(sChar);
 			boolean tCharIsDigit = Character.isDigit(tChar);
-			
+
 			if (sCharIsDigit && tCharIsDigit) {
 				// Compare numbers
 				
@@ -260,7 +260,7 @@ public final class NaturalStrings {
 				if (tAllZero) {
 					return 1;
 				}
-				
+
 				int diff = 0;
 				do {
 					if (diff == 0) {
@@ -314,7 +314,7 @@ public final class NaturalStrings {
 					do {
 						++tIndex;
 					} while (tIndex < tLength && !Character.isDigit(t.charAt(tIndex)));
-					
+
 					String as = s.substring(aw, sIndex);
 					String bs = t.substring(bw, tIndex);
 					int subwordResult = collator.compare(as, bs);

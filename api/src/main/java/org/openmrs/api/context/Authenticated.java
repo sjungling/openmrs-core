@@ -18,12 +18,12 @@ import org.openmrs.User;
  * @since 2.3.0
  */
 public interface Authenticated {
-	
+
 	/**
 	 * @return A string describing or identifying the authentication scheme that was used.
 	 */
 	public String getAuthenticationScheme();
-	
+
 	/**
 	 * @return The authenticated OpenMRS {@link User}.
 	 */

@@ -32,15 +32,15 @@ import org.openmrs.api.handler.RequiredDataHandler;
  *      You can disable all RequiredDataAdviceHandlers by specifying the parent class: {@literal @}DisableHandlers(handlerTypes = { RequiredDataHandler.class })
  **/
 
-@Target( { ElementType.FIELD })
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
 public @interface DisableHandlers {
-	
+
 	/**
 	 * The set of handlers to be be disabled
 	 */
 	public Class<? extends RequiredDataHandler>[] handlerTypes() default {};
-	
+
 }

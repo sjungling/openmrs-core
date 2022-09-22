@@ -33,11 +33,11 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
  * @see #reInitFrameworkServlet()
  */
 public class DispatcherServlet extends org.springframework.web.servlet.DispatcherServlet {
-	
+
 	private static final long serialVersionUID = -6925172744402818729L;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(DispatcherServlet.class);
-	
+
 	/**
 	 * @see org.springframework.web.servlet.FrameworkServlet#initFrameworkServlet()
 	 */
@@ -46,13 +46,13 @@ public class DispatcherServlet extends org.springframework.web.servlet.Dispatche
 		// refresh the application context to look for module xml config files as well
 		
 		Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
-		
+
 		log.debug("Framework being initialized");
 		WebModuleUtil.setDispatcherServlet(this);
-		
+
 		super.initFrameworkServlet();
 	}
-	
+
 	/**
 	 * Called by the ModuleUtil after adding in a new module. This needs to be called because the
 	 * new mappings and advice that a new module adds in are cached by Spring's DispatcherServlet.
@@ -64,23 +64,23 @@ public class DispatcherServlet extends org.springframework.web.servlet.Dispatche
 		log.debug("Framework being REinitialized");
 		Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
 		((XmlWebApplicationContext) getWebApplicationContext()).setClassLoader(OpenmrsClassLoader.getInstance());
-		
+
 		refresh();
-		
+
 		// the spring context gets reset by the framework servlet, so we need to 
 		// reload the advice points that were lost when refreshing Spring
 		for (Module module : ModuleFactory.getStartedModules()) {
 			ModuleFactory.loadAdvice(module);
 		}
 	}
-	
+
 	/**
 	 * @see javax.servlet.GenericServlet#init(javax.servlet.ServletConfig)
 	 */
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		
+
 		// hacky way to know if one of the startup filters needs to be run
 		if (UpdateFilter.updatesRequired() && !DatabaseUpdater.allowAutoUpdate()) {
 			log.info("DB updates are required, the update wizard must be run");
@@ -89,7 +89,7 @@ public class DispatcherServlet extends org.springframework.web.servlet.Dispatche
 			log.info("Runtime properties were not found or the database is empty, so initialization is required");
 		}
 	}
-	
+
 	/**
 	 * Stops and closes the application context created by this dispatcher servlet.
 	 */

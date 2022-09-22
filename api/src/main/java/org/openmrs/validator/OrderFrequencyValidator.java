@@ -23,9 +23,9 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.10
  */
-@Handler(supports = { OrderFrequency.class })
+@Handler(supports = {OrderFrequency.class})
 public class OrderFrequencyValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -35,7 +35,7 @@ public class OrderFrequencyValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return OrderFrequency.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Checks the order frequency object for any inconsistencies/errors
 	 * 
@@ -58,13 +58,13 @@ public class OrderFrequencyValidator implements Validator {
 			errors.reject("error.general");
 		} else {
 			ValidationUtils.rejectIfEmpty(errors, "concept", "Concept.noConceptSelected");
-			
+
 			Concept concept = orderFrequency.getConcept();
 			if (concept != null) {
 				if (!ConceptClass.FREQUENCY_UUID.equals(concept.getConceptClass().getUuid())) {
 					errors.rejectValue("concept", "OrderFrequency.concept.shouldBeClassFrequency");
 				}
-				
+
 				OrderFrequency of = Context.getOrderService().getOrderFrequencyByConcept(concept);
 				if (of != null && !of.equals(orderFrequency)) {
 					errors.rejectValue("concept", "OrderFrequency.concept.shouldNotBeShared");

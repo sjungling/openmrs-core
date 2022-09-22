@@ -41,7 +41,7 @@ public class FormUtil {
 
 	private FormUtil() {
 	}
-	
+
 	private static final String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
 	/**
@@ -58,14 +58,14 @@ public class FormUtil {
 		if (s == null || s.length() < 1) {
 			return "_blank";
 		}
-		
+
 		// xml tokens must start with a letter
 		String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_";
-		
+
 		// after the leading letter, xml tokens may have
 		// digits, period, or hyphen
 		String nameChars = letters + "0123456789.-";
-		
+
 		// special characters that should be replaced with valid text
 		// all other invalid characters will be removed
 		Map<String, String> swapChars = new HashMap<>();
@@ -80,10 +80,10 @@ public class FormUtil {
 		swapChars.put("=", "eq");
 		swapChars.put("/", "slash");
 		swapChars.put("\\\\", "backslash");
-		
+
 		// start by cleaning whitespace and converting to lowercase
 		s = s.replaceAll("^\\s+", "").replaceAll("\\s+$", "").replaceAll("\\s+", "_").toLowerCase();
-		
+
 		// swap characters
 		Set<Entry<String, String>> swaps = swapChars.entrySet();
 		for (Entry<String, String> entry : swaps) {
@@ -93,7 +93,7 @@ public class FormUtil {
 				s = s.replaceAll(String.valueOf(entry.getKey()), "");
 			}
 		}
-		
+
 		// ensure that invalid characters and consecutive underscores are
 		// removed
 		StringBuilder token = new StringBuilder("");
@@ -104,21 +104,21 @@ public class FormUtil {
 				underscoreFlag = (s.charAt(i) == '_');
 			}
 		}
-		
+
 		// remove extraneous underscores before returning token
 		String tokenStr = token.toString();
 		tokenStr = tokenStr.replaceAll("_+", "_");
 		tokenStr = tokenStr.replaceAll("_+$", "");
-		
+
 		// make sure token starts with valid letter
 		if (letters.indexOf(tokenStr.charAt(0)) == -1 || tokenStr.startsWith("xml")) {
 			tokenStr = "_" + tokenStr;
 		}
-		
+
 		// return token
 		return tokenStr;
 	}
-	
+
 	/**
 	 * Generates a new, unique tag name for any given string
 	 *
@@ -143,7 +143,7 @@ public class FormUtil {
 			return token;
 		}
 	}
-	
+
 	/**
 	 * Returns a sorted and structured map of <code>FormField</code>s for the given OpenMRS form.
 	 * The root sections of the schema are stored under a key of zero (i.e.,
@@ -161,7 +161,7 @@ public class FormUtil {
 		Map<Integer, TreeSet<FormField>> formStructure = new TreeMap<>();
 		Integer base = 0;
 		formStructure.put(base, new TreeSet<>());
-		
+
 		for (FormField formField : form.getFormFields()) {
 			FormField parent = formField.getParent();
 			if (parent == null) {
@@ -175,16 +175,15 @@ public class FormUtil {
 				formStructure.get(parent.getFormFieldId()).add(formField);
 			}
 		}
-		
+
 		return formStructure;
 	}
-	
+
 	public static String dateToString() {
 		return dateToString(new Date());
 	}
-	
-	
-	
+
+
 	public static String dateToString(Date date) {
 		DateFormat dateFormatter = new SimpleDateFormat(DATE_TIME_FORMAT);
 		String dateString = dateFormatter.format(new Date());
@@ -192,7 +191,7 @@ public class FormUtil {
 		// include the colon, so we need to insert it
 		return dateString.substring(0, 22) + ":" + dateString.substring(22);
 	}
-	
+
 	/**
 	 * Get a string somewhat unique to this form. Combines the form's id and version and build
 	 *
@@ -202,7 +201,7 @@ public class FormUtil {
 	public static String getFormUriWithoutExtension(Form form) {
 		return form.getFormId() + "-" + form.getVersion() + "-" + form.getBuild();
 	}
-	
+
 	/**
 	 * Turn the given concept into a string acceptable to for hl7 and forms
 	 *
@@ -214,7 +213,7 @@ public class FormUtil {
 		ConceptName localizedName = concept.getName(locale, false);
 		return conceptToString(concept, localizedName);
 	}
-	
+
 	/**
 	 * Turn the given concept/concept-name pair into a string acceptable for hl7 and forms
 	 *
@@ -225,7 +224,7 @@ public class FormUtil {
 	public static String conceptToString(Concept concept, ConceptName localizedName) {
 		return concept.getConceptId() + "^" + localizedName.getName() + "^" + HL7Constants.HL7_LOCAL_CONCEPT; // + "^"
 	}
-	
+
 	/**
 	 * Turn the given drug into a string acceptable for hl7 and forms
 	 *

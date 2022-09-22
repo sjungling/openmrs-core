@@ -25,25 +25,25 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
  * webApplicationContext is refreshed, this dispatcher servlet needs to be refreshed too.
  */
 public class StaticDispatcherServlet extends org.springframework.web.servlet.DispatcherServlet {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(StaticDispatcherServlet.class);
-	
+
 	/**
 	 * @see org.springframework.web.servlet.FrameworkServlet#initFrameworkServlet()
 	 */
 	@Override
 	protected void initFrameworkServlet() throws ServletException, BeansException {
-		
+
 		Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
-		
+
 		log.info("Framework being initialized for static content");
 		WebModuleUtil.setStaticDispatcherServlet(this);
-		
+
 		super.initFrameworkServlet();
 	}
-	
+
 	/**
 	 * Called by the ModuleUtil after adding in a new, updating, starting, or stopping a module.
 	 * This needs to be called because each spring dispatcher servlet creates a new application
@@ -53,13 +53,13 @@ public class StaticDispatcherServlet extends org.springframework.web.servlet.Dis
 	 */
 	public void refreshApplicationContext() throws ServletException {
 		log.info("Application context for the static content dispatcher servlet is being refreshed");
-		
+
 		Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
 		((XmlWebApplicationContext) getWebApplicationContext()).setClassLoader(OpenmrsClassLoader.getInstance());
-		
+
 		refresh();
 	}
-	
+
 	public void stopAndCloseApplicationContext() {
 		try {
 			XmlWebApplicationContext ctx = (XmlWebApplicationContext) getWebApplicationContext();

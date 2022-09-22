@@ -18,9 +18,9 @@ import org.openmrs.Drug;
  * The Class DrugsByNameComparatorTest. Contains tests for DrugsByNameComparator
  */
 public class DrugsByNameComparatorTest {
-	
+
 	/**
-	 * @see DrugsByNameComparator#compareDrugNamesIgnoringNumericals(Drug,Drug)
+	 * @see DrugsByNameComparator#compareDrugNamesIgnoringNumericals(Drug, Drug)
 	 */
 	@Test
 	public void compareDrugNamesIgnoringNumericals_shouldReturnNegativeIfNameForDrug1ComesBeforeThatOfDrug2()
@@ -33,9 +33,9 @@ public class DrugsByNameComparatorTest {
 		int actualValue = dComparator.compare(drug1, drug2);
 		assertEquals(actualValue, -1);
 	}
-	
+
 	/**
-	 * @see DrugsByNameComparator#compareDrugNamesIgnoringNumericals(Drug,Drug)
+	 * @see DrugsByNameComparator#compareDrugNamesIgnoringNumericals(Drug, Drug)
 	 */
 	@Test
 	public void compareDrugNamesIgnoringNumericals_shouldReturnZeroIfNameForDrug1ComesBeforeThatOfDrug2() {
@@ -47,9 +47,9 @@ public class DrugsByNameComparatorTest {
 		int actualValue = dComparator.compare(drug1, drug2);
 		assertEquals(actualValue, 0);
 	}
-	
+
 	/**
-	 * @see DrugsByNameComparator#compareDrugNamesIgnoringNumericals(Drug,Drug)
+	 * @see DrugsByNameComparator#compareDrugNamesIgnoringNumericals(Drug, Drug)
 	 */
 	@Test
 	public void compareDrugNamesIgnoringNumericals_shouldReturnPositiveIfNameForDrug1ComesBeforeThatOfDrug2IgnoringDashes()
@@ -62,9 +62,9 @@ public class DrugsByNameComparatorTest {
 		int actualValue = dComparator.compare(drug1, drug2);
 		assertEquals(actualValue, 1);
 	}
-	
+
 	/**
-	 * @see DrugsByNameComparator#compareDrugNamesIgnoringNumericals(Drug,Drug)
+	 * @see DrugsByNameComparator#compareDrugNamesIgnoringNumericals(Drug, Drug)
 	 */
 	@Test
 	public void compareDrugNamesIgnoringNumericals_shouldReturnPositiveIfNameForDrug1ComesBeforeThatOfDrug2IgnoringNumerics()
@@ -77,5 +77,5 @@ public class DrugsByNameComparatorTest {
 		int actualValue = dComparator.compare(drug1, drug2);
 		assertEquals(actualValue, 1);
 	}
-	
+
 }

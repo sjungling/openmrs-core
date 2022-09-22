@@ -21,15 +21,15 @@ import org.openmrs.api.context.Context;
  * @see ConceptClass
  */
 public class ConceptClassEditor extends OpenmrsPropertyEditor<ConceptClass> {
-	
+
 	public ConceptClassEditor() {
 	}
-	
+
 	@Override
 	protected ConceptClass getObjectById(Integer id) {
 		return Context.getConceptService().getConceptClass(id);
 	}
-	
+
 	@Override
 	protected ConceptClass getObjectByUuid(String uuid) {
 		return Context.getConceptService().getConceptClassByUuid(uuid);

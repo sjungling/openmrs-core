@@ -26,7 +26,7 @@ import org.springframework.test.context.ContextConfiguration;
  * To migrate your tests follow <a href="https://wiki.openmrs.org/display/docs/How+to+migrate+to+JUnit+5">How to migrate to JUnit 5</a>.
  * The JUnit 5 version of the class is {@link org.openmrs.web.test.jupiter.BaseModuleWebContextSensitiveTest}.<p>
  */
-@ContextConfiguration(locations = { "classpath:openmrs-servlet.xml", "classpath*:webModuleApplicationContext.xml" }, inheritLocations = true)
+@ContextConfiguration(locations = {"classpath:openmrs-servlet.xml", "classpath*:webModuleApplicationContext.xml"}, inheritLocations = true)
 @Deprecated
 public abstract class BaseModuleWebContextSensitiveTest extends BaseModuleContextSensitiveTest {
 

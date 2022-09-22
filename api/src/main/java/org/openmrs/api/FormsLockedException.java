@@ -18,9 +18,9 @@ import org.openmrs.util.OpenmrsConstants;
  * @see FormService#checkIfFormsAreLocked()
  */
 public class FormsLockedException extends APIException {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Generic constructor that gives a normal reason why the user is not being allowed to save or
 	 * delete a form
@@ -28,7 +28,7 @@ public class FormsLockedException extends APIException {
 	public FormsLockedException() {
 		this("forms.locked");
 	}
-	
+
 	/**
 	 * Convenience constructor to give the user a message other than normal default one
 	 * 
@@ -37,7 +37,7 @@ public class FormsLockedException extends APIException {
 	public FormsLockedException(String message) {
 		super(message);
 	}
-	
+
 	/**
 	 * Convenience constructor to give the user a message other than the normal one and to chain
 	 * this exception with a parent exception.
@@ -48,7 +48,7 @@ public class FormsLockedException extends APIException {
 	public FormsLockedException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	/**
 	 * Convenience constructor used to only set the parent exception to chain with. This does not
 	 * set the error message for the user as to why an exception is being thrown. The

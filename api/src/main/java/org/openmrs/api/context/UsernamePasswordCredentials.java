@@ -18,7 +18,7 @@ public class UsernamePasswordCredentials implements Credentials {
 
 	protected String username;
 	protected String password;
-	
+
 	public static final String SCHEME = "OPENMRS_USERPASS_AUTH_SCHEME";
 
 	public UsernamePasswordCredentials(String username, String password) {

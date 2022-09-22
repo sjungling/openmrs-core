@@ -18,26 +18,26 @@ import org.slf4j.LoggerFactory;
  * @since 1.9
  */
 public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(Provider.class);
-	
+
 	private Integer providerId;
-	
+
 	private Person person;
-	
+
 	private String identifier;
-	
+
 	private Concept role;
-	
+
 	private Concept speciality;
-	
+
 	public Provider() {
 	}
-	
+
 	public Provider(Integer providerId) {
 		this.providerId = providerId;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -45,7 +45,7 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 	public Integer getId() {
 		return getProviderId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -53,49 +53,49 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 	public void setId(Integer id) {
 		setProviderId(id);
 	}
-	
+
 	/**
 	 * @param providerId the providerId to set
 	 */
 	public void setProviderId(Integer providerId) {
 		this.providerId = providerId;
 	}
-	
+
 	/**
 	 * @return the providerId
 	 */
 	public Integer getProviderId() {
 		return providerId;
 	}
-	
+
 	/**
 	 * @param person the person to set
 	 */
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	
+
 	/**
 	 * @return the person
 	 */
 	public Person getPerson() {
 		return person;
 	}
-	
+
 	/**
 	 * @param identifier the identifier to set
 	 */
 	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
 	}
-	
+
 	/**
 	 * @return the identifier
 	 */
 	public String getIdentifier() {
 		return identifier;
 	}
-	
+
 	/**
 	 * Sets the role concept
 	 * 
@@ -105,7 +105,7 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 	public void setRole(Concept role) {
 		this.role = role;
 	}
-	
+
 	/**
 	 * Gets the role concept
 	 * 
@@ -115,7 +115,7 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 	public Concept getRole() {
 		return role;
 	}
-	
+
 	/**
 	 * Sets the speciality concept
 	 * 
@@ -125,7 +125,7 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 	public void setSpeciality(Concept speciality) {
 		this.speciality = speciality;
 	}
-	
+
 	/**
 	 * Gets the speciality concept
 	 * 
@@ -135,13 +135,13 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 	public Concept getSpeciality() {
 		return speciality;
 	}
-	
+
 	@Override
 	public String toString() {
 		String provider = String.valueOf(providerId) + " providerName:" + ((person != null) ? person.getNames() : "");
 		return "[Provider: providerId:" + provider + " ]";
 	}
-	
+
 	/**
 	 * @see org.openmrs.BaseOpenmrsMetadata#getName()
 	 * <strong>Should</strong> return person full name if person is not null or null otherwise

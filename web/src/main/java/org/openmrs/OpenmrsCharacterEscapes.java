@@ -18,25 +18,25 @@ import com.fasterxml.jackson.core.io.SerializedString;
  * JSON using the jackson API so as to escape html and scripts inside html tags
  */
 public class OpenmrsCharacterEscapes extends CharacterEscapes {
-	
+
 	private final int[] asciiEscapes;
-	
+
 	public OpenmrsCharacterEscapes() {
 		// start with set of characters known to require escaping (double-quote, backslash etc)
 		int[] esc = CharacterEscapes.standardAsciiEscapesForJSON();
-		
+
 		// and force escaping of a few others:
 		esc['<'] = CharacterEscapes.ESCAPE_CUSTOM;
 		esc['>'] = CharacterEscapes.ESCAPE_CUSTOM;
-		
+
 		asciiEscapes = esc;
 	}
-	
+
 	@Override
 	public int[] getEscapeCodesForAscii() {
 		return asciiEscapes;
 	}
-	
+
 	@Override
 	public SerializableString getEscapeSequence(int ch) {
 		if (ch == '<') {

@@ -25,10 +25,10 @@ import org.slf4j.LoggerFactory;
  * Sample implementation of task that shows how to send emails to users/roles via message service.
  */
 public class AlertReminderTask extends AbstractTask {
-	
+
 	// Logger 
 	private static final Logger log = LoggerFactory.getLogger(AlertReminderTask.class);
-	
+
 	/**
 	 * Send alert reminder email to user(s) associated with the alert.
 	 */
@@ -38,40 +38,40 @@ public class AlertReminderTask extends AbstractTask {
 			// Get all unread alerts
 			// TODO Change to getAllAlerts(Boolean includeRead, Boolean includeExpired);
 			Collection<Alert> alerts = Context.getAlertService().getAllAlerts(false);
-			
+
 			// Send alert notifications to users who have unread alerts
 			sendAlertNotifications(alerts);
-			
+
 		}
 		catch (Exception e) {
 			log.error("Failed to send alert notifications", e);
 		}
 	}
-	
+
 	/**
 	 * Send alerts
 	 * 
 	 * @param alerts the unread alerts
 	 */
 	private void sendAlertNotifications(Collection<Alert> alerts) {
-		
+
 		try {
-			
+
 			// Create a new message
 			Message message = Context.getMessageService().createMessage("Alert Reminder", "You have unread alerts.");
-			
+
 			// Get all recipients
 			Collection<User> users = getRecipients(alerts);
-			
+
 			// Send a message to each person only once
 			Context.getMessageService().sendMessage(message, users);
-			
+
 		}
 		catch (MessageException e) {
 			log.error("Failed to send message", e);
 		}
 	}
-	
+
 	/**
 	 * Get the recipients of all unread alerts.
 	 * 
@@ -92,5 +92,5 @@ public class AlertReminderTask extends AbstractTask {
 		}
 		return users;
 	}
-	
+
 }

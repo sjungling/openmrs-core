@@ -34,9 +34,9 @@ import org.hibernate.type.Type;
  * @author paul.shemansky@gmail.com
  */
 public class NativeIfNotAssignedIdentityGenerator extends IdentityGenerator implements Configurable {
-	
+
 	private String entityName;
-	
+
 	@Override
 	public Serializable generate(SharedSessionContractImplementor session, Object entity) throws HibernateException {
 		Serializable id;

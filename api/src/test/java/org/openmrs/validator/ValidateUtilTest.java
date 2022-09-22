@@ -30,20 +30,20 @@ import org.springframework.validation.Errors;
  * Tests methods on the {@link ValidateUtil} class.
  */
 public class ValidateUtilTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see ValidateUtil#validate(Object)
 	 */
 	@Test
 	public void validate_shouldThrowValidationExceptionIfErrorsOccurDuringValidation() {
 		Location loc = new Location();
-		assertThrows(ValidationException.class , () -> ValidateUtil.validate(loc));
+		assertThrows(ValidationException.class, () -> ValidateUtil.validate(loc));
 	}
-	
+
 	@Test
 	public void validate_shouldThrowAPIExceptionIfErrorsOccurDuringValidation() {
 		Location loc = new Location();
-		
+
 		try {
 			ValidateUtil.validate(loc);
 		}
@@ -51,7 +51,7 @@ public class ValidateUtilTest extends BaseContextSensitiveTest {
 			assertNotNull(validationException.getErrors());
 			assertTrue(validationException.getErrors().hasErrors());
 		}
-		
+
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class ValidateUtilTest extends BaseContextSensitiveTest {
 
 		ValidateUtil.setDisableValidation(prevVal);
 	}
-	
+
 	/**
 	 * @see ValidateUtil#validateFieldLengths(org.springframework.validation.Errors, Class, String...)
 	 */
@@ -80,12 +80,12 @@ public class ValidateUtilTest extends BaseContextSensitiveTest {
 	public void validateFieldLength_shouldRejectValueWhenNameIsToLong() {
 		PatientIdentifierType patientIdentifierType = new PatientIdentifierType();
 		patientIdentifierType.setName("asdfghjkl asdfghjkl asdfghjkl asdfghjkl asdfghjkl xx");
-		
+
 		BindException errors = new BindException(patientIdentifierType, "patientIdentifierType");
 		ValidateUtil.validateFieldLengths(errors, PatientIdentifierType.class, "name");
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
 	 * @see ValidateUtil#validateFieldLengths(org.springframework.validation.Errors, Class, String...)
 	 */
@@ -93,7 +93,7 @@ public class ValidateUtilTest extends BaseContextSensitiveTest {
 	public void validateFieldLength_shouldNotRejectValueWhenNameIsEqualMax() {
 		PatientIdentifierType patientIdentifierType = new PatientIdentifierType();
 		patientIdentifierType.setName("asdfghjkl asdfghjkl asdfghjkl asdfghjkl asdfghjkl ");
-		
+
 		BindException errors = new BindException(patientIdentifierType, "patientIdentifierType");
 		ValidateUtil.validateFieldLengths(errors, PatientIdentifierType.class, "name");
 		assertFalse(errors.hasFieldErrors("name"));
@@ -116,21 +116,21 @@ public class ValidateUtilTest extends BaseContextSensitiveTest {
 
 		ValidateUtil.setDisableValidation(prevVal);
 	}
-	
+
 	/**
-	 * @see ValidateUtil#validate(Object,Errors)
+	 * @see ValidateUtil#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPopulateErrorsIfObjectInvalid() {
 		Location loc = new Location();
 		Errors errors = new BindException(loc, "");
 		ValidateUtil.validate(loc, errors);
-		
+
 		assertTrue(errors.hasErrors());
 	}
 
 	/**
-	 * @see ValidateUtil#validate(Object,Errors)
+	 * @see ValidateUtil#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldReturnImmediatelyIfValidationIsDisabledAndHaveNoErrors() {
@@ -160,7 +160,7 @@ public class ValidateUtilTest extends BaseContextSensitiveTest {
 		Concept concept = new Concept();
 		drug.setName("Sucedáneo de leche humana de término de kcal 509-528/100g, lípidos 25.80-28.90/100g, proteínas 9.50-12.0/100g, hidrato de carbono 55.20-57.90/100g, polvo, envase de lata con 400 a 454 g y medida de 4.30 a 4.50 g. - envase con 400 a 454 g - - envase con 400 a 454 g");
 		drug.setConcept(concept);
-		
+
 		ValidationException exception = assertThrows(ValidationException.class, () -> ValidateUtil.validate(drug));
 		assertTrue(exception.getMessage().contains("failed to validate with reason: name: This value exceeds the maximum length of 255 permitted for this field."));
 	}

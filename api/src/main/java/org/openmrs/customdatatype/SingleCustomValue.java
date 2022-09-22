@@ -25,18 +25,18 @@ import org.openmrs.VisitAttribute;
  * @since 1.9
  */
 public interface SingleCustomValue<D extends CustomValueDescriptor> {
-	
+
 	/**
 	 * @return metadata describing this custom value
 	 */
 	D getDescriptor();
-	
+
 	/**
 	 * @return the value persisted in a database in a varchar column. Not necessarily human-readable.
 	 * @throws NotYetPersistedException if valueReference hasn't been set by the CustomDatatype yet
 	 */
 	String getValueReference() throws NotYetPersistedException;
-	
+
 	/**
 	 * Directly set the String value that OpenMRS should persist in the database
 	 * in a varchar column. Implementations should validate this value and throw an
@@ -46,7 +46,7 @@ public interface SingleCustomValue<D extends CustomValueDescriptor> {
 	 * @param valueToPersist
 	 */
 	void setValueReferenceInternal(String valueToPersist) throws InvalidCustomValueException;
-	
+
 	/**
 	 * Convenience method to get the typed version of the serializedValue. (This will result in a call
 	 * to a {@link CustomDatatype#fromReferenceString(String)}.)
@@ -54,17 +54,17 @@ public interface SingleCustomValue<D extends CustomValueDescriptor> {
 	 * @throws InvalidCustomValueException 
 	 */
 	Object getValue() throws InvalidCustomValueException;
-	
+
 	/**
 	 * Sets the typed value. (This will result in a call to {@link CustomDatatype#getReferenceStringForValue(Object)}
 	 * @param typedValue
 	 * @throws InvalidCustomValueException
 	 */
 	<T> void setValue(T typedValue) throws InvalidCustomValueException;
-	
+
 	/**
 	 * @return whether or not setValue has been called (thus {@link CustomDatatype#save(Object, String)} needs to be called
 	 */
 	boolean isDirty();
-	
+
 }

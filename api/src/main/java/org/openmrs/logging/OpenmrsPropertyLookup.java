@@ -41,20 +41,20 @@ import org.openmrs.util.OpenmrsUtil;
 @Plugin(name = OpenmrsPropertyLookup.NAME, category = StrLookup.CATEGORY)
 @SuppressWarnings("unused")
 public class OpenmrsPropertyLookup extends AbstractLookup {
-	
+
 	public static final String NAME = "openmrs";
-	
+
 	@Override
 	public String lookup(LogEvent event, String key) {
 		AdministrationService adminService = null;
-		
+
 		try {
 			adminService = Context.getAdministrationService();
 		}
 		catch (ServiceNotFoundException ignored) {
-			
+
 		}
-		
+
 		switch (key) {
 			case "applicationDirectory":
 				final String applicationDirectory = OpenmrsUtil.getApplicationDataDirectory();
@@ -62,32 +62,32 @@ public class OpenmrsPropertyLookup extends AbstractLookup {
 			case "logLocation":
 				final String logLocation = getGlobalProperty(adminService, OpenmrsConstants.GP_LOG_LOCATION);
 				return logLocation == null ?
-					null :
-						logLocation.endsWith("/") ?
-							logLocation.substring(0, logLocation.length() - 1) : logLocation;
+												null :
+												logLocation.endsWith("/") ?
+																				logLocation.substring(0, logLocation.length() - 1) : logLocation;
 			case "logLayout":
 				return getGlobalProperty(adminService, OpenmrsConstants.GP_LOG_LAYOUT);
 			default:
 				throw new IllegalArgumentException(key);
 		}
 	}
-	
+
 	private String getGlobalProperty(AdministrationService adminService, String globalPropertyName) {
 		if (adminService == null) {
 			return null;
 		}
-		
+
 		String value = adminService.getGlobalProperty(globalPropertyName);
 		if (value == null) {
 			return null;
 		} else {
 			value = value.trim();
 		}
-		
+
 		if (value.isEmpty()) {
 			return null;
 		}
-		
+
 		return value;
 	}
 }

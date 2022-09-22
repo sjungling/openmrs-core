@@ -38,20 +38,20 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * Tests some of the methods on the {@link org.openmrs.web.filter.update.GZIPFilter}
  */
 public class GZIPFilterTest extends BaseWebContextSensitiveTest {
-	
+
 	/**
-	 * @see org.openmrs.web.filter.GZIPFilter#doFilterInternal(HttpServletRequest,HttpServletResponse, javax.servlet.FilterChain)
+	 * @see org.openmrs.web.filter.GZIPFilter#doFilterInternal(HttpServletRequest, HttpServletResponse, javax.servlet.FilterChain)
 	 */
 	@Test
 	public void zipRequestWrapperTest_shouldReturnTrueIfUnzippedContentReadFromWrapperIsTheSameAsContentBeforeZipping()
-	        throws Exception {
+									throws Exception {
 		GlobalProperty property = new GlobalProperty("gzip.acceptCompressedRequestsForPaths", ".*");
-		
+
 		Context.getAdministrationService().saveGlobalProperty(property);
 		MockHttpServletRequest req = new MockHttpServletRequest();
 		req.setContextPath("http://gzipservletpath");
 		req.addHeader("Content-encoding", "gzip");
-		
+
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		GZIPOutputStream gzOutput = new GZIPOutputStream(stream);
 		PrintWriter pwriter = new PrintWriter(gzOutput);
@@ -59,12 +59,12 @@ public class GZIPFilterTest extends BaseWebContextSensitiveTest {
 		pwriter.flush();
 		gzOutput.finish();
 		req.setContent(stream.toByteArray());
-		
+
 		MockHttpServletResponse resp = new MockHttpServletResponse();
 		FilterChain fil = mock(FilterChain.class);
 		GZIPFilter gzipFilter = new GZIPFilter();
 		gzipFilter.doFilterInternal(req, resp, fil);
-		
+
 		final ArgumentCaptor<HttpServletRequest> argumentCaptor = ArgumentCaptor.forClass(HttpServletRequest.class);
 		Mockito.verify(fil).doFilter(argumentCaptor.capture(), Mockito.any(HttpServletResponse.class));
 		HttpServletRequest requestArgument = argumentCaptor.getValue();
@@ -73,13 +73,13 @@ public class GZIPFilterTest extends BaseWebContextSensitiveTest {
 			InputStreamReader iReader = new InputStreamReader(iStream);
 			BufferedReader bufReader = new BufferedReader(iReader);
 			String outputMessage = bufReader.readLine();
-			
+
 			assertThat(outputMessage, is("message string"));
 		}
 		catch (IOException e) {
 			throw new RuntimeException();
 		}
-		
+
 	}
-	
+
 }

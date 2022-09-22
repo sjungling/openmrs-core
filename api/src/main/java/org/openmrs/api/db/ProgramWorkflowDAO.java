@@ -32,7 +32,7 @@ import org.openmrs.ProgramWorkflowState;
  * @version 1.0
  */
 public interface ProgramWorkflowDAO {
-	
+
 	// **************************
 	// PROGRAM
 	// **************************
@@ -45,7 +45,7 @@ public interface ProgramWorkflowDAO {
 	 * @throws DAOException
 	 */
 	public Program saveProgram(Program program) throws DAOException;
-	
+
 	/**
 	 * Retrieves a {@link Program} from the database by primary key programId
 	 * 
@@ -54,7 +54,7 @@ public interface ProgramWorkflowDAO {
 	 * @throws DAOException
 	 */
 	public Program getProgram(Integer programId) throws DAOException;
-	
+
 	/**
 	 * Returns all programs
 	 * 
@@ -63,7 +63,7 @@ public interface ProgramWorkflowDAO {
 	 * @throws DAOException
 	 */
 	public List<Program> getAllPrograms(boolean includeRetired) throws DAOException;
-	
+
 	/**
 	 * Returns programs that match the given string. A null list will never be returned. An empty
 	 * list will be returned if there are no programs matching this <code>nameFragment</code>
@@ -73,7 +73,7 @@ public interface ProgramWorkflowDAO {
 	 * @throws DAOException
 	 */
 	public List<Program> findPrograms(String nameFragment) throws DAOException;
-	
+
 	/**
 	 * Completely remove a program from the database (not reversible) This method delegates to
 	 * #purgeProgram(program, boolean) method
@@ -82,7 +82,7 @@ public interface ProgramWorkflowDAO {
 	 * @throws DAOException
 	 */
 	public void deleteProgram(Program program) throws DAOException;
-	
+
 	// **************************
 	// PATIENT PROGRAM
 	// **************************
@@ -95,7 +95,7 @@ public interface ProgramWorkflowDAO {
 	 * @throws DAOException
 	 */
 	public PatientProgram savePatientProgram(PatientProgram patientProgram) throws DAOException;
-	
+
 	/**
 	 * Returns a PatientProgram given that PatientPrograms primary key <code>patientProgramId</code>
 	 * A null value is returned if no PatientProgram exists with this patientProgramId.
@@ -106,9 +106,9 @@ public interface ProgramWorkflowDAO {
 	 * @throws DAOException
 	 */
 	public PatientProgram getPatientProgram(Integer id);
-	
+
 	public List<PatientProgram> getPatientPrograms(Cohort cohort, Collection<Program> programs);
-	
+
 	/**
 	 * Returns PatientPrograms that match the input parameters. If an input parameter is set to
 	 * null, the parameter will not be used. Calling this method will all null parameters will
@@ -131,9 +131,9 @@ public interface ProgramWorkflowDAO {
 	 * @throws DAOException
 	 */
 	public List<PatientProgram> getPatientPrograms(Patient patient, Program program, Date minEnrollmentDate,
-	        Date maxEnrollmentDate, Date minCompletionDate, Date maxCompletionDate, boolean includeVoided)
-	        throws DAOException;
-	
+									Date maxEnrollmentDate, Date minCompletionDate, Date maxCompletionDate, boolean includeVoided)
+									throws DAOException;
+
 	/**
 	 * Completely remove a patientProgram from the database (not reversible) This method delegates
 	 * to #purgePatientProgram(patientProgram, boolean) method
@@ -142,7 +142,7 @@ public interface ProgramWorkflowDAO {
 	 * @throws DAOException
 	 */
 	public void deletePatientProgram(PatientProgram patientProgram) throws DAOException;
-	
+
 	// **************************
 	// CONCEPT STATE CONVERSION
 	// **************************
@@ -155,7 +155,7 @@ public interface ProgramWorkflowDAO {
 	 * @throws DAOException
 	 */
 	public ConceptStateConversion saveConceptStateConversion(ConceptStateConversion csc) throws DAOException;
-	
+
 	/**
 	 * Returns all conceptStateConversions
 	 * 
@@ -163,7 +163,7 @@ public interface ProgramWorkflowDAO {
 	 * @throws DAOException
 	 */
 	public List<ConceptStateConversion> getAllConceptStateConversions() throws DAOException;
-	
+
 	/**
 	 * Returns a conceptStateConversion given that conceptStateConversions primary key
 	 * <code>conceptStateConversionId</code> A null value is returned if no conceptStateConversion
@@ -176,7 +176,7 @@ public interface ProgramWorkflowDAO {
 	 * @throws DAOException
 	 */
 	public ConceptStateConversion getConceptStateConversion(Integer id);
-	
+
 	/**
 	 * Completely remove a conceptStateConversion from the database (not reversible)
 	 * 
@@ -184,7 +184,7 @@ public interface ProgramWorkflowDAO {
 	 * @throws DAOException
 	 */
 	public void deleteConceptStateConversion(ConceptStateConversion csc);
-	
+
 	/**
 	 * Retrieves the ConceptStateConversion that matches the passed <code>ProgramWorkflow</code> and
 	 * <code>Concept</code>
@@ -196,25 +196,25 @@ public interface ProgramWorkflowDAO {
 	 * @throws DAOException
 	 */
 	public ConceptStateConversion getConceptStateConversion(ProgramWorkflow workflow, Concept trigger);
-	
+
 	/**
 	 * @param uuid
 	 * @return concept state conversion or null
 	 */
 	public ConceptStateConversion getConceptStateConversionByUuid(String uuid);
-	
+
 	/**
 	 * @param uuid
 	 * @return patient program or null
 	 */
 	public PatientProgram getPatientProgramByUuid(String uuid);
-	
+
 	/**
 	 * @param uuid
 	 * @return program or null
 	 */
 	public Program getProgramByUuid(String uuid);
-	
+
 	/**
 	 * Retrieves the Programs from the dB which have the given name.
 	 * @param name the name of the Programs to retrieve.
@@ -224,7 +224,7 @@ public interface ProgramWorkflowDAO {
 	 * @return all Programs with the given name.
 	 */
 	public List<Program> getProgramsByName(String name, boolean includeRetired);
-	
+
 	/**
 	 * Retrieves a {@code ProgramWorkflowState} from the database by its primary key.
 	 * 
@@ -233,15 +233,15 @@ public interface ProgramWorkflowDAO {
 	 * @since 2.2.0
 	 */
 	public ProgramWorkflowState getState(Integer stateId);
-	
+
 	/**
 	 * @param uuid
 	 * @return program workflow state or null
 	 */
 	public ProgramWorkflowState getStateByUuid(String uuid);
-	
+
 	public PatientState getPatientStateByUuid(String uuid);
-	
+
 	/**
 	 * Retrieves a {@code ProgramWorkflow} from the database by its primary key.
 	 * 
@@ -250,13 +250,13 @@ public interface ProgramWorkflowDAO {
 	 * @since 2.2.0
 	 */
 	public ProgramWorkflow getWorkflow(Integer workflowId);
-	
+
 	/**
 	 * @param uuid
 	 * @return program workflow or null
 	 */
 	public ProgramWorkflow getWorkflowByUuid(String uuid);
-	
+
 	/**
 	 * Returns a list of Programs that are using a particular concept.
 	 * 
@@ -264,7 +264,7 @@ public interface ProgramWorkflowDAO {
 	 * @return - A List of Programs
 	 */
 	public List<Program> getProgramsByConcept(Concept concept);
-	
+
 	/**
 	 * Returns a list of ProgramWorkflows that are using a particular concept.
 	 * 
@@ -272,7 +272,7 @@ public interface ProgramWorkflowDAO {
 	 * @return - A List of ProgramWorkflows
 	 */
 	public List<ProgramWorkflow> getProgramWorkflowsByConcept(Concept concept);
-	
+
 	/**
 	 * Returns a list of ProgramWorkflowStates that are using a particular concept.
 	 * 
@@ -280,19 +280,20 @@ public interface ProgramWorkflowDAO {
 	 * @return - A List of ProgramWorkflowStates
 	 */
 	public List<ProgramWorkflowState> getProgramWorkflowStatesByConcept(Concept concept);
-        public List<ProgramAttributeType> getAllProgramAttributeTypes();
 
-        public ProgramAttributeType getProgramAttributeType(Integer var1);
+	public List<ProgramAttributeType> getAllProgramAttributeTypes();
 
-        public ProgramAttributeType getProgramAttributeTypeByUuid(String var1);
+	public ProgramAttributeType getProgramAttributeType(Integer var1);
 
-        public ProgramAttributeType saveProgramAttributeType(ProgramAttributeType var1);
+	public ProgramAttributeType getProgramAttributeTypeByUuid(String var1);
 
-        public PatientProgramAttribute getPatientProgramAttributeByUuid(String var1);
+	public ProgramAttributeType saveProgramAttributeType(ProgramAttributeType var1);
 
-        public void purgeProgramAttributeType(ProgramAttributeType var1);
+	public PatientProgramAttribute getPatientProgramAttributeByUuid(String var1);
 
-        public List<PatientProgram> getPatientProgramByAttributeNameAndValue(String attributeName, String attributeValue);
+	public void purgeProgramAttributeType(ProgramAttributeType var1);
 
-        public Map<Object, Object> getPatientProgramAttributeByAttributeName(List<Integer> patientIds, String attributeName);
+	public List<PatientProgram> getPatientProgramByAttributeNameAndValue(String attributeName, String attributeValue);
+
+	public Map<Object, Object> getPatientProgramAttributeByAttributeName(List<Integer> patientIds, String attributeName);
 }

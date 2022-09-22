@@ -25,17 +25,17 @@ public class UsernamePasswordAuthenticationScheme extends DaoAuthenticationSchem
 
 	@Override
 	public Authenticated authenticate(Credentials credentials)
-		throws ContextAuthenticationException {
+									throws ContextAuthenticationException {
 		log.debug("Authenticating client: {}", credentials.getClientName());
 
 		if (!(credentials instanceof UsernamePasswordCredentials)) {
 			throw new ContextAuthenticationException(
-				"The provided credentials could not be used to authenticated with the specified authentication scheme.");
+											"The provided credentials could not be used to authenticated with the specified authentication scheme.");
 		}
 
 		UsernamePasswordCredentials userPassCreds = (UsernamePasswordCredentials) credentials;
 		return new BasicAuthenticated(getContextDAO().authenticate(userPassCreds.getUsername(), userPassCreds.getPassword()),
-			UsernamePasswordCredentials.SCHEME);
+										UsernamePasswordCredentials.SCHEME);
 	}
 
 }

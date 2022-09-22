@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
  * Tests methods on the {@link HL7Util} class
  */
 public class HL7UtilTest {
-	
+
 	/**
 	 * @throws HL7Exception
 	 * @see HL7Util#parseHL7Timestamp(String)
@@ -34,14 +34,14 @@ public class HL7UtilTest {
 		// set tz to be US/Indianapolis so this junit test works everywhere and always
 		TimeZone originalTimeZone = TimeZone.getDefault();
 		TimeZone.setDefault(TimeZone.getTimeZone("EST"));
-		
+
 		Date d = HL7Util.parseHL7Date("20091225003000");
 		assertEquals(25, d.getDate());
-		
+
 		// reset the timezone
 		TimeZone.setDefault(originalTimeZone);
 	}
-	
+
 	/**
 	 * @throws HL7Exception
 	 * @see HL7Util#parseHL7Timestamp(String)
@@ -51,32 +51,32 @@ public class HL7UtilTest {
 		Date d = HL7Util.parseHL7Date("197804110615-0200");
 		assertEquals(new Long("261130500000"), (Long) d.getTime());
 	}
-	
+
 	/**
 	 * @throws ParseException
-	 * @see HL7Util#getTimeZoneOffset(String,Date)
+	 * @see HL7Util#getTimeZoneOffset(String, Date)
 	 */
 	@Test
 	public void getTimeZoneOffset_shouldReturnTimezoneForGivenDateAndNotTheCurrentDate() throws ParseException {
 		// set tz to be US/Indianapolis so this junit test works everywhere and always
 		TimeZone originalTimeZone = TimeZone.getDefault();
 		TimeZone.setDefault(TimeZone.getTimeZone("GMT-05:00"));
-		
+
 		assertEquals("-0500", HL7Util.getTimeZoneOffset("197804110615", new SimpleDateFormat("yyyyMMdd")
-		        .parse("20091225")));
-		
+										.parse("20091225")));
+
 		// reset the timezone
 		TimeZone.setDefault(originalTimeZone);
 	}
-	
+
 	/**
-	 * @see HL7Util#getTimeZoneOffset(String,Date)
+	 * @see HL7Util#getTimeZoneOffset(String, Date)
 	 */
 	@Test
 	public void getTimeZoneOffset_shouldReturnTimezoneStringIfExistsInGivenString() {
 		assertEquals("+1100", HL7Util.getTimeZoneOffset("348934934934+1100", new Date()));
 	}
-	
+
 	/**
 	 * @throws HL7Exception
 	 * @see HL7Util#parseHL7Time(String)
@@ -87,13 +87,13 @@ public class HL7UtilTest {
 		// set tz to be a __non DST__ timezone so this junit test works everywhere and always
 		TimeZone originalTimeZone = TimeZone.getDefault();
 		TimeZone.setDefault(TimeZone.getTimeZone("EAT"));
-		
+
 		Date parsedDate = HL7Util.parseHL7Time("0615");
 		assertEquals(6, parsedDate.getHours());
 		assertEquals(15, parsedDate.getMinutes());
-		
+
 		// reset the timezone
 		TimeZone.setDefault(originalTimeZone);
 	}
-	
+
 }

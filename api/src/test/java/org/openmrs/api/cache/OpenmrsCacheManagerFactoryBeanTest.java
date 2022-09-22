@@ -21,16 +21,16 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 
-public class OpenmrsCacheManagerFactoryBeanTest extends BaseContextSensitiveTest{
-    
-    @Autowired
-    CacheManager cacheManager;
-    
-    @Test
-    public void shouldContainSpecificCacheConfigurations(){
-        String[] expectedCaches = {"conceptDatatype", "subscription", "userSearchLocales", "conceptIdsByMapping"};
-        Collection<String> actualCaches = cacheManager.getCacheNames();
-        assertThat(actualCaches.size(), is(expectedCaches.length));
-        assertThat(actualCaches, containsInAnyOrder(expectedCaches));
-    }
+public class OpenmrsCacheManagerFactoryBeanTest extends BaseContextSensitiveTest {
+
+	@Autowired
+	CacheManager cacheManager;
+
+	@Test
+	public void shouldContainSpecificCacheConfigurations() {
+		String[] expectedCaches = {"conceptDatatype", "subscription", "userSearchLocales", "conceptIdsByMapping"};
+		Collection<String> actualCaches = cacheManager.getCacheNames();
+		assertThat(actualCaches.size(), is(expectedCaches.length));
+		assertThat(actualCaches, containsInAnyOrder(expectedCaches));
+	}
 }

@@ -26,7 +26,7 @@ public class ConfigUtil implements GlobalPropertyListener {
 	 * Cache of global property key/value pairs to enable lookups that do not require accessing the service each time
 	 */
 	private static final Map<String, String> globalPropertyCache = new HashMap<>();
-	
+
 	/**
 	 * Gets the value of the given OpenMRS global property
 	 */
@@ -39,9 +39,9 @@ public class ConfigUtil implements GlobalPropertyListener {
 		return value;
 	}
 
-    /**
-	 * Returns the value of the given OpenMRS runtime property
-	 */
+	/**
+		* Returns the value of the given OpenMRS runtime property
+		*/
 	public static String getRuntimeProperty(String propertyName) {
 		return Context.getRuntimeProperties().getProperty(propertyName);
 	}
@@ -95,17 +95,17 @@ public class ConfigUtil implements GlobalPropertyListener {
 		}
 		return value;
 	}
-	
+
 	@Override
 	public void globalPropertyChanged(GlobalProperty newValue) {
 		globalPropertyCache.put(newValue.getProperty(), newValue.getPropertyValue());
 	}
-	
+
 	@Override
 	public void globalPropertyDeleted(String propertyName) {
 		globalPropertyCache.remove(propertyName);
 	}
-	
+
 	@Override
 	public boolean supportsPropertyName(String propertyName) {
 		return true;

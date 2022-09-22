@@ -23,9 +23,9 @@ import org.springframework.validation.Errors;
  * Contains tests methods for the {@link ConceptMapTypeValidator}
  */
 public class ConceptMapTypeValidatorTest extends BaseContextSensitiveTest {
-	
+
 	/**
-	 * @see ConceptMapTypeValidator#validate(Object,Errors)
+	 * @see ConceptMapTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheConceptMapTypeNameIsADuplicate() {
@@ -35,18 +35,18 @@ public class ConceptMapTypeValidatorTest extends BaseContextSensitiveTest {
 		new ConceptMapTypeValidator().validate(mapType, errors);
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
-	 * @see ConceptMapTypeValidator#validate(Object,Errors)
+	 * @see ConceptMapTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheConceptMapTypeObjectIsNull() {
 		Errors errors = new BindException(new ConceptMapType(), "mapType");
 		assertThrows(IllegalArgumentException.class, () ->  new ConceptMapTypeValidator().validate(null, errors));
 	}
-	
+
 	/**
-	 * @see ConceptMapTypeValidator#validate(Object,Errors)
+	 * @see ConceptMapTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheNameIsAWhiteSpaceCharacter() {
@@ -56,9 +56,9 @@ public class ConceptMapTypeValidatorTest extends BaseContextSensitiveTest {
 		new ConceptMapTypeValidator().validate(mapType, errors);
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
-	 * @see ConceptMapTypeValidator#validate(Object,Errors)
+	 * @see ConceptMapTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheNameIsAnEmptyString() {
@@ -68,9 +68,9 @@ public class ConceptMapTypeValidatorTest extends BaseContextSensitiveTest {
 		new ConceptMapTypeValidator().validate(mapType, errors);
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
-	 * @see ConceptMapTypeValidator#validate(Object,Errors)
+	 * @see ConceptMapTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheNameIsNull() {
@@ -79,9 +79,9 @@ public class ConceptMapTypeValidatorTest extends BaseContextSensitiveTest {
 		new ConceptMapTypeValidator().validate(mapType, errors);
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
-	 * @see ConceptMapTypeValidator#validate(Object,Errors)
+	 * @see ConceptMapTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassIfTheNameIsUniqueAmongstAllConceptMapTypeNames() {
@@ -91,9 +91,9 @@ public class ConceptMapTypeValidatorTest extends BaseContextSensitiveTest {
 		new ConceptMapTypeValidator().validate(mapType, errors);
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see ConceptMapTypeValidator#validate(Object,Errors)
+	 * @see ConceptMapTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() {
@@ -105,18 +105,18 @@ public class ConceptMapTypeValidatorTest extends BaseContextSensitiveTest {
 		new ConceptMapTypeValidator().validate(mapType, errors);
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see ConceptMapTypeValidator#validate(Object,Errors)
+	 * @see ConceptMapTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() {
 		ConceptMapType mapType = new ConceptMapType();
 		mapType.setName("unique-name");
 		mapType
-		        .setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		mapType
-		        .setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		Errors errors = new BindException(mapType, "mapType");
 		new ConceptMapTypeValidator().validate(mapType, errors);
 		assertTrue(errors.hasFieldErrors("description"));

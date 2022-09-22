@@ -21,17 +21,17 @@ import org.hibernate.SessionFactory;
  * @since 1.12, 1.11.3, 1.10.2, 1.9.9
  */
 public class DbSessionFactory {
-	
+
 	private SessionFactory sessionFactory;
-	
+
 	public DbSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	public DbSession getCurrentSession() {
 		return new DbSession(sessionFactory);
 	}
-	
+
 	public SessionFactory getHibernateSessionFactory() {
 		return sessionFactory;
 	}

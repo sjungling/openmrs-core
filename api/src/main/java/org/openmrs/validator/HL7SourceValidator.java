@@ -20,9 +20,9 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.9
  */
-@Handler(supports = { HL7Source.class }, order = 50)
+@Handler(supports = {HL7Source.class}, order = 50)
 public class HL7SourceValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -32,7 +32,7 @@ public class HL7SourceValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return c.equals(HL7Source.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -54,5 +54,5 @@ public class HL7SourceValidator implements Validator {
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name");
 		}
 	}
-	
+
 }

@@ -35,22 +35,22 @@ import org.springframework.validation.Errors;
  * Contains tests methods for the {@link OrderTypeValidator}
  */
 public class OrderTypeValidatorTest extends BaseContextSensitiveTest {
-	
+
 	@Autowired
 	private OrderService orderService;
-	
-	
+
+
 	/**
-	 * @see OrderTypeValidator#validate(Object,Errors)
+	 * @see OrderTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfTheOrderTypeObjectIsNull() {
 		Errors errors = new BindException(new OrderType(), "orderType");
 		assertThrows(IllegalArgumentException.class, () -> new OrderTypeValidator().validate(null, errors));
 	}
-	
+
 	/**
-	 * @see OrderTypeValidator#validate(Object,Errors)
+	 * @see OrderTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfNameIsNull() {
@@ -59,9 +59,9 @@ public class OrderTypeValidatorTest extends BaseContextSensitiveTest {
 		new OrderTypeValidator().validate(orderType, errors);
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
-	 * @see OrderTypeValidator#validate(Object,Errors)
+	 * @see OrderTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfNameIsEmpty() {
@@ -71,7 +71,7 @@ public class OrderTypeValidatorTest extends BaseContextSensitiveTest {
 		new OrderTypeValidator().validate(orderType, errors);
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
 	 * @see OrderTypeValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -83,9 +83,9 @@ public class OrderTypeValidatorTest extends BaseContextSensitiveTest {
 		new OrderTypeValidator().validate(orderType, errors);
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
-	 * @see OrderTypeValidator#validate(Object,Errors)
+	 * @see OrderTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfNameIsWhiteSpace() {
@@ -95,9 +95,9 @@ public class OrderTypeValidatorTest extends BaseContextSensitiveTest {
 		new OrderTypeValidator().validate(orderType, errors);
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
-	 * @see OrderTypeValidator#validate(Object,Errors)
+	 * @see OrderTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfNameIsADuplicate() {
@@ -107,9 +107,9 @@ public class OrderTypeValidatorTest extends BaseContextSensitiveTest {
 		new OrderTypeValidator().validate(orderType, errors);
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
-	 * @see OrderTypeValidator#validate(Object,Errors)
+	 * @see OrderTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfConceptClassIsADuplicate() {
@@ -122,9 +122,9 @@ public class OrderTypeValidatorTest extends BaseContextSensitiveTest {
 		new OrderTypeValidator().validate(orderType, errors);
 		assertTrue(errors.hasFieldErrors("conceptClasses[0]"));
 	}
-	
+
 	/**
-	 * @see OrderTypeValidator#validate(Object,Errors)
+	 * @see OrderTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfParentIsAmongItsDescendants() {
@@ -136,9 +136,9 @@ public class OrderTypeValidatorTest extends BaseContextSensitiveTest {
 		new OrderTypeValidator().validate(orderType, errors);
 		assertTrue(errors.hasFieldErrors("parent"));
 	}
-	
+
 	/**
-	 * @see OrderTypeValidator#validate(Object,Errors)
+	 * @see OrderTypeValidator#validate(Object, Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfParentIsAlsoADirectChild() {
@@ -150,7 +150,7 @@ public class OrderTypeValidatorTest extends BaseContextSensitiveTest {
 		new OrderTypeValidator().validate(orderType, errors);
 		assertTrue(errors.hasFieldErrors("parent"));
 	}
-	
+
 	/**
 	 * @see OrderTypeValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -164,10 +164,10 @@ public class OrderTypeValidatorTest extends BaseContextSensitiveTest {
 		orderType.setConceptClasses(col);
 		Errors errors = new BindException(orderType, "orderType");
 		new OrderTypeValidator().validate(orderType, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see OrderTypeValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -177,10 +177,10 @@ public class OrderTypeValidatorTest extends BaseContextSensitiveTest {
 		assertNotNull(orderType);
 		Errors errors = new BindException(orderType, "orderType");
 		new OrderTypeValidator().validate(orderType, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see OrderTypeValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -192,7 +192,7 @@ public class OrderTypeValidatorTest extends BaseContextSensitiveTest {
 		APIException exception = assertThrows(APIException.class, () -> orderService.saveOrderType(orderType));
 		assertThat(exception.getMessage(), is(expectedMsg));
 	}
-	
+
 	/**
 	 * @see OrderTypeValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -204,16 +204,16 @@ public class OrderTypeValidatorTest extends BaseContextSensitiveTest {
 		Collection<ConceptClass> col = new HashSet<>();
 		col.add(Context.getConceptService().getConceptClass(2));
 		orderType.setConceptClasses(col);
-		
+
 		orderType.setDescription("description");
 		orderType.setRetireReason("retireReason");
-		
+
 		Errors errors = new BindException(orderType, "orderType");
 		new OrderTypeValidator().validate(orderType, errors);
-		
+
 		assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see OrderTypeValidator#validate(Object, org.springframework.validation.Errors)
 	 */
@@ -221,21 +221,21 @@ public class OrderTypeValidatorTest extends BaseContextSensitiveTest {
 	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() {
 		OrderType orderType = new OrderType();
 		orderType
-		        .setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		orderType
-		        .setJavaClassName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setJavaClassName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		Collection<ConceptClass> col = new HashSet<>();
 		col.add(Context.getConceptService().getConceptClass(2));
 		orderType.setConceptClasses(col);
-		
+
 		orderType
-		        .setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+										.setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		orderType
-		        .setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
-		
+										.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+
 		Errors errors = new BindException(orderType, "orderType");
 		new OrderTypeValidator().validate(orderType, errors);
-		
+
 		assertTrue(errors.hasFieldErrors("name"));
 		assertTrue(errors.hasFieldErrors("javaClassName"));
 		assertTrue(errors.hasFieldErrors("description"));

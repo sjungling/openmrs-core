@@ -30,16 +30,16 @@ import org.openmrs.api.context.Context;
  */
 @Handler(supports = Visit.class)
 public class VisitUnvoidHandler implements UnvoidHandler<Visit> {
-	
+
 	@Override
 	public void handle(Visit visit, User voidingUser, Date origParentVoidedDate, String unused) {
 		List<Encounter> encountersByVisit = Context.getEncounterService().getEncountersByVisit(visit, true);
 		for (Encounter encounter : encountersByVisit) {
 			if (encounter.getVoided() && encounter.getDateVoided().equals(visit.getDateVoided())
-			        && encounter.getVoidReason().equals(visit.getVoidReason())) {
+											&& encounter.getVoidReason().equals(visit.getVoidReason())) {
 				Context.getEncounterService().unvoidEncounter(encounter);
 			}
 		}
 	}
-	
+
 }

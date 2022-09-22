@@ -19,7 +19,7 @@ import org.openmrs.api.context.Context;
  * @since 1.9
  */
 public abstract class BaseEncounterVisitHandler implements EncounterVisitHandler {
-	
+
 	/**
 	 * Delegates to {@link EncounterVisitHandler#getDisplayName(java.util.Locale)} with
 	 * {@link Context#getLocale()} as a parameter.
@@ -30,5 +30,5 @@ public abstract class BaseEncounterVisitHandler implements EncounterVisitHandler
 	public String getDisplayName() {
 		return getDisplayName(Context.getLocale());
 	}
-	
+
 }

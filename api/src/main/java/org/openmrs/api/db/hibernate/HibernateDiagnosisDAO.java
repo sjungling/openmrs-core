@@ -37,7 +37,7 @@ import javax.persistence.TypedQuery;
  *
  */
 public class HibernateDiagnosisDAO implements DiagnosisDAO {
-	
+
 	/**
 	 * Hibernate session factory
 	 */
@@ -79,15 +79,15 @@ public class HibernateDiagnosisDAO implements DiagnosisDAO {
 	@Override
 	public List<Diagnosis> getActiveDiagnoses(Patient patient, Date fromDate) {
 		String fromDateCriteria = "";
-		if(fromDate != null){
+		if (fromDate != null) {
 			fromDateCriteria = " and d.dateCreated >= :fromDate ";
 		}
 		Query query = sessionFactory.getCurrentSession().createQuery(
-			"from Diagnosis d where d.patient.patientId = :patientId and d.voided = false " 
-				+ fromDateCriteria  
-				+ " order by d.dateCreated desc");
+										"from Diagnosis d where d.patient.patientId = :patientId and d.voided = false "
+																		+ fromDateCriteria
+																		+ " order by d.dateCreated desc");
 		query.setInteger("patientId", patient.getId());
-		if(fromDate != null){
+		if (fromDate != null) {
 			query.setDate("fromDate", fromDate);
 		}
 		return query.list();
@@ -153,7 +153,7 @@ public class HibernateDiagnosisDAO implements DiagnosisDAO {
 	public Diagnosis getDiagnosisById(Integer diagnosisId) {
 		return (Diagnosis) sessionFactory.getCurrentSession().get(Diagnosis.class, diagnosisId);
 	}
-	
+
 	/**
 	 * Gets the diagnosis attached to the specified UUID.
 	 *
@@ -161,9 +161,9 @@ public class HibernateDiagnosisDAO implements DiagnosisDAO {
 	 * @return the diagnosis associated with the UUID.
 	 */
 	@Override
-	public Diagnosis getDiagnosisByUuid(String uuid){
+	public Diagnosis getDiagnosisByUuid(String uuid) {
 		return (Diagnosis) sessionFactory.getCurrentSession().createQuery("from Diagnosis d where d.uuid = :uuid")
-			.setString("uuid", uuid).uniqueResult();
+										.setString("uuid", uuid).uniqueResult();
 	}
 
 	/**
@@ -171,7 +171,7 @@ public class HibernateDiagnosisDAO implements DiagnosisDAO {
 	 * @param diagnosis diagnosis to remove from the database
 	 */
 	@Override
-	public void deleteDiagnosis(Diagnosis diagnosis) throws DAOException{
+	public void deleteDiagnosis(Diagnosis diagnosis) throws DAOException {
 		sessionFactory.getCurrentSession().delete(diagnosis);
 	}
 
@@ -201,7 +201,7 @@ public class HibernateDiagnosisDAO implements DiagnosisDAO {
 	@Transactional(readOnly = true)
 	public DiagnosisAttributeType getDiagnosisAttributeTypeByUuid(String uuid) throws DAOException {
 		return (DiagnosisAttributeType) sessionFactory.getCurrentSession().createCriteria(DiagnosisAttributeType.class).add(
-				Restrictions.eq("uuid", uuid)).uniqueResult();
+										Restrictions.eq("uuid", uuid)).uniqueResult();
 	}
 
 	/**
@@ -230,6 +230,6 @@ public class HibernateDiagnosisDAO implements DiagnosisDAO {
 	@Transactional(readOnly = true)
 	public DiagnosisAttribute getDiagnosisAttributeByUuid(String uuid) throws DAOException {
 		return (DiagnosisAttribute) sessionFactory.getCurrentSession().createCriteria(DiagnosisAttribute.class).add(Restrictions.eq("uuid", uuid))
-				.uniqueResult();
+										.uniqueResult();
 	}
 }

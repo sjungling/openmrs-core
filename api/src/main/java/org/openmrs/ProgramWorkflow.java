@@ -23,21 +23,21 @@ import org.openmrs.util.NaturalStrings;
  * ProgramWorkflow
  */
 public class ProgramWorkflow extends BaseChangeableOpenmrsMetadata {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	// ******************
 	// Properties
 	// ******************
 	
 	private Integer programWorkflowId;
-	
+
 	private Program program;
-	
+
 	private Concept concept;
-	
+
 	private Set<ProgramWorkflowState> states = new HashSet<>();
-	
+
 	// ******************
 	// Constructors
 	// ******************
@@ -45,12 +45,12 @@ public class ProgramWorkflow extends BaseChangeableOpenmrsMetadata {
 	/** Default Constructor */
 	public ProgramWorkflow() {
 	}
-	
+
 	/** Constructor with id */
 	public ProgramWorkflow(Integer programWorkflowId) {
 		setProgramWorkflowId(programWorkflowId);
 	}
-	
+
 	// ******************
 	// Instance methods
 	// ******************
@@ -64,7 +64,7 @@ public class ProgramWorkflow extends BaseChangeableOpenmrsMetadata {
 		state.setProgramWorkflow(this);
 		getStates().add(state);
 	}
-	
+
 	/**
 	 * Removes a {@link ProgramWorkflowState} from this ProgramWorkflow
 	 * 
@@ -76,7 +76,7 @@ public class ProgramWorkflow extends BaseChangeableOpenmrsMetadata {
 			state.setProgramWorkflow(null);
 		}
 	}
-	
+
 	/**
 	 * Retires a {@link ProgramWorkflowState}
 	 * 
@@ -85,7 +85,7 @@ public class ProgramWorkflow extends BaseChangeableOpenmrsMetadata {
 	public void retireState(ProgramWorkflowState state) {
 		state.setRetired(true);
 	}
-	
+
 	/**
 	 * Returns a {@link ProgramWorkflowState} whose primary key id matches the input parameter
 	 * 
@@ -101,7 +101,7 @@ public class ProgramWorkflow extends BaseChangeableOpenmrsMetadata {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns a {@link ProgramWorkflowState} whose Concept matches the passed concept
 	 * 
@@ -117,7 +117,7 @@ public class ProgramWorkflow extends BaseChangeableOpenmrsMetadata {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns a {@link ProgramWorkflowState} whose Concept name matches the passed name in any
 	 * {@link Locale}
@@ -134,7 +134,7 @@ public class ProgramWorkflow extends BaseChangeableOpenmrsMetadata {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns a {@link ProgramWorkflowState} whose {@link Concept} has any {@link ConceptName} that
 	 * matches the given <code>name</code>
@@ -151,7 +151,7 @@ public class ProgramWorkflow extends BaseChangeableOpenmrsMetadata {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns a Set&lt;{@link ProgramWorkflowState}&gt; including all non-retired ProgramWorkflowStates
 	 * and all retired ProgramWorkflowStates in this ProgramWorkflow if <code>includeRetired</code>
@@ -170,7 +170,7 @@ public class ProgramWorkflow extends BaseChangeableOpenmrsMetadata {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * Returns a Set&lt;{@link ProgramWorkflowState}&gt; including all ProgramWorkflowStates, sorted by
 	 * {@link ConceptName}
@@ -180,16 +180,16 @@ public class ProgramWorkflow extends BaseChangeableOpenmrsMetadata {
 	 */
 	public Set<ProgramWorkflowState> getSortedStates() {
 		final Comparator<String> naturalComparator = NaturalStrings.getNaturalComparator();
-		
+
 		Comparator<ProgramWorkflowState> stateComparator = (o1, o2) -> naturalComparator.compare(o1.getConcept().getName().getName(), o2.getConcept().getName().getName());
-		
+
 		Set<ProgramWorkflowState> sorted = new TreeSet<>(stateComparator);
 		if (getStates() != null) {
 			sorted.addAll(getStates());
 		}
 		return sorted;
 	}
-	
+
 	/**
 	 * Returns a List&lt;{@link ProgramWorkflowState}&gt; including all possible next
 	 * ProgramWorkflowStates, for the passed {@link PatientProgram} ordered by {@link ConceptName}
@@ -208,7 +208,7 @@ public class ProgramWorkflow extends BaseChangeableOpenmrsMetadata {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * Check whether it is allowable to transition from <code>fromState</code> to
 	 * <code>toState</code>.
@@ -223,17 +223,17 @@ public class ProgramWorkflow extends BaseChangeableOpenmrsMetadata {
 		if (fromState == null) {
 			return toState.getInitial();
 		}
-		
+
 		// Does not allow patient to move into the same state
 		return !fromState.equals(toState);
 	}
-	
+
 	/** @see Object#toString() */
 	@Override
 	public String toString() {
 		return "ProgramWorkflow(id=" + getProgramWorkflowId() + ")";
 	}
-	
+
 	// ******************
 	// Property Access
 	// ******************
@@ -241,45 +241,45 @@ public class ProgramWorkflow extends BaseChangeableOpenmrsMetadata {
 	public Set<ProgramWorkflowState> getStates() {
 		return states;
 	}
-	
+
 	public void setStates(Set<ProgramWorkflowState> states) {
 		this.states = states;
 	}
-	
+
 	public Concept getConcept() {
 		return concept;
 	}
-	
+
 	public void setConcept(Concept concept) {
 		this.concept = concept;
 	}
-	
+
 	public Program getProgram() {
 		return program;
 	}
-	
+
 	public void setProgram(Program program) {
 		this.program = program;
 	}
-	
+
 	public Integer getProgramWorkflowId() {
 		return programWorkflowId;
 	}
-	
+
 	public void setProgramWorkflowId(Integer programWorkflowId) {
 		this.programWorkflowId = programWorkflowId;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
 	@Override
 	public Integer getId() {
-		
+
 		return getProgramWorkflowId();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -287,9 +287,9 @@ public class ProgramWorkflow extends BaseChangeableOpenmrsMetadata {
 	@Override
 	public void setId(Integer id) {
 		setProgramWorkflowId(id);
-		
+
 	}
-	
+
 	/**
 	 * Gets the number of states which are not retired
 	 * 

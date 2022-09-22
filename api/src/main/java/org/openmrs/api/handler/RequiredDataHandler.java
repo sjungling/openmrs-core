@@ -29,7 +29,7 @@ import org.openmrs.User;
  * @since 1.5
  */
 public interface RequiredDataHandler<O extends OpenmrsObject> {
-	
+
 	/**
 	 * This method is called to when the required data needs to be set.
 	 * 
@@ -40,5 +40,5 @@ public interface RequiredDataHandler<O extends OpenmrsObject> {
 	 *            exists
 	 */
 	public void handle(O openmrsObject, User currentUser, Date currentDate, String other);
-	
+
 }

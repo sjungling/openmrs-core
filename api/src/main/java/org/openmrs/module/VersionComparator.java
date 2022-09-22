@@ -21,9 +21,9 @@ import java.util.Comparator;
 public class VersionComparator implements Comparator<String>, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	String TOKEN = ".";
-	
+
 	/**
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 	 * <strong>Should</strong> compare via numeric value not string value
@@ -32,5 +32,5 @@ public class VersionComparator implements Comparator<String>, Serializable {
 	public int compare(String o1, String o2) {
 		return ModuleUtil.compareVersion(o1, o2);
 	}
-	
+
 }

@@ -27,11 +27,11 @@ import org.springframework.validation.Validator;
  *
  * @since 1.9
  */
-@Handler(supports = { Encounter.class }, order = 50)
+@Handler(supports = {Encounter.class}, order = 50)
 public class EncounterValidator implements Validator {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(EncounterValidator.class);
-	
+
 	/**
 	 * Returns whether or not this validator supports validating a given class.
 	 *
@@ -43,7 +43,7 @@ public class EncounterValidator implements Validator {
 		log.debug("{}.supports: {}", this.getClass().getName(), c.getName());
 		return Encounter.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Validates the given Encounter. Currently checks if the patient has been set and also ensures
 	 * that the patient for an encounter and the visit it is associated to if any, are the same.
@@ -65,40 +65,40 @@ public class EncounterValidator implements Validator {
 	@Override
 	public void validate(Object obj, Errors errors) throws APIException {
 		log.debug("{}.validate...", this.getClass().getName());
-		
+
 		if (obj == null || !(obj instanceof Encounter)) {
 			throw new IllegalArgumentException("The parameter obj should not be null and must be of type " + Encounter.class);
 		}
-		
+
 		Encounter encounter = (Encounter) obj;
-		
+
 		ValidationUtils.rejectIfEmpty(errors, "encounterType", "Encounter.error.encounterType.required",
-		    "Encounter type is Required");
-		
+										"Encounter type is Required");
+
 		ValidationUtils.rejectIfEmpty(errors, "patient", "Encounter.error.patient.required", "Patient is required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "encounterDatetime", "Encounter.datetime.required");
 		if (encounter.getVisit() != null && !ObjectUtils.equals(encounter.getVisit().getPatient(), encounter.getPatient())) {
 			errors.rejectValue("visit", "Encounter.visit.patients.dontMatch",
-			    "The patient for the encounter and visit should be the same");
+											"The patient for the encounter and visit should be the same");
 		}
-		
+
 		Date encounterDateTime = encounter.getEncounterDatetime();
-		
+
 		if (encounterDateTime != null && encounterDateTime.after(new Date())) {
 			errors.rejectValue("encounterDatetime", "Encounter.datetimeShouldBeBeforeCurrent",
-			    "The encounter datetime should be before the current date.");
+											"The encounter datetime should be before the current date.");
 		}
-		
+
 		Visit visit = encounter.getVisit();
 		if (visit != null && encounterDateTime != null) {
 			if (visit.getStartDatetime() != null && encounterDateTime.before(visit.getStartDatetime())) {
 				errors.rejectValue("encounterDatetime", "Encounter.datetimeShouldBeInVisitDatesRange",
-				    "The encounter datetime should be between the visit start and stop dates.");
+												"The encounter datetime should be between the visit start and stop dates.");
 			}
-			
+
 			if (visit.getStopDatetime() != null && encounterDateTime.after(visit.getStopDatetime())) {
 				errors.rejectValue("encounterDatetime", "Encounter.datetimeShouldBeInVisitDatesRange",
-				    "The encounter datetime should be between the visit start and stop dates.");
+												"The encounter datetime should be between the visit start and stop dates.");
 			}
 		}
 		ValidateUtil.validateFieldLengths(errors, obj.getClass(), "voidReason");

@@ -30,48 +30,48 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class H2DatabaseIT implements LiquibaseProvider {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(H2DatabaseIT.class);
-	
+
 	public static final String CONNECTION_URL = "jdbc:h2:mem:openmrs;DB_CLOSE_DELAY=-1";
-	
+
 	private static final String CONTEXT = "some context";
-	
+
 	protected static final String USER_NAME = "another_user";
-	
+
 	protected static final String PASSWORD = "another_password";
-	
+
 	@BeforeEach
 	public void setup() throws SQLException, ClassNotFoundException {
 		this.initializeDatabase();
 	}
-	
+
 	@AfterEach
 	public void tearDown() throws SQLException {
 		this.dropAllDatabaseObjects();
 	}
-	
+
 	public Liquibase getLiquibase(String filename) throws LiquibaseException, SQLException {
 		Database liquibaseConnection = DatabaseFactory.getInstance()
-		        .findCorrectDatabaseImplementation(new JdbcConnection(getConnection()));
-		
+										.findCorrectDatabaseImplementation(new JdbcConnection(getConnection()));
+
 		liquibaseConnection.setDatabaseChangeLogTableName("LIQUIBASECHANGELOG");
 		liquibaseConnection.setDatabaseChangeLogLockTableName("LIQUIBASECHANGELOGLOCK");
-		
+
 		return new Liquibase(filename, new ClassLoaderResourceAccessor(getClass().getClassLoader()), liquibaseConnection);
 	}
-	
+
 	protected void initializeDatabase() throws SQLException, ClassNotFoundException {
 		String driver = "org.h2.Driver";
 		Class.forName(driver);
 	}
-	
+
 	protected void updateDatabase(String filename) throws Exception {
 		Liquibase liquibase = getLiquibase(filename);
 		liquibase.update(new Contexts(CONTEXT));
 		liquibase.getDatabase().getConnection().commit();
 	}
-	
+
 	protected void dropAllDatabaseObjects() throws SQLException {
 		Connection connection = getConnection();
 		Statement statement = null;
@@ -88,7 +88,7 @@ public class H2DatabaseIT implements LiquibaseProvider {
 		}
 	}
 
-	protected void updateDatabase( List<String> filenames) throws Exception {
+	protected void updateDatabase(List<String> filenames) throws Exception {
 		log.info("liquibase files used for creating and updating the OpenMRS database are: " + filenames);
 
 		for (String filename : filenames) {
@@ -99,7 +99,7 @@ public class H2DatabaseIT implements LiquibaseProvider {
 
 	protected Connection getConnection() throws SQLException {
 		Connection connection = DriverManager.getConnection(CONNECTION_URL, USER_NAME, PASSWORD);
-		connection.setAutoCommit( false );
+		connection.setAutoCommit(false);
 		return connection;
 	}
 }

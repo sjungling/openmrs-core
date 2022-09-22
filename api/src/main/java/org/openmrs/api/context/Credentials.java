@@ -16,16 +16,16 @@ package org.openmrs.api.context;
  * @since 2.3.0
  */
 public interface Credentials {
-	
+
 	/**
 	 * @return The authentication scheme that should be used with those credentials.
 	 */
 	public String getAuthenticationScheme();
-	
+
 	/**
 	 * A string that identifies the owner of the credentials by a name.
 	 * Typically in the case of a user the client would simply be identified with its username. 
 	 */
 	public String getClientName();
-	
+
 }

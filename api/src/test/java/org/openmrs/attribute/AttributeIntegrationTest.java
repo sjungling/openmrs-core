@@ -34,37 +34,37 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
  * in concert.
  */
 public class AttributeIntegrationTest extends BaseContextSensitiveTest {
-	
+
 	VisitService service;
-	
+
 	@BeforeEach
 	public void before() {
 		service = Context.getVisitService();
 	}
-	
+
 	@Test
 	public void shouldTestAddingAnAttributeToSomethingAndSavingIt() throws InvalidCustomValueException, ParseException {
 		Visit visit = service.getVisit(1);
 		VisitAttributeType auditDate = service.getVisitAttributeType(1);
-		
+
 		VisitAttribute legalDate = new VisitAttribute();
 		legalDate.setAttributeType(auditDate);
 		// try using a subclass of java.util.Date, to make sure the handler can take subclasses.
 		legalDate.setValue(new Date(new SimpleDateFormat("yyyy-MM-dd").parse("2011-04-15").getTime()));
 		visit.addAttribute(legalDate);
-		
+
 		service.saveVisit(visit);
-		
+
 		// saving the visit should have caused the date to be validated and saved
 		assertNotNull(legalDate.getValueReference());
 		assertEquals("2011-04-15", legalDate.getValueReference());
-		
+
 		VisitAttribute badDate = new VisitAttribute();
 		badDate.setAttributeType(auditDate);
 		// no value
 		visit.addAttribute(badDate);
-		
+
 		assertThrows(APIException.class, () -> service.saveVisit(visit));
 	}
-	
+
 }

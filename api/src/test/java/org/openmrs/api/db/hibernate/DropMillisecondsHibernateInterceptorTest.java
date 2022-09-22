@@ -32,7 +32,7 @@ public class DropMillisecondsHibernateInterceptorTest extends BaseContextSensiti
 
 	@Autowired
 	PersonService personService;
-	
+
 	@Autowired
 	DropMillisecondsHibernateInterceptor dropMillisecondsHibernateInterceptor;
 
@@ -65,14 +65,14 @@ public class DropMillisecondsHibernateInterceptorTest extends BaseContextSensiti
 
 		assertThat(person.getBirthdate(), is(dateWithoutMillisecond));
 	}
-	
+
 	@Test
 	public void shouldNotChangeWhenInstanceOfTime() throws Exception {
-		Time[] time = { Time.valueOf("17:00:00") };
+		Time[] time = {Time.valueOf("17:00:00")};
 		boolean anyChanges = dropMillisecondsHibernateInterceptor.onSave(null, null, time, null, null);
 		assertFalse(anyChanges);
 	}
-	
+
 	@Test
 	public void shouldNotThrowUnsupportedOperationExceptionWhenInstanceOfSqlDate() throws Exception {
 		Date[] sqlDate = {new java.sql.Date(567L)};

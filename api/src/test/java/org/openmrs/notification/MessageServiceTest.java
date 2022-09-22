@@ -21,11 +21,11 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
  * Unit tests for the MessageService.
  */
 public class MessageServiceTest extends BaseContextSensitiveTest {
-	
+
 	private static final String NO_SMTP_SERVER_ERROR = "Could not connect to SMTP host:";
-	
+
 	MessageService ms = null;
-	
+
 	/**
 	 * Run this before each unit test in this class. The "@Before" method in
 	 * {@link BaseContextSensitiveTest} is run right before this method.
@@ -35,13 +35,13 @@ public class MessageServiceTest extends BaseContextSensitiveTest {
 	@BeforeEach
 	public void runBeforeEachTest() {
 		executeDataSet("org/openmrs/notification/include/MessageServiceTest-initial.xml");
-		
+
 		ms = Context.getMessageService();
 	}
-	
+
 	/**
 	 * @throws MessageException
-	 * @see MessageService#createMessage(String,String,String,String)
+	 * @see MessageService#createMessage(String, String, String, String)
 	 */
 	@Test
 	public void createMessage_shouldCreateMessage() throws MessageException {
@@ -52,35 +52,35 @@ public class MessageServiceTest extends BaseContextSensitiveTest {
 		String attachment = "inga";
 		String attachmentContentType = "text/plain";
 		String attachmentFileName = "inga.txt";
-		
+
 		Message msg1 = ms.createMessage(recipients, sender, subject, message);
 		Message msg2 = ms.createMessage(subject, message);
 		Message msg3 = ms.createMessage(sender, subject, message);
 		Message msg4 = ms.createMessage(recipients, sender, subject, message, attachment, attachmentContentType,
-		    attachmentFileName);
-		
+										attachmentFileName);
+
 		assertEquals(recipients, msg1.getRecipients());
 		assertEquals(recipients, msg4.getRecipients());
-		
+
 		assertEquals(sender, msg1.getSender());
 		assertEquals(sender, msg3.getSender());
 		assertEquals(sender, msg4.getSender());
-		
+
 		assertEquals(subject, msg1.getSubject());
 		assertEquals(subject, msg2.getSubject());
 		assertEquals(subject, msg3.getSubject());
 		assertEquals(subject, msg4.getSubject());
-		
+
 		assertEquals(message, msg1.getContent());
 		assertEquals(message, msg2.getContent());
 		assertEquals(message, msg3.getContent());
 		assertEquals(message, msg4.getContent());
-		
+
 		assertEquals(attachment, msg4.getAttachment());
 		assertEquals(attachmentContentType, msg4.getAttachmentContentType());
 		assertEquals(attachmentFileName, msg4.getAttachmentFileName());
 	}
-	
+
 	/**
 	 * @throws MessageException
 	 * @see MessageService#sendMessage(Message)
@@ -98,9 +98,9 @@ public class MessageServiceTest extends BaseContextSensitiveTest {
 				fail();
 			}
 		}
-		
+
 		Message tryToSend2 = ms.createMessage("recipient@example.com,recipient2@example.com", "openmrs.emailer@gmail.com",
-		    "subject", "content", "moo", "text/plain", "moo.txt");
+										"subject", "content", "moo", "text/plain", "moo.txt");
 		try {
 			ms.sendMessage(tryToSend2);
 		}
@@ -112,5 +112,5 @@ public class MessageServiceTest extends BaseContextSensitiveTest {
 			}
 		}
 	}
-	
+
 }

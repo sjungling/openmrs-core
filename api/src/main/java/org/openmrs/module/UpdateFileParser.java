@@ -30,18 +30,18 @@ import org.xml.sax.InputSource;
  * @version 1.0
  */
 public class UpdateFileParser {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(UpdateFileParser.class);
-	
+
 	private String content;
-	
+
 	// these properties store the 'best fit' (most recent update that will fit with the current code version)
 	private String moduleId = null;
-	
+
 	private String currentVersion = null;
-	
+
 	private String downloadURL = null;
-	
+
 	/**
 	 * Default constructor
 	 *
@@ -50,7 +50,7 @@ public class UpdateFileParser {
 	public UpdateFileParser(String s) {
 		this.content = s;
 	}
-	
+
 	/**
 	 * Parse the contents of the update.rdf file.
 	 *
@@ -67,41 +67,41 @@ public class UpdateFileParser {
 				stringReader = new StringReader(content);
 				InputSource inputSource = new InputSource(stringReader);
 				inputSource.setSystemId("./");
-				
+
 				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 				DocumentBuilder db = dbf.newDocumentBuilder();
-				
+
 				// Disable resolution of external entities. See TRUNK-3942 
 				db.setEntityResolver((publicId, systemId) -> new InputSource(new StringReader("")));
-				
+
 				updateDoc = db.parse(inputSource);
 			}
 			catch (Exception e) {
 				log.warn("Unable to parse content");
 				throw new ModuleException("Error parsing update.rdf file: " + content, e);
 			}
-			
+
 			Element rootNode = updateDoc.getDocumentElement();
-			
+
 			String configVersion = rootNode.getAttribute("configVersion");
-			
+
 			if (!validConfigVersions().contains(configVersion)) {
 				throw new ModuleException("Invalid configVersion: '" + configVersion + "' found In content: " + content);
 			}
-			
+
 			if ("1.0".equals(configVersion)) {
 				// the only update in the xml file is the 'best fit'
 				this.moduleId = getElement(rootNode, configVersion, "moduleId");
 				this.currentVersion = getElement(rootNode, configVersion, "currentVersion");
 				this.downloadURL = getElement(rootNode, configVersion, "downloadURL");
 			} else if ("1.1".equals(configVersion)) {
-				
+
 				this.moduleId = rootNode.getAttribute("moduleId");
-				
+
 				NodeList nodes = rootNode.getElementsByTagName("update");
 				// default to the lowest version possible
 				this.currentVersion = "";
-				
+
 				// loop over all 'update' tags
 				for (int i = 0; i < nodes.getLength(); i++) {
 					Element currentNode = (Element) nodes.item(i);
@@ -111,8 +111,8 @@ public class UpdateFileParser {
 						String requireOpenMRSVersion = getElement(currentNode, configVersion, "requireOpenMRSVersion");
 						// if the openmrs code version is compatible, this node is a winner
 						if (requireOpenMRSVersion == null
-						        || ModuleUtil.matchRequiredVersions(OpenmrsConstants.OPENMRS_VERSION_SHORT,
-						            requireOpenMRSVersion)) {
+														|| ModuleUtil.matchRequiredVersions(OpenmrsConstants.OPENMRS_VERSION_SHORT,
+														requireOpenMRSVersion)) {
 							this.currentVersion = currentVersion;
 							this.downloadURL = getElement(currentNode, configVersion, "downloadURL");
 						}
@@ -129,9 +129,9 @@ public class UpdateFileParser {
 				stringReader.close();
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * Generic method to get a module tag
 	 *
@@ -146,7 +146,7 @@ public class UpdateFileParser {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * List of the valid sqldiff versions
 	 *
@@ -158,26 +158,26 @@ public class UpdateFileParser {
 		versions.add("1.1");
 		return versions;
 	}
-	
+
 	/**
 	 * @return the downloadURL
 	 */
 	public String getDownloadURL() {
 		return downloadURL;
 	}
-	
+
 	/**
 	 * @return the moduleId
 	 */
 	public String getModuleId() {
 		return moduleId;
 	}
-	
+
 	/**
 	 * @return the version
 	 */
 	public String getCurrentVersion() {
 		return currentVersion;
 	}
-	
+
 }

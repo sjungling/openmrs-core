@@ -31,10 +31,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class ConfigUtilTest extends BaseContextSensitiveTest {
 
-	@Autowired 
+	@Autowired
 	@Qualifier("adminService")
 	AdministrationService administrationService;
-	
+
 	static {
 		System.setProperty("inRuntimeAndSystem", "system-property-value");
 		System.setProperty("inSystemNotRuntime", "system-property-value");

@@ -29,29 +29,29 @@ import org.slf4j.LoggerFactory;
  * Validates Hibernate mapping files.
  */
 public class ValidateHibernateMappingsDatabaseIT extends H2DatabaseIT {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ValidateHibernateMappingsDatabaseIT.class);
-	
-	
+
+
 	@Test
 	public void shouldValidateHibernateMappings() throws Exception {
 		/*
 		 * Drop all database objects before running the test as previously run tests may have left tables behind.
 		 */
 		this.dropAllDatabaseObjects();
-		
+
 		ChangeLogVersionFinder changeLogVersionFinder = new ChangeLogVersionFinder();
 		Map<String, List<String>> changeLogCombinations = changeLogVersionFinder.getChangeLogCombinations();
-		
+
 		// test all possible combinations of liquibase snapshot and update files
 		//
 		for (List<String> snapshotAndUpdateFileNames : changeLogCombinations.values()) {
-			
+
 			this.initializeDatabase();
-			
+
 			log.info(
-			    "liquibase files used for creating and updating the OpenMRS database are: " + snapshotAndUpdateFileNames);
-			
+											"liquibase files used for creating and updating the OpenMRS database are: " + snapshotAndUpdateFileNames);
+
 			for (String fileName : snapshotAndUpdateFileNames) {
 				// process the core data file only for the first generation of liquibase snapshot files
 				//
@@ -59,7 +59,7 @@ public class ValidateHibernateMappingsDatabaseIT extends H2DatabaseIT {
 					log.info("processing " + fileName);
 					this.updateDatabase(fileName);
 				}
-				
+
 				// exclude the core data file for subsequent generations of liquibase snapshot files
 				//
 				if (!fileName.contains("liquibase-core-data")) {
@@ -67,19 +67,19 @@ public class ValidateHibernateMappingsDatabaseIT extends H2DatabaseIT {
 					this.updateDatabase(fileName);
 				}
 			}
-			
+
 			// this is the core of this test: building the session factory validates if the generated database schema 
 			// corresponds to Hibernate mappings
 			//
 			this.buildSessionFactory();
-			
+
 			this.dropAllDatabaseObjects();
 		}
 	}
-	
+
 	private SessionFactory buildSessionFactory() {
 		Configuration configuration = new Configuration().configure();
-		
+
 		Set<Class<?>> entityClasses = OpenmrsClassScanner.getInstance().getClassesWithAnnotation(Entity.class);
 		if (entityClasses.contains(OrderServiceTest.SomeTestOrder.class)) {
 			entityClasses.remove(OrderServiceTest.SomeTestOrder.class);
@@ -94,10 +94,10 @@ public class ValidateHibernateMappingsDatabaseIT extends H2DatabaseIT {
 		configuration.setProperty(Environment.PASS, PASSWORD);
 		configuration.setProperty(Environment.USE_SECOND_LEVEL_CACHE, "false");
 		configuration.setProperty(Environment.USE_QUERY_CACHE, "false");
-		
+
 		// Validate HBMs against the actual schema
 		configuration.setProperty(Environment.HBM2DDL_AUTO, "validate");
-		
+
 		return configuration.buildSessionFactory();
 	}
 }

@@ -20,9 +20,9 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { ConceptDatatype.class }, order = 50)
+@Handler(supports = {ConceptDatatype.class}, order = 50)
 public class ConceptDatatypeValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -32,7 +32,7 @@ public class ConceptDatatypeValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return c.equals(ConceptDatatype.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -52,8 +52,8 @@ public class ConceptDatatypeValidator implements Validator {
 		} else {
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name");
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "hl7Abbreviation", "description",
-			    "retireReason");
+											"retireReason");
 		}
 	}
-	
+
 }

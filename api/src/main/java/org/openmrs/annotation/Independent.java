@@ -25,7 +25,7 @@ import org.openmrs.aop.RequiredDataAdvice;
  *
  * @see RequiredDataAdvice#recursivelyHandle(Class, org.openmrs.OpenmrsObject, org.openmrs.User, java.util.Date, String, java.util.List)
  */
-@Target( { ElementType.FIELD })
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Independent {

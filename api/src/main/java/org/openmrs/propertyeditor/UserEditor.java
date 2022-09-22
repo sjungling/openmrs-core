@@ -21,15 +21,15 @@ import org.openmrs.api.context.Context;
  * @see User
  */
 public class UserEditor extends OpenmrsPropertyEditor<User> {
-	
+
 	public UserEditor() {
 	}
-	
+
 	@Override
 	protected User getObjectById(Integer id) {
 		return Context.getUserService().getUser(id);
 	}
-	
+
 	@Override
 	protected User getObjectByUuid(String uuid) {
 		return Context.getUserService().getUserByUuid(uuid);

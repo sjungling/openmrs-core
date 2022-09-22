@@ -27,7 +27,7 @@ import org.openmrs.aop.RequiredDataAdvice;
  * @since 1.5
  */
 public interface SaveHandler<O extends OpenmrsObject> extends RequiredDataHandler<O> {
-	
+
 	/**
 	 * This method is used by the implementing classes to set any required data that it needs to.
 	 * 
@@ -40,5 +40,5 @@ public interface SaveHandler<O extends OpenmrsObject> extends RequiredDataHandle
 	 */
 	@Override
 	public void handle(O object, User creator, Date dateCreated, String other);
-	
+
 }

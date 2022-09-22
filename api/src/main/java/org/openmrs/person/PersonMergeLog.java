@@ -26,83 +26,83 @@ import org.openmrs.api.PersonService;
  * @since 1.9
  */
 public class PersonMergeLog extends BaseChangeableOpenmrsData {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * The unique identifier of the person merge log entity
 	 */
 	private Integer personMergeLogId;
-	
+
 	/**
 	 * The object representing the preferred person of the merge
 	 */
 	private Person winner;
-	
+
 	/**
 	 * The object representing the non-preferred person of the merge
 	 */
 	private Person loser;
-	
+
 	/**
 	 * serialized data representing the details of the merge
 	 */
 	private String serializedMergedData;
-	
+
 	/**
 	 * object representing the deserialized form of the merge data. This field is not directly
 	 * mapped to the database.
 	 */
 	private transient PersonMergeLogData personMergeLogData;
-	
+
 	public Integer getPersonMergeLogId() {
 		return personMergeLogId;
 	}
-	
+
 	public void setPersonMergeLogId(Integer personMergeLogId) {
 		this.personMergeLogId = personMergeLogId;
 	}
-	
+
 	public Person getWinner() {
 		return winner;
 	}
-	
+
 	public void setWinner(Person winner) {
 		this.winner = winner;
 	}
-	
+
 	public Person getLoser() {
 		return loser;
 	}
-	
+
 	public void setLoser(Person loser) {
 		this.loser = loser;
 	}
-	
+
 	public String getSerializedMergedData() {
 		return serializedMergedData;
 	}
-	
+
 	public void setSerializedMergedData(String serializedMergedData) {
 		this.serializedMergedData = serializedMergedData;
 	}
-	
+
 	public PersonMergeLogData getPersonMergeLogData() {
 		return personMergeLogData;
 	}
-	
+
 	public void setPersonMergeLogData(PersonMergeLogData personMergeLogData) {
 		this.personMergeLogData = personMergeLogData;
 	}
-	
+
 	@Override
 	public void setId(Integer id) {
 		setPersonMergeLogId(id);
 	}
-	
+
 	@Override
 	public Integer getId() {
 		return getPersonMergeLogId();
 	}
-	
+
 }

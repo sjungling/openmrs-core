@@ -36,7 +36,7 @@ import org.openmrs.aop.RequiredDataAdvice;
  */
 @Handler(supports = Retireable.class)
 public class BaseRetireHandler implements RetireHandler<Retireable> {
-	
+
 	/**
 	 * This method sets "retired" to true, the retired reason, and the retiredBy/dateRetired (if
 	 * those are null).<br>
@@ -54,22 +54,22 @@ public class BaseRetireHandler implements RetireHandler<Retireable> {
 	 */
 	@Override
 	public void handle(Retireable retireableObject, User retiringUser, Date retireDate, String retireReason) {
-		
+
 		// skip over doing retire stuff if already retired
 		if (!retireableObject.getRetired() || retireableObject.getRetiredBy() == null) {
-			
+
 			retireableObject.setRetired(true);
 			retireableObject.setRetireReason(retireReason);
-			
+
 			if (retireableObject.getRetiredBy() == null) {
 				retireableObject.setRetiredBy(retiringUser);
 			}
 			if (retireableObject.getDateRetired() == null) {
 				retireableObject.setDateRetired(retireDate);
 			}
-			
+
 		}
-		
+
 	}
-	
+
 }

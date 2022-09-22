@@ -36,18 +36,18 @@ public class HibernateAlertDAOTest extends BaseContextSensitiveTest {
 
 	@Autowired
 	private HibernateAlertDAO hibernateAlertDAO;
-	
+
 	private volatile boolean didUpdateExpirationDate = false;
 
 	@BeforeEach
 	public void setUp() {
 		executeDataSet(DATA_XML);
-		
+
 		if (!didUpdateExpirationDate) {
 			Alert activeAlert = hibernateAlertDAO.getAlert(2);
 			activeAlert.setDateToExpire(
-				Date.from(
-					LocalDate.now().plus(5, ChronoUnit.DAYS).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+											Date.from(
+																			LocalDate.now().plus(5, ChronoUnit.DAYS).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 
 			hibernateAlertDAO.saveAlert(activeAlert);
 			didUpdateExpirationDate = true;

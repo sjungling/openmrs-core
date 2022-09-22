@@ -19,15 +19,15 @@ import org.openmrs.api.context.Context;
  * @since 1.7
  */
 public class LocationTagEditor extends OpenmrsPropertyEditor<LocationTag> {
-	
+
 	public LocationTagEditor() {
 	}
-	
+
 	@Override
 	protected LocationTag getObjectById(Integer id) {
 		return Context.getLocationService().getLocationTag(id);
 	}
-	
+
 	@Override
 	protected LocationTag getObjectByUuid(String uuid) {
 		return Context.getLocationService().getLocationTagByUuid(uuid);

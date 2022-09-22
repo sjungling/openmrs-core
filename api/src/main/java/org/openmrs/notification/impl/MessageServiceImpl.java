@@ -31,11 +31,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public class MessageServiceImpl implements MessageService {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(MessageServiceImpl.class);
-	
+
 	private TemplateDAO templateDAO;
-	
+
 	private MessageSender messageSender; // Delivers message 
 	
 	private MessagePreparator messagePreparator; // Prepares message for delivery 
@@ -43,14 +43,14 @@ public class MessageServiceImpl implements MessageService {
 	public void setTemplateDAO(TemplateDAO dao) {
 		this.templateDAO = dao;
 	}
-	
+
 	/**
 	 * Public constructor Required for use with spring's method injection. Be careful because this
 	 * class requires a DAO Context in order to work properly. Please set the DAO context
 	 */
 	public MessageServiceImpl() {
 	}
-	
+
 	/**
 	 * Set the message preparator.
 	 *
@@ -60,12 +60,12 @@ public class MessageServiceImpl implements MessageService {
 	public void setMessagePreparator(MessagePreparator messagePreparator) {
 		this.messagePreparator = messagePreparator;
 	}
-	
+
 	@Override
 	public MessagePreparator getMessagePreparator() {
 		return this.messagePreparator;
 	}
-	
+
 	/**
 	 * Set the message sender.
 	 *
@@ -75,12 +75,12 @@ public class MessageServiceImpl implements MessageService {
 	public void setMessageSender(MessageSender messageSender) {
 		this.messageSender = messageSender;
 	}
-	
+
 	@Override
 	public MessageSender getMessageSender() {
 		return this.messageSender;
 	}
-	
+
 	/**
 	 * Send the message. All send calls go through this method.
 	 *
@@ -97,7 +97,7 @@ public class MessageServiceImpl implements MessageService {
 			throw new MessageException(e);
 		}
 	}
-	
+
 	/**
 	 * Create a message object with the given parts.
 	 *
@@ -110,7 +110,7 @@ public class MessageServiceImpl implements MessageService {
 	public Message createMessage(String recipients, String sender, String subject, String content) throws MessageException {
 		return Context.getMessageService().createMessage(recipients, sender, subject, content, null, null, null);
 	}
-	
+
 	/**
 	 * Create a message object with the given parts.
 	 *
@@ -122,7 +122,7 @@ public class MessageServiceImpl implements MessageService {
 	public Message createMessage(String sender, String subject, String content) throws MessageException {
 		return Context.getMessageService().createMessage(null, sender, subject, content);
 	}
-	
+
 	/**
 	 * Create a message object with the given parts.
 	 *
@@ -133,7 +133,7 @@ public class MessageServiceImpl implements MessageService {
 	public Message createMessage(String subject, String content) throws MessageException {
 		return Context.getMessageService().createMessage(null, null, subject, content);
 	}
-	
+
 	/**
 	 * @see org.openmrs.notification.MessageService#createMessage(java.lang.String,
 	 *      java.lang.String, java.lang.String, java.lang.String, java.lang.String,
@@ -141,7 +141,7 @@ public class MessageServiceImpl implements MessageService {
 	 */
 	@Override
 	public Message createMessage(String recipients, String sender, String subject, String content, String attachment,
-	        String attachmentContentType, String attachmentFileName) throws MessageException {
+									String attachmentContentType, String attachmentFileName) throws MessageException {
 		Message message = new Message();
 		message.setRecipients(recipients);
 		message.setSender(sender);
@@ -152,7 +152,7 @@ public class MessageServiceImpl implements MessageService {
 		message.setAttachmentFileName(attachmentFileName);
 		return message;
 	}
-	
+
 	/**
 	 * Send a message using the given parameters. This is a convenience method so that the client
 	 * does not need to create its own Message object.
@@ -162,7 +162,7 @@ public class MessageServiceImpl implements MessageService {
 		Message message = createMessage(recipients, sender, subject, content);
 		Context.getMessageService().sendMessage(message);
 	}
-	
+
 	/**
 	 * Send a message to a user that is identified by the given identifier.
 	 *
@@ -176,7 +176,7 @@ public class MessageServiceImpl implements MessageService {
 		message.addRecipient(user.getUserProperty(OpenmrsConstants.USER_PROPERTY_NOTIFICATION_ADDRESS));
 		Context.getMessageService().sendMessage(message);
 	}
-	
+
 	/**
 	 * Send message to a single user.
 	 *
@@ -192,7 +192,7 @@ public class MessageServiceImpl implements MessageService {
 		}
 		Context.getMessageService().sendMessage(message);
 	}
-	
+
 	/**
 	 * Send message to a collection of recipients.
 	 */
@@ -207,7 +207,7 @@ public class MessageServiceImpl implements MessageService {
 		}
 		Context.getMessageService().sendMessage(message);
 	}
-	
+
 	/**
 	 * Send a message to a group of users identified by their role.
 	 */
@@ -217,24 +217,24 @@ public class MessageServiceImpl implements MessageService {
 		Role role = Context.getUserService().getRole(roleName);
 		Context.getMessageService().sendMessage(message, role);
 	}
-	
+
 	/**
-         * Sends a message to a group of users identifier by their role.
+			* Sends a message to a group of users identifier by their role.
 	 */
 	@Override
 	public void sendMessage(Message message, Role role) throws MessageException {
 		log.debug("Sending message to role " + role);
 		log.debug("User Service : " + Context.getUserService());
-		
+
 		List<Role> roles = new ArrayList<>();
 		roles.add(role);
-		
+
 		Collection<User> users = Context.getUserService().getUsers(null, roles, false);
-		
+
 		log.debug("Sending message " + message + " to " + users);
 		Context.getMessageService().sendMessage(message, users);
 	}
-	
+
 	/**
 	 * Prepare a message given the template. The template should be populated with all necessary
 	 * data including the variable name-value pairs
@@ -246,7 +246,7 @@ public class MessageServiceImpl implements MessageService {
 	public Message prepareMessage(Template template) throws MessageException {
 		return messagePreparator.prepare(template);
 	}
-	
+
 	/**
 	 * Prepare a message based on a template and data used for variable substitution within template.
 	 *
@@ -266,7 +266,7 @@ public class MessageServiceImpl implements MessageService {
 			throw new MessageException("Could not prepare message with template " + templateName, e);
 		}
 	}
-	
+
 	/**
 	 * Get all templates in the database.
 	 *
@@ -277,7 +277,7 @@ public class MessageServiceImpl implements MessageService {
 	public List getAllTemplates() throws MessageException {
 		return templateDAO.getTemplates();
 	}
-	
+
 	/**
 	 * Get template by identifier.
 	 *
@@ -289,7 +289,7 @@ public class MessageServiceImpl implements MessageService {
 	public Template getTemplate(Integer id) throws MessageException {
 		return templateDAO.getTemplate(id);
 	}
-	
+
 	/**
 	 * Get templates by name.
 	 *
@@ -300,5 +300,5 @@ public class MessageServiceImpl implements MessageService {
 	@Transactional(readOnly = true)
 	public List getTemplatesByName(String name) throws MessageException {
 		return templateDAO.getTemplatesByName(name);
-	}	
+	}
 }

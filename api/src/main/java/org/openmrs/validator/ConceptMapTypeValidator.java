@@ -22,9 +22,9 @@ import org.springframework.validation.Validator;
  *
  * @since 1.9
  */
-@Handler(supports = { ConceptMapType.class }, order = 50)
+@Handler(supports = {ConceptMapType.class}, order = 50)
 public class ConceptMapTypeValidator implements Validator {
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 *
@@ -34,7 +34,7 @@ public class ConceptMapTypeValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return ConceptMapType.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Checks that a given concept map type object is valid.
 	 *
@@ -51,20 +51,20 @@ public class ConceptMapTypeValidator implements Validator {
 	 */
 	@Override
 	public void validate(Object obj, Errors errors) {
-		
+
 		if (obj == null || !(obj instanceof ConceptMapType)) {
 			throw new IllegalArgumentException("The parameter obj should not be null and must be of type"
-			        + ConceptMapType.class);
+											+ ConceptMapType.class);
 		}
-		
+
 		ConceptMapType conceptMapType = (ConceptMapType) obj;
 		String name = conceptMapType.getName();
 		if (!StringUtils.hasText(name)) {
 			errors.rejectValue("name", "ConceptMapType.error.nameRequired",
-			    "The name property is required for a concept map type");
+											"The name property is required for a concept map type");
 			return;
 		}
-		
+
 		name = name.trim();
 		ConceptMapType duplicate = Context.getConceptService().getConceptMapTypeByName(name);
 		if (duplicate != null && !OpenmrsUtil.nullSafeEquals(duplicate.getUuid(), conceptMapType.getUuid())) {

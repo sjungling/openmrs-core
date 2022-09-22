@@ -20,22 +20,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class PersonAttributeHelperTest extends BaseContextSensitiveTest {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(PersonAttributeHelperTest.class);
-	
+
 	private final static String PEOPLE_FROM_THE_SHIRE_XML = "org/openmrs/api/db/hibernate/include/HibernatePersonDAOTest-people.xml";
-	
+
 	private SessionFactory sessionFactory = null;
-	
+
 	private PersonAttributeHelper helper = null;
-	
+
 	@BeforeEach
 	public void getPersonDAO() {
 		executeDataSet(PEOPLE_FROM_THE_SHIRE_XML);
 		sessionFactory = (SessionFactory) applicationContext.getBean("sessionFactory");
 		helper = new PersonAttributeHelper(sessionFactory);
 	}
-	
+
 	/**
 	 * @see PersonAttributeHelper#personAttributeExists(String)
 	 */
@@ -46,10 +46,10 @@ public class PersonAttributeHelperTest extends BaseContextSensitiveTest {
 		assertTrue(helper.personAttributeExists("Story teller"));
 		assertTrue(helper.personAttributeExists("Porridge with honey"));
 		assertTrue(helper.personAttributeExists("Mushroom pie"));
-		
+
 		assertFalse(helper.personAttributeExists("Unexpected attribute value"));
 	}
-	
+
 	/**
 	 * @see PersonAttributeHelper#voidedPersonAttributeExists(String)
 	 */
@@ -57,10 +57,10 @@ public class PersonAttributeHelperTest extends BaseContextSensitiveTest {
 	public void voidedPersonAttributeExists_shouldReturnTrueIfAVoidedPersonAttributeExists() {
 		assertTrue(helper.voidedPersonAttributeExists("Master thief"));
 		assertTrue(helper.voidedPersonAttributeExists("Mushroom pie"));
-		
+
 		assertFalse(helper.voidedPersonAttributeExists("Unexpected attribute value"));
 	}
-	
+
 	/**
 	 * @see PersonAttributeHelper#nonVoidedPersonAttributeExists(String)
 	 */
@@ -68,10 +68,10 @@ public class PersonAttributeHelperTest extends BaseContextSensitiveTest {
 	public void nonVoidedPersonAttributeExists_shouldReturnTrueIfANonvoidedPersonAttributeExists() {
 		assertTrue(helper.nonVoidedPersonAttributeExists("Story teller"));
 		assertTrue(helper.nonVoidedPersonAttributeExists("Porridge with honey"));
-		
+
 		assertFalse(helper.nonVoidedPersonAttributeExists("Unexpected attribute value"));
 	}
-	
+
 	/**
 	 * @see PersonAttributeHelper#nonSearchablePersonAttributeExists(String)
 	 */
@@ -80,13 +80,13 @@ public class PersonAttributeHelperTest extends BaseContextSensitiveTest {
 		assertFalse(helper.nonSearchablePersonAttributeExists("Master thief"));
 		assertFalse(helper.nonSearchablePersonAttributeExists("Senior ring bearer"));
 		assertFalse(helper.nonSearchablePersonAttributeExists("Story teller"));
-		
+
 		assertTrue(helper.nonSearchablePersonAttributeExists("Porridge with honey"));
 		assertTrue(helper.nonSearchablePersonAttributeExists("Mushroom pie"));
-		
+
 		assertFalse(helper.nonSearchablePersonAttributeExists("Unexpected attribute value"));
 	}
-	
+
 	/**
 	 * @see PersonAttributeHelper#searchablePersonAttributeExists(String)
 	 */
@@ -95,10 +95,10 @@ public class PersonAttributeHelperTest extends BaseContextSensitiveTest {
 		assertTrue(helper.searchablePersonAttributeExists("Master thief"));
 		assertTrue(helper.searchablePersonAttributeExists("Senior ring bearer"));
 		assertTrue(helper.searchablePersonAttributeExists("Story teller"));
-		
+
 		assertFalse(helper.searchablePersonAttributeExists("Porridge with honey"));
 		assertFalse(helper.searchablePersonAttributeExists("Mushroom pie"));
-		
+
 		assertFalse(helper.nonSearchablePersonAttributeExists("Unexpected attribute value"));
 	}
 }

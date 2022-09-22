@@ -12,7 +12,7 @@ package org.openmrs;
 import org.junit.jupiter.api.Test;
 
 public class EncounterRoleTest {
-	
+
 	/**
 	 * @see Encounter#toString()
 	 */
@@ -22,5 +22,5 @@ public class EncounterRoleTest {
 		@SuppressWarnings("unused")
 		String toStringOutput = encounterRole.toString();
 	}
-	
+
 }

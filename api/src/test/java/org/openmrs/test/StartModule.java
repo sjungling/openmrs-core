@@ -21,9 +21,9 @@ import java.lang.annotation.Target;
  * @see StartModuleExecutionListener
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.TYPE })
+@Target({ElementType.TYPE})
 public @interface StartModule {
-	
+
 	/**
 	 * A list of full paths to omods.
 	 * 

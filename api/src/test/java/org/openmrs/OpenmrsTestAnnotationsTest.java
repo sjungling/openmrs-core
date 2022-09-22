@@ -21,7 +21,7 @@ import org.openmrs.test.jupiter.BaseContextSensitiveTest;
  * Runs tests on the "@SkipBaseSetup" annotation that OpenMRS unit tests use.
  */
 public class OpenmrsTestAnnotationsTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * Make sure the "@Before" method on {@link BaseContextSensitiveTest} is authenticating the user
 	 * 
@@ -35,12 +35,12 @@ public class OpenmrsTestAnnotationsTest extends BaseContextSensitiveTest {
 		assertTrue(Context.getEncounterService().getAllEncounterTypes().size() > 0);
 		// make sure we have the data from the INITIAL_DATA_SET_XML_FILENAME
 		Context.authenticate("admin", "test");
-		
+
 		// this is put here for the next test method to check that authentication is
 		// not happening when told not to
 		Context.logout();
 	}
-	
+
 	/**
 	 * Make sure the "@Before" method on {@link BaseContextSensitiveTest} is not authenticating the
 	 * user when told to skip
@@ -50,10 +50,10 @@ public class OpenmrsTestAnnotationsTest extends BaseContextSensitiveTest {
 	@Test
 	@SkipBaseSetup
 	public void shouldSkipAuthentication() {
-		
+
 		// this depends on Context.logout() being in the previous test method
 		
 		assertFalse(Context.isAuthenticated());
 	}
-	
+
 }

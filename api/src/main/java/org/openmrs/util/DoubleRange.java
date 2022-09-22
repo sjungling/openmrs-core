@@ -18,21 +18,21 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * because it only allows inclusive bounds.)
  */
 public class DoubleRange implements Comparable<DoubleRange> {
-	
+
 	private Double low;
-	
+
 	private Double high;
-	
+
 	private boolean closedLow = true; //TODO: add setters and getters for these
 	
 	private boolean closedHigh = false;
-	
+
 	/**
 	 * <strong>Should</strong> return null low and high if accessors are not called
 	 */
 	public DoubleRange() {
 	}
-	
+
 	/**
 	 * <strong>Should</strong> return infinite low and high if called with null parameters
 	 */
@@ -40,7 +40,7 @@ public class DoubleRange implements Comparable<DoubleRange> {
 		this.low = low == null ? new Double(Double.NEGATIVE_INFINITY) : low;
 		this.high = high == null ? new Double(Double.POSITIVE_INFINITY) : high;
 	}
-	
+
 	/**
 	 * @return Returns the high.
 	 * <strong>Should</strong> return correct value of high if it high was set previously
@@ -49,7 +49,7 @@ public class DoubleRange implements Comparable<DoubleRange> {
 	public Double getHigh() {
 		return high;
 	}
-	
+
 	/**
 	 * @param high The high to set.
 	 * <strong>Should</strong> set high to positive infinity on null parameter
@@ -58,7 +58,7 @@ public class DoubleRange implements Comparable<DoubleRange> {
 	public void setHigh(Double high) {
 		this.high = high == null ? new Double(Double.POSITIVE_INFINITY) : high;
 	}
-	
+
 	/**
 	 * @return Returns the low.
 	 * <strong>Should</strong> return correct value of low if low was set previously
@@ -67,7 +67,7 @@ public class DoubleRange implements Comparable<DoubleRange> {
 	public Double getLow() {
 		return low;
 	}
-	
+
 	/**
 	 * @param low The low to set.
 	 * <strong>Should</strong> set low to negative infinity on null parameter
@@ -76,7 +76,7 @@ public class DoubleRange implements Comparable<DoubleRange> {
 	public void setLow(Double low) {
 		this.low = low == null ? new Double(Double.NEGATIVE_INFINITY) : low;
 	}
-	
+
 	/**
 	 * first sorts according to low-bound (ascending) then according to high-bound (descending)
 	 * <strong>Should</strong> return plus 1 if this low is greater than other low
@@ -94,7 +94,7 @@ public class DoubleRange implements Comparable<DoubleRange> {
 		}
 		return temp;
 	}
-	
+
 	/**
 	 * BUG: this method should return false if both ends of the range are null.
 	 * It currently returns true in this case.
@@ -132,7 +132,7 @@ public class DoubleRange implements Comparable<DoubleRange> {
 		}
 		return true;
 	}
-	
+
 	/**
 	 *
 	 * @return a String representation of the DoubleRange
@@ -164,7 +164,7 @@ public class DoubleRange implements Comparable<DoubleRange> {
 		}
 		return ret.toString();
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof DoubleRange) {
@@ -173,7 +173,7 @@ public class DoubleRange implements Comparable<DoubleRange> {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * <strong>Should</strong> return the same hashCode for objects representing the same interval
 	 */
@@ -181,5 +181,5 @@ public class DoubleRange implements Comparable<DoubleRange> {
 	public int hashCode() {
 		return new HashCodeBuilder().append(low).append(high).build();
 	}
-	
+
 }

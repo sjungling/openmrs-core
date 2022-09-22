@@ -25,24 +25,24 @@ import org.hibernate.search.annotations.ContainedIn;
  * @version 2.0
  */
 public class Patient extends Person {
-	
+
 	public static final long serialVersionUID = 93123L;
-	
+
 	private Integer patientId;
-	
+
 	private String allergyStatus = Allergies.UNKNOWN;
-	
+
 	@ContainedIn
 	private Set<PatientIdentifier> identifiers;
 
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public Patient() {
 		setPatient(true);
 	}
-	
+
 	/**
 	 * This constructor creates a new Patient object from the given {@link Person} object. All
 	 * attributes are copied over to the new object. NOTE! All child collection objects are copied
@@ -62,7 +62,7 @@ public class Patient extends Person {
 		}
 		setPatient(true);
 	}
-	
+
 	/**
 	 * Constructor with default patient id
 	 * 
@@ -73,7 +73,7 @@ public class Patient extends Person {
 		this.patientId = patientId;
 		setPatient(true);
 	}
-	
+
 	/**
 	 * This constructor creates a new Patient object from the given {@link Patient} object. All
 	 * attributes are copied over to the new object. In effect creating a clone/duplicate. <br>
@@ -93,7 +93,7 @@ public class Patient extends Person {
 		}
 		this.identifiers = newIdentifiers;
 	}
-	
+
 	// Property accessors
 	
 	/**
@@ -105,7 +105,7 @@ public class Patient extends Person {
 		}
 		return this.patientId;
 	}
-	
+
 	/**
 	 * Sets the internal identifier for a patient. <b>This should never be called directly</b>. It
 	 * exists only for the use of the supporting infrastructure.
@@ -116,7 +116,7 @@ public class Patient extends Person {
 		super.setPersonId(patientId);
 		this.patientId = patientId;
 	}
-	
+
 	/**
 	 * Returns allergy status maintained by the supporting infrastructure.
 	 * 
@@ -127,7 +127,7 @@ public class Patient extends Person {
 	public String getAllergyStatus() {
 		return this.allergyStatus;
 	}
-	
+
 	/**
 	 * Sets the allergy status for a patient. <b>This should never be called directly</b>. It should
 	 * reflect allergy status maintained by the supporting infrastructure.
@@ -139,7 +139,7 @@ public class Patient extends Person {
 	public void setAllergyStatus(String allergyStatus) {
 		this.allergyStatus = allergyStatus;
 	}
-	
+
 	/**
 	 * Overrides the parent setPersonId(Integer) so that we can be sure patient id is also set
 	 * correctly.
@@ -151,7 +151,7 @@ public class Patient extends Person {
 		super.setPersonId(personId);
 		this.patientId = personId;
 	}
-	
+
 	/**
 	 * Get all of this patients identifiers -- both voided and non-voided ones. If you want only
 	 * non-voided identifiers, use {@link #getActiveIdentifiers()}
@@ -167,7 +167,7 @@ public class Patient extends Person {
 		}
 		return this.identifiers;
 	}
-	
+
 	/**
 	 * Update all identifiers for patient
 	 * 
@@ -194,7 +194,7 @@ public class Patient extends Person {
 			addIdentifier(identifier);
 		}
 	}
-	
+
 	/**
 	 * Will add this PatientIdentifier if the patient doesn't contain it already
 	 * 
@@ -215,10 +215,10 @@ public class Patient extends Person {
 				}
 			}
 		}
-		
+
 		getIdentifiers().add(patientIdentifier);
 	}
-	
+
 	/**
 	 * Convenience method to remove the given identifier from this patient's list of identifiers. If
 	 * <code>patientIdentifier</code> is null, nothing is done.
@@ -231,7 +231,7 @@ public class Patient extends Person {
 			getIdentifiers().remove(patientIdentifier);
 		}
 	}
-	
+
 	/**
 	 * Convenience method to get the first "preferred" identifier for a patient. Otherwise, returns
 	 * the first non-voided identifier Otherwise, null
@@ -256,7 +256,7 @@ public class Patient extends Person {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns the first (preferred) patient identifier matching a
 	 * <code>PatientIdentifierType</code> Otherwise, returns the first non-voided identifier
@@ -281,7 +281,7 @@ public class Patient extends Person {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns the first (preferred) patient identifier matching <code>identifierTypeId</code>
 	 * 
@@ -292,7 +292,7 @@ public class Patient extends Person {
 		if (!getIdentifiers().isEmpty()) {
 			for (PatientIdentifier id : getIdentifiers()) {
 				if (id.getPreferred() && !id.getVoided()
-				        && identifierTypeId.equals(id.getIdentifierType().getPatientIdentifierTypeId())) {
+												&& identifierTypeId.equals(id.getIdentifierType().getPatientIdentifierTypeId())) {
 					return id;
 				}
 			}
@@ -305,7 +305,7 @@ public class Patient extends Person {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns the (preferred) patient identifier matching <code>identifierTypeName</code> Otherwise
 	 * returns that last <code>PatientIdenitifer</code>
@@ -329,7 +329,7 @@ public class Patient extends Person {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns only the non-voided identifiers for this patient. If you want <u>all</u> identifiers,
 	 * use {@link #getIdentifiers()}
@@ -353,7 +353,7 @@ public class Patient extends Person {
 		ids.addAll(nonPreferred);
 		return ids;
 	}
-	
+
 	/**
 	 * Returns only the non-voided identifiers for this patient. If you want <u>all</u> identifiers,
 	 * use {@link #getIdentifiers()}
@@ -371,12 +371,12 @@ public class Patient extends Person {
 		}
 		return ids;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Patient#" + patientId;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
@@ -385,7 +385,7 @@ public class Patient extends Person {
 	public Integer getId() {
 		return getPatientId();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -394,7 +394,7 @@ public class Patient extends Person {
 	public void setId(Integer id) {
 		setPatientId(id);
 	}
-	
+
 	/**
 	 * Returns the person represented
 	 * 
@@ -404,5 +404,5 @@ public class Patient extends Person {
 	public Person getPerson() {
 		return this;
 	}
-	
+
 }

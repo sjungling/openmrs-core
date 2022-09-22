@@ -13,25 +13,25 @@ package org.openmrs;
  * DrugIngredient
  */
 public class DrugIngredient extends BaseOpenmrsObject implements java.io.Serializable, OpenmrsObject {
-	
+
 	public static final long serialVersionUID = 94023L;
-	
+
 	// Fields
 	
 	private Drug drug;
-	
+
 	private Concept ingredient;
-	
+
 	private Double strength;
-	
+
 	private Concept units;
-	
+
 	// Constructors
 	
 	/** default constructor */
 	public DrugIngredient() {
 	}
-	
+
 	// Property accessors
 	
 	/**
@@ -40,28 +40,28 @@ public class DrugIngredient extends BaseOpenmrsObject implements java.io.Seriali
 	public Drug getDrug() {
 		return drug;
 	}
-	
+
 	/**
 	 * @param drug the drug to set
 	 */
 	public void setDrug(Drug drug) {
 		this.drug = drug;
 	}
-	
+
 	/**
 	 * @return Returns the ingredient.
 	 */
 	public Concept getIngredient() {
 		return ingredient;
 	}
-	
+
 	/**
 	 * @param ingredient The ingredient to set.
 	 */
 	public void setIngredient(Concept ingredient) {
 		this.ingredient = ingredient;
 	}
-	
+
 	/**
 	 * @return Returns the strength.
 	 * @since 1.11
@@ -69,7 +69,7 @@ public class DrugIngredient extends BaseOpenmrsObject implements java.io.Seriali
 	public Double getStrength() {
 		return strength;
 	}
-	
+
 	/**
 	 * @param strength The strength to set.
 	 * @since 1.11
@@ -77,7 +77,7 @@ public class DrugIngredient extends BaseOpenmrsObject implements java.io.Seriali
 	public void setStrength(Double strength) {
 		this.strength = strength;
 	}
-	
+
 	/**
 	 * @return Returns the units.
 	 * @since 1.11
@@ -85,7 +85,7 @@ public class DrugIngredient extends BaseOpenmrsObject implements java.io.Seriali
 	public Concept getUnits() {
 		return units;
 	}
-	
+
 	/**
 	 * @param units The units to set.
 	 * @since 1.11
@@ -93,7 +93,7 @@ public class DrugIngredient extends BaseOpenmrsObject implements java.io.Seriali
 	public void setUnits(Concept units) {
 		this.units = units;
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
@@ -102,7 +102,7 @@ public class DrugIngredient extends BaseOpenmrsObject implements java.io.Seriali
 	public Integer getId() {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
@@ -111,5 +111,5 @@ public class DrugIngredient extends BaseOpenmrsObject implements java.io.Seriali
 	public void setId(Integer id) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 }

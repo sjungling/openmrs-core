@@ -20,13 +20,13 @@ import org.openmrs.api.context.Context;
  * @since 1.9
  */
 public class LocationUtility implements GlobalPropertyListener {
-	
+
 	/**
 	 * Cached version of the system default location. This is cached so that we don't have to look
 	 * it up in the global property table every time it is requested for
 	 */
 	private static Location defaultLocation = null;
-	
+
 	/**
 	 * Gets the system default location specified as a global property.
 	 *
@@ -37,10 +37,10 @@ public class LocationUtility implements GlobalPropertyListener {
 		if (defaultLocation == null && Context.isSessionOpen()) {
 			defaultLocation = Context.getLocationService().getDefaultLocation();
 		}
-		
+
 		return defaultLocation;
 	}
-	
+
 	/**
 	 * Convenience method that returns the default location of the authenticated user. It should
 	 * return the user's specified location from the user properties if any is set.
@@ -50,11 +50,11 @@ public class LocationUtility implements GlobalPropertyListener {
 	public static Location getUserDefaultLocation() {
 		return Context.getUserContext().getLocation();
 	}
-	
+
 	public static void setDefaultLocation(Location defaultLocation) {
 		LocationUtility.defaultLocation = defaultLocation;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.GlobalPropertyListener#globalPropertyChanged(org.openmrs.GlobalProperty)
 	 */
@@ -63,7 +63,7 @@ public class LocationUtility implements GlobalPropertyListener {
 		// reset the value
 		setDefaultLocation(null);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.GlobalPropertyListener#globalPropertyDeleted(java.lang.String)
 	 */
@@ -72,7 +72,7 @@ public class LocationUtility implements GlobalPropertyListener {
 		// reset the value
 		setDefaultLocation(null);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.GlobalPropertyListener#supportsPropertyName(java.lang.String)
 	 */
@@ -80,5 +80,5 @@ public class LocationUtility implements GlobalPropertyListener {
 	public boolean supportsPropertyName(String propertyName) {
 		return propertyName.equals(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCATION_NAME);
 	}
-	
+
 }

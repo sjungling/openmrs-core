@@ -21,15 +21,15 @@ import org.openmrs.api.context.Context;
  * @see Drug
  */
 public class DrugEditor extends OpenmrsPropertyEditor<Drug> {
-	
+
 	public DrugEditor() {
 	}
-	
+
 	@Override
 	protected Drug getObjectById(Integer id) {
 		return Context.getConceptService().getDrug(id);
 	}
-	
+
 	@Override
 	protected Drug getObjectByUuid(String uuid) {
 		return Context.getConceptService().getDrugByUuid(uuid);

@@ -38,12 +38,12 @@ import java.lang.annotation.Target;
  *     public void getUsersByName(String name);
  * </pre>
  */
-@Target( { ElementType.METHOD, ElementType.TYPE })
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
 public @interface Authorized {
-	
+
 	/**
 	 * Returns the list of privileges needed to access a method. (i.e. "View Users"). Multiple
 	 * privileges are compared with an "or" unless <code>requireAll</code> is set to true
@@ -51,7 +51,7 @@ public @interface Authorized {
 	 * @return String[] The secure method attributes
 	 */
 	public String[] value() default {};
-	
+
 	/**
 	 * If set to true, will require that the user have <i>all</i> privileges listed in
 	 * <code>value</code>. if false, user only has to have one of the privileges. Defaults to false
@@ -59,5 +59,5 @@ public @interface Authorized {
 	 * @return boolean true/false whether the privileges should be "and"ed together
 	 */
 	public boolean requireAll() default false;
-	
+
 }
